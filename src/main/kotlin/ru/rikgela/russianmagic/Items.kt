@@ -20,7 +20,9 @@ enum class ItemTier(
         repairMaterialIn: Supplier<Ingredient>) : IItemTier {
     EBONY_PLANKS(2, 350, 6.5f, 2.3f, 12, Supplier<Ingredient> { Ingredient.fromItems(Items.EBONY_PLANKS.get()) }),
     MARBLE(3, 1061, 8.0f, 3.0f, 18, Supplier<Ingredient> { Ingredient.fromItems(Items.MARBLE.get()) }),
-    WHITE_JADE(4, 1501, 8.0f, 3.0f, 25, Supplier<Ingredient> { Ingredient.fromItems(Items.WHITE_JADE.get()) });
+    WHITE_JADE(4, 1501, 8.0f, 3.0f, 25, Supplier<Ingredient> { Ingredient.fromItems(Items.WHITE_JADE.get()) }),
+    RHINESTONE(5, 2001, 14.0f, 5.0f, 30, Supplier<Ingredient> {Ingredient.fromItems(Items.RHINESTONE.get()) }),
+    AQUAMARINE(6, 3001, 18.0f, 6.0f, 35, Supplier<Ingredient> {Ingredient.fromItems(Items.AQUAMARINE.get()) });
 
     private val repairMaterial = LazyValue(repairMaterialIn)
     override fun getMaxUses(): Int {
@@ -79,6 +81,8 @@ object Items {
     val EBONY_PLANKS: RegistryObject<Item> = ITEMS.register("ebony_planks") { Item(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val MARBLE: RegistryObject<Item> = ITEMS.register("marble") { Item(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val WHITE_JADE: RegistryObject<Item> = ITEMS.register("white_jade") { Item(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RHINESTONE: RegistryObject<Item> = ITEMS.register("white_jade") { Item(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AQUAMARINE: RegistryObject<Item> = ITEMS.register("white_jade") { Item(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
     val EBONY_PLANKS_AXE: RegistryObject<Item> = ITEMS.register("ebony_planks_axe") { AxeItem(ItemTier.EBONY_PLANKS, 6.0f, -3.1f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val EBONY_PLANKS_SHOVEL: RegistryObject<Item> = ITEMS.register("ebony_planks_shovel") { ShovelItem(ItemTier.EBONY_PLANKS, 1.5f, -3.0f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
@@ -97,4 +101,17 @@ object Items {
     val WHITE_JADE_SWORD: RegistryObject<Item> = ITEMS.register("white_jade_sword") { SwordItem(ItemTier.WHITE_JADE, 3, -2.4f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val WHITE_JADE_PICKAXE: RegistryObject<Item> = ITEMS.register("white_jade_pickaxe") { PickaxeItem(ItemTier.WHITE_JADE, 1, -2.8f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val WHITE_JADE_HOE: RegistryObject<Item> = ITEMS.register("white_jade_hoe") { HoeItem(ItemTier.WHITE_JADE, (-2).toFloat(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+
+    val RHINESTONE_AXE: RegistryObject<Item> = ITEMS.register("white_jade_axe") { AxeItem(ItemTier.RHINESTONE, 6.0f, -3.1f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RHINESTONE_SHOVEL: RegistryObject<Item> = ITEMS.register("white_jade_shovel") { ShovelItem(ItemTier.RHINESTONE, 1.5f, -3.0f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RHINESTONE_SWORD: RegistryObject<Item> = ITEMS.register("white_jade_sword") { SwordItem(ItemTier.RHINESTONE, 3, -2.4f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RHINESTONE_PICKAXE: RegistryObject<Item> = ITEMS.register("white_jade_pickaxe") { PickaxeItem(ItemTier.RHINESTONE, 1, -2.8f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RHINESTONE_HOE: RegistryObject<Item> = ITEMS.register("white_jade_hoe") { HoeItem(ItemTier.RHINESTONE, (-2).toFloat(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+
+    val AQUAMARINE_AXE: RegistryObject<Item> = ITEMS.register("white_jade_axe") { AxeItem(ItemTier.AQUAMARINE, 6.0f, -3.1f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AQUAMARINE_SHOVEL: RegistryObject<Item> = ITEMS.register("white_jade_shovel") { ShovelItem(ItemTier.AQUAMARINE, 1.5f, -3.0f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AQUAMARINE_SWORD: RegistryObject<Item> = ITEMS.register("white_jade_sword") { SwordItem(ItemTier.AQUAMARINE, 3, -2.4f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AQUAMARINE_PICKAXE: RegistryObject<Item> = ITEMS.register("white_jade_pickaxe") { PickaxeItem(ItemTier.AQUAMARINE, 1, -2.8f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AQUAMARINE_HOE: RegistryObject<Item> = ITEMS.register("white_jade_hoe") { HoeItem(ItemTier.AQUAMARINE, (-2).toFloat(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+
 }
