@@ -49,6 +49,7 @@ object ModItems {
 
     val EBONY_PLANKS = ITEMS.register("ebony_planks") { Item(Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
     val MARBLE = ITEMS.register("marble") { Item(Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val WHITE_JADE = ITEMS.register("white_jade") { Item(Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
 
     val EBONY_PLANKS_AXE: RegistryObject<Item> = ITEMS.register("ebony_planks_axe") { AxeItem(ModItemTier.EBONY_PLANKS, 6.0f, -3.1f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
     val EBONY_PLANKS_SHOVEL: RegistryObject<Item> = ITEMS.register("ebony_planks_shovel") { ShovelItem(ModItemTier.EBONY_PLANKS, 1.5f, -3.0f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
@@ -61,6 +62,13 @@ object ModItems {
     val MARBLE_SWORD: RegistryObject<Item> = ITEMS.register("marble_sword") { SwordItem(ModItemTier.MARBLE, 3, -2.4f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
     val MARBLE_PICKAXE: RegistryObject<Item> = ITEMS.register("marble_pickaxe") { PickaxeItem(ModItemTier.MARBLE, 1, -2.8f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
     val MARBLE_HOE: RegistryObject<Item> = ITEMS.register("marble_hoe") { HoeItem(ModItemTier.MARBLE, (-2).toFloat(), Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+
+    val WHITE_JADE_AXE: RegistryObject<Item> = ITEMS.register("white_jade_axe") {AxeItem(ModItemTier.WHITE_JADE, 6.0f, -3.1f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP))}
+    val WHITE_JADE_SHOVEL: RegistryObject<Item> = ITEMS.register("white_jade_shovel") { ShovelItem(ModItemTier.WHITE_JADE, 1.5f, -3.0f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val WHITE_JADE_SWORD: RegistryObject<Item> = ITEMS.register("white_jade_sword") { SwordItem(ModItemTier.WHITE_JADE, 3, -2.4f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val WHITE_JADE_PICKAXE: RegistryObject<Item> = ITEMS.register("white_jade_pickaxe") { PickaxeItem(ModItemTier.WHITE_JADE, 1, -2.8f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val WHITE_JADE_HOE: RegistryObject<Item> = ITEMS.register("white_jade_hoe") { HoeItem(ModItemTier.WHITE_JADE, (-2).toFloat(), Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+
 }
 
 object ModFoods {
@@ -78,8 +86,8 @@ enum class ModItemTier(
         private val enchantability: Int,
         repairMaterialIn: Supplier<Ingredient>) : IItemTier {
     EBONY_PLANKS(2, 350, 6.5f, 2.3f, 12, Supplier<Ingredient> { Ingredient.fromItems(ModItems.EBONY_PLANKS.get()) }),
-    MARBLE(3, 1061, 8.0f, 3.0f, 18, Supplier<Ingredient> { Ingredient.fromItems(ModItems.MARBLE.get()) });
-
+    MARBLE(3, 1061, 8.0f, 3.0f, 18, Supplier<Ingredient> { Ingredient.fromItems(ModItems.MARBLE.get()) }),
+    WHITE_JADE(4, 1501, 8.0f, 3.0f, 25, Supplier<Ingredient> {Ingredient.fromItems(ModItems.WHITE_JADE.get()) });
     private val repairMaterial: LazyValue<Ingredient>
     override fun getMaxUses(): Int {
         return maxUses

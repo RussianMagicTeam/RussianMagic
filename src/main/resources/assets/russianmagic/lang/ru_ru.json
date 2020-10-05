@@ -2,5 +2,26 @@
   "item.russianmagic.stone_magic_object": "Очень важный магический предмет!",
   "item.russianmagic.sausage": "Сосиска",
   "item.russianmagic.enchanted_sausage": "Отважная сосиска",
-  "itemGroup.russian_magic_items": "Русская магия. Предметы"
+  "itemGroup.russian_magic_items": "Русская магия. Предметы",
+
+  "item.russianmagic.marble": "Мрамор",
+  "item.russianmagic.marble_axe": "Топор из мрамора",
+  "item.russianmagic.marble_hoe": "Мотыга из мрамора",
+  "item.russianmagic.marble_pickaxe": "Кирка из мрамора",
+  "item.russianmagic.marble_shovel": "Лопата из мрамора",
+  "item.russianmagic.marble_sword": "Меч из мрамора",
+
+  "item.russianmagic.ebony_planks": "Доски из черного дерева",
+  "item.russianmagic.ebony_planks_axe": "Топор из черного дерева",
+  "item.russianmagic.ebony_planks_hoe": "Мотыга из черного дерева",
+  "item.russianmagic.ebony_planks_pickaxe": "Кирка из черного дерева",
+  "item.russianmagic.ebony_planks_shovel": "Лопата из черного дерева",
+  "item.russianmagic.ebony_planks_sword": "Меч из черного дерева",
+
+  "item.russianmagic.white_jade": "Белый нефрит",
+  "item.russianmagic.white_jade_axe": "Топор из белого нефрита",
+  "item.russianmagic.white_jade_hoe": "Мотыга из белого нефрита",
+  "item.russianmagic.white_jade_pickaxe": "Кирка из белого нефрита",
+  "item.russianmagic.white_jade_shovel": "Лопата из белого нефрита",
+  "item.russianmagic.white_jade_sword": "Меч из белого нефрита"
 }
