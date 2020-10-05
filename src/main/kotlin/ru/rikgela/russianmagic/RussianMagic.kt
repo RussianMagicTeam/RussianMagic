@@ -1,4 +1,4 @@
-package ru.rikgela.russinamagic
+package ru.rikgela.russianmagic
 
 import net.minecraft.item.Food
 import net.minecraft.item.Item
@@ -40,7 +40,8 @@ object ModItems {
     }
 
     val ENCHANTED_SAUSAGE = ITEMS.register<Item>("enchanted_sausage") {
-        object : Item(Properties().food(ModFoods.ENCHANTED_SAUSAGE).group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) {
+        object : Item(Properties()
+                .food(ModFoods.ENCHANTED_SAUSAGE).group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) {
             override fun hasEffect(stack: ItemStack): Boolean {
                 return true
             }
