@@ -16,7 +16,7 @@ object ModItems {
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("russianmagic")
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
-class ExampleMod {
+class RussianMagic {
     init{
         val bus = FMLJavaModLoadingContext.get().modEventBus
         ModItems.ITEMS.register(bus)
