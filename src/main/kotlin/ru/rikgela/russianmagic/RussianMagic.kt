@@ -8,6 +8,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 class RussianMagic {
     init {
         val bus = FMLJavaModLoadingContext.get().modEventBus
-        ModItems.ITEMS.register(bus)
+        Items.ITEMS.register(bus)
     }
 }

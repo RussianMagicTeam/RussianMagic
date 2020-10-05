@@ -4,7 +4,7 @@ import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
 import java.util.function.Supplier
 
-class ModItemGroup(name: String, private val iconSupplier: Supplier<ItemStack?>?) : ItemGroup(name) {
+class ItemGroup(name: String, private val iconSupplier: Supplier<ItemStack?>?) : ItemGroup(name) {
     override fun createIcon(): ItemStack? {
         if (iconSupplier != null) {
             return iconSupplier.get()
@@ -13,6 +13,6 @@ class ModItemGroup(name: String, private val iconSupplier: Supplier<ItemStack?>?
     }
 }
 
-object ModItemGroups {
-    val MOD_ITEMS_ITEM_GROUP: ItemGroup = ModItemGroup("russian_magic_items", Supplier { ItemStack(ModItems.STONE_STICK.get()) })
+object ItemGroups {
+    val RUSSIAN_MAGIC_ITEM_GROUP: ItemGroup = ru.rikgela.russianmagic.ItemGroup("russian_magic_items", Supplier { ItemStack(Items.STONE_MAGIC_OBJECT.get()) })
 }

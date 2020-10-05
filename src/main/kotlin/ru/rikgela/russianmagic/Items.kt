@@ -11,16 +11,16 @@ import net.minecraftforge.registries.ForgeRegistries
 import java.util.function.Supplier
 
 
-enum class ModItemTier(
+enum class ItemTier(
         private val harvestLevel: Int,
         private val maxUses: Int,
         private val efficiency: Float,
         private val attackDamage: Float,
         private val enchantability: Int,
         repairMaterialIn: Supplier<Ingredient>) : IItemTier {
-    EBONY_PLANKS(2, 350, 6.5f, 2.3f, 12, Supplier<Ingredient> { Ingredient.fromItems(ModItems.EBONY_PLANKS.get()) }),
-    MARBLE(3, 1061, 8.0f, 3.0f, 18, Supplier<Ingredient> { Ingredient.fromItems(ModItems.MARBLE.get()) }),
-    WHITE_JADE(4, 1501, 8.0f, 3.0f, 25, Supplier<Ingredient> { Ingredient.fromItems(ModItems.WHITE_JADE.get()) });
+    EBONY_PLANKS(2, 350, 6.5f, 2.3f, 12, Supplier<Ingredient> { Ingredient.fromItems(Items.EBONY_PLANKS.get()) }),
+    MARBLE(3, 1061, 8.0f, 3.0f, 18, Supplier<Ingredient> { Ingredient.fromItems(Items.MARBLE.get()) }),
+    WHITE_JADE(4, 1501, 8.0f, 3.0f, 25, Supplier<Ingredient> { Ingredient.fromItems(Items.WHITE_JADE.get()) });
 
     private val repairMaterial = LazyValue(repairMaterialIn)
     override fun getMaxUses(): Int {
@@ -49,52 +49,52 @@ enum class ModItemTier(
 
 }
 
-object ModFoods {
+object Foods {
     var SAUSAGE: Food = Food.Builder().hunger(5).saturation(0.5f).meat().build()
     var ENCHANTED_SAUSAGE: Food = Food.Builder().hunger(8).saturation(0.7f).meat().setAlwaysEdible().fastToEat()
             .effect({ EffectInstance(Effects.HEALTH_BOOST, 600, 0) }, 1f)
             .effect({ EffectInstance(Effects.INSTANT_HEALTH, 600, 0) }, 1f).build()
 }
 
-object ModItems {
+object Items {
     val ITEMS: DeferredRegister<Item> = DeferredRegister(ForgeRegistries.ITEMS, "russianmagic")
-    val STONE_STICK: RegistryObject<Item> = ITEMS.register<Item>("stone_magic_object") {
+    val STONE_MAGIC_OBJECT: RegistryObject<Item> = ITEMS.register<Item>("stone_magic_object") {
         Item(Item.Properties()
-                .group(ModItemGroups.MOD_ITEMS_ITEM_GROUP))
+                .group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP))
     }
     val SAUSAGE: RegistryObject<Item> = ITEMS.register("sausage") {
         Item(Item.Properties()
-                .food(ModFoods.SAUSAGE)
-                .group(ModItemGroups.MOD_ITEMS_ITEM_GROUP))
+                .food(Foods.SAUSAGE)
+                .group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP))
     }
     val ENCHANTED_SAUSAGE: RegistryObject<Item> = ITEMS.register<Item>("enchanted_sausage") {
         object : Item(Properties()
-                .food(ModFoods.ENCHANTED_SAUSAGE).group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) {
+                .food(Foods.ENCHANTED_SAUSAGE).group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) {
             override fun hasEffect(stack: ItemStack): Boolean {
                 return true
             }
         }
     }
 
-    val EBONY_PLANKS: RegistryObject<Item> = ITEMS.register("ebony_planks") { Item(Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
-    val MARBLE: RegistryObject<Item> = ITEMS.register("marble") { Item(Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
-    val WHITE_JADE: RegistryObject<Item> = ITEMS.register("white_jade") { Item(Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val EBONY_PLANKS: RegistryObject<Item> = ITEMS.register("ebony_planks") { Item(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val MARBLE: RegistryObject<Item> = ITEMS.register("marble") { Item(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val WHITE_JADE: RegistryObject<Item> = ITEMS.register("white_jade") { Item(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val EBONY_PLANKS_AXE: RegistryObject<Item> = ITEMS.register("ebony_planks_axe") { AxeItem(ModItemTier.EBONY_PLANKS, 6.0f, -3.1f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
-    val EBONY_PLANKS_SHOVEL: RegistryObject<Item> = ITEMS.register("ebony_planks_shovel") { ShovelItem(ModItemTier.EBONY_PLANKS, 1.5f, -3.0f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
-    val EBONY_PLANKS_SWORD: RegistryObject<Item> = ITEMS.register("ebony_planks_sword") { SwordItem(ModItemTier.EBONY_PLANKS, 3, -2.4f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
-    val EBONY_PLANKS_PICKAXE: RegistryObject<Item> = ITEMS.register("ebony_planks_pickaxe") { PickaxeItem(ModItemTier.EBONY_PLANKS, 1, -2.8f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
-    val EBONY_PLANKS_HOE: RegistryObject<Item> = ITEMS.register("ebony_planks_hoe") { HoeItem(ModItemTier.EBONY_PLANKS, (-2).toFloat(), Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val EBONY_PLANKS_AXE: RegistryObject<Item> = ITEMS.register("ebony_planks_axe") { AxeItem(ItemTier.EBONY_PLANKS, 6.0f, -3.1f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val EBONY_PLANKS_SHOVEL: RegistryObject<Item> = ITEMS.register("ebony_planks_shovel") { ShovelItem(ItemTier.EBONY_PLANKS, 1.5f, -3.0f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val EBONY_PLANKS_SWORD: RegistryObject<Item> = ITEMS.register("ebony_planks_sword") { SwordItem(ItemTier.EBONY_PLANKS, 3, -2.4f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val EBONY_PLANKS_PICKAXE: RegistryObject<Item> = ITEMS.register("ebony_planks_pickaxe") { PickaxeItem(ItemTier.EBONY_PLANKS, 1, -2.8f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val EBONY_PLANKS_HOE: RegistryObject<Item> = ITEMS.register("ebony_planks_hoe") { HoeItem(ItemTier.EBONY_PLANKS, (-2).toFloat(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val MARBLE_AXE: RegistryObject<Item> = ITEMS.register("marble_axe") { AxeItem(ModItemTier.MARBLE, 6.0f, -3.1f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
-    val MARBLE_SHOVEL: RegistryObject<Item> = ITEMS.register("marble_shovel") { ShovelItem(ModItemTier.MARBLE, 1.5f, -3.0f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
-    val MARBLE_SWORD: RegistryObject<Item> = ITEMS.register("marble_sword") { SwordItem(ModItemTier.MARBLE, 3, -2.4f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
-    val MARBLE_PICKAXE: RegistryObject<Item> = ITEMS.register("marble_pickaxe") { PickaxeItem(ModItemTier.MARBLE, 1, -2.8f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
-    val MARBLE_HOE: RegistryObject<Item> = ITEMS.register("marble_hoe") { HoeItem(ModItemTier.MARBLE, (-2).toFloat(), Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val MARBLE_AXE: RegistryObject<Item> = ITEMS.register("marble_axe") { AxeItem(ItemTier.MARBLE, 6.0f, -3.1f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val MARBLE_SHOVEL: RegistryObject<Item> = ITEMS.register("marble_shovel") { ShovelItem(ItemTier.MARBLE, 1.5f, -3.0f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val MARBLE_SWORD: RegistryObject<Item> = ITEMS.register("marble_sword") { SwordItem(ItemTier.MARBLE, 3, -2.4f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val MARBLE_PICKAXE: RegistryObject<Item> = ITEMS.register("marble_pickaxe") { PickaxeItem(ItemTier.MARBLE, 1, -2.8f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val MARBLE_HOE: RegistryObject<Item> = ITEMS.register("marble_hoe") { HoeItem(ItemTier.MARBLE, (-2).toFloat(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val WHITE_JADE_AXE: RegistryObject<Item> = ITEMS.register("white_jade_axe") { AxeItem(ModItemTier.WHITE_JADE, 6.0f, -3.1f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
-    val WHITE_JADE_SHOVEL: RegistryObject<Item> = ITEMS.register("white_jade_shovel") { ShovelItem(ModItemTier.WHITE_JADE, 1.5f, -3.0f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
-    val WHITE_JADE_SWORD: RegistryObject<Item> = ITEMS.register("white_jade_sword") { SwordItem(ModItemTier.WHITE_JADE, 3, -2.4f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
-    val WHITE_JADE_PICKAXE: RegistryObject<Item> = ITEMS.register("white_jade_pickaxe") { PickaxeItem(ModItemTier.WHITE_JADE, 1, -2.8f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
-    val WHITE_JADE_HOE: RegistryObject<Item> = ITEMS.register("white_jade_hoe") { HoeItem(ModItemTier.WHITE_JADE, (-2).toFloat(), Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val WHITE_JADE_AXE: RegistryObject<Item> = ITEMS.register("white_jade_axe") { AxeItem(ItemTier.WHITE_JADE, 6.0f, -3.1f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val WHITE_JADE_SHOVEL: RegistryObject<Item> = ITEMS.register("white_jade_shovel") { ShovelItem(ItemTier.WHITE_JADE, 1.5f, -3.0f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val WHITE_JADE_SWORD: RegistryObject<Item> = ITEMS.register("white_jade_sword") { SwordItem(ItemTier.WHITE_JADE, 3, -2.4f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val WHITE_JADE_PICKAXE: RegistryObject<Item> = ITEMS.register("white_jade_pickaxe") { PickaxeItem(ItemTier.WHITE_JADE, 1, -2.8f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val WHITE_JADE_HOE: RegistryObject<Item> = ITEMS.register("white_jade_hoe") { HoeItem(ItemTier.WHITE_JADE, (-2).toFloat(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 }
