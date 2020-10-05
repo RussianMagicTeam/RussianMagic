@@ -1,11 +1,10 @@
 package ru.rikgela.russianmagic
 
-import net.minecraft.item.Food
-import net.minecraft.item.Item
-import net.minecraft.item.ItemGroup
-import net.minecraft.item.ItemStack
+import net.minecraft.item.*
+import net.minecraft.item.crafting.Ingredient
 import net.minecraft.potion.EffectInstance
 import net.minecraft.potion.Effects
+import net.minecraft.util.LazyValue
 import net.minecraftforge.fml.RegistryObject
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
@@ -47,6 +46,21 @@ object ModItems {
             }
         }
     }
+
+    val EBONY_PLANKS = ITEMS.register("ebony_planks") { Item(Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val MARBLE = ITEMS.register("marble") { Item(Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+
+    val EBONY_PLANKS_AXE: RegistryObject<Item> = ITEMS.register("ebony_planks_axe") { AxeItem(ModItemTier.EBONY_PLANKS, 6.0f, -3.1f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val EBONY_PLANKS_SHOVEL: RegistryObject<Item> = ITEMS.register("ebony_planks_shovel") { ShovelItem(ModItemTier.EBONY_PLANKS, 1.5f, -3.0f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val EBONY_PLANKS_SWORD: RegistryObject<Item> = ITEMS.register("ebony_planks_sword") { SwordItem(ModItemTier.EBONY_PLANKS, 3, -2.4f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val EBONY_PLANKS_PICKAXE: RegistryObject<Item> = ITEMS.register("ebony_planks_pickaxe") { PickaxeItem(ModItemTier.EBONY_PLANKS, 1, -2.8f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val EBONY_PLANKS_HOE: RegistryObject<Item> = ITEMS.register("ebony_planks_hoe") { HoeItem(ModItemTier.EBONY_PLANKS, (-2).toFloat(), Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+
+    val MARBLE_AXE: RegistryObject<Item> = ITEMS.register("marble_axe") { AxeItem(ModItemTier.MARBLE, 6.0f, -3.1f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val MARBLE_SHOVEL: RegistryObject<Item> = ITEMS.register("marble_shovel") { ShovelItem(ModItemTier.MARBLE, 1.5f, -3.0f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val MARBLE_SWORD: RegistryObject<Item> = ITEMS.register("marble_sword") { SwordItem(ModItemTier.MARBLE, 3, -2.4f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val MARBLE_PICKAXE: RegistryObject<Item> = ITEMS.register("marble_pickaxe") { PickaxeItem(ModItemTier.MARBLE, 1, -2.8f, Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
+    val MARBLE_HOE: RegistryObject<Item> = ITEMS.register("marble_hoe") { HoeItem(ModItemTier.MARBLE, (-2).toFloat(), Item.Properties().group(ModItemGroups.MOD_ITEMS_ITEM_GROUP)) }
 }
 
 object ModFoods {
@@ -54,6 +68,46 @@ object ModFoods {
     var ENCHANTED_SAUSAGE = Food.Builder().hunger(8).saturation(0.7f).meat().setAlwaysEdible().fastToEat()
             .effect({ EffectInstance(Effects.HEALTH_BOOST, 600, 0) }, 1f)
             .effect({ EffectInstance(Effects.INSTANT_HEALTH, 600, 0) }, 1f).build()
+}
+
+enum class ModItemTier(
+        private val harvestLevel: Int,
+        private val maxUses: Int,
+        private val efficiency: Float,
+        private val attackDamage: Float,
+        private val enchantability: Int,
+        repairMaterialIn: Supplier<Ingredient>) : IItemTier {
+    EBONY_PLANKS(2, 350, 6.5f, 2.3f, 12, Supplier<Ingredient> { Ingredient.fromItems(ModItems.EBONY_PLANKS.get()) }),
+    MARBLE(3, 1061, 8.0f, 3.0f, 18, Supplier<Ingredient> { Ingredient.fromItems(ModItems.MARBLE.get()) });
+
+    private val repairMaterial: LazyValue<Ingredient>
+    override fun getMaxUses(): Int {
+        return maxUses
+    }
+
+    override fun getEfficiency(): Float {
+        return efficiency
+    }
+
+    override fun getAttackDamage(): Float {
+        return attackDamage
+    }
+
+    override fun getHarvestLevel(): Int {
+        return harvestLevel
+    }
+
+    override fun getEnchantability(): Int {
+        return enchantability
+    }
+
+    override fun getRepairMaterial(): Ingredient {
+        return repairMaterial.value
+    }
+
+    init {
+        repairMaterial = LazyValue(repairMaterialIn)
+    }
 }
 
 // The value here should match an entry in the META-INF/mods.toml file

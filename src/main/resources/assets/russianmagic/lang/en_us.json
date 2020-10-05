@@ -2,5 +2,19 @@
   "item.russianmagic.stone_magic_object": "Very important magic item!",
   "item.russianmagic.sausage": "Sausage",
   "item.russianmagic.enchanted_sausage": "Enchanted Sausage",
-  "itemGroup.russian_magic_items": "Russian Magic Items"
+  "itemGroup.russian_magic_items": "Russian Magic Items",
+
+  "item.russianmagic.marble": "Marble",
+  "item.russianmagic.marble_axe": "Marble Axe",
+  "item.russianmagic.marble_hoe": "Marble Hoe",
+  "item.russianmagic.marble_pickaxe": "Marble Pickaxe",
+  "item.russianmagic.marble_shovel": "Marble Shovel",
+  "item.russianmagic.marble_sword": "Marble Sword",
+
+  "item.russianmagic.ebony_planks": "Ebony Planks",
+  "item.russianmagic.ebony_planks_axe": "Ebony Planks Axe",
+  "item.russianmagic.ebony_planks_hoe": "Ebony Planks Hoe",
+  "item.russianmagic.ebony_planks_pickaxe": "Ebony Planks Pickaxe",
+  "item.russianmagic.ebony_planks_shovel": "Ebony Planks Shovel",
+  "item.russianmagic.ebony_planks_sword": "Ebony Planks Sword"
 }
