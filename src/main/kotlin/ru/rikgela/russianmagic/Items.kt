@@ -57,7 +57,7 @@ object Foods {
 }
 
 object Items {
-    val ITEMS: DeferredRegister<Item> = DeferredRegister(ForgeRegistries.ITEMS, "russianmagic")
+    val ITEMS: DeferredRegister<Item> = DeferredRegister(ForgeRegistries.ITEMS, MOD_ID)
     val STONE_MAGIC_OBJECT: RegistryObject<Item> = ITEMS.register<Item>("stone_magic_object") {
         Item(Item.Properties()
                 .group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP))
@@ -97,4 +97,7 @@ object Items {
     val WHITE_JADE_SWORD: RegistryObject<Item> = ITEMS.register("white_jade_sword") { SwordItem(ItemTier.WHITE_JADE, 3, -2.4f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val WHITE_JADE_PICKAXE: RegistryObject<Item> = ITEMS.register("white_jade_pickaxe") { PickaxeItem(ItemTier.WHITE_JADE, 1, -2.8f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val WHITE_JADE_HOE: RegistryObject<Item> = ITEMS.register("white_jade_hoe") { HoeItem(ItemTier.WHITE_JADE, (-2).toFloat(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+
+    //Blocks
+    val STONE_STICK_BLOCK: RegistryObject<Item?>? = ITEMS.register("stone_stick_block") { BlockItem(Blocks.STONE_STICK_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 }
