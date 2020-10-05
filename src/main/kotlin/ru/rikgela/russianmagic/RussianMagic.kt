@@ -25,7 +25,7 @@ class ModItemGroup(name: String?, iconSupplier: Supplier<ItemStack?>?) : ItemGro
 }
 
 object ModItemGroups {
-    val MOD_ITEMS_ITEM_GROUP: ItemGroup = ModItemGroup("tutorial_mod_gs_items", Supplier { ItemStack(ModItems.STONE_STICK.get()) })
+    val MOD_ITEMS_ITEM_GROUP: ItemGroup = ModItemGroup("russian_magic_items", Supplier { ItemStack(ModItems.STONE_STICK.get()) })
 }
 
 

@@ -1,5 +1,6 @@
 {
   "item.russianmagic.stone_magic_object": "Очень важный магический предмет!",
   "item.russianmagic.sausage": "Сосиска",
-  "item.russianmagic.enchanted_sausage": "Отважная сосиска"
+  "item.russianmagic.enchanted_sausage": "Отважная сосиска",
+  "itemGroup.russian_magic_items": "Русская магия. Предметы"
 }
