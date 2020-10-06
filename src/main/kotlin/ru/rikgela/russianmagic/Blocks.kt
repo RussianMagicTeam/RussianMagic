@@ -16,4 +16,5 @@ object Blocks {
                 .hardnessAndResistance(3.0f, 3.0f)
                 .harvestTool(ToolType.PICKAXE))
     }
+
 }

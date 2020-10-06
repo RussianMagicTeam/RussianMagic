@@ -1,10 +1,5 @@
 package ru.rikgela.russianmagic.mana
 
-
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
 public class ManaStorage : IManaStorage {
     var mana = 0
     var maxManaStored = 0

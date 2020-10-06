@@ -7,8 +7,6 @@ import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.capabilities.Capability.IStorage
 import net.minecraftforge.common.capabilities.CapabilityInject
 import net.minecraftforge.common.capabilities.CapabilityManager
-import ru.rikgela.russianmagic.mana.ManaStorage
-import ru.rikgela.russianmagic.mana.IManaStorage
 
 object CapabilityMana {
     @CapabilityInject(IManaStorage::class)

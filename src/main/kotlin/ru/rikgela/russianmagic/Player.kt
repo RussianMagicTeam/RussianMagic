@@ -1,41 +1,40 @@
-/*package ru.rikgela.russianmagic
+package ru.rikgela.russianmagic
 
-import net.minecraft.entity.Entity
-import net.minecraft.nbt.INBT
-import net.minecraft.nbt.IntNBT
-import net.minecraft.util.Direction
-import net.minecraft.util.ResourceLocation
-import net.minecraftforge.common.capabilities.Capability
-import net.minecraftforge.common.capabilities.Capability.IStorage
-import net.minecraftforge.common.capabilities.CapabilityInject
-import net.minecraftforge.common.capabilities.CapabilityManager
-import net.minecraftforge.energy.EnergyStorage
-import net.minecraftforge.energy.IEnergyStorage
-import net.minecraftforge.event.AttachCapabilitiesEvent
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.item.ItemStack
+import net.minecraftforge.event.entity.EntityJoinWorldEvent
+import net.minecraftforge.event.entity.living.LivingDeathEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 
 
-interface IManaHandler {
-    var mana: Int
+//CapabilityManager.INSTANCE.register(IManaHandler.class, new Storage(), DefaultManaHandler.class);
 
-    fun addMana(mana: Int)
-    fun removeMana(mana: Int)
-}
-
-@CapabilityInject(IManaHandler::class)
-val CAPABILITY_MANA: Capability<IManaHandler>? = null
-
-class DefaultManaHandler : IManaHandler {
-    override var mana = 0
-
-    override fun addMana(mana: Int) {
-        this.mana += mana
-    }
-
-    override fun removeMana(mana: Int) {
-        this.mana -= mana
-        if (this.mana < 0) this.mana = 0
+/*@SubscribeEvent
+class MyForgeEventHandler {
+    @SubscribeEvent
+    fun pickupItem(event: EntityItemPickupEvent?) {
+        println("Item picked up!")
     }
 }
 
-*/
+ */
+
+class EventsHandler {
+    @SubscribeEvent
+    fun onJoin(e: EntityJoinWorldEvent) {
+        if (e.entity is PlayerEntity) {
+            val player: PlayerEntity = e.entity as PlayerEntity
+            //val tmp = "Hello, " + player.getName() + "!"
+            //ITextComponent text  = new TextComponentTranslation(tmp)
+
+        }
+    }
+
+    @SubscribeEvent
+    fun onDeath(e: LivingDeathEvent) {
+        if (e.entity is PlayerEntity) {
+            val player: PlayerEntity = e.entity as PlayerEntity
+            if (player.getName().equals("_Ivasik_")) player.dropItem(ItemStack(Items.GOLDEN_APPLE, 1, 1), false)
+        }
+    }
+}
