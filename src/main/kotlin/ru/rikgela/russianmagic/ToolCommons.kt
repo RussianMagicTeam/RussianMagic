@@ -1,6 +1,6 @@
 package ru.rikgela.russianmagic
 
-
+/*
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.block.material.Material
@@ -128,4 +128,4 @@ object ToolCommons {
     fun raytraceFromEntity(e: Entity, distance: Double, fluids: Boolean): BlockRayTraceResult {
         return e.pick(distance, 1f, fluids) as BlockRayTraceResult
     }
-}
+}*/
