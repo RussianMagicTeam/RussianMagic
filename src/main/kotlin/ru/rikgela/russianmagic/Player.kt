@@ -15,31 +15,27 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 
 class MyForgeEventHandler {
     @SubscribeEvent
-    fun pickupItem(event: EntityItemPickupEvent?) {
+    fun pickupItem(e: EntityItemPickupEvent) {
         println("Item picked up!")
-        (event?.entity as ServerPlayerEntity)
-                .sendMessage(StringTextComponent("You picked up something"))
+        if (e.entity is PlayerEntity) {
+            (e.entity as PlayerEntity)
+                    .sendMessage(StringTextComponent("You picked up something"))
+        }
     }
-}
-
-
-
-class EventsHandler {
     @SubscribeEvent
     fun onJoin(e: EntityJoinWorldEvent) {
         if (e.entity is PlayerEntity) {
-            val player: PlayerEntity = e.entity as PlayerEntity
-            //val tmp = "Hello, " + player.getName() + "!"
-            //ITextComponent text  = new TextComponentTranslation(tmp)
-
+            (e.entity as PlayerEntity)
+                    .sendMessage(StringTextComponent("Hello from RussianMagic!"))
         }
     }
 
     @SubscribeEvent
     fun onDeath(e: LivingDeathEvent) {
         if (e.entity is PlayerEntity) {
-            val player: PlayerEntity = e.entity as PlayerEntity
-            if (player.getName().equals("_Ivasik_")) player.dropItem(ItemStack(Items.ENCHANTED_SAUSAGE.get(), 1, CompoundNBT()), false)
+            (e.entity as PlayerEntity)
+                    .sendMessage(StringTextComponent("Земля тебе пуховик, бро!"))
         }
     }
 }
+
