@@ -102,17 +102,17 @@ object Items {
     val WHITE_JADE_PICKAXE: RegistryObject<Item> = ITEMS.register("white_jade_pickaxe") { PickaxeItem(ItemTier.WHITE_JADE, 1, -2.8f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val WHITE_JADE_HOE: RegistryObject<Item> = ITEMS.register("white_jade_hoe") { HoeItem(ItemTier.WHITE_JADE, (-2).toFloat(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val RHINESTONE_AXE: RegistryObject<Item> = ITEMS.register("white_jade_axe") { AxeItem(ItemTier.RHINESTONE, 6.0f, -3.1f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val RHINESTONE_SHOVEL: RegistryObject<Item> = ITEMS.register("white_jade_shovel") { ShovelItem(ItemTier.RHINESTONE, 1.5f, -3.0f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val RHINESTONE_SWORD: RegistryObject<Item> = ITEMS.register("white_jade_sword") { SwordItem(ItemTier.RHINESTONE, 3, -2.4f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val RHINESTONE_PICKAXE: RegistryObject<Item> = ITEMS.register("white_jade_pickaxe") { PickaxeItem(ItemTier.RHINESTONE, 1, -2.8f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val RHINESTONE_HOE: RegistryObject<Item> = ITEMS.register("white_jade_hoe") { HoeItem(ItemTier.RHINESTONE, (-2).toFloat(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RHINESTONE_AXE: RegistryObject<Item> = ITEMS.register("rhinestone_axe") { AxeItem(ItemTier.RHINESTONE, 6.0f, -3.1f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RHINESTONE_SHOVEL: RegistryObject<Item> = ITEMS.register("rhinestone_shovel") { ShovelItem(ItemTier.RHINESTONE, 1.5f, -3.0f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RHINESTONE_SWORD: RegistryObject<Item> = ITEMS.register("rhinestone_sword") { SwordItem(ItemTier.RHINESTONE, 3, -2.4f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RHINESTONE_PICKAXE: RegistryObject<Item> = ITEMS.register("rhinestone_pickaxe") { PickaxeItem(ItemTier.RHINESTONE, 1, -2.8f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RHINESTONE_HOE: RegistryObject<Item> = ITEMS.register("rhinestone_hoe") { HoeItem(ItemTier.RHINESTONE, (-2).toFloat(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val AQUAMARINE_AXE: RegistryObject<Item> = ITEMS.register("white_jade_axe") { AxeItem(ItemTier.AQUAMARINE, 6.0f, -3.1f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val AQUAMARINE_SHOVEL: RegistryObject<Item> = ITEMS.register("white_jade_shovel") { ShovelItem(ItemTier.AQUAMARINE, 1.5f, -3.0f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val AQUAMARINE_SWORD: RegistryObject<Item> = ITEMS.register("white_jade_sword") { SwordItem(ItemTier.AQUAMARINE, 3, -2.4f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val AQUAMARINE_PICKAXE: RegistryObject<Item> = ITEMS.register("white_jade_pickaxe") { PickaxeItem(ItemTier.AQUAMARINE, 1, -2.8f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val AQUAMARINE_HOE: RegistryObject<Item> = ITEMS.register("white_jade_hoe") { HoeItem(ItemTier.AQUAMARINE, (-2).toFloat(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AQUAMARINE_AXE: RegistryObject<Item> = ITEMS.register("aquamarine_axe") { AxeItem(ItemTier.AQUAMARINE, 6.0f, -3.1f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AQUAMARINE_SHOVEL: RegistryObject<Item> = ITEMS.register("aquamarine_shovel") { ShovelItem(ItemTier.AQUAMARINE, 1.5f, -3.0f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AQUAMARINE_SWORD: RegistryObject<Item> = ITEMS.register("aquamarine_sword") { SwordItem(ItemTier.AQUAMARINE, 3, -2.4f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AQUAMARINE_PICKAXE: RegistryObject<Item> = ITEMS.register("aquamarine_pickaxe") { PickaxeItem(ItemTier.AQUAMARINE, 1, -2.8f, Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AQUAMARINE_HOE: RegistryObject<Item> = ITEMS.register("aquamarine_hoe") { HoeItem(ItemTier.AQUAMARINE, (-2).toFloat(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
 
     //Blocks
