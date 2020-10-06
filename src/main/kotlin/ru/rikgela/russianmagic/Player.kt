@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic
+/*package ru.rikgela.russianmagic
 
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
@@ -38,3 +38,4 @@ class EventsHandler {
         }
     }
 }
+*/
