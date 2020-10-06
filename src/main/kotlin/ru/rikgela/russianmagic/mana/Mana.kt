@@ -10,14 +10,17 @@ import net.minecraft.util.text.StringTextComponent
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.capabilities.Capability.IStorage
 import net.minecraftforge.common.capabilities.CapabilityInject
+import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.common.capabilities.ICapabilitySerializable
 import net.minecraftforge.common.util.LazyOptional
 import net.minecraftforge.common.util.NonNullSupplier
 import net.minecraftforge.event.AttachCapabilitiesEvent
-import net.minecraftforge.event.entity.living.LivingFallEvent
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
+import net.minecraftforge.items.IItemHandler
 import ru.rikgela.russianmagic.MOD_ID
 
 
@@ -48,22 +51,21 @@ class Mana : IMana {
 }
 
 class ManaStorage : IStorage<IMana> {
-    override fun writeNBT(capability: Capability<IMana>, instance: IMana, side: Direction): INBT {
+    override fun writeNBT(capability: Capability<IMana>, instance: IMana, side: Direction?): INBT {
         return IntNBT.valueOf(instance.mana)
     }
 
-    override fun readNBT(capability: Capability<IMana>, instance: IMana, side: Direction, nbt: INBT) {
+    override fun readNBT(capability: Capability<IMana>, instance: IMana, side: Direction?, nbt: INBT) {
         instance.set((nbt as IntNBT).int)
     }
 }
 
+@CapabilityInject(IMana::class)
+var MANA_CAP: Capability<IMana>? = null
+
 class ManaProvider : ICapabilitySerializable<INBT>
 {
-    companion object{
-        @CapabilityInject(IMana::class)
-        val MANA_CAP: Capability<IMana>? = null
-    }
-    val instance: IMana? = MANA_CAP?.defaultInstance
+    private val instance: IMana? = MANA_CAP?.defaultInstance
 
     @Override
     fun hasCapability(capability: Capability<Any> , facing: Direction ): Boolean
@@ -72,7 +74,7 @@ class ManaProvider : ICapabilitySerializable<INBT>
     }
 
     override fun <T : Any?> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> {
-         return if(cap == MANA_CAP) LazyOptional.of(instance as NonNullSupplier<T>) else LazyOptional.empty()
+         return if(cap == MANA_CAP) LazyOptional.of {instance as T} else LazyOptional.empty()
     }
 
     override fun deserializeNBT(nbt: INBT?) {
@@ -99,18 +101,26 @@ class EventHandler {
     @SubscribeEvent
     fun onPlayerLogsIn(event: PlayerLoggedInEvent) {
         val player: PlayerEntity = event.player
-        val mana: IMana = player.getCapability(ManaProvider.MANA_CAP!!, null).orElse(Mana())
-        val message = String.format("Hello there, you have §7%d§r mana left.", mana.mana)
-        player.sendMessage(StringTextComponent(message))
+        if(MANA_CAP != null) {
+            val mana: IMana = player.getCapability(MANA_CAP!!, null).orElse(Mana())
+            val message = String.format("Hello there, you have §7%d§r mana left.", mana.mana)
+            player.sendMessage(StringTextComponent(message))
+        }else{
+            player.sendMessage(StringTextComponent("Mana not registered!"))
+        }
     }
 
     @SubscribeEvent
     fun onPlayerSleep(event: PlayerSleepInBedEvent) {
         val player: PlayerEntity = event.player
 //        if (player.worldObj.isRemote) return
-        val mana: IMana = player.getCapability(ManaProvider.MANA_CAP!!, null).orElse(Mana())
-        mana.fill(50)
-        val message = String.format("You refreshed yourself in the bed. You received 50 mana, you have §7%d§r mana left.", mana.mana)
-        player.sendMessage(StringTextComponent(message))
+        if(MANA_CAP != null) {
+            val mana: IMana = player.getCapability(MANA_CAP!!, null).orElse(Mana())
+            mana.fill(50)
+            val message = String.format("You refreshed yourself in the bed. You received 50 mana, you have §7%d§r mana left.", mana.mana)
+            player.sendMessage(StringTextComponent(message))
+        }else{
+            player.sendMessage(StringTextComponent("Mana not registered!"))
+        }
     }
 }
