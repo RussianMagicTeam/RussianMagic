@@ -6,14 +6,15 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "russianmagic:marble"
+          "name": "russianmagic:marble_block"
         }
       ],
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
         }
-      ]
+      ],
+      "name": "russianmagic:marble_block"
     }
   ]
 }
