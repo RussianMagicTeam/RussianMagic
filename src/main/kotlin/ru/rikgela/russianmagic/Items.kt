@@ -18,11 +18,11 @@ enum class ItemTier(
         private val attackDamage: Float,
         private val enchantability: Int,
         repairMaterialIn: Supplier<Ingredient>) : IItemTier {
-    EBONY_PLANKS(2, 350, 6.5f, 2.3f, 12, Supplier<Ingredient> { Ingredient.fromItems(Items.EBONY_PLANKS.get()) }),
-    MARBLE(3, 1061, 8.0f, 3.0f, 18, Supplier<Ingredient> { Ingredient.fromItems(Items.MARBLE.get()) }),
-    WHITE_JADE(4, 1501, 8.0f, 3.0f, 25, Supplier<Ingredient> { Ingredient.fromItems(Items.WHITE_JADE.get()) }),
-    RHINESTONE(5, 2001, 14.0f, 5.0f, 30, Supplier<Ingredient> {Ingredient.fromItems(Items.RHINESTONE.get()) }),
-    AQUAMARINE(6, 3001, 18.0f, 6.0f, 35, Supplier<Ingredient> {Ingredient.fromItems(Items.AQUAMARINE.get()) });
+    EBONY_PLANKS(4, 350, 6.5f, 2.3f, 12, Supplier<Ingredient> { Ingredient.fromItems(Items.EBONY_PLANKS.get()) }),
+    MARBLE(5, 1061, 8.0f, 3.0f, 18, Supplier<Ingredient> { Ingredient.fromItems(Items.MARBLE.get()) }),
+    WHITE_JADE(6, 1501, 8.0f, 3.0f, 25, Supplier<Ingredient> { Ingredient.fromItems(Items.WHITE_JADE.get()) }),
+    RHINESTONE(7, 2001, 14.0f, 5.0f, 30, Supplier<Ingredient> {Ingredient.fromItems(Items.RHINESTONE.get()) }),
+    AQUAMARINE(8, 3001, 18.0f, 6.0f, 35, Supplier<Ingredient> {Ingredient.fromItems(Items.AQUAMARINE.get()) });
 
     private val repairMaterial = LazyValue(repairMaterialIn)
     override fun getMaxUses(): Int {
