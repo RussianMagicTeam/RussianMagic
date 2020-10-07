@@ -9,6 +9,7 @@ import ru.rikgela.russianmagic.client.HUDEventHandler
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage
 import ru.rikgela.russianmagic.mana.*
+import ru.rikgela.russianmagic.oregenerator.OreGeneration
 
 
 const val MOD_ID = "russianmagic"
@@ -34,6 +35,7 @@ class RussianMagic {
 
     private fun setup(event: FMLCommonSetupEvent) {
         //preinit
+        OreGeneration.setupOreGeneration();
         CapabilityManager.INSTANCE.register(IMana::class.java, ManaStorage()) { Mana() }
         @Suppress("INACCESSIBLE_TYPE")
         RMNetworkChannel.registerMessage(
