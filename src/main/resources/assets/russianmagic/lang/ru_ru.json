@@ -40,5 +40,7 @@
   "item.russianmagic.aquamarine_sword": "Меч из аквамарина",
 
   "block.russianmagic.marble_block": "Мраморный блок",
-  "block.russianmagic.white_jade_block": "Блок белого нефрита"
+  "block.russianmagic.white_jade_block": "Блок белого нефрита",
+  "block.russianmagic.rhinestone_block": "Блок горного хрусталя",
+  "block.russianmagic.rhinestone_block_ore": "Руда горного хрусталя"
 }
