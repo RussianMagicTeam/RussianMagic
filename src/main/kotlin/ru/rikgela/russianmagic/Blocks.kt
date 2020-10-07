@@ -30,6 +30,20 @@ object Blocks {
                 .hardnessAndResistance(3.0f, 3.0f)
                 .harvestTool(ToolType.PICKAXE))
     }
+    val AQUAMARINE_BLOCK: RegistryObject<Block> = BLOCKS.register<Block>("aquamarine_block") {
+      Block(Block
+                .Properties
+                .create(Material.ROCK)
+                .hardnessAndResistance(3.0f, 3.0f)
+                .harvestTool(ToolType.PICKAXE))
+    }
+    val AQUAMARINE_BLOCK_ORE: RegistryObject<Block> = BLOCKS.register<Block>("aquamarine_block_ore") {
+       Block(Block
+                .Properties
+                .create(Material.ROCK)
+                .hardnessAndResistance(3.0f, 3.0f)
+                .harvestTool(ToolType.PICKAXE))
+    }
     val RHINESTONE_BLOCK: RegistryObject<Block> = BLOCKS.register<Block>("rhinestone_block") {
         Block(Block
                 .Properties
