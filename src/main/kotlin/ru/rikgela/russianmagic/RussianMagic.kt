@@ -29,7 +29,7 @@ class RussianMagic {
     }
 
     private fun setup(event: FMLCommonSetupEvent) {
-        // some preinit code
+        //preinit
         CapabilityManager.INSTANCE.register(IMana::class.java, ManaStorage()) { Mana() }
     }
 }

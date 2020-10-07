@@ -1,17 +1,11 @@
 package ru.rikgela.russianmagic
 
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.ServerPlayerEntity
-import net.minecraft.item.ItemStack
-import net.minecraft.nbt.CompoundNBT
 import net.minecraft.util.text.StringTextComponent
-import net.minecraft.util.text.TextComponent
 import net.minecraftforge.event.entity.EntityJoinWorldEvent
 import net.minecraftforge.event.entity.living.LivingDeathEvent
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
-
-//CapabilityManager.INSTANCE.register(IManaHandler.class, new Storage(), DefaultManaHandler.class);
 
 class MyForgeEventHandler {
     @SubscribeEvent
@@ -22,6 +16,7 @@ class MyForgeEventHandler {
                     .sendMessage(StringTextComponent("You picked up something"))
         }
     }
+
     @SubscribeEvent
     fun onJoin(e: EntityJoinWorldEvent) {
         if (e.entity is PlayerEntity) {
