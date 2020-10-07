@@ -120,4 +120,8 @@ object Items {
     val MARBLE_BLOCK: RegistryObject<Item?>? = ITEMS.register("marble_block") { BlockItem(Blocks.MARBLE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val WHITE_JADE_BLOCK: RegistryObject<Item?>? = ITEMS.register("white_jade_block") { BlockItem(Blocks.WHITE_JADE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-}
+
+    //Mekanisms
+
+    }
+
