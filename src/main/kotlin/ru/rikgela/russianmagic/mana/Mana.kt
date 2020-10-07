@@ -1,9 +1,12 @@
 package ru.rikgela.russianmagic.mana
 
+import net.minecraft.client.Minecraft
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.INBT
 import net.minecraft.nbt.IntNBT
+import net.minecraft.network.PacketBuffer
 import net.minecraft.util.Direction
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.StringTextComponent
@@ -16,17 +19,40 @@ import net.minecraftforge.event.AttachCapabilitiesEvent
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
+import net.minecraftforge.fml.network.NetworkEvent
+import net.minecraftforge.fml.network.PacketDistributor
 import ru.rikgela.russianmagic.MOD_ID
+import ru.rikgela.russianmagic.common.RMNetworkChannel
+import java.util.function.Supplier
 
 
 interface IMana {
     fun consume(points: Int)
     fun fill(points: Int)
     fun set(points: Int)
+    fun sendToPlayer(player: ServerPlayerEntity)
+    fun copy(mana: IMana)
     val mana: Int
 }
 
 class Mana : IMana {
+    companion object {
+        fun fromPlayer(player: PlayerEntity): Mana {
+            if (MANA_CAP != null) {
+                return player.getCapability(MANA_CAP!!).orElse(Mana()) as Mana
+            }
+            return Mana()
+        }
+    }
+
+    override fun sendToPlayer(player: ServerPlayerEntity) {
+        RMNetworkChannel.send(PacketDistributor.PLAYER.with { player }, ManaMessage(this))
+    }
+
+    override fun copy(mana: IMana) {
+        this.mana = mana.mana
+    }
+
     override var mana = 250
         private set
 
@@ -43,6 +69,30 @@ class Mana : IMana {
         mana = points
     }
 
+}
+
+class ManaMessage(
+        private val mana: Mana
+) {
+    companion object {
+        val minecraft: Minecraft = Minecraft.getInstance()
+        fun fromPacketBuffer(pb: PacketBuffer): ManaMessage {
+            val ret = Mana()
+            ret.set(pb.readInt())
+            return ManaMessage(ret)
+        }
+    }
+
+    fun encoder(pb: PacketBuffer) {
+        pb.writeInt(mana.mana)
+    }
+
+    fun handle(ctx: Supplier<NetworkEvent.Context?>) {
+        ctx.get()?.enqueueWork {
+            MANA_CAP?.let { minecraft.player?.getCapability(it)?.orElse(Mana())?.copy(mana) }
+        }
+        ctx.get()?.packetHandled = true
+    }
 }
 
 class ManaStorage : IStorage<IMana> {
@@ -98,6 +148,8 @@ class EventHandler {
             val mana: IMana = player.getCapability(MANA_CAP!!, null).orElse(Mana())
             val message = String.format("Hello there, you have §7%d§r mana left.", mana.mana)
             player.sendMessage(StringTextComponent(message))
+            if (player is ServerPlayerEntity)
+                mana.sendToPlayer(player)
         } else {
             player.sendMessage(StringTextComponent("Mana not registered!"))
         }
@@ -106,12 +158,13 @@ class EventHandler {
     @SubscribeEvent
     fun onPlayerSleep(event: PlayerSleepInBedEvent) {
         val player: PlayerEntity = event.player
-//        if (player.worldObj.isRemote) return
         if (MANA_CAP != null) {
             val mana: IMana = player.getCapability(MANA_CAP!!, null).orElse(Mana())
             mana.fill(50)
             val message = String.format("You refreshed yourself in the bed. You received 50 mana, you have §7%d§r mana left.", mana.mana)
             player.sendMessage(StringTextComponent(message))
+            if (player is ServerPlayerEntity)
+                mana.sendToPlayer(player)
         } else {
             player.sendMessage(StringTextComponent("Mana not registered!"))
         }

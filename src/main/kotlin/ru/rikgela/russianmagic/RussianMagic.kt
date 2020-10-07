@@ -5,10 +5,14 @@ import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
+import ru.rikgela.russianmagic.client.HUDEventHandler
+import ru.rikgela.russianmagic.common.RMNetworkChannel
+import ru.rikgela.russianmagic.common.RMNetworkMessage
 import ru.rikgela.russianmagic.mana.*
 
 
 const val MOD_ID = "russianmagic"
+var networkIndex = 0
 
 @Mod(MOD_ID)
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -25,11 +29,25 @@ class RussianMagic {
         MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
         MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
         MinecraftForge.EVENT_BUS.register(EventHandler())
-
+        MinecraftForge.EVENT_BUS.register(HUDEventHandler())
     }
 
     private fun setup(event: FMLCommonSetupEvent) {
         //preinit
         CapabilityManager.INSTANCE.register(IMana::class.java, ManaStorage()) { Mana() }
+        @Suppress("INACCESSIBLE_TYPE")
+        RMNetworkChannel.registerMessage(
+                networkIndex++,
+                RMNetworkMessage::class.java,
+                RMNetworkMessage::encoder,
+                RMNetworkMessage.Companion::fromPacketBuffer,
+                RMNetworkMessage::handle)
+        @Suppress("INACCESSIBLE_TYPE")
+        RMNetworkChannel.registerMessage(
+                networkIndex++,
+                ManaMessage::class.java,
+                ManaMessage::encoder,
+                ManaMessage.Companion::fromPacketBuffer,
+                ManaMessage::handle)
     }
 }
