@@ -1,34 +1,36 @@
-/*package ru.rikgela.russianmagic
+package ru.rikgela.russianmagic
 
-//CapabilityManager.INSTANCE.register(IManaHandler.class, new Storage(), DefaultManaHandler.class);
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.util.text.StringTextComponent
+import net.minecraftforge.event.entity.EntityJoinWorldEvent
+import net.minecraftforge.event.entity.living.LivingDeathEvent
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent
+import net.minecraftforge.eventbus.api.SubscribeEvent
 
-//@SubscribeEvent
-//class MyForgeEventHandler {
-//    @SubscribeEvent
-//    fun pickupItem(event: EntityItemPickupEvent?) {
-//        println("Item picked up!")
-//    }
-//}
+class MyForgeEventHandler {
+    @SubscribeEvent
+    fun pickupItem(e: EntityItemPickupEvent) {
+        println("Item picked up!")
+        if (e.entity is PlayerEntity) {
+            (e.entity as PlayerEntity)
+                    .sendMessage(StringTextComponent("You picked up something"))
+        }
+    }
 
+    @SubscribeEvent
+    fun onJoin(e: EntityJoinWorldEvent) {
+        if (e.entity is PlayerEntity) {
+            (e.entity as PlayerEntity)
+                    .sendMessage(StringTextComponent("Hello from RussianMagic!"))
+        }
+    }
 
-//
-//class EventsHandler {
-//    @SubscribeEvent
-//    fun onJoin(e: EntityJoinWorldEvent) {
-//        if (e.entity is PlayerEntity) {
-//            val player: PlayerEntity = e.entity as PlayerEntity
-//            //val tmp = "Hello, " + player.getName() + "!"
-//            //ITextComponent text  = new TextComponentTranslation(tmp)
-//
-//        }
-//    }
-//
-//    @SubscribeEvent
-//    fun onDeath(e: LivingDeathEvent) {
-//        if (e.entity is PlayerEntity) {
-//            val player: PlayerEntity = e.entity as PlayerEntity
-//            if (player.getName().equals("_Ivasik_")) player.dropItem(ItemStack(Items.GOLDEN_APPLE, 1, 1), false)
-//        }
-//    }
-//}
-*/
+    @SubscribeEvent
+    fun onDeath(e: LivingDeathEvent) {
+        if (e.entity is PlayerEntity) {
+            (e.entity as PlayerEntity)
+                    .sendMessage(StringTextComponent("Земля тебе пуховик, бро!"))
+        }
+    }
+}
+

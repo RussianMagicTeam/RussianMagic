@@ -16,5 +16,12 @@ object Blocks {
                 .hardnessAndResistance(3.0f, 3.0f)
                 .harvestTool(ToolType.PICKAXE))
     }
+    val MARBLE_BLOCK: RegistryObject<Block> = BLOCKS.register<Block>("marble_block") {
+        Block(Block
+                .Properties
+                .create(Material.ROCK)
+                .hardnessAndResistance(3.0f, 3.0f)
+                .harvestTool(ToolType.PICKAXE))
+    }
 
 }
