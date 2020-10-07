@@ -42,5 +42,12 @@
 
   "block.russianmagic.stone_stick_block": "Stone stick block",
   "block.russianmagic.marble_block": "Marble block",
-  "block.russianmagic.white_jade_block": "White jade block"
+  "block.russianmagic.white_jade_block": "White jade block",
+
+  "block.russianmagic.aquamarine_block": "Aquamarine block",
+  "block.russianmagic.aquamarine_block_ore": "Aquamarine ore"
+
+  "block.russianmagic.rhinestone_block": "Rhinestone block",
+  "block.russianmagic.rhinestone_block_ore": "Rhinestone ore"
+
 }
