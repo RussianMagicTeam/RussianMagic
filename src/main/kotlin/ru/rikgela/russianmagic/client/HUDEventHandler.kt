@@ -7,8 +7,10 @@ import ru.rikgela.russianmagic.client.gui.GuiManaHUD
 class HUDEventHandler {
     private val manaHUD = GuiManaHUD()
 
+
     @SubscribeEvent
-    fun renderEntityHUD(event: RenderGameOverlayEvent.Post) {
+    fun renderEntityHUD(event: RenderGameOverlayEvent.Text) {
         manaHUD.drawHUD()
+        manaHUD.printHud()
     }
 }

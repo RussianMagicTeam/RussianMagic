@@ -28,7 +28,7 @@ class RussianMagic {
         Blocks.BLOCKS.register(bus)
         MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
         MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
-        MinecraftForge.EVENT_BUS.register(EventHandler())
+        MinecraftForge.EVENT_BUS.register(ManaEventHandler())
         MinecraftForge.EVENT_BUS.register(HUDEventHandler())
     }
 
