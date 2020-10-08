@@ -43,9 +43,11 @@
   "block.russianmagic.white_jade_block": "Блок белого нефрита",
 
   "block.russianmagic.aquamarine_block": "Блок аквамарина",
-  "block.russianmagic.aquamarine_block_ore": "Руда аквамарина"
+  "block.russianmagic.aquamarine_block_ore": "Руда аквамарина",
 
   "block.russianmagic.rhinestone_block": "Блок горного хрусталя",
-  "block.russianmagic.rhinestone_block_ore": "Руда горного хрусталя"
+  "block.russianmagic.rhinestone_block_ore": "Руда горного хрусталя",
+
+  "item.russianmagic.spell_of_regeneration": "Заклинание регенерации"
 
 }

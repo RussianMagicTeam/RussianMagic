@@ -8,6 +8,7 @@ import net.minecraft.util.LazyValue
 import net.minecraftforge.fml.RegistryObject
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
+import ru.rikgela.russianmagic.objects.items.SpellScroll
 import java.util.function.Supplier
 
 
@@ -125,5 +126,9 @@ object Items {
 
     val RHINESTONE_BLOCK: RegistryObject<Item?>? = ITEMS.register("rhinestone_block") { BlockItem(Blocks.RHINESTONE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val RHINESTONE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("rhinestone_block_ore") { BlockItem(Blocks.RHINESTONE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+
+    // Spell_Scrolls
+    val SPELL_OF_REGENERATION: RegistryObject<Item> = ITEMS.register("spell_of_regeneration") {
+        SpellScroll(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
 }

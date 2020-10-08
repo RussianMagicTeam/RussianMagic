@@ -48,6 +48,8 @@
   "block.russianmagic.aquamarine_block_ore": "Aquamarine ore"
 
   "block.russianmagic.rhinestone_block": "Rhinestone block",
-  "block.russianmagic.rhinestone_block_ore": "Rhinestone ore"
+  "block.russianmagic.rhinestone_block_ore": "Rhinestone ore",
+
+  "item.russianmagic.spell_of_regeneration": "Spell of Regeneration"
 
 }
