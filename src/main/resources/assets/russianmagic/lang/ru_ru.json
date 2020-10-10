@@ -43,9 +43,77 @@
   "block.russianmagic.white_jade_block": "Блок белого нефрита",
 
   "block.russianmagic.aquamarine_block": "Блок аквамарина",
-  "block.russianmagic.aquamarine_block_ore": "Руда аквамарина"
+  "block.russianmagic.aquamarine_block_ore": "Руда аквамарина",
 
   "block.russianmagic.rhinestone_block": "Блок горного хрусталя",
-  "block.russianmagic.rhinestone_block_ore": "Руда горного хрусталя"
+  "block.russianmagic.rhinestone_block_ore": "Руда горного хрусталя",
 
+  "block.russianmagic.jasper_block": "Блок яшмы>",
+  "block.russianmagic.jasper_block_ore": "Руда яшмы",
+
+  "block.russianmagic.chrysolite_block": "Блок хризолита",
+  "block.russianmagic.chrysolite_block_ore": "Руда хризолита",
+
+  "block.russianmagic.garnet_block": "Блок граната",
+  "block.russianmagic.garnet_block_ore": "Руда граната",
+
+  "block.russianmagic.topaz_block": "Блок топаза",
+  "block.russianmagic.topaz_block_ore": "Руда топаза",
+
+  "block.russianmagic.perunite_block": "Блок перунита",
+  "block.russianmagic.perunite_block_ore": "Руда перунита",
+
+  "block.russianmagic.iolite_block": "Блок иолита",
+  "block.russianmagic.iolite_block_ore": "Руда иолита",
+
+  "block.russianmagic.agate_block": "Блок агата",
+  "block.russianmagic.agate_block_ore": "Руда агата",
+
+  "block.russianmagic.citrine_block": "Блок цитрина",
+  "block.russianmagic.citrine_block_ore": "Руда цитрина",
+
+  "block.russianmagic.chalcedony_block": "Блок халцедона",
+  "block.russianmagic.chalcedony_block_ore": "Руда халцедона",
+
+  "block.russianmagic.beryl_block": "Блок берилла",
+  "block.russianmagic.beryl_block_ore": "Руда берилла",
+
+  "block.russianmagic.heliodor_block": "Блок гелиодора",
+  "block.russianmagic.heliodor_block_ore": "Руда гелиодора",
+
+  "block.russianmagic.sitall_block": "Блок ситалла",
+  "block.russianmagic.sitall_block_ore": "Руда ситалла",
+
+  "block.russianmagic.amethyst_block": "Блок аметиста",
+  "block.russianmagic.amethyst_block_ore": "Руда аметиста",
+
+  "block.russianmagic.carnelian_block": "Блок карнеола",
+  "block.russianmagic.carnelian_block_ore": "Руда карнеола",
+
+  "block.russianmagic.tanzanite_block": "Блок танзанита",
+  "block.russianmagic.tanzanite_block_ore": "Руда танзанита",
+
+  "block.russianmagic.ametrine_block": "Блок аметрина",
+  "block.russianmagic.ametrine_block_ore": "Руда аметрина",
+
+  "block.russianmagic.charoite_block": "Блок чароита",
+  "block.russianmagic.charoite_block_ore": "Руда чароита",
+
+  "block.russianmagic.coral_block": "Блок коралла",
+  "block.russianmagic.coral_block_ore": "Руда коралла",
+
+  "block.russianmagic.ruby_block": "Блок рубина",
+  "block.russianmagic.ruby_block_ore": "Руда рубина",
+
+  "block.russianmagic.onyx_block": "Блок оникса",
+  "block.russianmagic.onyx_block_ore": "Руда оникса",
+
+  "block.russianmagic.sapphire_block": "Блок сапфира",
+  "block.russianmagic.sapphire_block_ore": "Руда сапфира",
+
+  "block.russianmagic.opal_block": "Блок опала",
+  "block.russianmagic.opal_block_ore": "Руда опала",
+
+  "block.russianmagic.kunzite_block": "Блок кунцита",
+  "block.russianmagic.kunzite_block_ore": "Руда кунцита"
 }
