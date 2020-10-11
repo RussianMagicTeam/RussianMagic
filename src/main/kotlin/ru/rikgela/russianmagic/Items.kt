@@ -3,7 +3,7 @@ package ru.rikgela.russianmagic
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityClassification
 import net.minecraft.entity.EntityType
-import net.minecraft.entity.projectile.FireballEntity
+import net.minecraft.entity.projectile.SmallFireballEntity
 import net.minecraft.item.*
 import net.minecraft.item.crafting.Ingredient
 import net.minecraft.potion.EffectInstance
@@ -67,7 +67,7 @@ object Foods {
 
 object Items {
     val ITEMS: DeferredRegister<Item> = DeferredRegister(ForgeRegistries.ITEMS, MOD_ID)
-    val ENTITIES = DeferredRegister(ForgeRegistries.ENTITIES, MOD_ID)
+    //val ENTITIES = DeferredRegister(ForgeRegistries.ENTITIES, MOD_ID)
 
 
     val STONE_MAGIC_OBJECT: RegistryObject<Item> = ITEMS.register<Item>("stone_magic_object") {
@@ -150,8 +150,10 @@ object Items {
     //val PROJECTILE_ENTITY: RegistryObject<TileEntityType<ProjectileEntity>> = ENTITIES.register(
     //        "projectile_entity", { TileEntityType.Builder.create({ ProjectileEntity() }, EXAMPLE_BLOCK.get()).build(null) }
     //)
-    val s : RegistryObject<EntityType<ProjectileEntity>> = ENTITIES.register("projectile_entity", {
-        { EntityType.Builder.create<Entity>({ ProjectileEntity() }, EntityClassification.AMBIENT).size(0.5f, 0.9f).build(null))
+    //val PROJECTILE_ENTITY: EntityType<ProjectileEntity?>? =
+            //ENTITIES.register("projectile_entity",
+                    //EntityType.Builder.create<ProjectileEntity>({ ProjectileEntity() }),
+                    //)
 
     //val PROJECTILE_ENTITY: RegistryObject<EntityType<ProjectileEntity>> = ENTITIES.register("projectile_entity")
 

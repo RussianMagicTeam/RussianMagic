@@ -1,79 +1,57 @@
-package ru.rikgela.russianmagic.objects.entity.projectile;
+package ru.rikgela.russianmagic.objects.entity.projectile
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.entity.projectile.AbstractFireballEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.RayTraceResult.Type;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraft.block.Blocks
+import net.minecraft.entity.EntityType
+import net.minecraft.entity.LivingEntity
+import net.minecraft.entity.MobEntity
+import net.minecraft.entity.projectile.AbstractFireballEntity
+import net.minecraft.potion.EffectInstance
+import net.minecraft.potion.Effects
+import net.minecraft.util.DamageSource
+import net.minecraft.util.math.BlockRayTraceResult
+import net.minecraft.util.math.EntityRayTraceResult
+import net.minecraft.util.math.RayTraceResult
+import net.minecraft.world.World
+import net.minecraftforge.event.ForgeEventFactory
+import ru.rikgela.russianmagic.RMEntities
+import ru.rikgela.russianmagic.RMEntities.PROJECTILE_ENTITY
 
-import static ru.rikgela.russianmagic.RussianMagicKt.MOD_ID;
+class ProjectileEntity : AbstractFireballEntity {
+    constructor(p_i50160_1_: EntityType<out ProjectileEntity?>?, p_i50160_2_: World?) : super(p_i50160_1_, p_i50160_2_) {}
+    constructor(worldIn: World?, shooter: LivingEntity?, accelX: Double, accelY: Double, accelZ: Double) : super(RMEntities.PROJECTILE_ENTITY.get(), shooter, accelX, accelY, accelZ, worldIn) {}
+    constructor(worldIn: World?, x: Double, y: Double, z: Double, accelX: Double, accelY: Double, accelZ: Double) : super(RMEntities.PROJECTILE_ENTITY.get(), x, y, z, accelX, accelY, accelZ, worldIn) {}
 
-public class ProjectileEntity extends AbstractFireballEntity {
-    public ProjectileEntity(EntityType<? extends net.minecraft.entity.projectile.SmallFireballEntity> p_i50160_1_, World p_i50160_2_) {
-        super(p_i50160_1_, p_i50160_2_);
-    }
-
-    public ProjectileEntity(World worldIn, LivingEntity shooter, double accelX, double accelY, double accelZ) {
-        super(EntityType.SMALL_FIREBALL, shooter, accelX, accelY, accelZ, worldIn);
-    }
-
-    public ProjectileEntity(World worldIn, double x, double y, double z, double accelX, double accelY, double accelZ) {
-        super(EntityType.SMALL_FIREBALL, x, y, z, accelX, accelY, accelZ, worldIn);
-    }
-
-    protected void onImpact(RayTraceResult result) {
-        super.onImpact(result);
-        if (!this.world.isRemote) {
-            if (result.getType() == Type.ENTITY) {
-                Entity entity = ((EntityRayTraceResult)result).getEntity();
-                if (!entity.isImmuneToFire()) {
-                    int i = entity.getFireTimer();
-                    entity.setFire(5);
-                    boolean flag = entity.attackEntityFrom(DamageSource.causeFireballDamage(this, this.shootingEntity), 5.0F);
+    override fun onImpact(result: RayTraceResult) {
+        super.onImpact(result)
+        if (!world.isRemote) {
+            if (result.type == RayTraceResult.Type.ENTITY) {
+                val entity = (result as EntityRayTraceResult).entity
+                if (!entity.isImmuneToFire) {
+                    val i = entity.fireTimer
+                    entity.setFire(5)
+                    val flag = entity.attackEntityFrom(DamageSource.causeFireballDamage(this, shootingEntity), 5.0f)
                     if (flag) {
-                        this.applyEnchantments(this.shootingEntity, entity);
+                        applyEnchantments(shootingEntity, entity)
                     } else {
-                        entity.setFireTimer(i);
+                        entity.fireTimer = i
                     }
                 }
-            } else if (this.shootingEntity == null || !(this.shootingEntity instanceof MobEntity) || ForgeEventFactory.getMobGriefingEvent(this.world, this.shootingEntity)) {
-                BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult)result;
-                BlockPos blockpos = blockraytraceresult.getPos().offset(blockraytraceresult.getFace());
-                if (this.world.isAirBlock(blockpos)) {
-                    this.world.setBlockState(blockpos, Blocks.FIRE.getDefaultState());
+            } else if (shootingEntity == null || shootingEntity !is MobEntity || ForgeEventFactory.getMobGriefingEvent(world, shootingEntity)) {
+                val blockraytraceresult = result as BlockRayTraceResult
+                val blockpos = blockraytraceresult.pos.offset(blockraytraceresult.face)
+                if (world.isAirBlock(blockpos)) {
+                    world.setBlockState(blockpos, Blocks.FIRE.defaultState)
                 }
             }
-
-            this.remove();
+            this.remove()
         }
-
     }
 
-    public boolean canBeCollidedWith() {
-        return false;
+    override fun canBeCollidedWith(): Boolean {
+        return false
     }
 
-    public boolean attackEntityFrom(DamageSource source, float amount) {
-        return false;
+    override fun attackEntityFrom(source: DamageSource, amount: Float): Boolean {
+        return false
     }
 }
-
-
-    private static <T extends Entity> EntityType<T> register(String key, EntityType.Builder<T> builder) {
-        return Registry.register(Registry.ENTITY_TYPE, key, builder.build(key));
-    }
