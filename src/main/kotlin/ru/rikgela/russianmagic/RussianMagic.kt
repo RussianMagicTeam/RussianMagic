@@ -1,10 +1,13 @@
 package ru.rikgela.russianmagic
 
+import net.minecraft.entity.Entity
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.capabilities.CapabilityManager
+import net.minecraftforge.eventbus.api.IEventBus
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
+import ru.rikgela.russianmagic.Items.ENTITIES
 import ru.rikgela.russianmagic.client.HUDEventHandler
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage
@@ -27,10 +30,12 @@ class RussianMagic {
         }
         Items.ITEMS.register(bus)
         Blocks.BLOCKS.register(bus)
+        Items.ENTITIES.register(bus)
         MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
         MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
         MinecraftForge.EVENT_BUS.register(ManaEventHandler())
         MinecraftForge.EVENT_BUS.register(HUDEventHandler())
+
     }
 
     private fun setup(event: FMLCommonSetupEvent) {

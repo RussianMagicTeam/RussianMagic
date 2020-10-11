@@ -71,7 +71,7 @@ class Mana : IMana {
             fill(max((20 * manaPerTick).toInt(), 1))
         }
         if (ticks % 100 == 0) {
-            manaPerTick = (manaPerTick * 1.1).toFloat()
+            manaPerTick = if(manaPerTick <= 10000) (manaPerTick * 1.1).toFloat() else 10000F
         }
         ticks++
     }

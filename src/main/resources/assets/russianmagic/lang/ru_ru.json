@@ -48,6 +48,7 @@
   "block.russianmagic.rhinestone_block": "Блок горного хрусталя",
   "block.russianmagic.rhinestone_block_ore": "Руда горного хрусталя",
 
-  "item.russianmagic.spell_of_regeneration": "Заклинание регенерации"
+  "item.russianmagic.spell_of_regeneration": "Заклинание регенерации",
+  "item.russianmagic.spell_of_fireball": "Заклинание огненного шара"
 
 }

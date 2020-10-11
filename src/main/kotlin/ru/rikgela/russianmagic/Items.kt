@@ -1,5 +1,9 @@
 package ru.rikgela.russianmagic
 
+import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityClassification
+import net.minecraft.entity.EntityType
+import net.minecraft.entity.projectile.FireballEntity
 import net.minecraft.item.*
 import net.minecraft.item.crafting.Ingredient
 import net.minecraft.potion.EffectInstance
@@ -8,6 +12,8 @@ import net.minecraft.util.LazyValue
 import net.minecraftforge.fml.RegistryObject
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
+import ru.rikgela.russianmagic.objects.entity.projectile.ProjectileEntity
+import ru.rikgela.russianmagic.objects.items.FireballScroll
 import ru.rikgela.russianmagic.objects.items.SpellScroll
 import java.util.function.Supplier
 
@@ -61,6 +67,9 @@ object Foods {
 
 object Items {
     val ITEMS: DeferredRegister<Item> = DeferredRegister(ForgeRegistries.ITEMS, MOD_ID)
+    val ENTITIES = DeferredRegister(ForgeRegistries.ENTITIES, MOD_ID)
+
+
     val STONE_MAGIC_OBJECT: RegistryObject<Item> = ITEMS.register<Item>("stone_magic_object") {
         Item(Item.Properties()
                 .group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP))
@@ -130,5 +139,20 @@ object Items {
     // Spell_Scrolls
     val SPELL_OF_REGENERATION: RegistryObject<Item> = ITEMS.register("spell_of_regeneration") {
         SpellScroll(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+
+    val SPELL_OF_FIREBALL: RegistryObject<Item> = ITEMS.register("spell_of_fireball") {
+        FireballScroll(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+
+    //val PROJECTILE_ENTITY: RegistryObject<EntityType<ProjectileEntity>> = ENTITIES.register("projectile_entity", Supplier<I> { EntityType.Builder.create<Entity>({ ProjectileEntity() }, EntityClassification.AMBIENT).size(0.5f, 0.9f).build(null) })
+
+    //val ENT_PROJECTILE RegistryObject<EntityType<ProjectileEntity>> = ENTITIES.register(EntityType.Builder.<EntityModProjectile>create(EntityClassification.MISC).setCustomClientFactory(EntityModProjectile::new).size(0.25F, 0.25F), "ent_projectile");
+
+    //val PROJECTILE_ENTITY: RegistryObject<TileEntityType<ProjectileEntity>> = ENTITIES.register(
+    //        "projectile_entity", { TileEntityType.Builder.create({ ProjectileEntity() }, EXAMPLE_BLOCK.get()).build(null) }
+    //)
+    val s : RegistryObject<EntityType<ProjectileEntity>> = ENTITIES.register("projectile_entity", {
+        { EntityType.Builder.create<Entity>({ ProjectileEntity() }, EntityClassification.AMBIENT).size(0.5f, 0.9f).build(null))
+
+    //val PROJECTILE_ENTITY: RegistryObject<EntityType<ProjectileEntity>> = ENTITIES.register("projectile_entity")
 
 }
