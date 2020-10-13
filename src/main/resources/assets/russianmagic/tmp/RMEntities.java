@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic;
+/*package ru.rikgela.russianmagic;
 
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -14,3 +14,4 @@ public class RMEntities {
     public static final DeferredRegister<EntityType<?>> ENTITIES = new DeferredRegister(ForgeRegistries.ENTITIES, MOD_ID);
     public static final RegistryObject<EntityType<ProjectileEntity>> PROJECTILE_ENTITY = ENTITIES.register("projectile_entity", () -> EntityType.Builder.<ProjectileEntity>create(ProjectileEntity::new, EntityClassification.AMBIENT).size(0.9F, 1.1F).build(new ResourceLocation(MOD_ID, "projectile_entity").toString()));
 }
+*/

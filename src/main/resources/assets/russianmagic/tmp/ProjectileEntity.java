@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.objects.entity.projectile;
+/*package ru.rikgela.russianmagic.objects.entity.projectile;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -69,3 +69,4 @@ public class ProjectileEntity extends AbstractFireballEntity {
     //private static <T extends Entity> EntityType<T> register(String key, EntityType.Builder<T> builder) {
         //return Registry.register(Registry.ENTITY_TYPE, key, builder.build(key));
     //}
+*/
