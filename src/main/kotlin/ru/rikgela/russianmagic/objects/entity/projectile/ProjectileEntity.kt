@@ -2,11 +2,14 @@ package ru.rikgela.russianmagic.objects.entity.projectile
 
 //import ru.rikgela.russianmagic.objects.entity.projectile.AbstractProjectileEntity
 import net.minecraft.block.Blocks
+import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.MobEntity
+import net.minecraft.entity.projectile.DamagingProjectileEntity
 import net.minecraft.network.IPacket
 import net.minecraft.util.DamageSource
+import net.minecraft.util.IndirectEntityDamageSource
 import net.minecraft.util.math.BlockRayTraceResult
 import net.minecraft.util.math.EntityRayTraceResult
 import net.minecraft.util.math.RayTraceResult
@@ -28,7 +31,7 @@ class ProjectileEntity : AbstractProjectileEntity {
                 if (!entity.isImmuneToFire) {
                     val i = entity.fireTimer
                     entity.setFire(5)
-                    val flag = entity.attackEntityFrom(DamageSource.causeFireballDamage(this, shootingEntity), 5.0f)
+                    val flag = entity.attackEntityFrom(causeFireballDamage(this, shootingEntity), 5.0f)
                     if (flag) {
                         applyEnchantments(shootingEntity, entity)
                     } else {
@@ -57,4 +60,8 @@ class ProjectileEntity : AbstractProjectileEntity {
     override fun createSpawnPacket(): IPacket<*> {
         return NetworkHooks.getEntitySpawningPacket(this)
     }
+}
+
+fun causeFireballDamage(fireball: SpellProjectileEntity?, indirectEntityIn: Entity?): DamageSource? {
+    return if (indirectEntityIn == null) IndirectEntityDamageSource("onFire", fireball, fireball).setFireDamage().setProjectile() else IndirectEntityDamageSource("fireball", fireball, indirectEntityIn).setFireDamage().setProjectile()
 }

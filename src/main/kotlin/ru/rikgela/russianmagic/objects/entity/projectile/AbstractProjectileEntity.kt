@@ -17,7 +17,7 @@ import net.minecraftforge.api.distmarker.OnlyIn
 import ru.rikgela.russianmagic.objects.entity.projectile.AbstractProjectileEntity
 
 @OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem::class)
-abstract class AbstractProjectileEntity : DamagingProjectileEntity, IRendersAsItem {
+abstract class AbstractProjectileEntity : SpellProjectileEntity, IRendersAsItem {
     constructor(p_i50166_1_: EntityType<out AbstractProjectileEntity>, p_i50166_2_: World) : super(p_i50166_1_, p_i50166_2_) {}
     constructor(p_i50167_1_: EntityType<out AbstractProjectileEntity>, p_i50167_2_: Double, p_i50167_4_: Double, p_i50167_6_: Double, p_i50167_8_: Double, p_i50167_10_: Double, p_i50167_12_: Double, p_i50167_14_: World) : super(p_i50167_1_, p_i50167_2_, p_i50167_4_, p_i50167_6_, p_i50167_8_, p_i50167_10_, p_i50167_12_, p_i50167_14_) {}
     constructor(p_i50168_1_: EntityType<out AbstractProjectileEntity>, p_i50168_2_: LivingEntity, p_i50168_3_: Double, p_i50168_5_: Double, p_i50168_7_: Double, p_i50168_9_: World) : super(p_i50168_1_, p_i50168_2_, p_i50168_3_, p_i50168_5_, p_i50168_7_, p_i50168_9_) {}

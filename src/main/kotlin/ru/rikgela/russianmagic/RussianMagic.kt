@@ -1,6 +1,7 @@
 package ru.rikgela.russianmagic
 
 import net.minecraft.client.renderer.entity.EntityRendererManager
+import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.fml.client.registry.RenderingRegistry
@@ -14,7 +15,6 @@ import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage
 import ru.rikgela.russianmagic.mana.*
 import ru.rikgela.russianmagic.oregenerator.OreGeneration
-
 
 const val MOD_ID = "russianmagic"
 var networkIndex = 0
@@ -45,7 +45,7 @@ class RussianMagic {
     }
 
     private fun clientSetup(event: FMLClientSetupEvent) {
-        RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn) }
+        RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")) }
     }
 
     private fun setup(event: FMLCommonSetupEvent) {
