@@ -7,7 +7,6 @@ import net.minecraft.entity.projectile.ProjectileHelper
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.network.IPacket
 import net.minecraft.network.play.server.SSpawnObjectPacket
-import net.minecraft.particles.IParticleData
 import net.minecraft.particles.ParticleTypes
 import net.minecraft.util.DamageSource
 import net.minecraft.util.math.*
@@ -90,7 +89,7 @@ abstract class SpellProjectileEntity protected constructor(p_i50173_1_: EntityTy
                 f = 0.8f
             }
             motion = vec3d.add(accelerationX, accelerationY, accelerationZ).scale(f.toDouble())
-            world.addParticle(particle, d0, d1 + 0.5, d2, 0.0, 0.0, 0.0)
+//            world.addParticle(particle, d0, d1 + 0.5, d2, 0.0, 0.0, 0.0)
             setPosition(d0, d1, d2)
         } else {
             this.remove()
@@ -100,8 +99,8 @@ abstract class SpellProjectileEntity protected constructor(p_i50173_1_: EntityTy
     protected val isFireballFiery: Boolean
         protected get() = false
 
-    protected val particle: IParticleData
-        protected get() = ParticleTypes.SMOKE
+//    protected val particle: IParticleData
+//        protected get() = ParticleTypes.SMOKE
 
     /**
      * Return the motion factor for this projectile. The factor is multiplied by the original motion.
