@@ -1,13 +1,15 @@
 package ru.rikgela.russianmagic
 
-import net.minecraft.entity.Entity
+import net.minecraft.client.renderer.entity.EntityRendererManager
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.capabilities.CapabilityManager
-import net.minecraftforge.eventbus.api.IEventBus
+import net.minecraftforge.fml.client.registry.RenderingRegistry
 import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import ru.rikgela.russianmagic.client.HUDEventHandler
+import ru.rikgela.russianmagic.client.entity.render.ProjectileEntityRender
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage
 import ru.rikgela.russianmagic.mana.*
@@ -24,8 +26,11 @@ class RussianMagic {
         val bus = FMLJavaModLoadingContext.get().modEventBus
 
         // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().modEventBus.addListener {
-            event: FMLCommonSetupEvent? -> setup(event!!)
+        FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLCommonSetupEvent ->
+            setup(event)
+        }
+        FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLClientSetupEvent ->
+            clientSetup(event)
         }
         Items.ITEMS.register(bus)
         Blocks.BLOCKS.register(bus)
@@ -35,13 +40,19 @@ class RussianMagic {
         MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
         MinecraftForge.EVENT_BUS.register(ManaEventHandler())
         MinecraftForge.EVENT_BUS.register(HUDEventHandler())
+//        MinecraftForge.EVENT_BUS.register(ClientEventBusSubscriber())
 
+    }
 
+    private fun clientSetup(event: FMLClientSetupEvent) {
+        RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn) }
     }
 
     private fun setup(event: FMLCommonSetupEvent) {
         //preinit
-        OreGeneration.setupOreGeneration();
+        RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn) }
+
+        OreGeneration.setupOreGeneration()
         CapabilityManager.INSTANCE.register(IMana::class.java, ManaStorage()) { Mana() }
         @Suppress("INACCESSIBLE_TYPE")
         RMNetworkChannel.registerMessage(
