@@ -26,20 +26,20 @@ class RussianMagic {
         val bus = FMLJavaModLoadingContext.get().modEventBus
 
         // Register the setup method for modloading
+
+        Blocks.BLOCKS.register(bus)
+        RMEntities.ENTITIES.register(bus)
+        Items.ITEMS.register(bus)
+        MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
+        MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
+        MinecraftForge.EVENT_BUS.register(ManaEventHandler())
+        MinecraftForge.EVENT_BUS.register(HUDEventHandler())
         FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLCommonSetupEvent ->
             setup(event)
         }
         FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLClientSetupEvent ->
             clientSetup(event)
         }
-        Items.ITEMS.register(bus)
-        Blocks.BLOCKS.register(bus)
-        //Items.ENTITIES.register(bus)
-        RMEntities.ENTITIES.register(bus)
-        MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
-        MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
-        MinecraftForge.EVENT_BUS.register(ManaEventHandler())
-        MinecraftForge.EVENT_BUS.register(HUDEventHandler())
 //        MinecraftForge.EVENT_BUS.register(ClientEventBusSubscriber())
 
     }
@@ -50,7 +50,6 @@ class RussianMagic {
 
     private fun setup(event: FMLCommonSetupEvent) {
         //preinit
-        RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn) }
 
         OreGeneration.setupOreGeneration()
         CapabilityManager.INSTANCE.register(IMana::class.java, ManaStorage()) { Mana() }

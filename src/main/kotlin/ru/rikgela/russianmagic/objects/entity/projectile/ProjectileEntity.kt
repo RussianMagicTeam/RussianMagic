@@ -1,26 +1,24 @@
 package ru.rikgela.russianmagic.objects.entity.projectile
 
+//import ru.rikgela.russianmagic.objects.entity.projectile.AbstractProjectileEntity
 import net.minecraft.block.Blocks
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.MobEntity
-import net.minecraft.entity.projectile.AbstractFireballEntity
-//import ru.rikgela.russianmagic.objects.entity.projectile.AbstractProjectileEntity
-import net.minecraft.potion.EffectInstance
-import net.minecraft.potion.Effects
+import net.minecraft.network.IPacket
 import net.minecraft.util.DamageSource
 import net.minecraft.util.math.BlockRayTraceResult
 import net.minecraft.util.math.EntityRayTraceResult
 import net.minecraft.util.math.RayTraceResult
 import net.minecraft.world.World
 import net.minecraftforge.event.ForgeEventFactory
+import net.minecraftforge.fml.network.NetworkHooks
 import ru.rikgela.russianmagic.RMEntities
-import ru.rikgela.russianmagic.RMEntities.PROJECTILE_ENTITY
 
-class ProjectileEntity : AbstractFireballEntity {
-    constructor(p_i50160_1_: EntityType<out ProjectileEntity>, p_i50160_2_: World) : super(p_i50160_1_, p_i50160_2_) {}
-    constructor(worldIn: World, shooter: LivingEntity, accelX: Double, accelY: Double, accelZ: Double) : super(RMEntities.PROJECTILE_ENTITY.get(), shooter, accelX, accelY, accelZ, worldIn) {}
-    constructor(worldIn: World, x: Double, y: Double, z: Double, accelX: Double, accelY: Double, accelZ: Double) : super(RMEntities.PROJECTILE_ENTITY.get(), x, y, z, accelX, accelY, accelZ, worldIn) {}
+class ProjectileEntity : AbstractProjectileEntity {
+    constructor(p_i50160_1_: EntityType<out ProjectileEntity>, p_i50160_2_: World) : super(p_i50160_1_, p_i50160_2_)
+    constructor(worldIn: World, shooter: LivingEntity, accelX: Double, accelY: Double, accelZ: Double) : super(RMEntities.PROJECTILE_ENTITY.get(), shooter, accelX, accelY, accelZ, worldIn)
+    constructor(worldIn: World, x: Double, y: Double, z: Double, accelX: Double, accelY: Double, accelZ: Double) : super(RMEntities.PROJECTILE_ENTITY.get(), x, y, z, accelX, accelY, accelZ, worldIn)
 
     override fun onImpact(result: RayTraceResult) {
         super.onImpact(result)
@@ -54,5 +52,9 @@ class ProjectileEntity : AbstractFireballEntity {
 
     override fun attackEntityFrom(source: DamageSource, amount: Float): Boolean {
         return false
+    }
+
+    override fun createSpawnPacket(): IPacket<*> {
+        return NetworkHooks.getEntitySpawningPacket(this)
     }
 }
