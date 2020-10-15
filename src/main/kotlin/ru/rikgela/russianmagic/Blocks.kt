@@ -1,11 +1,13 @@
 package ru.rikgela.russianmagic
 
 import net.minecraft.block.Block
+import net.minecraft.block.material.Material
+import net.minecraft.tileentity.TileEntityType
 import net.minecraftforge.common.ToolType
 import net.minecraftforge.fml.RegistryObject
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
-import net.minecraft.block.material.Material
+import ru.rikgela.russianmagic.objects.blocks.RMFurnaceBlock
 
 object Blocks {
     val BLOCKS: DeferredRegister<Block> = DeferredRegister<Block>(ForgeRegistries.BLOCKS, MOD_ID)
@@ -30,5 +32,14 @@ object Blocks {
                 .hardnessAndResistance(3.0f, 3.0f)
                 .harvestTool(ToolType.PICKAXE))
     }
+
+    val RM_FURNACE_BLOCK: RegistryObject<Block> = BLOCKS.register("rm_furnace_block") {
+        RMFurnaceBlock(Block
+                .Properties.
+                from(Blocks.FURNACE))
+    }
+
+    val EXAMPLE_FURNACE: RegistryObject<TileEntityType<RMFurnaceTileENtity>> = TILE_ENTITY_TYPES.register("rm_furnace_block",
+            { TileEntityType.Builder.create({ RMFurnaceTileENtity() }, BlockInit.RM_FURNACE_BLOCK.get()) })
 
 }
