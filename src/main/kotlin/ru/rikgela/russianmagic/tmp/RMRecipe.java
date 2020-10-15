@@ -1,6 +1,4 @@
-package ru.rikgela.russianmagic.recipes;
-
-import ru.rikgela.russianmagic.init.RecipeSerializerInit;
+/*package ru.rikgela.russianmagic.tmp;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -9,14 +7,16 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
+import ru.rikgela.russianmagic.init.RecipeSerializerInit;
+import ru.rikgela.russianmagic.recipes.IRMRecipe;
 
-public class Recipe implements IRecipe {
+public class RMRecipe implements IRMRecipe {
 
     private final ResourceLocation id;
     private Ingredient input;
     private final ItemStack output;
 
-    public Recipe(ResourceLocation id, Ingredient input, ItemStack output) {
+    public RMRecipe(ResourceLocation id, Ingredient input, ItemStack output) {
         this.id = id;
         this.output = output;
         this.input = input;
@@ -59,4 +59,4 @@ public class Recipe implements IRecipe {
     public NonNullList<Ingredient> getIngredients() {
         return NonNullList.from(null, this.input);
     }
-}
+}*/

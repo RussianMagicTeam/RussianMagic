@@ -5,15 +5,9 @@ import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
+import ru.rikgela.russianmagic.init.BlocksInit
+import ru.rikgela.russianmagic.init.Items
 import ru.rikgela.russianmagic.mana.*
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 
 
 const val MOD_ID = "russianmagic"
@@ -29,7 +23,7 @@ class RussianMagic {
             event: FMLCommonSetupEvent? -> setup(event!!)
         }
         Items.ITEMS.register(bus)
-        Blocks.BLOCKS.register(bus)
+        BlocksInit.BLOCKS.register(bus)
         MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
         MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
         MinecraftForge.EVENT_BUS.register(EventHandler())

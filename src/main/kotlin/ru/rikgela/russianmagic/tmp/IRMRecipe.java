@@ -1,8 +1,4 @@
-package ru.rikgela.russianmagic.recipes;
-
-import javax.annotation.Nonnull;
-
-//import com.turtywurty.tutorialmod.TutorialMod;
+/*package ru.rikgela.russianmagic.tmp;
 
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
@@ -11,9 +7,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
+import javax.annotation.Nonnull;
+
 import static ru.rikgela.russianmagic.RussianMagicKt.MOD_ID;
 
-public interface IRecipe extends IRecipe<RecipeWrapper> {
+public interface IRMRecipe extends IRecipe<RecipeWrapper> {
 
     ResourceLocation RECIPE_TYPE_ID = new ResourceLocation(MOD_ID, "example");
 
@@ -29,4 +27,4 @@ public interface IRecipe extends IRecipe<RecipeWrapper> {
     }
 
     Ingredient getInput();
-}
+}*/

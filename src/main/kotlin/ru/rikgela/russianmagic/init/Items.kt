@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic
+package ru.rikgela.russianmagic.init
 
 import net.minecraft.item.*
 import net.minecraft.item.crafting.Ingredient
@@ -8,6 +8,8 @@ import net.minecraft.util.LazyValue
 import net.minecraftforge.fml.RegistryObject
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
+import ru.rikgela.russianmagic.ItemGroups
+import ru.rikgela.russianmagic.MOD_ID
 import java.util.function.Supplier
 
 
@@ -116,9 +118,9 @@ object Items {
 
 
     //Blocks
-    val STONE_STICK_BLOCK: RegistryObject<Item?>? = ITEMS.register("stone_stick_block") { BlockItem(Blocks.STONE_STICK_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val MARBLE_BLOCK: RegistryObject<Item?>? = ITEMS.register("marble_block") { BlockItem(Blocks.MARBLE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val WHITE_JADE_BLOCK: RegistryObject<Item?>? = ITEMS.register("white_jade_block") { BlockItem(Blocks.WHITE_JADE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val STONE_STICK_BLOCK: RegistryObject<Item?>? = ITEMS.register("stone_stick_block") { BlockItem(BlocksInit.STONE_STICK_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val MARBLE_BLOCK: RegistryObject<Item?>? = ITEMS.register("marble_block") { BlockItem(BlocksInit.MARBLE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val WHITE_JADE_BLOCK: RegistryObject<Item?>? = ITEMS.register("white_jade_block") { BlockItem(BlocksInit.WHITE_JADE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
 
     //Mekanisms

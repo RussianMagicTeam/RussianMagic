@@ -1,231 +1,188 @@
-package ru.rikgela.russianmagic.tileentity;
+package ru.rikgela.russianmagic.tileentity
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import net.minecraft.client.Minecraft
+import net.minecraft.client.world.ClientWorld
+import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.inventory.ItemStackHelper
+import net.minecraft.inventory.container.Container
+import net.minecraft.inventory.container.INamedContainerProvider
+import net.minecraft.item.ItemStack
+import net.minecraft.item.crafting.IRecipe
+import net.minecraft.item.crafting.IRecipeType
+import net.minecraft.item.crafting.Ingredient
+import net.minecraft.nbt.CompoundNBT
+import net.minecraft.network.NetworkManager
+import net.minecraft.network.play.server.SUpdateTileEntityPacket
+import net.minecraft.tileentity.ITickableTileEntity
+import net.minecraft.tileentity.TileEntity
+import net.minecraft.tileentity.TileEntityType
+import net.minecraft.util.Direction
+import net.minecraft.util.NonNullList
+import net.minecraft.util.text.ITextComponent
+import net.minecraft.util.text.TranslationTextComponent
+import net.minecraft.world.World
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
+import net.minecraftforge.common.capabilities.Capability
+import net.minecraftforge.common.util.Constants
+import net.minecraftforge.common.util.LazyOptional
+import net.minecraftforge.common.util.NonNullSupplier
+import net.minecraftforge.items.CapabilityItemHandler
+import net.minecraftforge.items.IItemHandlerModifiable
+import net.minecraftforge.items.wrapper.RecipeWrapper
+import ru.rikgela.russianmagic.MOD_ID
+import ru.rikgela.russianmagic.container.RMFurnaceContainer
+import ru.rikgela.russianmagic.init.RMTileEntityTypes
+import ru.rikgela.russianmagic.init.RecipeSerializerInit
+import ru.rikgela.russianmagic.objects.blocks.RMFurnaceBlock
+import ru.rikgela.russianmagic.recipes.RMRecipe
+import ru.rikgela.russianmagic.util.RMItemHandler
+import java.util.*
+import java.util.function.Consumer
+import java.util.stream.Collectors
 
-import javax.annotation.Nullable;
-
-//import com.turtywurty.tutorialmod.TutorialMod;
-import ru.rikgela.russianmagic.container.RMFurnaceContainer;
-//import com.turtywurty.tutorialmod.init.ModTileEntityTypes;
-//import com.turtywurty.tutorialmod.init.RecipeSerializerInit;
-//import com.turtywurty.tutorialmod.recipes.ExampleRecipe;
-//import com.turtywurty.tutorialmod.util.ExampleItemHandler;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
-import ru.rikgela.russianmagic.objects.blocks.RMFurnaceBlock;
-
-import static ru.rikgela.russianmagic.RussianMagicKt.MOD_ID;
-
-public class RMFurnaceTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider {
-
-    private ITextComponent customName;
-    public int currentSmeltTime;
-    public final int maxSmeltTime = 100;
-    private ExampleItemHandler inventory;
-
-    public RMFurnaceTileEntity(TileEntityType<?> tileEntityTypeIn) {
-        super(tileEntityTypeIn);
-
-        this.inventory = new ExampleItemHandler(2);
+class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntityType<*>? = RMTileEntityTypes.RM_FURNACE.get()) : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider {
+    var customName: ITextComponent? = null
+    @JvmField
+    var currentSmeltTime = 0
+    @JvmField
+    val maxSmeltTime = 100
+    private val inventory: RMItemHandler = RMItemHandler(2)
+    override fun createMenu(windowID: Int, playerInv: PlayerInventory, playerIn: PlayerEntity): Container? {
+        return RMFurnaceContainer(windowID, playerInv, this)
     }
 
-    public RMFurnaceTileEntity() {
-        this(ModTileEntityTypes.EXAMPLE_FURNACE.get());
-    }
-
-    @Override
-    public Container createMenu(final int windowID, final PlayerInventory playerInv, final PlayerEntity playerIn) {
-        return new RMFurnaceContainer(windowID, playerInv, this);
-    }
-
-    @Override
-    public void tick() {
-        boolean dirty = false;
-
-        if (this.world != null && !this.world.isRemote) {
-            if (this.world.isBlockPowered(this.getPos())) {
-                if (this.getRecipe(this.inventory.getStackInSlot(0)) != null) {
-                    if (this.currentSmeltTime != this.maxSmeltTime) {
-                        this.world.setBlockState(this.getPos(),
-                                this.getBlockState().with(RMFurnaceBlock.LIT, true));
-                        this.currentSmeltTime++;
-                        dirty = true;
+    override fun tick() {
+        var dirty = false
+        if (world != null && !world!!.isRemote) {
+            if (world!!.isBlockPowered(getPos())) {
+                if (getRecipe(inventory.getStackInSlot(0)) != null) {
+                    if (currentSmeltTime != maxSmeltTime) {
+                        world!!.setBlockState(getPos(),
+                                this.blockState.with(RMFurnaceBlock.LIT, true))
+                        currentSmeltTime++
+                        dirty = true
                     } else {
-                        this.world.setBlockState(this.getPos(),
-                                this.getBlockState().with(RMFurnaceBlock.LIT, false));
-                        this.currentSmeltTime = 0;
-                        ItemStack output = this.getRecipe(this.inventory.getStackInSlot(0)).getRecipeOutput();
-                        this.inventory.insertItem(1, output.copy(), false);
-                        this.inventory.decrStackSize(0, 1);
-                        dirty = true;
+                        world!!.setBlockState(getPos(),
+                                this.blockState.with(RMFurnaceBlock.LIT, false))
+                        currentSmeltTime = 0
+                        val output = getRecipe(inventory.getStackInSlot(0))!!.recipeOutput
+                        inventory.insertItem(1, output.copy(), false)
+                        inventory.decrStackSize(0, 1)
+                        dirty = true
                     }
                 }
             }
         }
-
         if (dirty) {
-            this.markDirty();
-            this.world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(),
-                    Constants.BlockFlags.BLOCK_UPDATE);
+            markDirty()
+            world!!.notifyBlockUpdate(getPos(), this.blockState, this.blockState,
+                    Constants.BlockFlags.BLOCK_UPDATE)
         }
     }
 
-    public void setCustomName(ITextComponent name) {
-        this.customName = name;
+    val name: ITextComponent?
+        get() = if (customName != null) customName else defaultName
+
+    private val defaultName: ITextComponent
+        private get() = TranslationTextComponent("container.$MOD_ID.example_furnace")
+
+    override fun getDisplayName(): ITextComponent {
+        return name!!
     }
 
-    public ITextComponent getName() {
-        return this.customName != null ? this.customName : this.getDefaultName();
-    }
-
-    private ITextComponent getDefaultName() {
-        return new TranslationTextComponent("container." + MOD_ID + ".example_furnace");
-    }
-
-    @Override
-    public ITextComponent getDisplayName() {
-        return this.getName();
-    }
-
-    @Nullable
-    public ITextComponent getCustomName() {
-        return this.customName;
-    }
-
-    @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
+    override fun read(compound: CompoundNBT) {
+        super.read(compound)
         if (compound.contains("CustomName", Constants.NBT.TAG_STRING)) {
-            this.customName = ITextComponent.Serializer.fromJson(compound.getString("CustomName"));
+            customName = ITextComponent.Serializer.fromJson(compound.getString("CustomName"))
         }
-
-        NonNullList<ItemStack> inv = NonNullList.<ItemStack>withSize(this.inventory.getSlots(), ItemStack.EMPTY);
-        ItemStackHelper.loadAllItems(compound, inv);
-        this.inventory.setNonNullList(inv);
-
-        this.currentSmeltTime = compound.getInt("CurrentSmeltTime");
+        val inv = NonNullList.withSize(inventory.slots, ItemStack.EMPTY)
+        ItemStackHelper.loadAllItems(compound, inv)
+        inventory.setNonNullList(inv)
+        currentSmeltTime = compound.getInt("CurrentSmeltTime")
     }
 
-    @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
-        if (this.customName != null) {
-            compound.putString("CustomName", ITextComponent.Serializer.toJson(this.customName));
+    override fun write(compound: CompoundNBT): CompoundNBT {
+        super.write(compound)
+        if (customName != null) {
+            compound.putString("CustomName", ITextComponent.Serializer.toJson(customName))
         }
-
-        ItemStackHelper.saveAllItems(compound, this.inventory.toNonNullList());
-        compound.putInt("CurrentSmeltTime", this.currentSmeltTime);
-
-        return compound;
+        ItemStackHelper.saveAllItems(compound, inventory.toNonNullList())
+        compound.putInt("CurrentSmeltTime", currentSmeltTime)
+        return compound
     }
 
-    @Nullable
-    private ExampleRecipe getRecipe(ItemStack stack) {
+    private fun getRecipe(stack: ItemStack?): RMRecipe? {
         if (stack == null) {
-            return null;
+            return null
         }
-
-        Set<IRecipe<?>> recipes = findRecipesByType(RecipeSerializerInit.EXAMPLE_TYPE, this.world);
-        for (IRecipe<?> iRecipe : recipes) {
-            ExampleRecipe recipe = (ExampleRecipe) iRecipe;
-            if (recipe.matches(new RecipeWrapper(this.inventory), this.world)) {
-                return recipe;
+        val recipes = findRecipesByType(RecipeSerializerInit.EXAMPLE_TYPE, world)
+        for (iRecipe in recipes) {
+            val recipe = iRecipe as RMRecipe
+            if (recipe.matches(RecipeWrapper(inventory), this.world!!)) {
+                return recipe
             }
         }
-
-        return null;
+        return null
     }
 
-    public static Set<IRecipe<?>> findRecipesByType(IRecipeType<?> typeIn, World world) {
-        return world != null ? world.getRecipeManager().getRecipes().stream()
-                .filter(recipe -> recipe.getType() == typeIn).collect(Collectors.toSet()) : Collections.emptySet();
+    fun getInventory(): IItemHandlerModifiable {
+        return inventory
     }
 
-    @SuppressWarnings("resource")
-    @OnlyIn(Dist.CLIENT)
-    public static Set<IRecipe<?>> findRecipesByType(IRecipeType<?> typeIn) {
-        ClientWorld world = Minecraft.getInstance().world;
-        return world != null ? world.getRecipeManager().getRecipes().stream()
-                .filter(recipe -> recipe.getType() == typeIn).collect(Collectors.toSet()) : Collections.emptySet();
+    override fun getUpdatePacket(): SUpdateTileEntityPacket? {
+        val nbt = CompoundNBT()
+        write(nbt)
+        return SUpdateTileEntityPacket(pos, 0, nbt)
     }
 
-    public static Set<ItemStack> getAllRecipeInputs(IRecipeType<?> typeIn, World worldIn) {
-        Set<ItemStack> inputs = new HashSet<ItemStack>();
-        Set<IRecipe<?>> recipes = findRecipesByType(typeIn, worldIn);
-        for (IRecipe<?> recipe : recipes) {
-            NonNullList<Ingredient> ingredients = recipe.getIngredients();
-            ingredients.forEach(ingredient -> {
-                for (ItemStack stack : ingredient.getMatchingStacks()) {
-                    inputs.add(stack);
-                }
-            });
+    override fun onDataPacket(net: NetworkManager, pkt: SUpdateTileEntityPacket) {
+        read(pkt.nbtCompound)
+    }
+
+    override fun getUpdateTag(): CompoundNBT {
+        val nbt = CompoundNBT()
+        write(nbt)
+        return nbt
+    }
+
+    override fun handleUpdateTag(nbt: CompoundNBT) {
+        read(nbt)
+    }
+
+    override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> {
+        return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.orEmpty(cap, (LazyOptional.of { inventory }))
+    }
+
+    companion object {
+        fun findRecipesByType(typeIn: IRecipeType<*>, world: World?): Set<IRecipe<*>> {
+            return if (world != null) world.recipeManager.recipes.stream()
+                    .filter { recipe: IRecipe<*> -> recipe.type === typeIn }.collect(Collectors.toSet()) else emptySet()
         }
-        return inputs;
-    }
 
-    public final IItemHandlerModifiable getInventory() {
-        return this.inventory;
-    }
+        @OnlyIn(Dist.CLIENT)
+        fun findRecipesByType(typeIn: IRecipeType<*>): Set<IRecipe<*>> {
+            val world = Minecraft.getInstance().world
+            return if (world != null) world.recipeManager.recipes.stream()
+                    .filter { recipe: IRecipe<*> -> recipe.type === typeIn }.collect(Collectors.toSet()) else emptySet()
+        }
 
-    @Nullable
-    @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        CompoundNBT nbt = new CompoundNBT();
-        this.write(nbt);
-        return new SUpdateTileEntityPacket(this.pos, 0, nbt);
+        fun getAllRecipeInputs(typeIn: IRecipeType<*>, worldIn: World): Set<ItemStack> {
+            val inputs: MutableSet<ItemStack> = HashSet()
+            val recipes = findRecipesByType(typeIn, worldIn)
+            for (recipe in recipes) {
+                val ingredients = recipe.ingredients
+                ingredients.forEach(Consumer { ingredient: Ingredient ->
+                    for (stack in ingredient.matchingStacks) {
+                        inputs.add(stack)
+                    }
+                })
+            }
+            return inputs
+        }
     }
-
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        this.read(pkt.getNbtCompound());
-    }
-
-    @Override
-    public CompoundNBT getUpdateTag() {
-        CompoundNBT nbt = new CompoundNBT();
-        this.write(nbt);
-        return nbt;
-    }
-
-    @Override
-    public void handleUpdateTag(CompoundNBT nbt) {
-        this.read(nbt);
-    }
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.orEmpty(cap, LazyOptional.of(() -> this.inventory));
+    init {
+        //inventory = RMItemHandler(2)
     }
 }
