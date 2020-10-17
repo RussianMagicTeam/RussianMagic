@@ -1,6 +1,7 @@
 package ru.rikgela.russianmagic.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import kotlin.Suppress;
 import ru.rikgela.russianmagic.container.RMFurnaceContainer;
 
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
@@ -42,6 +43,7 @@ public class RMFurnaceScreen extends ContainerScreen<RMFurnaceContainer> {
 
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
+        @Suppress("INACCESSIBLE_TYPE")
         this.renderBackground();
         super.render(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
