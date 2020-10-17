@@ -14,6 +14,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
+import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.container.RMFurnaceContainer
 import ru.rikgela.russianmagic.init.*
 import ru.rikgela.russianmagic.mana.*
