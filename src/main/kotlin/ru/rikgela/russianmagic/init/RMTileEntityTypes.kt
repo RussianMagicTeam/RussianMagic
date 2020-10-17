@@ -16,7 +16,7 @@ object RMTileEntityTypes {
     //                .create(ExampleChestTileEntity::new, BlockInit.EXAMPLE_CHEST.get()).build(null));
     @JvmField
     val RM_FURNACE = TILE_ENTITY_TYPES
-            .register("example_furnace") {
+            .register("rm_furnace") {
                 TileEntityType.Builder
                         .create(Supplier { RMFurnaceTileEntity() }, BlocksInit.RM_FURNACE_BLOCK.get()).build(null)
             }

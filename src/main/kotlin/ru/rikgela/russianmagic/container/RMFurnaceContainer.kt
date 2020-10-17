@@ -20,7 +20,7 @@ import java.util.function.IntSupplier
 import javax.annotation.Nonnull
 
 class RMFurnaceContainer(windowID: Int, playerInv: PlayerInventory?,
-                         val tileEntity: RMFurnaceTileEntity) : Container(RMContainerTypes.EXAMPLE_FURNACE.get(), windowID) {
+                         val tileEntity: RMFurnaceTileEntity) : Container(RMContainerTypes.RM_FURNACE_CONTAINER.get(), windowID) {
     private val canInteractWithCallable: IWorldPosCallable
     var currentSmeltTime: FunctionalIntReferenceHolder? = null
 

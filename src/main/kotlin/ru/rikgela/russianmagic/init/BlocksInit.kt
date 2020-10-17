@@ -37,7 +37,7 @@ object BlocksInit {
                 .harvestTool(ToolType.PICKAXE))
     }
 
-    val RM_FURNACE_BLOCK: RegistryObject<Block> = BLOCKS.register("rm_furnace_block") {
+    val RM_FURNACE_BLOCK: RegistryObject<Block> = BLOCKS.register<Block>("rm_furnace") {
         RMFurnaceBlock(Block
                 .Properties
                 .from(Blocks.FURNACE))

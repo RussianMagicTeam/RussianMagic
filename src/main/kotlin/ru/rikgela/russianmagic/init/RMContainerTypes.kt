@@ -9,12 +9,12 @@ import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.container.RMFurnaceContainer
 
 object RMContainerTypes {
-    val CONTAINER_TYPES = DeferredRegister(
+    public val CONTAINER_TYPES = DeferredRegister(
             ForgeRegistries.CONTAINERS, MOD_ID)
 
     //public static final RegistryObject<ContainerType<ExampleChestContainer>> EXAMPLE_CHEST = CONTAINER_TYPES
     //        .register("example_chest", () -> IForgeContainerType.create(ExampleChestContainer::new));
     @JvmField
-    val EXAMPLE_FURNACE = CONTAINER_TYPES
-            .register("example_furnace") { IForgeContainerType.create { windowID: Int, playerInv: PlayerInventory?, data: PacketBuffer? -> RMFurnaceContainer(windowID, playerInv!!, data!!) } }
+    val RM_FURNACE_CONTAINER = CONTAINER_TYPES
+            .register("rm_furnace") { IForgeContainerType.create { windowID: Int, playerInv: PlayerInventory?, data: PacketBuffer? -> RMFurnaceContainer(windowID, playerInv!!, data!!) } }
 }
