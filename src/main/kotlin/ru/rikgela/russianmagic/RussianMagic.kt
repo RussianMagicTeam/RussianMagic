@@ -8,6 +8,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.ITextComponent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.capabilities.CapabilityManager
+import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.client.registry.RenderingRegistry
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
@@ -43,26 +44,23 @@ class RussianMagic {
         FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLCommonSetupEvent ->
             setup(event)
         }
-        FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLClientSetupEvent ->
-            clientSetup(event)
-        }
+        //FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLClientSetupEvent ->
+            //clientSetup(event)
+        //}
 
     }
 
-    private fun clientSetup(event: FMLClientSetupEvent) {
-    //RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")) }
+    @SubscribeEvent
+    fun clientSetup(event: FMLClientSetupEvent?) {
+        ScreenManager.registerFactory(RMContainerTypes.RM_FURNACE_CONTAINER.get(), ScreenManager.IScreenFactory<RMFurnaceContainer, RMFurnaceScreen> { screenContainer, inv, titleIn -> RMFurnaceScreen(screenContainer, inv, titleIn) })
     }
+
+    //private fun clientSetup(event: FMLClientSetupEvent) {
+        //ScreenManager.registerFactory(RMContainerTypes.RM_FURNACE_CONTAINER.get(), ScreenManager.IScreenFactory<RMFurnaceContainer, RMFurnaceScreen> { screenContainer, inv, titleIn -> RMFurnaceScreen(screenContainer, inv, titleIn) })
+    //}
 
     private fun setup(event: FMLCommonSetupEvent) {
     //preinit
-        ScreenManager.registerFactory(RMContainerTypes.RM_FURNACE_CONTAINER.get(), ScreenManager.IScreenFactory<RMFurnaceContainer, RMFurnaceScreen> { screenContainer, inv, titleIn -> RMFurnaceScreen(screenContainer, inv, titleIn) })
         //CapabilityManager.INSTANCE.register(IMana::class.java, ManaStorage()) { Mana() }
-        @Suppress("INACCESSIBLE_TYPE")
-        RMNetworkChannel.registerMessage(
-            networkIndex++,
-            ManaMessage::class.java,
-            ManaMessage::encoder,
-            ManaMessage.Companion::fromPacketBuffer,
-            ManaMessage::handle)
     }
 }

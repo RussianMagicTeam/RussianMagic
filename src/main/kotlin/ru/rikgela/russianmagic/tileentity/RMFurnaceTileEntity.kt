@@ -86,7 +86,7 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
         get() = if (customName != null) customName else defaultName
 
     private val defaultName: ITextComponent
-        private get() = TranslationTextComponent("container.$MOD_ID.example_furnace")
+        private get() = TranslationTextComponent("container.$MOD_ID.rm_furnace")
 
     override fun getDisplayName(): ITextComponent {
         return name!!

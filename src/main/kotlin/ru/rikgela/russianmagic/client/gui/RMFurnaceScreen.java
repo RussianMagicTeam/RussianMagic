@@ -43,7 +43,6 @@ public class RMFurnaceScreen extends ContainerScreen<RMFurnaceContainer> {
 
     @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
-        @Suppress("INACCESSIBLE_TYPE")
         this.renderBackground();
         super.render(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
