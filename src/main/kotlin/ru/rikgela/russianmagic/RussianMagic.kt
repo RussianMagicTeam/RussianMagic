@@ -2,11 +2,15 @@ package ru.rikgela.russianmagic
 
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScreenManager
+import net.minecraft.client.renderer.entity.EntityRendererManager
 import net.minecraft.inventory.container.ContainerType
+import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.ITextComponent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.capabilities.CapabilityManager
+import net.minecraftforge.fml.client.registry.RenderingRegistry
 import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
@@ -35,7 +39,9 @@ class RussianMagic {
         MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
         MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
         MinecraftForge.EVENT_BUS.register(EventHandler())
-        ScreenManager.registerFactory(RMContainerTypes.RM_FURNACE_CONTAINER.get(), ScreenManager.IScreenFactory<RMFurnaceContainer, RMFurnaceScreen> { screenContainer, inv, titleIn -> RMFurnaceScreen(screenContainer, inv, titleIn) })
+        FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLClientSetupEvent ->
+            clientSetup(event)
+        }
 
     }
 
@@ -44,5 +50,8 @@ class RussianMagic {
         CapabilityManager.INSTANCE.register(IMana::class.java, ManaStorage()) { Mana() }
     }
 
-
+    private fun clientSetup(event: FMLClientSetupEvent) {
+    ScreenManager.registerFactory(RMContainerTypes.RM_FURNACE_CONTAINER.get(), ScreenManager.IScreenFactory<RMFurnaceContainer, RMFurnaceScreen> { screenContainer, inv, titleIn -> RMFurnaceScreen(screenContainer, inv, titleIn) })
+    //RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")) }
+    }
 }

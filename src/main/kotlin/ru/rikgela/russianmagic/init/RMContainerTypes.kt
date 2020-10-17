@@ -16,5 +16,6 @@ object RMContainerTypes {
     //        .register("example_chest", () -> IForgeContainerType.create(ExampleChestContainer::new));
     @JvmField
     val RM_FURNACE_CONTAINER = CONTAINER_TYPES
-            .register("rm_furnace") { IForgeContainerType.create { windowID: Int, playerInv: PlayerInventory?, data: PacketBuffer? -> RMFurnaceContainer(windowID, playerInv!!, data!!) } }
+            .register("rm_furnace") { IForgeContainerType.create { windowID: Int, playerInv: PlayerInventory, data: PacketBuffer -> RMFurnaceContainer(windowID, playerInv, data) } }
+
 }

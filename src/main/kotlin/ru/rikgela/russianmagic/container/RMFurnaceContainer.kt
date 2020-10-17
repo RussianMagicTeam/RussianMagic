@@ -25,7 +25,7 @@ class RMFurnaceContainer(windowID: Int, playerInv: PlayerInventory?,
     var currentSmeltTime: FunctionalIntReferenceHolder? = null
 
     // Client Constructor
-    constructor(windowID: Int, playerInv: PlayerInventory, data: PacketBuffer) : this(windowID, playerInv, getTileEntity(playerInv, data))
+    constructor(windowID: Int, playerInv: PlayerInventory?, data: PacketBuffer?) : this(windowID, playerInv, getTileEntity(playerInv, data))
 
     override fun canInteractWith(playerIn: PlayerEntity): Boolean {
         return isWithinUsableDistance(canInteractWithCallable, playerIn, BlocksInit.RM_FURNACE_BLOCK.get())
@@ -64,10 +64,10 @@ class RMFurnaceContainer(windowID: Int, playerInv: PlayerInventory?,
         get() = if (currentSmeltTime!!.get() != 0 && tileEntity.maxSmeltTime != 0) currentSmeltTime!!.get() * 24 / tileEntity.maxSmeltTime else 0
 
     companion object {
-        private fun getTileEntity(playerInv: PlayerInventory, data: PacketBuffer): RMFurnaceTileEntity {
+        private fun getTileEntity(playerInv: PlayerInventory?, data: PacketBuffer?): RMFurnaceTileEntity {
             Objects.requireNonNull(playerInv, "playerInv cannot be null")
             Objects.requireNonNull(data, "data cannot be null")
-            val tileAtPos = playerInv.player.world.getTileEntity(data.readBlockPos())
+            val tileAtPos = (playerInv!!).player.world.getTileEntity((data!!).readBlockPos())
             if (tileAtPos is RMFurnaceTileEntity) {
                 return tileAtPos
             }

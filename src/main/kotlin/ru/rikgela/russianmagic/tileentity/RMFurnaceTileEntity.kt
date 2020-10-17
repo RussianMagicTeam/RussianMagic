@@ -117,7 +117,7 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
         if (stack == null) {
             return null
         }
-        val recipes = findRecipesByType(RecipeSerializerInit.EXAMPLE_TYPE, world)
+        val recipes = findRecipesByType(RecipeSerializerInit.RM_TYPE, world)
         for (iRecipe in recipes) {
             val recipe = iRecipe as RMRecipe
             if (recipe.matches(RecipeWrapper(inventory), this.world!!)) {

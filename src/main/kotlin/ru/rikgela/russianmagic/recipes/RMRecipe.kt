@@ -29,7 +29,7 @@ class RMRecipe(private val id: ResourceLocation, override val input: Ingredient,
     }
 
     override fun getSerializer(): IRecipeSerializer<*> {
-        return RecipeSerializerInit.EXAMPLE_SERIALIZER.get()
+        return RecipeSerializerInit.RM_SERIALIZER.get()
     }
 
     override fun getIngredients(): NonNullList<Ingredient> {
