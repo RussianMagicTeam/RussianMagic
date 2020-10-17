@@ -13,7 +13,7 @@ import ru.rikgela.russianmagic.recipes.RMRecipe
 import ru.rikgela.russianmagic.recipes.RecipeSerializer
 
 object RecipeSerializerInit {
-    val EXAMPLE_RECIPE_SERIALIZER: IRecipeSerializer<RMRecipe?> = RecipeSerializer()
+    val EXAMPLE_RECIPE_SERIALIZER: IRecipeSerializer<RMRecipe> = RecipeSerializer()
     @JvmField
     val EXAMPLE_TYPE = registerType<IRecipeType<IRMRecipe>>(IRMRecipe.RECIPE_TYPE_ID)
     val RECIPE_SERIALIZERS = DeferredRegister(

@@ -39,8 +39,8 @@ object BlocksInit {
 
     val RM_FURNACE_BLOCK: RegistryObject<Block> = BLOCKS.register("rm_furnace_block") {
         RMFurnaceBlock(Block
-                .Properties.
-                from(Blocks.FURNACE))
+                .Properties
+                .from(Blocks.FURNACE))
     }
 
     //val RM_FURNACE: RegistryObject<TileEntityType<RMFurnaceTileEntity>> = TILE_ENTITY_TYPES.register("rm_furnace_block",
