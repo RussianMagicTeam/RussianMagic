@@ -1,7 +1,6 @@
 package ru.rikgela.russianmagic.tileentity
 
 import net.minecraft.client.Minecraft
-import net.minecraft.client.world.ClientWorld
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.ItemStackHelper
@@ -27,8 +26,8 @@ import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.util.Constants
 import net.minecraftforge.common.util.LazyOptional
-import net.minecraftforge.common.util.NonNullSupplier
 import net.minecraftforge.items.CapabilityItemHandler
+import net.minecraftforge.items.IItemHandler
 import net.minecraftforge.items.IItemHandlerModifiable
 import net.minecraftforge.items.wrapper.RecipeWrapper
 import ru.rikgela.russianmagic.MOD_ID
@@ -46,9 +45,10 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
     var customName: ITextComponent? = null
     @JvmField
     var currentSmeltTime = 0
+
     @JvmField
     val maxSmeltTime = 100
-    private val inventory: RMItemHandler = RMItemHandler(2)
+    val inventory: RMItemHandler = RMItemHandler(2)
     override fun createMenu(windowID: Int, playerInv: PlayerInventory, playerIn: PlayerEntity): Container? {
         return RMFurnaceContainer(windowID, playerInv, this)
     }
@@ -152,7 +152,7 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
     }
 
     override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> {
-        return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.orEmpty(cap, (LazyOptional.of { inventory }))
+        return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.orEmpty(cap, LazyOptional.of { inventory as IItemHandler })
     }
 
     companion object {

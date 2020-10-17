@@ -20,12 +20,12 @@ import java.util.function.IntSupplier
 import javax.annotation.Nonnull
 
 class RMFurnaceContainer(windowID: Int, playerInv: PlayerInventory?,
-                         var tileEntity: RMFurnaceTileEntity) : Container(RMContainerTypes.EXAMPLE_FURNACE.get(), windowID) {
+                         val tileEntity: RMFurnaceTileEntity) : Container(RMContainerTypes.EXAMPLE_FURNACE.get(), windowID) {
     private val canInteractWithCallable: IWorldPosCallable
     var currentSmeltTime: FunctionalIntReferenceHolder? = null
 
     // Client Constructor
-    constructor(windowID: Int, playerInv: PlayerInventory, data: PacketBuffer) : this(windowID, playerInv, getTileEntity(playerInv, data)) {}
+    constructor(windowID: Int, playerInv: PlayerInventory, data: PacketBuffer) : this(windowID, playerInv, getTileEntity(playerInv, data))
 
     override fun canInteractWith(playerIn: PlayerEntity): Boolean {
         return isWithinUsableDistance(canInteractWithCallable, playerIn, BlocksInit.RM_FURNACE_BLOCK.get())
