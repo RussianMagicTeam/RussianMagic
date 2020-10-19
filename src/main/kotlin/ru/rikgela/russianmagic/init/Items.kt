@@ -124,7 +124,7 @@ object Items {
 
 
     //Mekanisms
-    val RM_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_furnace") { BlockItem(BlocksInit.RM_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RM_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_furnace_block") { BlockItem(BlocksInit.RM_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
     }
 

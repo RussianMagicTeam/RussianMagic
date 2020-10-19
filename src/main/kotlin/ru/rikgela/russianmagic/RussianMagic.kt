@@ -1,24 +1,16 @@
 package ru.rikgela.russianmagic
 
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScreenManager
-import net.minecraft.client.renderer.entity.EntityRendererManager
-import net.minecraft.inventory.container.ContainerType
-import net.minecraft.util.ResourceLocation
-import net.minecraft.util.text.ITextComponent
 import net.minecraftforge.common.MinecraftForge
-import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.eventbus.api.SubscribeEvent
-import net.minecraftforge.fml.client.registry.RenderingRegistry
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
-import ru.rikgela.russianmagic.common.RMNetworkChannel
-import ru.rikgela.russianmagic.container.RMFurnaceContainer
 import ru.rikgela.russianmagic.init.*
-import ru.rikgela.russianmagic.mana.*
+import ru.rikgela.russianmagic.mana.EventHandler
+import ru.rikgela.russianmagic.mana.ManaCapabilityHandler
 
 
 const val MOD_ID = "russianmagic"
@@ -44,23 +36,23 @@ class RussianMagic {
         FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLCommonSetupEvent ->
             setup(event)
         }
-        //FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLClientSetupEvent ->
-            //clientSetup(event)
-        //}
+        FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLClientSetupEvent ->
+            clientSetup(event)
+        }
 
     }
 
     @SubscribeEvent
     fun clientSetup(event: FMLClientSetupEvent?) {
-        ScreenManager.registerFactory(RMContainerTypes.RM_FURNACE_CONTAINER.get(), ScreenManager.IScreenFactory<RMFurnaceContainer, RMFurnaceScreen> { screenContainer, inv, titleIn -> RMFurnaceScreen(screenContainer, inv, titleIn) })
+        ScreenManager.registerFactory(RMContainerTypes.RM_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn -> RMFurnaceScreen(screenContainer, inv, titleIn) }
     }
 
     //private fun clientSetup(event: FMLClientSetupEvent) {
-        //ScreenManager.registerFactory(RMContainerTypes.RM_FURNACE_CONTAINER.get(), ScreenManager.IScreenFactory<RMFurnaceContainer, RMFurnaceScreen> { screenContainer, inv, titleIn -> RMFurnaceScreen(screenContainer, inv, titleIn) })
+//        ScreenManager.registerFactory(RMContainerTypes.RM_FURNACE_CONTAINER.get(), ScreenManager.IScreenFactory<RMFurnaceContainer, RMFurnaceScreen> { screenContainer, inv, titleIn -> RMFurnaceScreen(screenContainer, inv, titleIn) })
     //}
 
     private fun setup(event: FMLCommonSetupEvent) {
-    //preinit
-        //CapabilityManager.INSTANCE.register(IMana::class.java, ManaStorage()) { Mana() }
+        //preinit
+//        CapabilityManager.INSTANCE.register(IMana::class.java, ManaStorage()) { Mana() }
     }
 }
