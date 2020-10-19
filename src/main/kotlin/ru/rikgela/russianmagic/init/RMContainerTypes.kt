@@ -17,5 +17,4 @@ object RMContainerTypes {
     @JvmField
     val RM_FURNACE_CONTAINER = CONTAINER_TYPES
             .register("rm_furnace") { IForgeContainerType.create { windowID: Int, playerInv: PlayerInventory, data: PacketBuffer -> RMFurnaceContainer(windowID, playerInv, data) } }
-
 }

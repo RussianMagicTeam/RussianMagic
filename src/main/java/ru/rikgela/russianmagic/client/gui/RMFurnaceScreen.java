@@ -1,13 +1,11 @@
-/*package ru.rikgela.russianmagic.client.gui;
+package ru.rikgela.russianmagic.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import kotlin.Suppress;
-import ru.rikgela.russianmagic.container.RMFurnaceContainer;
-
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import ru.rikgela.russianmagic.container.RMFurnaceContainer;
 
 import static ru.rikgela.russianmagic.RussianMagicKt.MOD_ID;
 
@@ -37,7 +35,7 @@ public class RMFurnaceScreen extends ContainerScreen<RMFurnaceContainer> {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-        this.font.drawString(this.title.getFormattedText(), 8.0f, 8.0f, 0x404040);
+        this.font.drawString("Magic Furnace"this.title.getFormattedText(), 8.0f, 8.0f, 0x404040);
         this.font.drawString(this.playerInventory.getDisplayName().getFormattedText(), 8.0f, 69.0f, 0x404040);
     }
 
@@ -47,4 +45,4 @@ public class RMFurnaceScreen extends ContainerScreen<RMFurnaceContainer> {
         super.render(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
     }
-}*/
+}
