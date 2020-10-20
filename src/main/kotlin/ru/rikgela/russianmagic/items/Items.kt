@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.Items
+package ru.rikgela.russianmagic.items
 
 import net.minecraft.item.*
 import net.minecraft.item.crafting.Ingredient
