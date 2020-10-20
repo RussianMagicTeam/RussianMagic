@@ -7,6 +7,7 @@ import net.minecraft.inventory.ItemStackHelper
 import net.minecraft.inventory.container.Container
 import net.minecraft.inventory.container.INamedContainerProvider
 import net.minecraft.item.ItemStack
+import net.minecraft.item.crafting.FurnaceRecipe
 import net.minecraft.item.crafting.IRecipe
 import net.minecraft.item.crafting.IRecipeType
 import net.minecraft.item.crafting.Ingredient
@@ -35,29 +36,31 @@ import ru.rikgela.russianmagic.container.RMFurnaceContainer
 import ru.rikgela.russianmagic.init.RMTileEntityTypes
 import ru.rikgela.russianmagic.init.RecipeSerializerInit
 import ru.rikgela.russianmagic.objects.blocks.RMFurnaceBlock
-import ru.rikgela.russianmagic.recipes.RMRecipe
 import ru.rikgela.russianmagic.util.RMItemHandler
 import java.util.*
 import java.util.function.Consumer
 import java.util.stream.Collectors
 
-class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntityType<*>? = RMTileEntityTypes.RM_FURNACE.get()) : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider {
+class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntityType<*> = RMTileEntityTypes.RM_FURNACE.get()) : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider {
     var customName: ITextComponent? = null
-    @JvmField
+
     var currentSmeltTime = 0
 
-    @JvmField
+
     val maxSmeltTime = 100
     val inventory: RMItemHandler = RMItemHandler(2)
-    override fun createMenu(windowID: Int, playerInv: PlayerInventory, playerIn: PlayerEntity): Container? {
+    override fun createMenu(windowID: Int, playerInv: PlayerInventory, playerIn: PlayerEntity): Container {
         return RMFurnaceContainer(windowID, playerInv, this)
     }
 
     override fun tick() {
         var dirty = false
-        if (world != null && !world!!.isRemote) {
-            if (world!!.isBlockPowered(getPos())) {
-                if (getRecipe(inventory.getStackInSlot(0)) != null) {
+        if (world != null && world?.isRemote != true) {
+            val recipe = getRecipe(inventory.getStackInSlot(0))
+            if (recipe != null) {
+                if (inventory.getStackInSlot(1).count == 0
+                        || inventory.getStackInSlot(1).item == recipe.recipeOutput.item
+                        && inventory.getStackInSlot(1).count + recipe.recipeOutput.count <= inventory.getStackInSlot(1).maxStackSize) {
                     if (currentSmeltTime != maxSmeltTime) {
                         world!!.setBlockState(getPos(),
                                 this.blockState.with(RMFurnaceBlock.LIT, true))
@@ -67,12 +70,20 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
                         world!!.setBlockState(getPos(),
                                 this.blockState.with(RMFurnaceBlock.LIT, false))
                         currentSmeltTime = 0
-                        val output = getRecipe(inventory.getStackInSlot(0))!!.recipeOutput
+                        val output = recipe.recipeOutput
                         inventory.insertItem(1, output.copy(), false)
                         inventory.decrStackSize(0, 1)
                         dirty = true
                     }
+                } else {
+                    currentSmeltTime = 0
+                    world!!.setBlockState(getPos(),
+                            this.blockState.with(RMFurnaceBlock.LIT, false))
                 }
+            } else {
+                currentSmeltTime = 0
+                world!!.setBlockState(getPos(),
+                        this.blockState.with(RMFurnaceBlock.LIT, false))
             }
         }
         if (dirty) {
@@ -82,14 +93,14 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
         }
     }
 
-    val name: ITextComponent?
-        get() = if (customName != null) customName else defaultName
+    val name: ITextComponent
+        get() = customName ?: defaultName
 
     private val defaultName: ITextComponent
-        private get() = TranslationTextComponent("container.$MOD_ID.rm_furnace")
+        get() = TranslationTextComponent("container.$MOD_ID.rm_furnace")
 
     override fun getDisplayName(): ITextComponent {
-        return name!!
+        return name
     }
 
     override fun read(compound: CompoundNBT) {
@@ -106,20 +117,20 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
     override fun write(compound: CompoundNBT): CompoundNBT {
         super.write(compound)
         if (customName != null) {
-            compound.putString("CustomName", ITextComponent.Serializer.toJson(customName))
+            compound.putString("CustomName", ITextComponent.Serializer.toJson(customName!!))
         }
         ItemStackHelper.saveAllItems(compound, inventory.toNonNullList())
         compound.putInt("CurrentSmeltTime", currentSmeltTime)
         return compound
     }
 
-    private fun getRecipe(stack: ItemStack?): RMRecipe? {
+    private fun getRecipe(stack: ItemStack?): FurnaceRecipe? {
         if (stack == null) {
             return null
         }
         val recipes = findRecipesByType(RecipeSerializerInit.RM_TYPE, world)
         for (iRecipe in recipes) {
-            val recipe = iRecipe as RMRecipe
+            val recipe = iRecipe as FurnaceRecipe
             if (recipe.matches(RecipeWrapper(inventory), this.world!!)) {
                 return recipe
             }
@@ -158,7 +169,8 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
     companion object {
         fun findRecipesByType(typeIn: IRecipeType<*>, world: World?): Set<IRecipe<*>> {
             return if (world != null) world.recipeManager.recipes.stream()
-                    .filter { recipe: IRecipe<*> -> recipe.type === typeIn }.collect(Collectors.toSet()) else emptySet()
+                    .filter { recipe: IRecipe<*> -> recipe.type.toString() == "smelting" }
+                    .collect(Collectors.toSet()) else emptySet()
         }
 
         @OnlyIn(Dist.CLIENT)

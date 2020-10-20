@@ -12,6 +12,7 @@ import net.minecraft.item.BlockItemUseContext
 import net.minecraft.item.ItemStack
 import net.minecraft.particles.ParticleTypes
 import net.minecraft.state.BooleanProperty
+import net.minecraft.state.DirectionProperty
 import net.minecraft.state.StateContainer
 import net.minecraft.state.properties.BlockStateProperties
 import net.minecraft.tileentity.TileEntity
@@ -25,17 +26,16 @@ import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fml.network.NetworkHooks
 import ru.rikgela.russianmagic.init.RMTileEntityTypes
 import ru.rikgela.russianmagic.tileentity.RMFurnaceTileEntity
-import ru.rikgela.russianmagic.util.RMItemHandler
 import java.util.*
 import java.util.function.Consumer
 
-class RMFurnaceBlock(properties: Properties?) : Block(properties) {
+class RMFurnaceBlock(properties: Properties) : Block(properties) {
     override fun hasTileEntity(state: BlockState): Boolean {
         return true
     }
 
-    override fun createTileEntity(state: BlockState, world: IBlockReader): TileEntity? {
-        return RMTileEntityTypes.RM_FURNACE.get().create()
+    override fun createTileEntity(state: BlockState, world: IBlockReader): TileEntity {
+        return RMTileEntityTypes.RM_FURNACE.get().create()!!
     }
 
     override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
@@ -88,11 +88,11 @@ class RMFurnaceBlock(properties: Properties?) : Block(properties) {
                         false)
             }
             val direction = stateIn.get(FACING)
-            val `direction$axis` = direction.axis
+            val directionAxis = direction.axis
             val d4 = rand.nextDouble() * 0.6 - 0.3
-            val d5 = if (`direction$axis` === Direction.Axis.X) direction.xOffset.toDouble() * 0.52 else d4
+            val d5 = if (directionAxis === Direction.Axis.X) direction.xOffset.toDouble() * 0.52 else d4
             val d6 = rand.nextDouble() * 6.0 / 16.0
-            val d7 = if (`direction$axis` === Direction.Axis.Z) direction.zOffset.toDouble() * 0.52 else d4
+            val d7 = if (directionAxis === Direction.Axis.Z) direction.zOffset.toDouble() * 0.52 else d4
             worldIn.addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6, d2 + d7, 0.0, 0.0, 0.0)
             worldIn.addParticle(ParticleTypes.FLAME, d0 + d5, d1 + d6, d2 + d7, 0.0, 0.0, 0.0)
         }
@@ -100,7 +100,7 @@ class RMFurnaceBlock(properties: Properties?) : Block(properties) {
 
     override fun onBlockActivated(state: BlockState, worldIn: World, pos: BlockPos, player: PlayerEntity,
                                   handIn: Hand, hit: BlockRayTraceResult): ActionResultType {
-        if (worldIn != null && !worldIn.isRemote) {
+        if (!worldIn.isRemote) {
             val tile = worldIn.getTileEntity(pos)
             if (tile is RMFurnaceTileEntity) {
                 NetworkHooks.openGui(player as ServerPlayerEntity, tile as INamedContainerProvider?, pos)
@@ -113,7 +113,7 @@ class RMFurnaceBlock(properties: Properties?) : Block(properties) {
     override fun onReplaced(state: BlockState, worldIn: World, pos: BlockPos, newState: BlockState, isMoving: Boolean) {
         val tile = worldIn.getTileEntity(pos)
         if (tile is RMFurnaceTileEntity && state.block !== newState.block) {
-            (tile.inventory as RMItemHandler).toNonNullList().forEach(Consumer { item: ItemStack? ->
+            (tile.inventory).toNonNullList().forEach(Consumer { item: ItemStack ->
                 val itemEntity = ItemEntity(worldIn, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), item)
                 worldIn.addEntity(itemEntity)
             })
@@ -124,9 +124,8 @@ class RMFurnaceBlock(properties: Properties?) : Block(properties) {
     }
 
     companion object {
-        val FACING = BlockStateProperties.HORIZONTAL_FACING
-        @JvmField
-        val LIT = BooleanProperty.create("lit")
+        val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
+        val LIT: BooleanProperty = BooleanProperty.create("lit")
     }
 
     init {

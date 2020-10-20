@@ -6,7 +6,6 @@ import net.minecraft.item.crafting.Ingredient
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.registry.Registry
 import net.minecraftforge.items.wrapper.RecipeWrapper
-import ru.rikgela.russianmagic.MOD_ID
 import javax.annotation.Nonnull
 
 interface IRMRecipe : IRecipe<RecipeWrapper> {
@@ -23,6 +22,6 @@ interface IRMRecipe : IRecipe<RecipeWrapper> {
 
     companion object {
         @JvmField
-        val RECIPE_TYPE_ID = ResourceLocation(MOD_ID, "example")
+        val RECIPE_TYPE_ID = ResourceLocation("smelting")
     }
 }

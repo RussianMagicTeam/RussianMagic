@@ -19,13 +19,15 @@ import java.util.function.IntConsumer
 import java.util.function.IntSupplier
 import javax.annotation.Nonnull
 
-class RMFurnaceContainer(windowID: Int, playerInv: PlayerInventory?,
-                         val tileEntity: RMFurnaceTileEntity) : Container(RMContainerTypes.RM_FURNACE_CONTAINER.get(), windowID) {
-    private val canInteractWithCallable: IWorldPosCallable
+class RMFurnaceContainer(windowID: Int,
+                         playerInv: PlayerInventory,
+                         private val tileEntity: RMFurnaceTileEntity
+) : Container(RMContainerTypes.RM_FURNACE_CONTAINER.get(), windowID) {
+    private val canInteractWithCallable: IWorldPosCallable = IWorldPosCallable.of(tileEntity.world!!, tileEntity.pos)
     var currentSmeltTime: FunctionalIntReferenceHolder? = null
 
     // Client Constructor
-    constructor(windowID: Int, playerInv: PlayerInventory?, data: PacketBuffer?) : this(windowID, playerInv, getTileEntity(playerInv, data))
+    constructor(windowID: Int, playerInv: PlayerInventory, data: PacketBuffer?) : this(windowID, playerInv, getTileEntity(playerInv, data))
 
     override fun canInteractWith(playerIn: PlayerEntity): Boolean {
         return isWithinUsableDistance(canInteractWithCallable, playerIn, BlocksInit.RM_FURNACE_BLOCK.get())
@@ -77,7 +79,6 @@ class RMFurnaceContainer(windowID: Int, playerInv: PlayerInventory?,
 
     // Server Constructor
     init {
-        canInteractWithCallable = IWorldPosCallable.of(tileEntity.world, tileEntity.pos)
         val slotSizePlus2 = 18
         val startX = 8
 
