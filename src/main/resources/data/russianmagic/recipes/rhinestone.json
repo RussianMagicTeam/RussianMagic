@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "russianmagic:rhinestone_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "russianmagic:rhinestone"
+  }
+}

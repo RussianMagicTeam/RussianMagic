@@ -42,5 +42,105 @@
 
   "block.russianmagic.stone_stick_block": "Stone stick block",
   "block.russianmagic.marble_block": "Marble block",
-  "block.russianmagic.white_jade_block": "White jade block"
+  "block.russianmagic.white_jade_block": "White jade block",
+
+  "block.russianmagic.aquamarine_block": "Aquamarine block",
+  "block.russianmagic.aquamarine_block_ore": "Aquamarine ore",
+
+  "block.russianmagic.rhinestone_block": "Rhinestone block",
+  "block.russianmagic.rhinestone_block_ore": "Rhinestone ore",
+  
+  "item.russianmagic.spell_of_regeneration": "Spell of Regeneration",
+
+  "block.russianmagic.jasper": "Jasper",
+  "block.russianmagic.jasper_block": "Jasper block",
+  "block.russianmagic.jasper_block_ore": "Jasper ore",
+
+  "block.russianmagic.chrysolite": "Chrysolite",
+  "block.russianmagic.chrysolite_block": "Chrysolite block",
+  "block.russianmagic.chrysolite_block_ore": "Chrysolite ore",
+
+  "block.russianmagic.garnet": "Garnet",
+  "block.russianmagic.garnet_block": "Garnet block",
+  "block.russianmagic.garnet_block_ore": "Garnet ore",
+
+  "block.russianmagic.topaz": "Topaz",
+  "block.russianmagic.topaz_block": "Topaz block",
+  "block.russianmagic.topaz_block_ore": "Topaz ore",
+
+  "block.russianmagic.perunite": "Perunite",
+  "block.russianmagic.perunite_block": "Perunite block",
+  "block.russianmagic.perunite_block_ore": "Perunite ore",
+
+  "block.russianmagic.iolite": "Iolite",
+  "block.russianmagic.iolite_block": "Iolite block",
+  "block.russianmagic.iolite_block_ore": "Iolite ore",
+
+  "block.russianmagic.agate": "Agate",
+  "block.russianmagic.agate_block": "Agate block",
+  "block.russianmagic.agate_block_ore": "Agate ore",
+
+  "block.russianmagic.citrine": "Citrine",
+  "block.russianmagic.citrine_block": "Citrine block",
+  "block.russianmagic.citrine_block_ore": "Citrine ore",
+
+  "block.russianmagic.chalcedony": "Chalcedony",
+  "block.russianmagic.chalcedony_block": "Chalcedony block",
+  "block.russianmagic.chalcedony_block_ore": "Chalcedony ore",
+
+  "block.russianmagic.beryl": "Beryl",
+  "block.russianmagic.beryl_block": "Beryl block",
+  "block.russianmagic.beryl_block_ore": "Beryl ore",
+
+  "block.russianmagic.heliodor": "Heliodor",
+  "block.russianmagic.heliodor_block": "Heliodor block",
+  "block.russianmagic.heliodor_block_ore": "Heliodor ore",
+
+  "block.russianmagic.sitall": "Sitall",
+  "block.russianmagic.sitall_block": "Sitall block",
+  "block.russianmagic.sitall_block_ore": "Sitall ore",
+
+  "block.russianmagic.amethyst": "Amethyst",
+  "block.russianmagic.amethyst_block": "Amethyst block",
+  "block.russianmagic.amethyst_block_ore": "Amethyst ore",
+
+  "block.russianmagic.carnelian": "Carnelian",
+  "block.russianmagic.carnelian_block": "Carnelian block",
+  "block.russianmagic.carnelian_block_ore": "Carnelian ore",
+
+  "block.russianmagic.tanzanite": "Tanzanite",
+  "block.russianmagic.tanzanite_block": "Tanzanite block",
+  "block.russianmagic.tanzanite_block_ore": "Tanzanite ore",
+
+  "block.russianmagic.ametrine": "Ametrine",
+  "block.russianmagic.ametrine_block": "Ametrine block",
+  "block.russianmagic.ametrine_block_ore": "Ametrine ore",
+
+  "block.russianmagic.charoite": "Charoite",
+  "block.russianmagic.charoite_block": "Charoite block",
+  "block.russianmagic.charoite_block_ore": "Charoite ore",
+
+  "block.russianmagic.coral": "Coral",
+  "block.russianmagic.coral_block": "Coral block",
+  "block.russianmagic.coral_block_ore": "Coral ore",
+
+  "block.russianmagic.ruby": "Ruby",
+  "block.russianmagic.ruby_block": "Ruby block",
+  "block.russianmagic.ruby_block_ore": "Ruby ore",
+
+  "block.russianmagic.onyx": "Onyx",
+  "block.russianmagic.onyx_block": "Onyx block",
+  "block.russianmagic.onyx_block_ore": "Onyx ore",
+
+  "block.russianmagic.sapphire": "Sapphire",
+  "block.russianmagic.sapphire_block": "Sapphire block",
+  "block.russianmagic.sapphire_block_ore": "Sapphire ore",
+
+  "block.russianmagic.opal": "Opal",
+  "block.russianmagic.opal_block": "Opal block",
+  "block.russianmagic.opal_block_ore": "Opal ore",
+
+  "block.russianmagic.kunzite": "Kunzite",
+  "block.russianmagic.kunzite_block": "Kunzite block",
+  "block.russianmagic.kunzite_block_ore": "Kunzite ore"
 }

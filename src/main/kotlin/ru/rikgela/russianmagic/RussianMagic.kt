@@ -11,9 +11,15 @@ import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
 import ru.rikgela.russianmagic.init.*
 import ru.rikgela.russianmagic.mana.EventHandler
 import ru.rikgela.russianmagic.mana.ManaCapabilityHandler
+import ru.rikgela.russianmagic.client.HUDEventHandler
+import ru.rikgela.russianmagic.common.RMNetworkChannel
+import ru.rikgela.russianmagic.common.RMNetworkMessage
+import ru.rikgela.russianmagic.mana.*
+import ru.rikgela.russianmagic.oregenerator.OreGeneration
 
 
 const val MOD_ID = "russianmagic"
+var networkIndex = 0
 
 @Mod(MOD_ID)
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -32,6 +38,8 @@ class RussianMagic {
         RMContainerTypes.CONTAINER_TYPES.register(bus)
         MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
         MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
+        MinecraftForge.EVENT_BUS.register(ManaEventHandler())
+        MinecraftForge.EVENT_BUS.register(HUDEventHandler())
         MinecraftForge.EVENT_BUS.register(EventHandler())
         FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLCommonSetupEvent ->
             setup(event)
@@ -53,6 +61,21 @@ class RussianMagic {
 
     private fun setup(event: FMLCommonSetupEvent) {
         //preinit
-//        CapabilityManager.INSTANCE.register(IMana::class.java, ManaStorage()) { Mana() }
+        OreGeneration.setupOreGeneration();
+        CapabilityManager.INSTANCE.register(IMana::class.java, ManaStorage()) { Mana() }
+        @Suppress("INACCESSIBLE_TYPE")
+        RMNetworkChannel.registerMessage(
+                networkIndex++,
+                RMNetworkMessage::class.java,
+                RMNetworkMessage::encoder,
+                RMNetworkMessage.Companion::fromPacketBuffer,
+                RMNetworkMessage::handle)
+        @Suppress("INACCESSIBLE_TYPE")
+        RMNetworkChannel.registerMessage(
+                networkIndex++,
+                ManaMessage::class.java,
+                ManaMessage::encoder,
+                ManaMessage.Companion::fromPacketBuffer,
+                ManaMessage::handle)
     }
 }
