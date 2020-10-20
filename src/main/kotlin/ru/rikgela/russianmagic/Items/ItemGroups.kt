@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic
+package ru.rikgela.russianmagic.Items
 
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
@@ -14,5 +14,5 @@ class ItemGroup(name: String, private val iconSupplier: Supplier<ItemStack?>?) :
 }
 
 object ItemGroups {
-    val RUSSIAN_MAGIC_ITEM_GROUP: ItemGroup = ru.rikgela.russianmagic.ItemGroup("russian_magic_items", Supplier { ItemStack(Items.STONE_MAGIC_OBJECT.get()) })
+    val RUSSIAN_MAGIC_ITEM_GROUP: ItemGroup = ru.rikgela.russianmagic.Items.ItemGroup("russian_magic_items", Supplier { ItemStack(Items.STONE_MAGIC_OBJECT.get()) })
 }

@@ -5,6 +5,8 @@ import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
+import ru.rikgela.russianmagic.Items.Items
+import ru.rikgela.russianmagic.blocks.Blocks
 import ru.rikgela.russianmagic.client.HUDEventHandler
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage

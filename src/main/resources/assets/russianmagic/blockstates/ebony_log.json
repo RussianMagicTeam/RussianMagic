@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "russianmagic:block/ebony_log"
+    },
+    "axis=z": {
+      "model": "russianmagic:block/ebony_log",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "russianmagic:block/ebony_log",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

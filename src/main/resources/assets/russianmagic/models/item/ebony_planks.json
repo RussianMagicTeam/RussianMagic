@@ -1,6 +1,3 @@
 {
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "russianmagic:item/ebony_planks"
-  }
+  "parent": "russianmagic:block/ebony_planks"
 }
