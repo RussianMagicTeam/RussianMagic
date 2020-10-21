@@ -35,6 +35,10 @@ import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.container.RMFurnaceContainer
 import ru.rikgela.russianmagic.init.RMTileEntityTypes
 import ru.rikgela.russianmagic.init.RecipeSerializerInit
+import ru.rikgela.russianmagic.mana.IMana
+import ru.rikgela.russianmagic.mana.IManaReceiver
+import ru.rikgela.russianmagic.mana.Mana
+import ru.rikgela.russianmagic.mana.ManaReceiver
 import ru.rikgela.russianmagic.objects.blocks.RMFurnaceBlock
 import ru.rikgela.russianmagic.util.RMItemHandler
 import java.util.*
@@ -46,7 +50,8 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
 
     var currentSmeltTime = 0
 
-
+    private val mana: IMana = Mana.withParams(100, 1000, 0F)
+    val manaReceiver: IManaReceiver = ManaReceiver(mana)
     val maxSmeltTime = 100
     val inventory: RMItemHandler = RMItemHandler(2)
     override fun createMenu(windowID: Int, playerInv: PlayerInventory, playerIn: PlayerEntity): Container {
@@ -55,41 +60,47 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
 
     override fun tick() {
         var dirty = false
+        var dropProgress = false
         if (world != null && world?.isRemote != true) {
             val recipe = getRecipe(inventory.getStackInSlot(0))
             if (recipe != null) {
-                if (inventory.getStackInSlot(1).count == 0
-                        || inventory.getStackInSlot(1).item == recipe.recipeOutput.item
-                        && inventory.getStackInSlot(1).count + recipe.recipeOutput.count <= inventory.getStackInSlot(1).maxStackSize) {
+                if (mana.currentMana >= 10 && (inventory.getStackInSlot(1).count == 0
+                                || inventory.getStackInSlot(1).item == recipe.recipeOutput.item
+                                && inventory.getStackInSlot(1).count + recipe.recipeOutput.count <= inventory.getStackInSlot(1).maxStackSize)) {
                     if (currentSmeltTime != maxSmeltTime) {
                         world!!.setBlockState(getPos(),
                                 this.blockState.with(RMFurnaceBlock.LIT, true))
                         currentSmeltTime++
                         dirty = true
                     } else {
-                        world!!.setBlockState(getPos(),
-                                this.blockState.with(RMFurnaceBlock.LIT, false))
-                        currentSmeltTime = 0
-                        val output = recipe.recipeOutput
-                        inventory.insertItem(1, output.copy(), false)
-                        inventory.decrStackSize(0, 1)
-                        dirty = true
+                        if (mana.consume(10)) {
+                            world!!.setBlockState(getPos(),
+                                    this.blockState.with(RMFurnaceBlock.LIT, false))
+                            currentSmeltTime = 0
+                            val output = recipe.recipeOutput
+                            inventory.insertItem(1, output.copy(), false)
+                            inventory.decrStackSize(0, 1)
+                            dirty = true
+                        } else {
+                            dropProgress = true
+                        }
                     }
                 } else {
-                    currentSmeltTime = 0
-                    world!!.setBlockState(getPos(),
-                            this.blockState.with(RMFurnaceBlock.LIT, false))
+                    dropProgress = true
                 }
             } else {
-                currentSmeltTime = 0
-                world!!.setBlockState(getPos(),
-                        this.blockState.with(RMFurnaceBlock.LIT, false))
+                dropProgress = true
             }
         }
         if (dirty) {
             markDirty()
             world!!.notifyBlockUpdate(getPos(), this.blockState, this.blockState,
                     Constants.BlockFlags.BLOCK_UPDATE)
+        }
+        if (dropProgress) {
+            currentSmeltTime = 0
+            world!!.setBlockState(getPos(),
+                    this.blockState.with(RMFurnaceBlock.LIT, false))
         }
     }
 
@@ -108,6 +119,7 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
         if (compound.contains("CustomName", Constants.NBT.TAG_STRING)) {
             customName = ITextComponent.Serializer.fromJson(compound.getString("CustomName"))
         }
+        mana.loadFromByteArray(compound.getByteArray("Mana"))
         val inv = NonNullList.withSize(inventory.slots, ItemStack.EMPTY)
         ItemStackHelper.loadAllItems(compound, inv)
         inventory.setNonNullList(inv)
@@ -116,6 +128,7 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
 
     override fun write(compound: CompoundNBT): CompoundNBT {
         super.write(compound)
+        compound.putByteArray("Mana", mana.toByteArray())
         if (customName != null) {
             compound.putString("CustomName", ITextComponent.Serializer.toJson(customName!!))
         }

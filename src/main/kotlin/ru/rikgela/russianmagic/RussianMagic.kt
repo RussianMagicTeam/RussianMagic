@@ -2,18 +2,19 @@ package ru.rikgela.russianmagic
 
 import net.minecraft.client.gui.ScreenManager
 import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
-import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
-import ru.rikgela.russianmagic.init.*
-import ru.rikgela.russianmagic.mana.EventHandler
-import ru.rikgela.russianmagic.mana.ManaCapabilityHandler
 import ru.rikgela.russianmagic.client.HUDEventHandler
+import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage
+import ru.rikgela.russianmagic.init.RMContainerTypes
+import ru.rikgela.russianmagic.init.RMTileEntityTypes
+import ru.rikgela.russianmagic.init.RecipeSerializerInit
 import ru.rikgela.russianmagic.mana.*
 import ru.rikgela.russianmagic.oregenerator.OreGeneration
 
@@ -28,9 +29,13 @@ class RussianMagic {
         val bus = FMLJavaModLoadingContext.get().modEventBus
 
         // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().modEventBus.addListener {
-            event: FMLCommonSetupEvent? -> setup(event!!)
+        FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLCommonSetupEvent ->
+            setup(event)
         }
+        FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLClientSetupEvent ->
+            clientSetup(event)
+        }
+
         Items.ITEMS.register(bus)
         BlocksInit.BLOCKS.register(bus)
         RecipeSerializerInit.RECIPE_SERIALIZERS.register(bus)
@@ -40,13 +45,6 @@ class RussianMagic {
         MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
         MinecraftForge.EVENT_BUS.register(ManaEventHandler())
         MinecraftForge.EVENT_BUS.register(HUDEventHandler())
-        MinecraftForge.EVENT_BUS.register(EventHandler())
-        FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLCommonSetupEvent ->
-            setup(event)
-        }
-        FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLClientSetupEvent ->
-            clientSetup(event)
-        }
 
     }
 
@@ -61,7 +59,7 @@ class RussianMagic {
 
     private fun setup(event: FMLCommonSetupEvent) {
         //preinit
-        OreGeneration.setupOreGeneration();
+        OreGeneration.setupOreGeneration()
         CapabilityManager.INSTANCE.register(IMana::class.java, ManaStorage()) { Mana() }
         @Suppress("INACCESSIBLE_TYPE")
         RMNetworkChannel.registerMessage(

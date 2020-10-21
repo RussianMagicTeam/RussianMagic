@@ -8,8 +8,6 @@ import net.minecraft.util.LazyValue
 import net.minecraftforge.fml.RegistryObject
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
-import ru.rikgela.russianmagic.ItemGroups
-import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.objects.items.SpellScroll
 import java.util.function.Supplier
 
@@ -151,83 +149,84 @@ object Items {
     //Mekanisms
     val RM_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_furnace_block") { BlockItem(BlocksInit.RM_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val AQUAMARINE_BLOCK: RegistryObject<Item?>? = ITEMS.register("aquamarine_block") { BlockItem(Blocks.AQUAMARINE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val AQUAMARINE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("aquamarine_block_ore") { BlockItem(Blocks.AQUAMARINE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AQUAMARINE_BLOCK: RegistryObject<Item?>? = ITEMS.register("aquamarine_block") { BlockItem(BlocksInit.AQUAMARINE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AQUAMARINE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("aquamarine_block_ore") { BlockItem(BlocksInit.AQUAMARINE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val RHINESTONE_BLOCK: RegistryObject<Item?>? = ITEMS.register("rhinestone_block") { BlockItem(Blocks.RHINESTONE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val RHINESTONE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("rhinestone_block_ore") { BlockItem(Blocks.RHINESTONE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RHINESTONE_BLOCK: RegistryObject<Item?>? = ITEMS.register("rhinestone_block") { BlockItem(BlocksInit.RHINESTONE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RHINESTONE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("rhinestone_block_ore") { BlockItem(BlocksInit.RHINESTONE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val JASPER_BLOCK: RegistryObject<Item?>? = ITEMS.register("jasper_block") { BlockItem(Blocks.JASPER_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val JASPER_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("jasper_block_ore") { BlockItem(Blocks.JASPER_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val JASPER_BLOCK: RegistryObject<Item?>? = ITEMS.register("jasper_block") { BlockItem(BlocksInit.JASPER_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val JASPER_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("jasper_block_ore") { BlockItem(BlocksInit.JASPER_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val CHRYSOLITE_BLOCK: RegistryObject<Item?>? = ITEMS.register("chrysolite_block") { BlockItem(Blocks.CHRYSOLITE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val CHRYSOLITE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("chrysolite_block_ore") { BlockItem(Blocks.CHRYSOLITE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val CHRYSOLITE_BLOCK: RegistryObject<Item?>? = ITEMS.register("chrysolite_block") { BlockItem(BlocksInit.CHRYSOLITE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val CHRYSOLITE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("chrysolite_block_ore") { BlockItem(BlocksInit.CHRYSOLITE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val GARNET_BLOCK: RegistryObject<Item?>? = ITEMS.register("garnet_block") { BlockItem(Blocks.GARNET_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val GARNET_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("garnet_block_ore") { BlockItem(Blocks.GARNET_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val GARNET_BLOCK: RegistryObject<Item?>? = ITEMS.register("garnet_block") { BlockItem(BlocksInit.GARNET_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val GARNET_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("garnet_block_ore") { BlockItem(BlocksInit.GARNET_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val TOPAZ_BLOCK: RegistryObject<Item?>? = ITEMS.register("topaz_block") { BlockItem(Blocks.TOPAZ_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val TOPAZ_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("topaz_block_ore") { BlockItem(Blocks.TOPAZ_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val TOPAZ_BLOCK: RegistryObject<Item?>? = ITEMS.register("topaz_block") { BlockItem(BlocksInit.TOPAZ_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val TOPAZ_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("topaz_block_ore") { BlockItem(BlocksInit.TOPAZ_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val PERUNITE_BLOCK: RegistryObject<Item?>? = ITEMS.register("perunite_block") { BlockItem(Blocks.PERUNITE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val PERUNITE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("perunite_block_ore") { BlockItem(Blocks.PERUNITE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val PERUNITE_BLOCK: RegistryObject<Item?>? = ITEMS.register("perunite_block") { BlockItem(BlocksInit.PERUNITE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val PERUNITE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("perunite_block_ore") { BlockItem(BlocksInit.PERUNITE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val IOLITE_BLOCK: RegistryObject<Item?>? = ITEMS.register("iolite_block") { BlockItem(Blocks.IOLITE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val IOLITE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("iolite_block_ore") { BlockItem(Blocks.IOLITE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val IOLITE_BLOCK: RegistryObject<Item?>? = ITEMS.register("iolite_block") { BlockItem(BlocksInit.IOLITE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val IOLITE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("iolite_block_ore") { BlockItem(BlocksInit.IOLITE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val AGATE_BLOCK: RegistryObject<Item?>? = ITEMS.register("agate_block") { BlockItem(Blocks.AGATE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val AGATE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("agate_block_ore") { BlockItem(Blocks.AGATE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AGATE_BLOCK: RegistryObject<Item?>? = ITEMS.register("agate_block") { BlockItem(BlocksInit.AGATE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AGATE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("agate_block_ore") { BlockItem(BlocksInit.AGATE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val CITRINE_BLOCK: RegistryObject<Item?>? = ITEMS.register("citrine_block") { BlockItem(Blocks.CITRINE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val CITRINE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("citrine_block_ore") { BlockItem(Blocks.CITRINE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val CITRINE_BLOCK: RegistryObject<Item?>? = ITEMS.register("citrine_block") { BlockItem(BlocksInit.CITRINE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val CITRINE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("citrine_block_ore") { BlockItem(BlocksInit.CITRINE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val CHALCEDONY_BLOCK: RegistryObject<Item?>? = ITEMS.register("chalcedony_block") { BlockItem(Blocks.CHALCEDONY_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val CHALCEDONY_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("chalcedony_block_ore") { BlockItem(Blocks.CHALCEDONY_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val CHALCEDONY_BLOCK: RegistryObject<Item?>? = ITEMS.register("chalcedony_block") { BlockItem(BlocksInit.CHALCEDONY_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val CHALCEDONY_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("chalcedony_block_ore") { BlockItem(BlocksInit.CHALCEDONY_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val BERYL_BLOCK: RegistryObject<Item?>? = ITEMS.register("beryl_block") { BlockItem(Blocks.BERYL_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val BERYL_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("beryl_block_ore") { BlockItem(Blocks.BERYL_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val BERYL_BLOCK: RegistryObject<Item?>? = ITEMS.register("beryl_block") { BlockItem(BlocksInit.BERYL_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val BERYL_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("beryl_block_ore") { BlockItem(BlocksInit.BERYL_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val HELIODOR_BLOCK: RegistryObject<Item?>? = ITEMS.register("heliodor_block") { BlockItem(Blocks.HELIODOR_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val HELIODOR_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("heliodor_block_ore") { BlockItem(Blocks.HELIODOR_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val HELIODOR_BLOCK: RegistryObject<Item?>? = ITEMS.register("heliodor_block") { BlockItem(BlocksInit.HELIODOR_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val HELIODOR_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("heliodor_block_ore") { BlockItem(BlocksInit.HELIODOR_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val SITALL_BLOCK: RegistryObject<Item?>? = ITEMS.register("sitall_block") { BlockItem(Blocks.SITALL_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val SITALL_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("sitall_block_ore") { BlockItem(Blocks.SITALL_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val SITALL_BLOCK: RegistryObject<Item?>? = ITEMS.register("sitall_block") { BlockItem(BlocksInit.SITALL_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val SITALL_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("sitall_block_ore") { BlockItem(BlocksInit.SITALL_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val AMETHYST_BLOCK: RegistryObject<Item?>? = ITEMS.register("amethyst_block") { BlockItem(Blocks.AMETHYST_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val AMETHYST_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("amethyst_block_ore") { BlockItem(Blocks.AMETHYST_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AMETHYST_BLOCK: RegistryObject<Item?>? = ITEMS.register("amethyst_block") { BlockItem(BlocksInit.AMETHYST_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AMETHYST_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("amethyst_block_ore") { BlockItem(BlocksInit.AMETHYST_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val CARNELIAN_BLOCK: RegistryObject<Item?>? = ITEMS.register("carnelian_block") { BlockItem(Blocks.CARNELIAN_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val CARNELIAN_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("carnelian_block_ore") { BlockItem(Blocks.CARNELIAN_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val CARNELIAN_BLOCK: RegistryObject<Item?>? = ITEMS.register("carnelian_block") { BlockItem(BlocksInit.CARNELIAN_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val CARNELIAN_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("carnelian_block_ore") { BlockItem(BlocksInit.CARNELIAN_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val TANZANITE_BLOCK: RegistryObject<Item?>? = ITEMS.register("tanzanite_block") { BlockItem(Blocks.TANZANITE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val TANZANITE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("tanzanite_block_ore") { BlockItem(Blocks.TANZANITE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val TANZANITE_BLOCK: RegistryObject<Item?>? = ITEMS.register("tanzanite_block") { BlockItem(BlocksInit.TANZANITE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val TANZANITE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("tanzanite_block_ore") { BlockItem(BlocksInit.TANZANITE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val AMETRINE_BLOCK: RegistryObject<Item?>? = ITEMS.register("ametrine_block") { BlockItem(Blocks.AMETRINE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val AMETRINE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("ametrine_block_ore") { BlockItem(Blocks.AMETRINE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AMETRINE_BLOCK: RegistryObject<Item?>? = ITEMS.register("ametrine_block") { BlockItem(BlocksInit.AMETRINE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val AMETRINE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("ametrine_block_ore") { BlockItem(BlocksInit.AMETRINE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val CHAROITE_BLOCK: RegistryObject<Item?>? = ITEMS.register("charoite_block") { BlockItem(Blocks.CHAROITE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val CHAROITE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("charoite_block_ore") { BlockItem(Blocks.CHAROITE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val CHAROITE_BLOCK: RegistryObject<Item?>? = ITEMS.register("charoite_block") { BlockItem(BlocksInit.CHAROITE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val CHAROITE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("charoite_block_ore") { BlockItem(BlocksInit.CHAROITE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val CORAL_BLOCK: RegistryObject<Item?>? = ITEMS.register("coral_block") { BlockItem(Blocks.CORAL_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val CORAL_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("coral_block_ore") { BlockItem(Blocks.CORAL_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val CORAL_BLOCK: RegistryObject<Item?>? = ITEMS.register("coral_block") { BlockItem(BlocksInit.CORAL_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val CORAL_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("coral_block_ore") { BlockItem(BlocksInit.CORAL_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val RUBY_BLOCK: RegistryObject<Item?>? = ITEMS.register("ruby_block") { BlockItem(Blocks.RUBY_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val RUBY_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("ruby_block_ore") { BlockItem(Blocks.RUBY_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RUBY_BLOCK: RegistryObject<Item?>? = ITEMS.register("ruby_block") { BlockItem(BlocksInit.RUBY_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RUBY_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("ruby_block_ore") { BlockItem(BlocksInit.RUBY_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val ONYX_BLOCK: RegistryObject<Item?>? = ITEMS.register("onyx_block") { BlockItem(Blocks.ONYX_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val ONYX_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("onyx_block_ore") { BlockItem(Blocks.ONYX_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val ONYX_BLOCK: RegistryObject<Item?>? = ITEMS.register("onyx_block") { BlockItem(BlocksInit.ONYX_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val ONYX_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("onyx_block_ore") { BlockItem(BlocksInit.ONYX_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val SAPPHIRE_BLOCK: RegistryObject<Item?>? = ITEMS.register("sapphire_block") { BlockItem(Blocks.SAPPHIRE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val SAPPHIRE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("sapphire_block_ore") { BlockItem(Blocks.SAPPHIRE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val SAPPHIRE_BLOCK: RegistryObject<Item?>? = ITEMS.register("sapphire_block") { BlockItem(BlocksInit.SAPPHIRE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val SAPPHIRE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("sapphire_block_ore") { BlockItem(BlocksInit.SAPPHIRE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val OPAL_BLOCK: RegistryObject<Item?>? = ITEMS.register("opal_block") { BlockItem(Blocks.OPAL_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val OPAL_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("opal_block_ore") { BlockItem(Blocks.OPAL_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val OPAL_BLOCK: RegistryObject<Item?>? = ITEMS.register("opal_block") { BlockItem(BlocksInit.OPAL_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val OPAL_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("opal_block_ore") { BlockItem(BlocksInit.OPAL_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-    val KUNZITE_BLOCK: RegistryObject<Item?>? = ITEMS.register("kunzite_block") { BlockItem(Blocks.KUNZITE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val KUNZITE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("kunzite_block_ore") { BlockItem(Blocks.KUNZITE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val KUNZITE_BLOCK: RegistryObject<Item?>? = ITEMS.register("kunzite_block") { BlockItem(BlocksInit.KUNZITE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val KUNZITE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("kunzite_block_ore") { BlockItem(BlocksInit.KUNZITE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
     // Spell_Scrolls
     val SPELL_OF_REGENERATION: RegistryObject<Item> = ITEMS.register("spell_of_regeneration") {
-        SpellScroll(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+        SpellScroll(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP))
+    }
 
 }

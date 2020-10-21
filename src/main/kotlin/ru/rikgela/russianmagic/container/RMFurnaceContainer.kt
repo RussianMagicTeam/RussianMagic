@@ -10,7 +10,7 @@ import net.minecraft.util.IWorldPosCallable
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.items.SlotItemHandler
-import ru.rikgela.russianmagic.init.BlocksInit
+import ru.rikgela.russianmagic.BlocksInit
 import ru.rikgela.russianmagic.init.RMContainerTypes
 import ru.rikgela.russianmagic.tileentity.RMFurnaceTileEntity
 import ru.rikgela.russianmagic.util.FunctionalIntReferenceHolder
@@ -21,7 +21,7 @@ import javax.annotation.Nonnull
 
 class RMFurnaceContainer(windowID: Int,
                          playerInv: PlayerInventory,
-                         private val tileEntity: RMFurnaceTileEntity
+                         val tileEntity: RMFurnaceTileEntity
 ) : Container(RMContainerTypes.RM_FURNACE_CONTAINER.get(), windowID) {
     private val canInteractWithCallable: IWorldPosCallable = IWorldPosCallable.of(tileEntity.world!!, tileEntity.pos)
     var currentSmeltTime: FunctionalIntReferenceHolder? = null

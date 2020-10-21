@@ -2,7 +2,6 @@ package ru.rikgela.russianmagic
 
 import net.minecraft.item.ItemGroup
 import net.minecraft.item.ItemStack
-import ru.rikgela.russianmagic.init.Items
 import java.util.function.Supplier
 
 class ItemGroup(name: String, private val iconSupplier: Supplier<ItemStack?>?) : ItemGroup(name) {

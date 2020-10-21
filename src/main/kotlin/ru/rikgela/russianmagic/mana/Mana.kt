@@ -32,8 +32,8 @@ import java.util.function.Supplier
 
 
 interface IMana {
-
     fun consume(points: Int, player: ServerPlayerEntity): Boolean
+    fun consume(points: Int): Boolean
     fun fill(points: Int)
     fun setMana(points: Int)
     fun setMaxMana(points: Int)
@@ -48,6 +48,19 @@ interface IMana {
     val manaPerTick: Float
 }
 
+interface IManaSpreader {
+    val currentMana: Int
+    val maxMana: Int
+    val manaPerTick: Float
+}
+
+interface IManaReceiver {
+    val currentMana: Int
+    val maxMana: Int
+    val maxTransfer: Int
+    fun transfer(points: Int): Boolean
+}
+
 class Mana : IMana {
     companion object {
         fun fromPlayer(player: PlayerEntity): Mana {
@@ -55,6 +68,14 @@ class Mana : IMana {
                 return player.getCapability(MANA_CAP!!).orElse(Mana()) as Mana
             }
             return Mana()
+        }
+
+        fun withParams(startManaCount: Int, maxManaCount: Int, manaPerTick: Float): Mana {
+            val ret = Mana()
+            ret.currentMana = startManaCount
+            ret.maxMana = maxManaCount
+            ret.manaPerTick = manaPerTick
+            return ret
         }
     }
 
@@ -122,9 +143,17 @@ class Mana : IMana {
     private var ticks = 0
 
     override fun consume(points: Int, player: ServerPlayerEntity): Boolean {
+        return if (consume(points)) {
+            sendToPlayer(player)
+            true
+        } else {
+            false
+        }
+    }
+
+    override fun consume(points: Int): Boolean {
         if (currentMana >= points) {
             currentMana -= points
-            sendToPlayer(player)
             return true
         }
         return false
@@ -149,6 +178,25 @@ class Mana : IMana {
         manaPerTick = points
     }
 
+}
+
+class ManaReceiver(private val mana: IMana) : IManaReceiver {
+    override val currentMana: Int
+        get() = mana.currentMana
+    override val maxMana: Int
+        get() = mana.maxMana
+
+    override val maxTransfer: Int
+        get() = maxMana - currentMana
+
+
+    override fun transfer(points: Int): Boolean {
+        if (currentMana + points <= maxMana) {
+            mana.fill(points)
+            return true
+        }
+        return false
+    }
 }
 
 class ManaMessage(
