@@ -11,6 +11,8 @@ import net.minecraft.network.PacketBuffer
 import net.minecraft.util.Direction
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.StringTextComponent
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.capabilities.Capability.IStorage
 import net.minecraftforge.common.capabilities.CapabilityInject
@@ -203,18 +205,21 @@ class ManaMessage(
         private val mana: Mana
 ) {
     companion object {
-        val minecraft: Minecraft = Minecraft.getInstance()
         fun fromPacketBuffer(pb: PacketBuffer): ManaMessage {
             val ret = Mana()
             ret.loadFromByteArray(pb.readByteArray())
             return ManaMessage(ret)
         }
+
+        @OnlyIn(Dist.CLIENT)
+        val minecraft: Minecraft = Minecraft.getInstance()
     }
 
     fun encoder(pb: PacketBuffer) {
         pb.writeByteArray(mana.toByteArray())
     }
 
+    @OnlyIn(Dist.CLIENT)
     fun handle(ctx: Supplier<NetworkEvent.Context?>) {
         ctx.get()?.enqueueWork {
             MANA_CAP?.let { minecraft.player?.getCapability(it)?.orElse(Mana())?.copy(mana) }

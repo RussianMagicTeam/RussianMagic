@@ -1,6 +1,8 @@
 package ru.rikgela.russianmagic
 
 import net.minecraft.client.gui.ScreenManager
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.eventbus.api.SubscribeEvent
@@ -44,12 +46,13 @@ class RussianMagic {
         MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
         MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
         MinecraftForge.EVENT_BUS.register(ManaEventHandler())
-        MinecraftForge.EVENT_BUS.register(HUDEventHandler())
 
     }
 
     @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
     fun clientSetup(event: FMLClientSetupEvent?) {
+        MinecraftForge.EVENT_BUS.register(HUDEventHandler())
         ScreenManager.registerFactory(RMContainerTypes.RM_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn -> RMFurnaceScreen(screenContainer, inv, titleIn) }
     }
 
