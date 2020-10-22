@@ -19,6 +19,7 @@ import java.util.*
 import java.util.function.IntConsumer
 import java.util.function.IntSupplier
 import javax.annotation.Nonnull
+import kotlin.math.min
 
 class RMFurnaceContainer(windowID: Int,
                          playerInv: PlayerInventory,
@@ -34,30 +35,49 @@ class RMFurnaceContainer(windowID: Int,
         return isWithinUsableDistance(canInteractWithCallable, playerIn, RMBlocks.RM_FURNACE_BLOCK.get())
     }
 
+    private fun transferToInventory(player: PlayerEntity, index: Int): ItemStack {
+        val slot = inventorySlots[index]
+        for (i in 0..35) {
+            if (inventorySlots[i].hasStack && inventorySlots[i].stack.isItemEqual(slot.stack)) {
+                val transferCount = min(slot.stack.count, inventorySlots[i].stack.maxStackSize - inventorySlots[i].stack.count)
+                slot.stack.count -= transferCount
+                inventorySlots[i].stack.count += transferCount
+                if (slot.stack.isEmpty) return player.activeItemStack
+            }
+        }
+
+        for (i in 0..35) {
+            if (!inventorySlots[i].hasStack) {
+                inventorySlots[i].putStack(slot.stack)
+                inventorySlots[index].putStack(ItemStack.EMPTY)
+                return player.activeItemStack
+            }
+        }
+
+        return player.activeItemStack
+    }
+
     @Nonnull
     override fun transferStackInSlot(player: PlayerEntity, index: Int): ItemStack {
-        var returnStack = ItemStack.EMPTY
+
+        var returnStack = player.activeItemStack
         val slot = inventorySlots[index]
-        if (slot != null && slot.hasStack) {
-            val slotStack = slot.stack
-            returnStack = slotStack.copy()
-            val containerSlots = inventorySlots.size - player.inventory.mainInventory.size
-            if (index < containerSlots) {
-                if (!mergeItemStack(slotStack, containerSlots, inventorySlots.size, true)) {
-                    return ItemStack.EMPTY
-                }
-            } else if (!mergeItemStack(slotStack, 0, containerSlots, false)) {
-                return ItemStack.EMPTY
-            }
-            if (slotStack.count == 0) {
-                slot.putStack(ItemStack.EMPTY)
+
+        if (slot.hasStack) {
+            if (index == 36 || index == 37) {
+                transferToInventory(player, index)
             } else {
-                slot.onSlotChanged()
+                if (inventorySlots[36].hasStack && inventorySlots[36].stack.isItemEqual(slot.stack)) {
+                    val transferCount = min(slot.stack.count, inventorySlots[36].stack.maxStackSize - inventorySlots[36].stack.count)
+                    slot.stack.count -= transferCount
+                    inventorySlots[36].stack.count += transferCount
+                    if (slot.stack.isEmpty) return returnStack
+                } else if (!inventorySlots[36].hasStack) {
+                    inventorySlots[36].putStack(slot.stack)
+                    inventorySlots[index].putStack(ItemStack.EMPTY)
+                    return returnStack
+                }
             }
-            if (slotStack.count == returnStack.count) {
-                return ItemStack.EMPTY
-            }
-            slot.onTake(player, slotStack)
         }
         return returnStack
     }
@@ -80,10 +100,17 @@ class RMFurnaceContainer(windowID: Int,
 
     override fun slotClick(slotId: Int, dragType: Int, clickTypeIn: ClickType, player: PlayerEntity): ItemStack {
         if(slotId == 37) {
-            if (player.inventory.itemStack.isEmpty)
+            if (player.inventory.itemStack.isEmpty) {
                 return super.slotClick(slotId, dragType, clickTypeIn, player)
-            if (player.inventory.itemStack.isItemEqual(inventory[slotId]))
-                return super.slotClick(slotId, dragType, clickTypeIn, player)
+            }
+            if (player.inventory.itemStack.isItemEqual(inventory[slotId])) {
+                val ret = player.inventory.itemStack
+                val transferCount = min(inventory[slotId].count, ret.maxStackSize - ret.count)
+                ret.count += transferCount
+                inventory[slotId].count -= transferCount
+                return ret
+            }
+
             return player.inventory.itemStack
         }
         return super.slotClick(slotId, dragType, clickTypeIn, player)
