@@ -24,7 +24,6 @@ import net.minecraftforge.common.util.Constants
 import net.minecraftforge.common.util.LazyOptional
 import net.minecraftforge.items.CapabilityItemHandler
 import net.minecraftforge.items.IItemHandler
-import net.minecraftforge.items.IItemHandlerModifiable
 import net.minecraftforge.items.wrapper.RecipeWrapper
 import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.container.RMFurnaceContainer
@@ -143,10 +142,6 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
         return null
     }
 
-    fun getInventory(): IItemHandlerModifiable {
-        return inventory
-    }
-
     override fun getUpdatePacket(): SUpdateTileEntityPacket? {
         val nbt = CompoundNBT()
         write(nbt)
@@ -177,8 +172,5 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
                     .filter { recipe: IRecipe<*> -> recipe.type.toString() == typeIn }
                     .collect(Collectors.toSet()) else emptySet()
         }
-    }
-    init {
-        //inventory = RMItemHandler(2)
     }
 }

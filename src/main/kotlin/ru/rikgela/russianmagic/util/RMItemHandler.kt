@@ -56,7 +56,7 @@ class RMItemHandler(size: Int, vararg stacks: ItemStack) : ItemStackHandler(size
     }
 
     init {
-        for (index in 0 until stacks.size) {
+        for (index in stacks.indices) {
             this.stacks[index] = stacks[index]
         }
     }

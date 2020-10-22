@@ -1,20 +1,18 @@
-package ru.rikgela.russianmagic
+package ru.rikgela.russianmagic.init
 
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.material.Material
-import net.minecraft.tileentity.TileEntityType
 import net.minecraftforge.common.ToolType
 import net.minecraftforge.fml.RegistryObject
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import ru.rikgela.russianmagic.MOD_ID
-import ru.rikgela.russianmagic.init.RMTileEntityTypes.TILE_ENTITY_TYPES
 import ru.rikgela.russianmagic.objects.blocks.RMFurnaceBlock
-import ru.rikgela.russianmagic.tileentity.RMFurnaceTileEntity
 
-object BlocksInit {
-    public val BLOCKS: DeferredRegister<Block> = DeferredRegister<Block>(ForgeRegistries.BLOCKS, MOD_ID)
+object RMBlocks {
+    @JvmStatic
+    val BLOCKS: DeferredRegister<Block> = DeferredRegister<Block>(ForgeRegistries.BLOCKS, MOD_ID)
     val STONE_STICK_BLOCK: RegistryObject<Block> = BLOCKS.register<Block>("stone_stick_block") {
         Block(Block
                 .Properties

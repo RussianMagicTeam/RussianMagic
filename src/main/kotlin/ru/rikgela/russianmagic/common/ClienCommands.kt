@@ -24,22 +24,22 @@ class RMCCMessage(
         enum class Commands {
             OPEN_GUI, TRANSFER_MANA_FROM_PLAYER_TO_TILE_ENTITY
         }
-
         data class Command(
                 val cmd: Commands,
                 val data: String
         )
-
         data class Pos(
                 val x: Int,
                 val y: Int,
                 val z: Int
         )
 
+        @JvmStatic
         fun fromString(msg: String): RMCCMessage {
             return RMCCMessage(Gson().fromJson(msg, Command::class.java))
         }
 
+        @JvmStatic
         fun fromPacketBuffer(pb: PacketBuffer): RMCCMessage {
             return fromString(pb.readByteArray().decodeToString())
         }
@@ -70,9 +70,9 @@ class RMCCMessage(
         pb.writeString(Gson().toJson(cmd))
     }
 
-    fun handle(ctx: Supplier<NetworkEvent.Context?>) {
-        ctx.get()?.enqueueWork {
-            val playerEntity: ServerPlayerEntity = ctx.get()?.sender ?: return@enqueueWork
+    fun handle(ctx: Supplier<NetworkEvent.Context>) {
+        ctx.get().enqueueWork {
+            val playerEntity: ServerPlayerEntity = ctx.get().sender ?: return@enqueueWork
             val world = playerEntity.world ?: return@enqueueWork
             if (cmd.cmd == Commands.OPEN_GUI) {
                 val pos = Gson().fromJson(cmd.data, Pos::class.java)
@@ -96,6 +96,6 @@ class RMCCMessage(
                 }
             }
         }
-        ctx.get()?.packetHandled = true
+        ctx.get().packetHandled = true
     }
 }

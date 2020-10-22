@@ -15,7 +15,9 @@ import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
 import ru.rikgela.russianmagic.common.RMCCMessage
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage
+import ru.rikgela.russianmagic.init.RMBlocks
 import ru.rikgela.russianmagic.init.RMContainerTypes
+import ru.rikgela.russianmagic.init.RMItems
 import ru.rikgela.russianmagic.init.RMTileEntityTypes
 import ru.rikgela.russianmagic.mana.*
 import ru.rikgela.russianmagic.oregenerator.OreGeneration
@@ -38,8 +40,8 @@ class RussianMagic {
             clientSetup(event)
         }
 
-        Items.ITEMS.register(bus)
-        BlocksInit.BLOCKS.register(bus)
+        RMItems.ITEMS.register(bus)
+        RMBlocks.BLOCKS.register(bus)
         RMTileEntityTypes.TILE_ENTITY_TYPES.register(bus)
         RMContainerTypes.CONTAINER_TYPES.register(bus)
         MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
@@ -54,10 +56,6 @@ class RussianMagic {
         MinecraftForge.EVENT_BUS.register(HUDEventHandler())
         ScreenManager.registerFactory(RMContainerTypes.RM_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn -> RMFurnaceScreen(screenContainer, inv, titleIn) }
     }
-
-    //private fun clientSetup(event: FMLClientSetupEvent) {
-//        ScreenManager.registerFactory(RMContainerTypes.RM_FURNACE_CONTAINER.get(), ScreenManager.IScreenFactory<RMFurnaceContainer, RMFurnaceScreen> { screenContainer, inv, titleIn -> RMFurnaceScreen(screenContainer, inv, titleIn) })
-    //}
 
     private fun setup(event: FMLCommonSetupEvent) {
         //preinit

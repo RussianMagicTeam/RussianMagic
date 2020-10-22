@@ -10,7 +10,7 @@ import net.minecraft.util.IWorldPosCallable
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.items.SlotItemHandler
-import ru.rikgela.russianmagic.BlocksInit
+import ru.rikgela.russianmagic.init.RMBlocks
 import ru.rikgela.russianmagic.init.RMContainerTypes
 import ru.rikgela.russianmagic.tileentity.RMFurnaceTileEntity
 import ru.rikgela.russianmagic.util.FunctionalIntReferenceHolder
@@ -24,13 +24,13 @@ class RMFurnaceContainer(windowID: Int,
                          val tileEntity: RMFurnaceTileEntity
 ) : Container(RMContainerTypes.RM_FURNACE_CONTAINER.get(), windowID) {
     private val canInteractWithCallable: IWorldPosCallable = IWorldPosCallable.of(tileEntity.world!!, tileEntity.pos)
-    var currentSmeltTime: FunctionalIntReferenceHolder? = null
+    private var currentSmeltTime: FunctionalIntReferenceHolder? = null
 
     // Client Constructor
     constructor(windowID: Int, playerInv: PlayerInventory, data: PacketBuffer?) : this(windowID, playerInv, getTileEntity(playerInv, data))
 
     override fun canInteractWith(playerIn: PlayerEntity): Boolean {
-        return isWithinUsableDistance(canInteractWithCallable, playerIn, BlocksInit.RM_FURNACE_BLOCK.get())
+        return isWithinUsableDistance(canInteractWithCallable, playerIn, RMBlocks.RM_FURNACE_BLOCK.get())
     }
 
     @Nonnull

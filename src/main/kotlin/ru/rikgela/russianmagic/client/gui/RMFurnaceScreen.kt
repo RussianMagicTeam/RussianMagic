@@ -8,7 +8,7 @@ import net.minecraft.util.text.ITextComponent
 import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.container.RMFurnaceContainer
 
-class RMFurnaceScreen(val screenContainer: RMFurnaceContainer, inv: PlayerInventory, titleIn: ITextComponent) : ContainerScreen<RMFurnaceContainer?>(screenContainer, inv, titleIn) {
+class RMFurnaceScreen(private val screenContainer: RMFurnaceContainer, inv: PlayerInventory, titleIn: ITextComponent) : ContainerScreen<RMFurnaceContainer?>(screenContainer, inv, titleIn) {
     override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {
         RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f)
         minecraft!!.getTextureManager().bindTexture(TEXTURE)

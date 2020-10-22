@@ -51,7 +51,7 @@ class RMFurnaceBlock(properties: Properties) : Block(properties) {
     }
 
     override fun getLightValue(state: BlockState): Int {
-        return if (state.get(LIT)) super.getLightValue(state) else 0
+        return if (state.get(LIT)) super.lightValue else 0
     }
 
     override fun getStateForPlacement(context: BlockItemUseContext): BlockState? {

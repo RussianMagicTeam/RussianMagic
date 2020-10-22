@@ -11,10 +11,10 @@ import java.awt.Color
 
 @OnlyIn(Dist.CLIENT)
 class GuiManaHUD(
-        val height: Int = 10,
-        val width: Int = 100,
-        val xPos: Int = 1,
-        val yPos: Int = 95,
+        private val height: Int = 10,
+        private val width: Int = 100,
+        private val xPos: Int = 1,
+        private val yPos: Int = 95,
 ) : AbstractGui() {
 
     fun drawHUD() {
