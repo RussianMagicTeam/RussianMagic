@@ -11,6 +11,8 @@ import net.minecraft.network.PacketBuffer
 import net.minecraft.util.Direction
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.StringTextComponent
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.capabilities.Capability.IStorage
 import net.minecraftforge.common.capabilities.CapabilityInject
@@ -32,7 +34,7 @@ import java.util.function.Supplier
 
 
 interface IMana {
-
+    fun consume(points: Int, player: ServerPlayerEntity): Boolean
     fun consume(points: Int): Boolean
     fun fill(points: Int)
     fun setMana(points: Int)
@@ -43,9 +45,22 @@ interface IMana {
     fun tick()
     fun toByteArray(): ByteArray
     fun loadFromByteArray(buff: ByteArray)
-    val mana: Int
+    val currentMana: Int
     val maxMana: Int
     val manaPerTick: Float
+}
+
+interface IManaSpreader {
+    val currentMana: Int
+    val maxMana: Int
+    val manaPerTick: Float
+}
+
+interface IManaReceiver {
+    val currentMana: Int
+    val maxMana: Int
+    val maxTransfer: Int
+    fun transfer(points: Int): Boolean
 }
 
 class Mana : IMana {
@@ -56,6 +71,14 @@ class Mana : IMana {
             }
             return Mana()
         }
+
+        fun withParams(startManaCount: Int, maxManaCount: Int, manaPerTick: Float): Mana {
+            val ret = Mana()
+            ret.currentMana = startManaCount
+            ret.maxMana = maxManaCount
+            ret.manaPerTick = manaPerTick
+            return ret
+        }
     }
 
     override fun sendToPlayer(player: ServerPlayerEntity) {
@@ -63,7 +86,7 @@ class Mana : IMana {
     }
 
     override fun copy(mana: IMana) {
-        this.mana = mana.mana
+        this.currentMana = mana.currentMana
     }
 
     override fun tick() {
@@ -71,7 +94,7 @@ class Mana : IMana {
             fill(max((20 * manaPerTick).toInt(), 1))
         }
         if (ticks % 100 == 0) {
-            manaPerTick = (manaPerTick * 1.1).toFloat()
+            manaPerTick = if (manaPerTick <= 10000) (manaPerTick * 1.1).toFloat() else 10000.0F
         }
         ticks++
     }
@@ -79,10 +102,10 @@ class Mana : IMana {
     override fun toByteArray(): ByteArray {
         val manaPerTick = floatToIntBits(this.manaPerTick)
         return byteArrayOf(
-                ((mana ushr 24) and 0xFFFF).toByte(),
-                ((mana ushr 16) and 0xFFFF).toByte(),
-                ((mana ushr 8) and 0xFFFF).toByte(),
-                (mana and 0xFFFF).toByte(),
+                ((currentMana ushr 24) and 0xFFFF).toByte(),
+                ((currentMana ushr 16) and 0xFFFF).toByte(),
+                ((currentMana ushr 8) and 0xFFFF).toByte(),
+                (currentMana and 0xFFFF).toByte(),
                 ((maxMana ushr 24) and 0xFFFF).toByte(),
                 ((maxMana ushr 16) and 0xFFFF).toByte(),
                 ((maxMana ushr 8) and 0xFFFF).toByte(),
@@ -96,7 +119,7 @@ class Mana : IMana {
 
     override fun loadFromByteArray(buff: ByteArray) {
         var i = 0
-        mana = buff[i++].toInt() shl 24 or
+        currentMana = buff[i++].toInt() shl 24 or
                 (buff[i++].toInt() and 0xFF shl 16) or
                 (buff[i++].toInt() and 0xFF shl 8) or
                 (buff[i++].toInt() and 0xFF)
@@ -113,30 +136,40 @@ class Mana : IMana {
         manaPerTick = intBitsToFloat(manaPerTickBits)
     }
 
-    override var mana = 250
+    override var currentMana = 250
         private set
     override var maxMana = 1000
         private set
     override var manaPerTick = 1F
         private set
     private var ticks = 0
+
+    override fun consume(points: Int, player: ServerPlayerEntity): Boolean {
+        return if (consume(points)) {
+            sendToPlayer(player)
+            true
+        } else {
+            false
+        }
+    }
+
     override fun consume(points: Int): Boolean {
-        if (mana >= points) {
-            mana -= points
+        if (currentMana >= points) {
+            currentMana -= points
             return true
         }
         return false
     }
 
     override fun fill(points: Int) {
-        mana += points
-        if (mana > maxMana) {
-            mana = maxMana
+        currentMana += points
+        if (currentMana > maxMana) {
+            currentMana = maxMana
         }
     }
 
     override fun setMana(points: Int) {
-        mana = points
+        currentMana = points
     }
 
     override fun setMaxMana(points: Int) {
@@ -149,11 +182,29 @@ class Mana : IMana {
 
 }
 
+class ManaReceiver(private val mana: IMana) : IManaReceiver {
+    override val currentMana: Int
+        get() = mana.currentMana
+    override val maxMana: Int
+        get() = mana.maxMana
+
+    override val maxTransfer: Int
+        get() = maxMana - currentMana
+
+
+    override fun transfer(points: Int): Boolean {
+        if (currentMana + points <= maxMana) {
+            mana.fill(points)
+            return true
+        }
+        return false
+    }
+}
+
 class ManaMessage(
         private val mana: Mana
 ) {
     companion object {
-        val minecraft: Minecraft = Minecraft.getInstance()
         fun fromPacketBuffer(pb: PacketBuffer): ManaMessage {
             val ret = Mana()
             ret.loadFromByteArray(pb.readByteArray())
@@ -165,9 +216,10 @@ class ManaMessage(
         pb.writeByteArray(mana.toByteArray())
     }
 
+    @OnlyIn(Dist.CLIENT)
     fun handle(ctx: Supplier<NetworkEvent.Context?>) {
         ctx.get()?.enqueueWork {
-            MANA_CAP?.let { minecraft.player?.getCapability(it)?.orElse(Mana())?.copy(mana) }
+            MANA_CAP?.let { Minecraft.getInstance().player?.getCapability(it)?.orElse(Mana())?.copy(mana) }
         }
         ctx.get()?.packetHandled = true
     }
@@ -225,7 +277,7 @@ class ManaEventHandler {
         val player: PlayerEntity = event.player
         if (MANA_CAP != null) {
             val mana: IMana = player.getCapability(MANA_CAP!!, null).orElse(Mana())
-            val message = String.format("Hello there, you have §7%d§r mana left.", mana.mana)
+            val message = String.format("Hello there, you have §7%d§r mana left.", mana.currentMana)
             player.sendMessage(StringTextComponent(message))
             if (player is ServerPlayerEntity)
                 mana.sendToPlayer(player)
