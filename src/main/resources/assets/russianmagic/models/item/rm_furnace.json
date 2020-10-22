@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/handheld",
-  "textures": {
-    "layer0": "russianmagic:item/rm_furnace"
-  }
+  "parent": "russianmagic:block/ru_furnace"
 }
