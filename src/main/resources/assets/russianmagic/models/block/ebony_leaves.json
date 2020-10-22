@@ -1,0 +1,6 @@
+{
+  "parent": "block/leaves",
+  "textures": {
+    "all": "russianmagic:block/ebony_leaves"
+  }
+}

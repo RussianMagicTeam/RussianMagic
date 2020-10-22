@@ -39,6 +39,13 @@
   "item.russianmagic.aquamarine_shovel": "Aquamarine Shovel",
   "item.russianmagic.aquamarine_sword": "Aquamarine Sword",
 
+  "item.russianmagic.ebony_sapling":"Ebony sapling",
+  "item.russianmagic.ebony_log": "Ebony log",
+  "item.russianmagic.stripped_ebony_log":"Stripped ebony log",
+  "item.russianmagic.ebony_wood": "Ebony wood",
+  "item.russianmagic.stripped_ebony_wood":"Stripped ebony wood",
+  "item.russianmagic.ebony_leaves": "Ebony leaves",
+
 
   "block.russianmagic.stone_stick_block": "Stone stick block",
   "block.russianmagic.marble_block": "Marble block",
@@ -48,8 +55,6 @@
   "block.russianmagic.aquamarine_block_ore": "Aquamarine ore",
 
   "block.russianmagic.rhinestone_block": "Rhinestone block",
-  "block.russianmagic.rhinestone_block_ore": "Rhinestone ore",
-  
   "item.russianmagic.spell_of_regeneration": "Spell of Regeneration",
 
   "item.russianmagic.jasper": "Jasper",
@@ -59,6 +64,15 @@
   "item.russianmagic.chrysolite": "Chrysolite",
   "block.russianmagic.chrysolite_block": "Chrysolite block",
   "block.russianmagic.chrysolite_block_ore": "Chrysolite ore",
+  "block.russianmagic.rhinestone_block_ore": "Rhinestone ore",
+
+  "block.russianmagic.ebony_sapling":"Ebony sapling",
+  "block.russianmagic.ebony_planks":"Ebony planks",
+  "block.russianmagic.ebony_log": "Ebony log",
+  "block.russianmagic.stripped_ebony_log":"Stripped ebony log",
+  "block.russianmagic.ebony_wood": "Ebony wood",
+  "block.russianmagic.stripped_ebony_wood":"Stripped ebony wood",
+  "block.russianmagic.ebony_leaves": "Ebony leaves",
 
   "item.russianmagic.garnet": "Garnet",
   "block.russianmagic.garnet_block": "Garnet block",
