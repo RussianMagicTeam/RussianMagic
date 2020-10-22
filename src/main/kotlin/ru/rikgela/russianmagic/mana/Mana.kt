@@ -210,9 +210,6 @@ class ManaMessage(
             ret.loadFromByteArray(pb.readByteArray())
             return ManaMessage(ret)
         }
-
-        @OnlyIn(Dist.CLIENT)
-        val minecraft: Minecraft = Minecraft.getInstance()
     }
 
     fun encoder(pb: PacketBuffer) {
@@ -222,7 +219,7 @@ class ManaMessage(
     @OnlyIn(Dist.CLIENT)
     fun handle(ctx: Supplier<NetworkEvent.Context?>) {
         ctx.get()?.enqueueWork {
-            MANA_CAP?.let { minecraft.player?.getCapability(it)?.orElse(Mana())?.copy(mana) }
+            MANA_CAP?.let { Minecraft.getInstance().player?.getCapability(it)?.orElse(Mana())?.copy(mana) }
         }
         ctx.get()?.packetHandled = true
     }
