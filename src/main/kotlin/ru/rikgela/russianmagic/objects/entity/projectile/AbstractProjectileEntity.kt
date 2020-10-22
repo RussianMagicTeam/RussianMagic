@@ -3,7 +3,6 @@ package ru.rikgela.russianmagic.objects.entity.projectile
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.IRendersAsItem
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.projectile.DamagingProjectileEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.item.Items
 import net.minecraft.nbt.CompoundNBT
@@ -14,7 +13,6 @@ import net.minecraft.util.Util
 import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
-import ru.rikgela.russianmagic.objects.entity.projectile.AbstractProjectileEntity
 
 @OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem::class)
 abstract class AbstractProjectileEntity : SpellProjectileEntity, IRendersAsItem {

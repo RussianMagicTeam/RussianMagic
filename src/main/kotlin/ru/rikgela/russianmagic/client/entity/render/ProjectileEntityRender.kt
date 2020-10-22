@@ -38,5 +38,3 @@ class ProjectileEntityRender(renderManagerIn: EntityRendererManager, private val
     }
 
 }
-
-

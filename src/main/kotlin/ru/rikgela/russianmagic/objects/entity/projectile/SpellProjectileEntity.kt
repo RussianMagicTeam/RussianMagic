@@ -34,7 +34,7 @@ abstract class SpellProjectileEntity protected constructor(p_i50173_1_: EntityTy
 
     constructor(p_i50175_1_: EntityType<out SpellProjectileEntity?>?, p_i50175_2_: LivingEntity, p_i50175_3_: Double, p_i50175_5_: Double, p_i50175_7_: Double, p_i50175_9_: World?) : this(p_i50175_1_, p_i50175_9_) {
         shootingEntity = p_i50175_2_
-        setLocationAndAngles(p_i50175_2_.posX, p_i50175_2_.posY + 1.0F, p_i50175_2_.posZ, p_i50175_2_.rotationYaw, p_i50175_2_.rotationPitch)
+        setLocationAndAngles(p_i50175_2_.posX, p_i50175_2_.posY + 0.5F, p_i50175_2_.posZ, p_i50175_2_.rotationYaw, p_i50175_2_.rotationPitch)
         recenterBoundingBox()
         motion = Vec3d.ZERO
         //p_i50175_3_ = p_i50175_3_ + this.rand.nextGaussian() * 0.4D;

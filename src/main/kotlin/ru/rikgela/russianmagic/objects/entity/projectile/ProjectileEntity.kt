@@ -6,7 +6,6 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.MobEntity
-import net.minecraft.entity.projectile.DamagingProjectileEntity
 import net.minecraft.network.IPacket
 import net.minecraft.util.DamageSource
 import net.minecraft.util.IndirectEntityDamageSource
