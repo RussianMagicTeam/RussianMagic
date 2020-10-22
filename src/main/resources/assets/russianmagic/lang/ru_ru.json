@@ -142,7 +142,7 @@
   "block.russianmagic.kunzite_block": "Блок кунцита",
   "block.russianmagic.kunzite_block_ore": "Руда кунцита",
 
-  "block.russianmagic.rm_furnace_block": "РМ печка",
+  "block.russianmagic.rm_furnace": "РМ печка",
   "container.russianmagic.rm_furnace": "РМ печка",
 
   "capability.russianmagic.mana": "Мана"

@@ -148,10 +148,6 @@ object RMItems {
     val MARBLE_BLOCK: RegistryObject<Item> = ITEMS.register("marble_block") { BlockItem(RMBlocks.MARBLE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val WHITE_JADE_BLOCK: RegistryObject<Item> = ITEMS.register("white_jade_block") { BlockItem(RMBlocks.WHITE_JADE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
-
-    //Mekanisms
-    val RM_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_furnace_block") { BlockItem(RMBlocks.RM_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-
     val AQUAMARINE_BLOCK: RegistryObject<Item?>? = ITEMS.register("aquamarine_block") { BlockItem(RMBlocks.AQUAMARINE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val AQUAMARINE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("aquamarine_block_ore") { BlockItem(RMBlocks.AQUAMARINE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
@@ -226,6 +222,9 @@ object RMItems {
 
     val KUNZITE_BLOCK: RegistryObject<Item?>? = ITEMS.register("kunzite_block") { BlockItem(RMBlocks.KUNZITE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val KUNZITE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("kunzite_block_ore") { BlockItem(RMBlocks.KUNZITE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+
+    //Mekanisms
+    val RM_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_furnace") { BlockItem(RMBlocks.RM_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
     // Spell_Scrolls
     val SPELL_OF_REGENERATION: RegistryObject<Item> = ITEMS.register("spell_of_regeneration") {
