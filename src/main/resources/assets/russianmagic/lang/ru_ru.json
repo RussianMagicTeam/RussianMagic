@@ -39,13 +39,28 @@
   "item.russianmagic.aquamarine_shovel": "Лопата из аквамарина",
   "item.russianmagic.aquamarine_sword": "Меч из аквамарина",
 
+  "item.russianmagic.ebony_sapling":"Саженец черного дерева",
+  "item.russianmagic.ebony_log": "Бревно черного дерева",
+  "item.russianmagic.stripped_ebony_log":"Обтёсанное бревно черного дерева",
+  "item.russianmagic.ebony_wood": "Черное дерево",
+  "item.russianmagic.stripped_ebony_wood":"Обтёсанное черное дерево",
+  "item.russianmagic.ebony_leaves": "Листва черного дерева",
+
   "block.russianmagic.marble_block": "Мраморный блок",
   "block.russianmagic.white_jade_block": "Блок белого нефрита",
 
   "block.russianmagic.aquamarine_block": "Блок аквамарина",
-  "block.russianmagic.aquamarine_block_ore": "Руда аквамарина"
+  "block.russianmagic.aquamarine_block_ore": "Руда аквамарина",
 
   "block.russianmagic.rhinestone_block": "Блок горного хрусталя",
-  "block.russianmagic.rhinestone_block_ore": "Руда горного хрусталя"
+  "block.russianmagic.rhinestone_block_ore": "Руда горного хрусталя",
+
+  "block.russianmagic.ebony_sapling": "Саженец черного дерева",
+  "block.russianmagic.ebony_planks": "Доски из черного дерева",
+  "block.russianmagic.ebony_log": "Бревно черного дерева",
+  "block.russianmagic.stripped_ebony_log":"Обтёсанное бревно черного дерева",
+  "block.russianmagic.ebony_wood": "Черное дерево",
+  "block.russianmagic.stripped_ebony_wood":"Обтёсанное черное дерево",
+  "block.russianmagic.ebony_leaves": "Листва черного дерева"
 
 }

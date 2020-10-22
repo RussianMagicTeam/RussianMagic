@@ -1,7 +1,10 @@
 {
   "replace": false,
   "values": [
-    "russianmagic:ebony_log"
+    "russianmagic:ebony_log",
+    "russianmagic:ebony_wood",
+    "russianmagic:stripped_ebony_log",
+    "russianmagic:stripped_ebony_wood"
   ]
 }
 
