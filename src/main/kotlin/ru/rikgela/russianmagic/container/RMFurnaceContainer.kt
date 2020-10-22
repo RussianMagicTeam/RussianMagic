@@ -2,6 +2,7 @@ package ru.rikgela.russianmagic.container
 
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.inventory.container.ClickType
 import net.minecraft.inventory.container.Container
 import net.minecraft.inventory.container.Slot
 import net.minecraft.item.ItemStack
@@ -75,6 +76,17 @@ class RMFurnaceContainer(windowID: Int,
             }
             throw IllegalStateException("TileEntity is not correct $tileAtPos")
         }
+    }
+
+    override fun slotClick(slotId: Int, dragType: Int, clickTypeIn: ClickType, player: PlayerEntity): ItemStack {
+        if(slotId == 37) {
+            if (player.inventory.itemStack.isEmpty)
+                return super.slotClick(slotId, dragType, clickTypeIn, player)
+            if (player.inventory.itemStack.isItemEqual(inventory[slotId]))
+                return super.slotClick(slotId, dragType, clickTypeIn, player)
+            return player.inventory.itemStack
+        }
+        return super.slotClick(slotId, dragType, clickTypeIn, player)
     }
 
     // Server Constructor
