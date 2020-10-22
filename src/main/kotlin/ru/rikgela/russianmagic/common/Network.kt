@@ -24,7 +24,7 @@ class RMNetworkMessage(
         }
 
         fun fromPacketBuffer(pb: PacketBuffer): RMNetworkMessage {
-            return RMNetworkMessage.fromString(pb.readString())
+            return fromString(pb.readByteArray().decodeToString())
         }
     }
 

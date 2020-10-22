@@ -1,6 +1,5 @@
 package ru.rikgela.russianmagic.tileentity
 
-import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.ItemStackHelper
@@ -9,8 +8,6 @@ import net.minecraft.inventory.container.INamedContainerProvider
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.FurnaceRecipe
 import net.minecraft.item.crafting.IRecipe
-import net.minecraft.item.crafting.IRecipeType
-import net.minecraft.item.crafting.Ingredient
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.network.NetworkManager
 import net.minecraft.network.play.server.SUpdateTileEntityPacket
@@ -22,8 +19,6 @@ import net.minecraft.util.NonNullList
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.World
-import net.minecraftforge.api.distmarker.Dist
-import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.util.Constants
 import net.minecraftforge.common.util.LazyOptional
@@ -34,15 +29,12 @@ import net.minecraftforge.items.wrapper.RecipeWrapper
 import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.container.RMFurnaceContainer
 import ru.rikgela.russianmagic.init.RMTileEntityTypes
-import ru.rikgela.russianmagic.init.RecipeSerializerInit
 import ru.rikgela.russianmagic.mana.IMana
 import ru.rikgela.russianmagic.mana.IManaReceiver
 import ru.rikgela.russianmagic.mana.Mana
 import ru.rikgela.russianmagic.mana.ManaReceiver
 import ru.rikgela.russianmagic.objects.blocks.RMFurnaceBlock
 import ru.rikgela.russianmagic.util.RMItemHandler
-import java.util.*
-import java.util.function.Consumer
 import java.util.stream.Collectors
 
 class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntityType<*> = RMTileEntityTypes.RM_FURNACE.get()) : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider {
@@ -141,7 +133,7 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
         if (stack == null) {
             return null
         }
-        val recipes = findRecipesByType(RecipeSerializerInit.RM_TYPE, world)
+        val recipes = findRecipesByType("smelting", world)
         for (iRecipe in recipes) {
             val recipe = iRecipe as FurnaceRecipe
             if (recipe.matches(RecipeWrapper(inventory), this.world!!)) {
@@ -180,31 +172,10 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
     }
 
     companion object {
-        fun findRecipesByType(typeIn: IRecipeType<*>, world: World?): Set<IRecipe<*>> {
+        fun findRecipesByType(typeIn: String, world: World?): Set<IRecipe<*>> {
             return if (world != null) world.recipeManager.recipes.stream()
-                    .filter { recipe: IRecipe<*> -> recipe.type.toString() == "smelting" }
+                    .filter { recipe: IRecipe<*> -> recipe.type.toString() == typeIn }
                     .collect(Collectors.toSet()) else emptySet()
-        }
-
-        @OnlyIn(Dist.CLIENT)
-        fun findRecipesByType(typeIn: IRecipeType<*>): Set<IRecipe<*>> {
-            val world = Minecraft.getInstance().world
-            return if (world != null) world.recipeManager.recipes.stream()
-                    .filter { recipe: IRecipe<*> -> recipe.type === typeIn }.collect(Collectors.toSet()) else emptySet()
-        }
-
-        fun getAllRecipeInputs(typeIn: IRecipeType<*>, worldIn: World): Set<ItemStack> {
-            val inputs: MutableSet<ItemStack> = HashSet()
-            val recipes = findRecipesByType(typeIn, worldIn)
-            for (recipe in recipes) {
-                val ingredients = recipe.ingredients
-                ingredients.forEach(Consumer { ingredient: Ingredient ->
-                    for (stack in ingredient.matchingStacks) {
-                        inputs.add(stack)
-                    }
-                })
-            }
-            return inputs
         }
     }
     init {

@@ -5,9 +5,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.item.ItemEntity
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.inventory.container.Container
-import net.minecraft.inventory.container.INamedContainerProvider
 import net.minecraft.item.BlockItemUseContext
 import net.minecraft.item.ItemStack
 import net.minecraft.particles.ParticleTypes
@@ -19,20 +17,16 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.BlockRayTraceResult
-import net.minecraft.util.text.StringTextComponent
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
-import net.minecraftforge.fml.network.NetworkHooks
+import ru.rikgela.russianmagic.common.RMCCMessage
 import ru.rikgela.russianmagic.init.RMTileEntityTypes
-import ru.rikgela.russianmagic.mana.IMana
-import ru.rikgela.russianmagic.mana.MANA_CAP
 import ru.rikgela.russianmagic.tileentity.RMFurnaceTileEntity
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
 import java.util.*
 import java.util.function.Consumer
-import kotlin.math.min
 
 class RMFurnaceBlock(properties: Properties) : Block(properties) {
     override fun hasTileEntity(state: BlockState): Boolean {
@@ -105,26 +99,11 @@ class RMFurnaceBlock(properties: Properties) : Block(properties) {
 
     override fun onBlockActivated(state: BlockState, worldIn: World, pos: BlockPos, player: PlayerEntity,
                                   handIn: Hand, hit: BlockRayTraceResult): ActionResultType {
-        if (!worldIn.isRemote) {
+        if (worldIn.isRemote) {
             if (KeyboardHelper.isHoldingShift) {
-                val tile = worldIn.getTileEntity(pos)
-                if (tile is RMFurnaceTileEntity) {
-                    if (MANA_CAP != null) {
-                        val playerMana: IMana = player.getCapability(MANA_CAP!!).orElseThrow { RuntimeException("WTF???") } as IMana
-                        val transferManaCount = min(tile.manaReceiver.maxTransfer, (playerMana).currentMana)
-                        if (transferManaCount > 0 && playerMana.consume(transferManaCount)) {
-                            if (tile.manaReceiver.transfer(transferManaCount)) {
-                                player.sendMessage(StringTextComponent("Furnace filled with $transferManaCount mana"))
-                            }
-                        }
-                    }
-                }
+                RMCCMessage.transferManaToTileEntity(pos.x, pos.y, pos.z)
             } else {
-                val tile = worldIn.getTileEntity(pos)
-                if (tile is RMFurnaceTileEntity) {
-                    NetworkHooks.openGui(player as ServerPlayerEntity, tile as INamedContainerProvider?, pos)
-                    return ActionResultType.SUCCESS
-                }
+                RMCCMessage.openTileEntityGui(pos.x, pos.y, pos.z)
             }
         }
         return ActionResultType.SUCCESS

@@ -12,11 +12,11 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import ru.rikgela.russianmagic.client.HUDEventHandler
 import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
+import ru.rikgela.russianmagic.common.RMCCMessage
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage
 import ru.rikgela.russianmagic.init.RMContainerTypes
 import ru.rikgela.russianmagic.init.RMTileEntityTypes
-import ru.rikgela.russianmagic.init.RecipeSerializerInit
 import ru.rikgela.russianmagic.mana.*
 import ru.rikgela.russianmagic.oregenerator.OreGeneration
 
@@ -40,7 +40,6 @@ class RussianMagic {
 
         Items.ITEMS.register(bus)
         BlocksInit.BLOCKS.register(bus)
-        RecipeSerializerInit.RECIPE_SERIALIZERS.register(bus)
         RMTileEntityTypes.TILE_ENTITY_TYPES.register(bus)
         RMContainerTypes.CONTAINER_TYPES.register(bus)
         MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
@@ -78,5 +77,12 @@ class RussianMagic {
                 ManaMessage::encoder,
                 ManaMessage.Companion::fromPacketBuffer,
                 ManaMessage::handle)
+        @Suppress("INACCESSIBLE_TYPE")
+        RMNetworkChannel.registerMessage(
+                networkIndex++,
+                RMCCMessage::class.java,
+                RMCCMessage::encoder,
+                RMCCMessage.Companion::fromPacketBuffer,
+                RMCCMessage::handle)
     }
 }
