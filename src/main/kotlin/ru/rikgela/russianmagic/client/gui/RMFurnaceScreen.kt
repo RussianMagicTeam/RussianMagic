@@ -2,6 +2,7 @@ package ru.rikgela.russianmagic.client.gui
 
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.gui.screen.inventory.ContainerScreen
+import net.minecraft.client.resources.I18n
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.ITextComponent
@@ -21,7 +22,8 @@ class RMFurnaceScreen(private val screenContainer: RMFurnaceContainer, inv: Play
         font.drawString(title.formattedText, 8.0f, 8.0f, 0x404040)
         val curMana = screenContainer.tileEntity.currentMana
         val maxMana = screenContainer.tileEntity.maxMana
-        font.drawString("curMana: $curMana, maxMana: $maxMana", 8.0f, 16.0f, 0x404040)
+        val Mana = I18n.format("capability.russianmagic.mana") + ": $curMana/$maxMana"
+        font.drawString( Mana, 8.0f, 16.0f, 0x404040)
         font.drawString(playerInventory.displayName.formattedText, 8.0f, 69.0f, 0x404040)
     }
 
