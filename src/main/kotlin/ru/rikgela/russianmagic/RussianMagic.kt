@@ -1,16 +1,20 @@
 package ru.rikgela.russianmagic
 
 import net.minecraft.client.gui.ScreenManager
+import net.minecraft.client.renderer.entity.EntityRendererManager
+import net.minecraft.util.ResourceLocation
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.eventbus.api.SubscribeEvent
+import net.minecraftforge.fml.client.registry.RenderingRegistry
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import ru.rikgela.russianmagic.client.HUDEventHandler
+import ru.rikgela.russianmagic.client.entity.render.ProjectileEntityRender
 import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
 import ru.rikgela.russianmagic.common.RMCCMessage
 import ru.rikgela.russianmagic.common.RMNetworkChannel
@@ -42,6 +46,7 @@ class RussianMagic {
 
         RMItems.ITEMS.register(bus)
         RMBlocks.BLOCKS.register(bus)
+        RMEntities.ENTITIES.register(bus)
         RMTileEntityTypes.TILE_ENTITY_TYPES.register(bus)
         RMContainerTypes.CONTAINER_TYPES.register(bus)
         MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
@@ -56,6 +61,7 @@ class RussianMagic {
         MinecraftForge.EVENT_BUS.register(HUDEventHandler())
         ScreenManager.registerFactory(RMContainerTypes.RM_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn -> RMFurnaceScreen(screenContainer, inv, titleIn) }
         RMBlocks.clientSetup()
+        RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")) }
     }
 
     private fun setup(event: FMLCommonSetupEvent) {

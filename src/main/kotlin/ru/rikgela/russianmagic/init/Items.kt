@@ -10,6 +10,7 @@ import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import ru.rikgela.russianmagic.ItemGroups
 import ru.rikgela.russianmagic.MOD_ID
+import ru.rikgela.russianmagic.objects.items.FireballScroll
 import ru.rikgela.russianmagic.objects.items.SpellScroll
 import java.util.function.Supplier
 
@@ -229,6 +230,10 @@ object RMItems {
     val SPELL_OF_REGENERATION: RegistryObject<Item> = ITEMS.register("spell_of_regeneration") {
         SpellScroll(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP))
     }
+    val SPELL_OF_FIREBALL: RegistryObject<Item> = ITEMS.register("spell_of_fireball") {
+        FireballScroll(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP))
+    }
+
 
     //tree
     val EBONY_SAPLING: RegistryObject<Item?>? = ITEMS.register("ebony_sapling") { BlockItem(RMBlocks.EBONY_SAPLING.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
