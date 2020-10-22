@@ -10,10 +10,10 @@ import net.minecraft.item.ItemUseContext
 import net.minecraft.util.ActionResultType
 import net.minecraft.util.SoundCategory
 import net.minecraft.util.SoundEvents
-import ru.rikgela.russianmagic.blocks.Blocks.EBONY_LOG
-import ru.rikgela.russianmagic.blocks.Blocks.EBONY_WOOD
-import ru.rikgela.russianmagic.blocks.Blocks.STRIPPED_EBONY_LOG
-import ru.rikgela.russianmagic.blocks.Blocks.STRIPPED_EBONY_WOOD
+import ru.rikgela.russianmagic.init.RMBlocks.EBONY_LOG
+import ru.rikgela.russianmagic.init.RMBlocks.EBONY_WOOD
+import ru.rikgela.russianmagic.init.RMBlocks.STRIPPED_EBONY_LOG
+import ru.rikgela.russianmagic.init.RMBlocks.STRIPPED_EBONY_WOOD
 
 class RMAxeItem(tier: IItemTier,
                 attackDamageIn: Float,

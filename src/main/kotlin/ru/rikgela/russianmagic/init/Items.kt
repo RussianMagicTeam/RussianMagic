@@ -82,7 +82,6 @@ object RMItems {
         }
     }
 
-    val EBONY_PLANKS: RegistryObject<Item> = ITEMS.register("ebony_planks") { Item(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val MARBLE: RegistryObject<Item> = ITEMS.register("marble") { Item(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val WHITE_JADE: RegistryObject<Item> = ITEMS.register("white_jade") { Item(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val RHINESTONE: RegistryObject<Item> = ITEMS.register("rhinestone") { Item(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
@@ -230,5 +229,14 @@ object RMItems {
     val SPELL_OF_REGENERATION: RegistryObject<Item> = ITEMS.register("spell_of_regeneration") {
         SpellScroll(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP))
     }
+
+    //tree
+    val EBONY_SAPLING: RegistryObject<Item?>? = ITEMS.register("ebony_sapling") { BlockItem(RMBlocks.EBONY_SAPLING.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val EBONY_PLANKS: RegistryObject<Item> = ITEMS.register("ebony_planks") { BlockItem(RMBlocks.EBONY_PLANKS.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val EBONY_LOG: RegistryObject<Item> = ITEMS.register("ebony_log") { BlockItem(RMBlocks.EBONY_LOG.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val STRIPPED_EBONY_LOG: RegistryObject<Item> = ITEMS.register("stripped_ebony_log") { BlockItem(RMBlocks.STRIPPED_EBONY_LOG.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val EBONY_WOOD: RegistryObject<Item> = ITEMS.register("ebony_wood") { BlockItem(RMBlocks.EBONY_WOOD.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val STRIPPED_EBONY_WOOD: RegistryObject<Item> = ITEMS.register("stripped_ebony_wood") { BlockItem(RMBlocks.STRIPPED_EBONY_WOOD.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val EBONY_LEAVES: RegistryObject<Item> = ITEMS.register("ebony_leaves") { BlockItem(RMBlocks.EBONY_LEAVES.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
 }

@@ -7,9 +7,9 @@ import net.minecraft.world.gen.feature.Feature
 import net.minecraft.world.gen.feature.TreeFeatureConfig
 import net.minecraft.world.gen.foliageplacer.BlobFoliagePlacer
 import net.minecraftforge.common.IPlantable
-import ru.rikgela.russianmagic.blocks.Blocks.EBONY_LEAVES
-import ru.rikgela.russianmagic.blocks.Blocks.EBONY_LOG
-import ru.rikgela.russianmagic.blocks.Blocks.EBONY_SAPLING
+import ru.rikgela.russianmagic.init.RMBlocks.EBONY_LEAVES
+import ru.rikgela.russianmagic.init.RMBlocks.EBONY_LOG
+import ru.rikgela.russianmagic.init.RMBlocks.EBONY_SAPLING
 import java.util.*
 
 
