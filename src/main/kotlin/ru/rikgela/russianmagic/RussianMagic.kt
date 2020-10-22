@@ -55,6 +55,7 @@ class RussianMagic {
     fun clientSetup(event: FMLClientSetupEvent?) {
         MinecraftForge.EVENT_BUS.register(HUDEventHandler())
         ScreenManager.registerFactory(RMContainerTypes.RM_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn -> RMFurnaceScreen(screenContainer, inv, titleIn) }
+        RMBlocks.clientSetup()
     }
 
     private fun setup(event: FMLCommonSetupEvent) {

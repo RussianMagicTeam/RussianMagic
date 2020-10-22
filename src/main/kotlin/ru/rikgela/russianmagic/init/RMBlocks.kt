@@ -5,6 +5,8 @@ import net.minecraft.block.Blocks
 import net.minecraft.block.FlowerPotBlock
 import net.minecraft.block.material.Material
 import net.minecraft.block.material.MaterialColor
+import net.minecraft.client.renderer.RenderType
+import net.minecraft.client.renderer.RenderTypeLookup
 import net.minecraftforge.common.ToolType
 import net.minecraftforge.fml.RegistryObject
 import net.minecraftforge.registries.DeferredRegister
@@ -407,5 +409,8 @@ object RMBlocks {
     val STRIPPED_EBONY_LOG: RegistryObject<EbonyLogBlock> = BLOCKS.register("stripped_ebony_log") { EbonyLogBlock(MaterialColor.WOOD, Block.Properties.from(Blocks.OAK_LOG)) }
     val EBONY_WOOD: RegistryObject<EbonyLogBlock> = BLOCKS.register("ebony_wood") { EbonyLogBlock(MaterialColor.WOOD, Block.Properties.from(Blocks.OAK_WOOD)) }
     val STRIPPED_EBONY_WOOD: RegistryObject<EbonyLogBlock> = BLOCKS.register("stripped_ebony_wood") { EbonyLogBlock(MaterialColor.WOOD, Block.Properties.from(Blocks.OAK_WOOD)) }
-
+    fun clientSetup() {
+        RenderTypeLookup.setRenderLayer(EBONY_SAPLING.get(), RenderType.getCutout())
+        RenderTypeLookup.setRenderLayer(EBONY_LEAVES.get(), RenderType.getCutout())
+    }
 }
