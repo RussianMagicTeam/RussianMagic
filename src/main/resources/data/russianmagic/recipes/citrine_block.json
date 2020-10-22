@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "russianmagic:citrine"
+    }
+  },
+  "result": {
+    "item": "russianmagic:citrine_block"
+  }
+}

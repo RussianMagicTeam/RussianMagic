@@ -11,6 +11,8 @@ import net.minecraft.network.PacketBuffer
 import net.minecraft.util.Direction
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.StringTextComponent
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.capabilities.Capability.IStorage
 import net.minecraftforge.common.capabilities.CapabilityInject
@@ -32,8 +34,8 @@ import java.util.function.Supplier
 
 
 interface IMana {
-
     fun consume(points: Int, player: ServerPlayerEntity): Boolean
+    fun consume(points: Int): Boolean
     fun fill(points: Int)
     fun setMana(points: Int)
     fun setMaxMana(points: Int)
@@ -48,6 +50,19 @@ interface IMana {
     val manaPerTick: Float
 }
 
+interface IManaSpreader {
+    val currentMana: Int
+    val maxMana: Int
+    val manaPerTick: Float
+}
+
+interface IManaReceiver {
+    val currentMana: Int
+    val maxMana: Int
+    val maxTransfer: Int
+    fun transfer(points: Int): Boolean
+}
+
 class Mana : IMana {
     companion object {
         fun fromPlayer(player: PlayerEntity): Mana {
@@ -55,6 +70,14 @@ class Mana : IMana {
                 return player.getCapability(MANA_CAP!!).orElse(Mana()) as Mana
             }
             return Mana()
+        }
+
+        fun withParams(startManaCount: Int, maxManaCount: Int, manaPerTick: Float): Mana {
+            val ret = Mana()
+            ret.currentMana = startManaCount
+            ret.maxMana = maxManaCount
+            ret.manaPerTick = manaPerTick
+            return ret
         }
     }
 
@@ -71,7 +94,7 @@ class Mana : IMana {
             fill(max((20 * manaPerTick).toInt(), 1))
         }
         if (ticks % 100 == 0) {
-            manaPerTick = if(manaPerTick <= 10000) (manaPerTick * 1.1).toFloat() else 10000F
+            manaPerTick = if (manaPerTick <= 10000) (manaPerTick * 1.1).toFloat() else 10000.0F
         }
         ticks++
     }
@@ -122,9 +145,17 @@ class Mana : IMana {
     private var ticks = 0
 
     override fun consume(points: Int, player: ServerPlayerEntity): Boolean {
+        return if (consume(points)) {
+            sendToPlayer(player)
+            true
+        } else {
+            false
+        }
+    }
+
+    override fun consume(points: Int): Boolean {
         if (currentMana >= points) {
             currentMana -= points
-            sendToPlayer(player)
             return true
         }
         return false
@@ -151,11 +182,29 @@ class Mana : IMana {
 
 }
 
+class ManaReceiver(private val mana: IMana) : IManaReceiver {
+    override val currentMana: Int
+        get() = mana.currentMana
+    override val maxMana: Int
+        get() = mana.maxMana
+
+    override val maxTransfer: Int
+        get() = maxMana - currentMana
+
+
+    override fun transfer(points: Int): Boolean {
+        if (currentMana + points <= maxMana) {
+            mana.fill(points)
+            return true
+        }
+        return false
+    }
+}
+
 class ManaMessage(
         private val mana: Mana
 ) {
     companion object {
-        val minecraft: Minecraft = Minecraft.getInstance()
         fun fromPacketBuffer(pb: PacketBuffer): ManaMessage {
             val ret = Mana()
             ret.loadFromByteArray(pb.readByteArray())
@@ -167,9 +216,10 @@ class ManaMessage(
         pb.writeByteArray(mana.toByteArray())
     }
 
+    @OnlyIn(Dist.CLIENT)
     fun handle(ctx: Supplier<NetworkEvent.Context?>) {
         ctx.get()?.enqueueWork {
-            MANA_CAP?.let { minecraft.player?.getCapability(it)?.orElse(Mana())?.copy(mana) }
+            MANA_CAP?.let { Minecraft.getInstance().player?.getCapability(it)?.orElse(Mana())?.copy(mana) }
         }
         ctx.get()?.packetHandled = true
     }

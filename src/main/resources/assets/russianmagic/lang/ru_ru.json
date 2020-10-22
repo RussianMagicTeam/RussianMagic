@@ -39,6 +39,13 @@
   "item.russianmagic.aquamarine_shovel": "Лопата из аквамарина",
   "item.russianmagic.aquamarine_sword": "Меч из аквамарина",
 
+  "item.russianmagic.ebony_sapling":"Саженец черного дерева",
+  "item.russianmagic.ebony_log": "Бревно черного дерева",
+  "item.russianmagic.stripped_ebony_log":"Обтёсанное бревно черного дерева",
+  "item.russianmagic.ebony_wood": "Черное дерево",
+  "item.russianmagic.stripped_ebony_wood":"Обтёсанное черное дерево",
+  "item.russianmagic.ebony_leaves": "Листва черного дерева",
+
   "block.russianmagic.marble_block": "Мраморный блок",
   "block.russianmagic.white_jade_block": "Блок белого нефрита",
 
@@ -49,6 +56,110 @@
   "block.russianmagic.rhinestone_block_ore": "Руда горного хрусталя",
 
   "item.russianmagic.spell_of_regeneration": "Заклинание регенерации",
-  "item.russianmagic.spell_of_fireball": "Заклинание огненного шара"
+  "item.russianmagic.spell_of_fireball": "Заклинание огненного шара",
 
+  "item.russianmagic.jasper": "Яшма",
+  "block.russianmagic.jasper_block": "Блок яшмы",
+  "block.russianmagic.jasper_block_ore": "Руда яшмы",
+
+  "item.russianmagic.chrysolite": "Xризолит",
+  "block.russianmagic.chrysolite_block": "Блок хризолита",
+  "block.russianmagic.chrysolite_block_ore": "Руда хризолита",
+
+  "block.russianmagic.ebony_sapling": "Саженец черного дерева",
+  "block.russianmagic.ebony_planks": "Доски из черного дерева",
+  "block.russianmagic.ebony_log": "Бревно черного дерева",
+  "block.russianmagic.stripped_ebony_log":"Обтёсанное бревно черного дерева",
+  "block.russianmagic.ebony_wood": "Черное дерево",
+  "block.russianmagic.stripped_ebony_wood":"Обтёсанное черное дерево",
+  "block.russianmagic.ebony_leaves": "Листва черного дерева",
+
+  "item.russianmagic.garnet": "Гранат",
+  "block.russianmagic.garnet_block": "Блок граната",
+  "block.russianmagic.garnet_block_ore": "Руда граната",
+
+  "item.russianmagic.topaz": "Топаз",
+  "block.russianmagic.topaz_block": "Блок топаза",
+  "block.russianmagic.topaz_block_ore": "Руда топаза",
+
+  "item.russianmagic.perunite": "Перунит",
+  "block.russianmagic.perunite_block": "Блок перунита",
+  "block.russianmagic.perunite_block_ore": "Руда перунита",
+
+  "item.russianmagic.iolite": "Иолит",
+  "block.russianmagic.iolite_block": "Блок иолита",
+  "block.russianmagic.iolite_block_ore": "Руда иолита",
+
+  "item.russianmagic.agate": "Агат",
+  "block.russianmagic.agate_block": "Блок агата",
+  "block.russianmagic.agate_block_ore": "Руда агата",
+
+  "item.russianmagic.citrine": "Цитрин",
+  "block.russianmagic.citrine_block": "Блок цитрина",
+  "block.russianmagic.citrine_block_ore": "Руда цитрина",
+
+  "item.russianmagic.chalcedony": "Халцедон",
+  "block.russianmagic.chalcedony_block": "Блок халцедона",
+  "block.russianmagic.chalcedony_block_ore": "Руда халцедона",
+
+  "item.russianmagic.beryl": "Берилл",
+  "block.russianmagic.beryl_block": "Блок берилла",
+  "block.russianmagic.beryl_block_ore": "Руда берилла",
+
+  "item.russianmagic.heliodor": "Гелиодор",
+  "block.russianmagic.heliodor_block": "Блок гелиодора",
+  "block.russianmagic.heliodor_block_ore": "Руда гелиодора",
+
+  "item.russianmagic.sitall": "Ситалл",
+  "block.russianmagic.sitall_block": "Блок ситалла",
+  "block.russianmagic.sitall_block_ore": "Руда ситалла",
+
+  "item.russianmagic.amethyst": "Аметист",
+  "block.russianmagic.amethyst_block": "Блок аметиста",
+  "block.russianmagic.amethyst_block_ore": "Руда аметиста",
+
+  "item.russianmagic.carnelian": "Карнеол",
+  "block.russianmagic.carnelian_block": "Блок карнеола",
+  "block.russianmagic.carnelian_block_ore": "Руда карнеола",
+
+  "item.russianmagic.tanzanite": "Танзанит",
+  "block.russianmagic.tanzanite_block": "Блок танзанита",
+  "block.russianmagic.tanzanite_block_ore": "Руда танзанита",
+
+  "item.russianmagic.ametrine": "Аметрин",
+  "block.russianmagic.ametrine_block": "Блок аметрина",
+  "block.russianmagic.ametrine_block_ore": "Руда аметрина",
+
+  "item.russianmagic.charoite": "Чароит",
+  "block.russianmagic.charoite_block": "Блок чароита",
+  "block.russianmagic.charoite_block_ore": "Руда чароита",
+
+  "item.russianmagic.coral": "Коралл",
+  "block.russianmagic.coral_block": "Блок коралла",
+  "block.russianmagic.coral_block_ore": "Руда коралла",
+
+  "item.russianmagic.ruby": "Рубин",
+  "block.russianmagic.ruby_block": "Блок рубина",
+  "block.russianmagic.ruby_block_ore": "Руда рубина",
+
+  "item.russianmagic.onyx": "Оникс",
+  "block.russianmagic.onyx_block": "Блок оникса",
+  "block.russianmagic.onyx_block_ore": "Руда оникса",
+
+  "item.russianmagic.sapphire": "Сапфир",
+  "block.russianmagic.sapphire_block": "Блок сапфира",
+  "block.russianmagic.sapphire_block_ore": "Руда сапфира",
+
+  "item.russianmagic.opal": "Опал",
+  "block.russianmagic.opal_block": "Блок опала",
+  "block.russianmagic.opal_block_ore": "Руда опала",
+
+  "item.russianmagic.kunzite": "Кунцит",
+  "block.russianmagic.kunzite_block": "Блок кунцита",
+  "block.russianmagic.kunzite_block_ore": "Руда кунцита",
+
+  "block.russianmagic.rm_furnace": "РМ печка",
+  "container.russianmagic.rm_furnace": "РМ печка",
+
+  "capability.russianmagic.mana": "Мана"
 }

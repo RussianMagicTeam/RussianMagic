@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "russianmagic:block/ebony_log_top",
+    "side": "russianmagic:block/ebony_log"
+  }
+}
