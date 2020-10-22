@@ -19,8 +19,8 @@ class RMFurnaceScreen(private val screenContainer: RMFurnaceContainer, inv: Play
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY)
         font.drawString(title.formattedText, 8.0f, 8.0f, 0x404040)
-        val curMana = screenContainer.tileEntity.manaReceiver.currentMana
-        val maxMana = screenContainer.tileEntity.manaReceiver.maxMana
+        val curMana = screenContainer.tileEntity.currentMana
+        val maxMana = screenContainer.tileEntity.maxMana
         font.drawString("curMana: $curMana, maxMana: $maxMana", 8.0f, 16.0f, 0x404040)
         font.drawString(playerInventory.displayName.formattedText, 8.0f, 69.0f, 0x404040)
     }

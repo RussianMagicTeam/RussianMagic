@@ -36,62 +36,63 @@ import ru.rikgela.russianmagic.objects.blocks.RMFurnaceBlock
 import ru.rikgela.russianmagic.util.RMItemHandler
 import java.util.stream.Collectors
 
-class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntityType<*> = RMTileEntityTypes.RM_FURNACE.get()) : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider {
+class RMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*> = RMTileEntityTypes.RM_FURNACE.get()) : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver {
     var customName: ITextComponent? = null
 
     var currentSmeltTime = 0
 
     private val mana: IMana = Mana.withParams(100, 1000, 0F)
-    val manaReceiver: IManaReceiver = ManaReceiver(mana)
+    private val manaReceiver: IManaReceiver = ManaReceiver(mana)
     val maxSmeltTime = 100
     val inventory: RMItemHandler = RMItemHandler(2)
+
     override fun createMenu(windowID: Int, playerInv: PlayerInventory, playerIn: PlayerEntity): Container {
         return RMFurnaceContainer(windowID, playerInv, this)
     }
 
-    override fun tick() {
-        var dirty = false
-        var dropProgress = false
+    fun update() {
+        markDirty()
         if (world != null && world?.isRemote != true) {
-            val recipe = getRecipe(inventory.getStackInSlot(0))
-            if (recipe != null) {
-                if (mana.currentMana >= 10 && (inventory.getStackInSlot(1).count == 0
-                                || inventory.getStackInSlot(1).item == recipe.recipeOutput.item
-                                && inventory.getStackInSlot(1).count + recipe.recipeOutput.count <= inventory.getStackInSlot(1).maxStackSize)) {
-                    if (currentSmeltTime != maxSmeltTime) {
-                        world!!.setBlockState(getPos(),
-                                this.blockState.with(RMFurnaceBlock.LIT, true))
-                        currentSmeltTime++
-                        dirty = true
-                    } else {
-                        if (mana.consume(10)) {
-                            world!!.setBlockState(getPos(),
-                                    this.blockState.with(RMFurnaceBlock.LIT, false))
-                            currentSmeltTime = 0
-                            val output = recipe.recipeOutput
-                            inventory.insertItem(1, output.copy(), false)
-                            inventory.decrStackSize(0, 1)
-                            dirty = true
-                        } else {
-                            dropProgress = true
-                        }
-                    }
-                } else {
-                    dropProgress = true
-                }
-            } else {
-                dropProgress = true
-            }
-        }
-        if (dirty) {
-            markDirty()
             world!!.notifyBlockUpdate(getPos(), this.blockState, this.blockState,
                     Constants.BlockFlags.BLOCK_UPDATE)
         }
-        if (dropProgress) {
-            currentSmeltTime = 0
-            world!!.setBlockState(getPos(),
-                    this.blockState.with(RMFurnaceBlock.LIT, false))
+    }
+
+    private fun dropProgress() {
+        currentSmeltTime = 0
+        world!!.setBlockState(getPos(), this.blockState.with(RMFurnaceBlock.LIT, false))
+        update()
+    }
+
+    private fun canBurn(recipe: FurnaceRecipe): Boolean {
+        return mana.currentMana >= 10 &&
+                (inventory.getStackInSlot(1).count == 0
+                        || (inventory.getStackInSlot(1).item == recipe.recipeOutput.item
+                        && inventory.getStackInSlot(1).count + recipe.recipeOutput.count <= inventory.getStackInSlot(1).maxStackSize))
+    }
+
+    override fun tick() {
+        if (world?.isRemote == false) {
+            val recipe = getRecipe(inventory.getStackInSlot(0)) ?: return dropProgress()
+            if (canBurn(recipe)) {
+                world!!.setBlockState(getPos(), this.blockState.with(RMFurnaceBlock.LIT, true))
+                if (currentSmeltTime < maxSmeltTime) {
+                    currentSmeltTime++
+                    update()
+                } else {
+                    if (mana.consume(10)) {
+                        currentSmeltTime = 0
+                        val output = recipe.recipeOutput
+                        inventory.insertItem(1, output.copy(), false)
+                        inventory.decrStackSize(0, 1)
+                        update()
+                    } else {
+                        dropProgress()
+                    }
+                }
+            } else {
+                dropProgress()
+            }
         }
     }
 
@@ -172,5 +173,21 @@ class RMFurnaceTileEntity @JvmOverloads constructor(tileEntityTypeIn: TileEntity
                     .filter { recipe: IRecipe<*> -> recipe.type.toString() == typeIn }
                     .collect(Collectors.toSet()) else emptySet()
         }
+    }
+
+    //IManaReceiver implementation
+    override val currentMana: Int
+        get() = manaReceiver.currentMana
+    override val maxMana: Int
+        get() = manaReceiver.maxMana
+    override val maxTransfer: Int
+        get() = manaReceiver.maxTransfer
+
+    override fun transfer(points: Int): Boolean {
+        if (manaReceiver.transfer(points)) {
+            update()
+            return true
+        }
+        return false
     }
 }
