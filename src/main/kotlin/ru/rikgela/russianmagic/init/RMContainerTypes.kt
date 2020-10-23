@@ -8,16 +8,17 @@ import net.minecraftforge.fml.RegistryObject
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import ru.rikgela.russianmagic.MOD_ID
-import ru.rikgela.russianmagic.container.RMFurnaceContainer
+import ru.rikgela.russianmagic.container.AbstractRMFurnaceContainer
+import ru.rikgela.russianmagic.container.RMMarbleFurnaceContainer
 
 object RMContainerTypes {
     val CONTAINER_TYPES: DeferredRegister<ContainerType<*>> = DeferredRegister(ForgeRegistries.CONTAINERS, MOD_ID)
 
     @JvmField
-    val RM_FURNACE_CONTAINER: RegistryObject<ContainerType<RMFurnaceContainer>> = CONTAINER_TYPES
-            .register("rm_furnace") {
+    val RM_MARBLE_FURNACE_CONTAINER: RegistryObject<ContainerType<AbstractRMFurnaceContainer>> = CONTAINER_TYPES
+            .register("rm_marble_furnace") {
                 IForgeContainerType.create { windowID: Int, playerInv: PlayerInventory, data: PacketBuffer ->
-                    RMFurnaceContainer(windowID, playerInv, data)
+                    RMMarbleFurnaceContainer(windowID, playerInv, data) as AbstractRMFurnaceContainer
                 }
             }
 }

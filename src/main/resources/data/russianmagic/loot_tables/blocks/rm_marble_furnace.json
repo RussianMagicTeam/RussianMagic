@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "russianmagic:rm_furnace"
+          "name": "russianmagic:rm_marble_furnace"
         }
       ],
       "conditions": [
@@ -14,7 +14,7 @@
           "condition": "minecraft:survives_explosion"
         }
       ],
-      "name": "russianmagic:rm_furnace"
+      "name": "russianmagic:rm_marble_furnace"
     }
   ]
 }

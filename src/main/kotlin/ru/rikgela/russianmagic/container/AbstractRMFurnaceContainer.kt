@@ -4,6 +4,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.container.ClickType
 import net.minecraft.inventory.container.Container
+import net.minecraft.inventory.container.ContainerType
 import net.minecraft.inventory.container.Slot
 import net.minecraft.item.ItemStack
 import net.minecraft.network.PacketBuffer
@@ -11,9 +12,8 @@ import net.minecraft.util.IWorldPosCallable
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.items.SlotItemHandler
-import ru.rikgela.russianmagic.init.RMBlocks
-import ru.rikgela.russianmagic.init.RMContainerTypes
-import ru.rikgela.russianmagic.tileentity.RMFurnaceTileEntity
+import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace
+import ru.rikgela.russianmagic.tileentity.AbstractRMFurnaceTileEntity
 import ru.rikgela.russianmagic.util.FunctionalIntReferenceHolder
 import java.util.*
 import java.util.function.IntConsumer
@@ -21,18 +21,19 @@ import java.util.function.IntSupplier
 import javax.annotation.Nonnull
 import kotlin.math.min
 
-class RMFurnaceContainer(windowID: Int,
-                         playerInv: PlayerInventory,
-                         val tileEntity: RMFurnaceTileEntity
-) : Container(RMContainerTypes.RM_FURNACE_CONTAINER.get(), windowID) {
-    private val canInteractWithCallable: IWorldPosCallable = IWorldPosCallable.of(tileEntity.world!!, tileEntity.pos)
+abstract class AbstractRMFurnaceContainer(windowID: Int,
+                                          private val furnaceType: ContainerType<AbstractRMFurnaceContainer>,
+                                          private val furnaceBlock: AbstractRMFurnace,
+                                          private val playerInv: PlayerInventory,
+                                          val tileEntityFurnace: AbstractRMFurnaceTileEntity
+) : Container(furnaceType, windowID) {
+
     private var currentSmeltTime: FunctionalIntReferenceHolder? = null
 
-    // Client Constructor
-    constructor(windowID: Int, playerInv: PlayerInventory, data: PacketBuffer?) : this(windowID, playerInv, getTileEntity(playerInv, data))
+    private val canInteractWithCallable: IWorldPosCallable = IWorldPosCallable.of(tileEntityFurnace.world!!, tileEntityFurnace.pos)
 
     override fun canInteractWith(playerIn: PlayerEntity): Boolean {
-        return isWithinUsableDistance(canInteractWithCallable, playerIn, RMBlocks.RM_FURNACE_BLOCK.get())
+        return isWithinUsableDistance(canInteractWithCallable, playerIn, furnaceBlock)
     }
 
     private fun transferToInventory(player: PlayerEntity, index: Int): ItemStack {
@@ -60,7 +61,7 @@ class RMFurnaceContainer(windowID: Int,
     @Nonnull
     override fun transferStackInSlot(player: PlayerEntity, index: Int): ItemStack {
 
-        var returnStack = player.activeItemStack
+        val returnStack = player.activeItemStack
         val slot = inventorySlots[index]
 
         if (slot.hasStack) {
@@ -84,14 +85,14 @@ class RMFurnaceContainer(windowID: Int,
 
     @get:OnlyIn(Dist.CLIENT)
     val smeltProgressionScaled: Int
-        get() = if (currentSmeltTime!!.get() != 0 && tileEntity.maxSmeltTime != 0) currentSmeltTime!!.get() * 24 / tileEntity.maxSmeltTime else 0
+        get() = if (currentSmeltTime!!.get() != 0 && tileEntityFurnace.maxSmeltTime != 0) currentSmeltTime!!.get() * 24 / tileEntityFurnace.maxSmeltTime else 0
 
     companion object {
-        private fun getTileEntity(playerInv: PlayerInventory?, data: PacketBuffer?): RMFurnaceTileEntity {
+        fun getTileEntity(playerInv: PlayerInventory?, data: PacketBuffer?): AbstractRMFurnaceTileEntity {
             Objects.requireNonNull(playerInv, "playerInv cannot be null")
             Objects.requireNonNull(data, "data cannot be null")
             val tileAtPos = (playerInv!!).player.world.getTileEntity((data!!).readBlockPos())
-            if (tileAtPos is RMFurnaceTileEntity) {
+            if (tileAtPos is AbstractRMFurnaceTileEntity) {
                 return tileAtPos
             }
             throw IllegalStateException("TileEntity is not correct $tileAtPos")
@@ -137,9 +138,9 @@ class RMFurnaceContainer(windowID: Int,
         }
 
         // Furnace Slots
-        addSlot(SlotItemHandler(tileEntity.inventory, 0, 56, 34))
-        addSlot(SlotItemHandler(tileEntity.inventory, 1, 116, 35))
-        trackInt(FunctionalIntReferenceHolder(IntSupplier { tileEntity.currentSmeltTime },
-                IntConsumer { value: Int -> tileEntity.currentSmeltTime = value }).also { currentSmeltTime = it })
+        addSlot(SlotItemHandler(tileEntityFurnace.inventory, 0, 56, 34))
+        addSlot(SlotItemHandler(tileEntityFurnace.inventory, 1, 116, 35))
+        trackInt(FunctionalIntReferenceHolder(IntSupplier { tileEntityFurnace.currentSmeltTime },
+                IntConsumer { value: Int -> tileEntityFurnace.currentSmeltTime = value }).also { currentSmeltTime = it })
     }
 }

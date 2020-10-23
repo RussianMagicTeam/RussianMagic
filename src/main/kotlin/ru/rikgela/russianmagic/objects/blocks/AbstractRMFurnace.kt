@@ -17,24 +17,21 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.BlockRayTraceResult
-import net.minecraft.world.IBlockReader
 import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import ru.rikgela.russianmagic.common.RMCCMessage
-import ru.rikgela.russianmagic.init.RMTileEntityTypes
-import ru.rikgela.russianmagic.tileentity.RMFurnaceTileEntity
+import ru.rikgela.russianmagic.tileentity.AbstractRMFurnaceTileEntity
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
 import java.util.*
 import java.util.function.Consumer
 
-class RMFurnaceBlock(properties: Properties) : Block(properties) {
+abstract class AbstractRMFurnace(properties: Properties) : Block(properties) {
+
+    private var tileEntity: TileEntity? = null
+
     override fun hasTileEntity(state: BlockState): Boolean {
         return true
-    }
-
-    override fun createTileEntity(state: BlockState, world: IBlockReader): TileEntity {
-        return RMTileEntityTypes.RM_FURNACE.get().create()!!
     }
 
     override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
@@ -56,16 +53,6 @@ class RMFurnaceBlock(properties: Properties) : Block(properties) {
 
     override fun getStateForPlacement(context: BlockItemUseContext): BlockState? {
         return defaultState.with(FACING, context.placementHorizontalFacing.opposite)
-    }
-
-    override fun onBlockPlacedBy(worldIn: World, pos: BlockPos, state: BlockState, placer: LivingEntity?, stack: ItemStack) {
-        super.onBlockPlacedBy(worldIn, pos, state, placer, stack)
-        if (stack.hasDisplayName()) {
-            val tile = worldIn.getTileEntity(pos)
-            if (tile is RMFurnaceTileEntity) {
-                tile.customName = stack.displayName
-            }
-        }
     }
 
     override fun hasComparatorInputOverride(state: BlockState): Boolean {
@@ -111,7 +98,7 @@ class RMFurnaceBlock(properties: Properties) : Block(properties) {
 
     override fun onReplaced(state: BlockState, worldIn: World, pos: BlockPos, newState: BlockState, isMoving: Boolean) {
         val tile = worldIn.getTileEntity(pos)
-        if (tile is RMFurnaceTileEntity && state.block !== newState.block) {
+        if (tile is AbstractRMFurnaceTileEntity && state.block !== newState.block) {
             (tile.inventory).toNonNullList().forEach(Consumer { item: ItemStack ->
                 val itemEntity = ItemEntity(worldIn, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), item)
                 worldIn.addEntity(itemEntity)
@@ -119,6 +106,16 @@ class RMFurnaceBlock(properties: Properties) : Block(properties) {
         }
         if (state.hasTileEntity() && state.block !== newState.block) {
             worldIn.removeTileEntity(pos)
+        }
+    }
+
+    override fun onBlockPlacedBy(worldIn: World, pos: BlockPos, state: BlockState, placer: LivingEntity?, stack: ItemStack) {
+        super.onBlockPlacedBy(worldIn, pos, state, placer, stack)
+        if (stack.hasDisplayName()) {
+            val tile = worldIn.getTileEntity(pos)
+            if (tile is AbstractRMFurnaceTileEntity) {
+                tile.customName = stack.displayName
+            }
         }
     }
 

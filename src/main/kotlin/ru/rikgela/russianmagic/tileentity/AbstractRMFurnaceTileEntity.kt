@@ -26,17 +26,19 @@ import net.minecraftforge.items.CapabilityItemHandler
 import net.minecraftforge.items.IItemHandler
 import net.minecraftforge.items.wrapper.RecipeWrapper
 import ru.rikgela.russianmagic.MOD_ID
-import ru.rikgela.russianmagic.container.RMFurnaceContainer
+import ru.rikgela.russianmagic.container.AbstractRMFurnaceContainer
+import ru.rikgela.russianmagic.container.RMMarbleFurnaceContainer
 import ru.rikgela.russianmagic.init.RMTileEntityTypes
 import ru.rikgela.russianmagic.mana.IMana
 import ru.rikgela.russianmagic.mana.IManaReceiver
 import ru.rikgela.russianmagic.mana.Mana
 import ru.rikgela.russianmagic.mana.ManaReceiver
-import ru.rikgela.russianmagic.objects.blocks.RMFurnaceBlock
+import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace
+import ru.rikgela.russianmagic.objects.blocks.RMMarbleFurnaceBlock
 import ru.rikgela.russianmagic.util.RMItemHandler
 import java.util.stream.Collectors
 
-class RMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*> = RMTileEntityTypes.RM_FURNACE.get()) : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver {
+abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*> = RMTileEntityTypes.RM_MARBLE_FURNACE.get()) : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver {
     var customName: ITextComponent? = null
 
     var currentSmeltTime = 0
@@ -45,10 +47,6 @@ class RMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*> = RMTileEntityType
     private val manaReceiver: IManaReceiver = ManaReceiver(mana)
     val maxSmeltTime = 100
     val inventory: RMItemHandler = RMItemHandler(2)
-
-    override fun createMenu(windowID: Int, playerInv: PlayerInventory, playerIn: PlayerEntity): Container {
-        return RMFurnaceContainer(windowID, playerInv, this)
-    }
 
     fun update() {
         markDirty()
@@ -60,11 +58,11 @@ class RMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*> = RMTileEntityType
 
     private fun dropProgress() {
         currentSmeltTime = 0
-        world!!.setBlockState(getPos(), this.blockState.with(RMFurnaceBlock.LIT, false))
+        world!!.setBlockState(getPos(), this.blockState.with(AbstractRMFurnace.LIT, false))
         update()
     }
 
-    private fun canBurn(recipe: FurnaceRecipe): Boolean {
+    fun canBurn(recipe: FurnaceRecipe): Boolean {
         return mana.currentMana >= 10 &&
                 (inventory.getStackInSlot(1).count == 0
                         || (inventory.getStackInSlot(1).item == recipe.recipeOutput.item
@@ -75,7 +73,7 @@ class RMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*> = RMTileEntityType
         if (world?.isRemote == false) {
             val recipe = getRecipe(inventory.getStackInSlot(0)) ?: return dropProgress()
             if (canBurn(recipe)) {
-                world!!.setBlockState(getPos(), this.blockState.with(RMFurnaceBlock.LIT, true))
+                world!!.setBlockState(getPos(), this.blockState.with(AbstractRMFurnace.LIT, true))
                 if (currentSmeltTime < maxSmeltTime) {
                     currentSmeltTime++
                     update()
@@ -96,15 +94,6 @@ class RMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*> = RMTileEntityType
         }
     }
 
-    val name: ITextComponent
-        get() = customName ?: defaultName
-
-    private val defaultName: ITextComponent
-        get() = TranslationTextComponent("container.$MOD_ID.rm_furnace")
-
-    override fun getDisplayName(): ITextComponent {
-        return name
-    }
 
     override fun read(compound: CompoundNBT) {
         super.read(compound)
