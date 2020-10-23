@@ -14,7 +14,6 @@ import ru.rikgela.russianmagic.mana.IManaReceiver
 import ru.rikgela.russianmagic.mana.MANA_CAP
 import ru.rikgela.russianmagic.tileentity.RMFurnaceTileEntity
 import java.util.function.Supplier
-import kotlin.math.min
 
 
 class RMCCMessage(
@@ -86,10 +85,8 @@ class RMCCMessage(
                 if (tile is IManaReceiver) {
                     if (MANA_CAP != null) {
                         val playerMana: IMana = playerEntity.getCapability(MANA_CAP!!).orElseThrow { RuntimeException("WTF???") } as IMana
-                        val transferManaCount = min(tile.maxTransfer, (playerMana).currentMana)
-                        if (transferManaCount > 0 && playerMana.consume(transferManaCount)) {
-                            tile.transfer(transferManaCount)
-                        }
+                        val transferManaCount = playerMana.currentMana - tile.transfer(playerMana.currentMana)
+                        if (transferManaCount > 0) playerMana.consume(transferManaCount)
                     }
                 }
             }

@@ -12,7 +12,7 @@ import net.minecraft.util.math.Vec3d
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.StringTextComponent
 import net.minecraft.world.World
-import ru.rikgela.russianmagic.mana.Mana.Companion.fromPlayer
+import ru.rikgela.russianmagic.mana.PlayerMana
 import ru.rikgela.russianmagic.objects.entity.projectile.ProjectileEntity
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
 
@@ -32,7 +32,7 @@ class FireballScroll(properties: Properties) : Item(properties) {
 
     override fun onItemRightClick(worldIn: World, playerIn: PlayerEntity, handIn: Hand): ActionResult<ItemStack> {
         if(playerIn is ServerPlayerEntity) {
-            val mana = fromPlayer(playerIn)
+            val mana = PlayerMana.fromPlayer(playerIn)
             if (mana.consume(100, playerIn)) {
                 val looking: Vec3d = playerIn.lookVec
                 val projectileEntity = ProjectileEntity(worldIn, playerIn as LivingEntity, looking.x, looking.y, looking.z)

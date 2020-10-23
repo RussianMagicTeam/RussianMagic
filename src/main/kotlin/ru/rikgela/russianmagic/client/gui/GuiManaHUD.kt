@@ -6,7 +6,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.text.TextFormatting
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
-import ru.rikgela.russianmagic.mana.Mana
+import ru.rikgela.russianmagic.mana.PlayerMana
 import java.awt.Color
 
 @OnlyIn(Dist.CLIENT)
@@ -18,7 +18,7 @@ class GuiManaHUD(
 ) : AbstractGui() {
 
     fun drawHUD() {
-        val mana = Mana.fromPlayer(minecraft.player as PlayerEntity)
+        val mana = PlayerMana.fromPlayer(minecraft.player as PlayerEntity)
 
         val x = minecraft.mainWindow.scaledWidth * xPos / 100
         val y = minecraft.mainWindow.scaledHeight * yPos / 100
@@ -31,7 +31,7 @@ class GuiManaHUD(
     fun printHud() {
         val x = minecraft.mainWindow.scaledWidth * xPos / 100
         val y = minecraft.mainWindow.scaledHeight * yPos / 100
-        val mana = Mana.fromPlayer(minecraft.player as PlayerEntity)
+        val mana = PlayerMana.fromPlayer(minecraft.player as PlayerEntity)
         Minecraft.getInstance().fontRenderer.drawString(mana.currentMana.toString(), x.toFloat() + 3, y.toFloat() - 8, TextFormatting.WHITE.color!!)
     }
 
