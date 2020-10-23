@@ -1,6 +1,5 @@
 package ru.rikgela.russianmagic.container
 
-import net.minecraft.block.Block
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.inventory.container.ClickType
@@ -12,25 +11,30 @@ import net.minecraft.network.PacketBuffer
 import net.minecraft.util.IWorldPosCallable
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
-import net.minecraftforge.fml.RegistryObject
 import net.minecraftforge.items.SlotItemHandler
-import ru.rikgela.russianmagic.init.RMContainerTypes
+import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace
 import ru.rikgela.russianmagic.tileentity.AbstractRMFurnaceTileEntity
 import ru.rikgela.russianmagic.util.FunctionalIntReferenceHolder
 import java.util.*
 import java.util.function.IntConsumer
 import java.util.function.IntSupplier
 import javax.annotation.Nonnull
-import javax.annotation.Nullable
 import kotlin.math.min
 
 abstract class AbstractRMFurnaceContainer(windowID: Int,
-                                          type: ContainerType<AbstractRMFurnaceContainer>,
-                                          val playerInv: PlayerInventory,
-                               val tileEntityFurnace: AbstractRMFurnaceTileEntity
-) : Container(type, windowID) {
+                                          private val furnaceType: ContainerType<AbstractRMFurnaceContainer>,
+                                          private val furnaceBlock: AbstractRMFurnace,
+                                          private val playerInv: PlayerInventory,
+                                          val tileEntityFurnace: AbstractRMFurnaceTileEntity
+) : Container(furnaceType, windowID) {
 
     private var currentSmeltTime: FunctionalIntReferenceHolder? = null
+
+    private val canInteractWithCallable: IWorldPosCallable = IWorldPosCallable.of(tileEntityFurnace.world!!, tileEntityFurnace.pos)
+
+    override fun canInteractWith(playerIn: PlayerEntity): Boolean {
+        return isWithinUsableDistance(canInteractWithCallable, playerIn, furnaceBlock)
+    }
 
     private fun transferToInventory(player: PlayerEntity, index: Int): ItemStack {
         val slot = inventorySlots[index]
@@ -57,7 +61,7 @@ abstract class AbstractRMFurnaceContainer(windowID: Int,
     @Nonnull
     override fun transferStackInSlot(player: PlayerEntity, index: Int): ItemStack {
 
-        var returnStack = player.activeItemStack
+        val returnStack = player.activeItemStack
         val slot = inventorySlots[index]
 
         if (slot.hasStack) {

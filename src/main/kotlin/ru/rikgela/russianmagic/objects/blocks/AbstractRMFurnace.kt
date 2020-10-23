@@ -17,15 +17,11 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.*
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.BlockRayTraceResult
-import net.minecraft.world.IBlockReader
 import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
-import net.minecraftforge.fml.RegistryObject
 import ru.rikgela.russianmagic.common.RMCCMessage
-import ru.rikgela.russianmagic.init.RMTileEntityTypes
 import ru.rikgela.russianmagic.tileentity.AbstractRMFurnaceTileEntity
-import ru.rikgela.russianmagic.tileentity.RMMarbleFurnaceTileEntity
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
 import java.util.*
 import java.util.function.Consumer
@@ -98,6 +94,29 @@ abstract class AbstractRMFurnace(properties: Properties) : Block(properties) {
             }
         }
         return ActionResultType.SUCCESS
+    }
+
+    override fun onReplaced(state: BlockState, worldIn: World, pos: BlockPos, newState: BlockState, isMoving: Boolean) {
+        val tile = worldIn.getTileEntity(pos)
+        if (tile is AbstractRMFurnaceTileEntity && state.block !== newState.block) {
+            (tile.inventory).toNonNullList().forEach(Consumer { item: ItemStack ->
+                val itemEntity = ItemEntity(worldIn, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), item)
+                worldIn.addEntity(itemEntity)
+            })
+        }
+        if (state.hasTileEntity() && state.block !== newState.block) {
+            worldIn.removeTileEntity(pos)
+        }
+    }
+
+    override fun onBlockPlacedBy(worldIn: World, pos: BlockPos, state: BlockState, placer: LivingEntity?, stack: ItemStack) {
+        super.onBlockPlacedBy(worldIn, pos, state, placer, stack)
+        if (stack.hasDisplayName()) {
+            val tile = worldIn.getTileEntity(pos)
+            if (tile is AbstractRMFurnaceTileEntity) {
+                tile.customName = stack.displayName
+            }
+        }
     }
 
     companion object {
