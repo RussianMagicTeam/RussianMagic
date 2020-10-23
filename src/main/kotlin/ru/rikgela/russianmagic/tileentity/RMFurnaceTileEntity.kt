@@ -41,7 +41,7 @@ class RMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*> = RMTileEntityType
 
     var currentSmeltTime = 0
 
-    private val mana: IMana = Mana.withParams(100, 1000, 0F)
+    private val mana: IMana = Mana.withParams(100, 1000)
     private val manaReceiver: IManaReceiver = ManaReceiver(mana)
     val maxSmeltTime = 100
     val inventory: RMItemHandler = RMItemHandler(2)
@@ -183,11 +183,9 @@ class RMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*> = RMTileEntityType
     override val maxTransfer: Int
         get() = manaReceiver.maxTransfer
 
-    override fun transfer(points: Int): Boolean {
-        if (manaReceiver.transfer(points)) {
-            update()
-            return true
-        }
-        return false
+    override fun transfer(points: Int): Int {
+        val ret = manaReceiver.transfer(points)
+        if (ret != points) update()
+        return ret
     }
 }
