@@ -7,9 +7,10 @@ import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.ITextComponent
 import ru.rikgela.russianmagic.MOD_ID
+import ru.rikgela.russianmagic.container.AbstractRMFurnaceContainer
 import ru.rikgela.russianmagic.container.RMMarbleFurnaceContainer
 
-class RMMarbleFurnaceScreen(private val screenContainerMarble: RMMarbleFurnaceContainer, inv: PlayerInventory, titleIn: ITextComponent) : ContainerScreen<RMMarbleFurnaceContainer?>(screenContainerMarble, inv, titleIn) {
+class RMMarbleFurnaceScreen(private val screenContainerMarble: AbstractRMFurnaceContainer, inv: PlayerInventory, titleIn: ITextComponent) : ContainerScreen<AbstractRMFurnaceContainer?>(screenContainerMarble, inv, titleIn) {
     override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {
         RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f)
         minecraft!!.getTextureManager().bindTexture(TEXTURE)
@@ -20,8 +21,8 @@ class RMMarbleFurnaceScreen(private val screenContainerMarble: RMMarbleFurnaceCo
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY)
         font.drawString(title.formattedText, 8.0f, 8.0f, 0x404040)
-        val curMana = screenContainerMarble.tileEntityMarble.currentMana
-        val maxMana = screenContainerMarble.tileEntityMarble.maxMana
+        val curMana = screenContainerMarble.tileEntityFurnace.currentMana
+        val maxMana = screenContainerMarble.tileEntityFurnace.maxMana
         val Mana = I18n.format("capability.russianmagic.mana") + ": $curMana/$maxMana"
         font.drawString( Mana, 8.0f, 16.0f, 0x404040)
         font.drawString(playerInventory.displayName.formattedText, 8.0f, 69.0f, 0x404040)
