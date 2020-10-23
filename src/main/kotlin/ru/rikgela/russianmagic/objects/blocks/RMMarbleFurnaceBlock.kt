@@ -23,18 +23,18 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import ru.rikgela.russianmagic.common.RMCCMessage
 import ru.rikgela.russianmagic.init.RMTileEntityTypes
-import ru.rikgela.russianmagic.tileentity.RMFurnaceTileEntity
+import ru.rikgela.russianmagic.tileentity.RMMarbleFurnaceTileEntity
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
 import java.util.*
 import java.util.function.Consumer
 
-class RMFurnaceBlock(properties: Properties) : Block(properties) {
+class RMMarbleFurnaceBlock(properties: Properties) : Block(properties) {
     override fun hasTileEntity(state: BlockState): Boolean {
         return true
     }
 
     override fun createTileEntity(state: BlockState, world: IBlockReader): TileEntity {
-        return RMTileEntityTypes.RM_FURNACE.get().create()!!
+        return RMTileEntityTypes.RM_MARBLE_FURNACE.get().create()!!
     }
 
     override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
@@ -62,7 +62,7 @@ class RMFurnaceBlock(properties: Properties) : Block(properties) {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack)
         if (stack.hasDisplayName()) {
             val tile = worldIn.getTileEntity(pos)
-            if (tile is RMFurnaceTileEntity) {
+            if (tile is RMMarbleFurnaceTileEntity) {
                 tile.customName = stack.displayName
             }
         }
@@ -111,7 +111,7 @@ class RMFurnaceBlock(properties: Properties) : Block(properties) {
 
     override fun onReplaced(state: BlockState, worldIn: World, pos: BlockPos, newState: BlockState, isMoving: Boolean) {
         val tile = worldIn.getTileEntity(pos)
-        if (tile is RMFurnaceTileEntity && state.block !== newState.block) {
+        if (tile is RMMarbleFurnaceTileEntity && state.block !== newState.block) {
             (tile.inventory).toNonNullList().forEach(Consumer { item: ItemStack ->
                 val itemEntity = ItemEntity(worldIn, pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble(), item)
                 worldIn.addEntity(itemEntity)

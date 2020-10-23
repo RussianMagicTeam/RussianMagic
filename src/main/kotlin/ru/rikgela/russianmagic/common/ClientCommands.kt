@@ -12,7 +12,7 @@ import net.minecraftforge.fml.network.NetworkHooks
 import ru.rikgela.russianmagic.mana.IMana
 import ru.rikgela.russianmagic.mana.IManaReceiver
 import ru.rikgela.russianmagic.mana.MANA_CAP
-import ru.rikgela.russianmagic.tileentity.RMFurnaceTileEntity
+import ru.rikgela.russianmagic.tileentity.RMMarbleFurnaceTileEntity
 import java.util.function.Supplier
 import kotlin.math.min
 
@@ -77,7 +77,7 @@ class RMCCMessage(
             if (cmd.cmd == Commands.OPEN_GUI) {
                 val pos = Gson().fromJson(cmd.data, Pos::class.java)
                 val tile = world.getTileEntity(BlockPos(pos.x, pos.y, pos.z))
-                if (tile is RMFurnaceTileEntity) {
+                if (tile is RMMarbleFurnaceTileEntity) {
                     NetworkHooks.openGui(playerEntity, tile as INamedContainerProvider?, BlockPos(pos.x, pos.y, pos.z))
                 }
             } else if (cmd.cmd == Commands.TRANSFER_MANA_FROM_PLAYER_TO_TILE_ENTITY) {

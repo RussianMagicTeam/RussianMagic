@@ -224,7 +224,7 @@ object RMItems {
     val KUNZITE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("kunzite_block_ore") { BlockItem(RMBlocks.KUNZITE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
     //Mekanisms
-    val RM_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_furnace") { BlockItem(RMBlocks.RM_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RM_MARBLE_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_marble_furnace") { BlockItem(RMBlocks.RM_MARBLE_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
     // Spell_Scrolls
     val SPELL_OF_REGENERATION: RegistryObject<Item> = ITEMS.register("spell_of_regeneration") {

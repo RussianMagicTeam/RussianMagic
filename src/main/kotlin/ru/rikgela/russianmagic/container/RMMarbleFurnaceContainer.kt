@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.items.SlotItemHandler
 import ru.rikgela.russianmagic.init.RMBlocks
 import ru.rikgela.russianmagic.init.RMContainerTypes
-import ru.rikgela.russianmagic.tileentity.RMFurnaceTileEntity
+import ru.rikgela.russianmagic.tileentity.RMMarbleFurnaceTileEntity
 import ru.rikgela.russianmagic.util.FunctionalIntReferenceHolder
 import java.util.*
 import java.util.function.IntConsumer
@@ -21,18 +21,18 @@ import java.util.function.IntSupplier
 import javax.annotation.Nonnull
 import kotlin.math.min
 
-class RMFurnaceContainer(windowID: Int,
-                         playerInv: PlayerInventory,
-                         val tileEntity: RMFurnaceTileEntity
-) : Container(RMContainerTypes.RM_FURNACE_CONTAINER.get(), windowID) {
-    private val canInteractWithCallable: IWorldPosCallable = IWorldPosCallable.of(tileEntity.world!!, tileEntity.pos)
+class RMMarbleFurnaceContainer(windowID: Int,
+                               playerInv: PlayerInventory,
+                               val tileEntityMarble: RMMarbleFurnaceTileEntity
+) : Container(RMContainerTypes.RM_MARBLE_FURNACE_CONTAINER.get(), windowID) {
+    private val canInteractWithCallable: IWorldPosCallable = IWorldPosCallable.of(tileEntityMarble.world!!, tileEntityMarble.pos)
     private var currentSmeltTime: FunctionalIntReferenceHolder? = null
 
     // Client Constructor
     constructor(windowID: Int, playerInv: PlayerInventory, data: PacketBuffer?) : this(windowID, playerInv, getTileEntity(playerInv, data))
 
     override fun canInteractWith(playerIn: PlayerEntity): Boolean {
-        return isWithinUsableDistance(canInteractWithCallable, playerIn, RMBlocks.RM_FURNACE_BLOCK.get())
+        return isWithinUsableDistance(canInteractWithCallable, playerIn, RMBlocks.RM_MARBLE_FURNACE_BLOCK.get())
     }
 
     private fun transferToInventory(player: PlayerEntity, index: Int): ItemStack {
@@ -84,14 +84,14 @@ class RMFurnaceContainer(windowID: Int,
 
     @get:OnlyIn(Dist.CLIENT)
     val smeltProgressionScaled: Int
-        get() = if (currentSmeltTime!!.get() != 0 && tileEntity.maxSmeltTime != 0) currentSmeltTime!!.get() * 24 / tileEntity.maxSmeltTime else 0
+        get() = if (currentSmeltTime!!.get() != 0 && tileEntityMarble.maxSmeltTime != 0) currentSmeltTime!!.get() * 24 / tileEntityMarble.maxSmeltTime else 0
 
     companion object {
-        private fun getTileEntity(playerInv: PlayerInventory?, data: PacketBuffer?): RMFurnaceTileEntity {
+        private fun getTileEntity(playerInv: PlayerInventory?, data: PacketBuffer?): RMMarbleFurnaceTileEntity {
             Objects.requireNonNull(playerInv, "playerInv cannot be null")
             Objects.requireNonNull(data, "data cannot be null")
             val tileAtPos = (playerInv!!).player.world.getTileEntity((data!!).readBlockPos())
-            if (tileAtPos is RMFurnaceTileEntity) {
+            if (tileAtPos is RMMarbleFurnaceTileEntity) {
                 return tileAtPos
             }
             throw IllegalStateException("TileEntity is not correct $tileAtPos")
@@ -137,9 +137,9 @@ class RMFurnaceContainer(windowID: Int,
         }
 
         // Furnace Slots
-        addSlot(SlotItemHandler(tileEntity.inventory, 0, 56, 34))
-        addSlot(SlotItemHandler(tileEntity.inventory, 1, 116, 35))
-        trackInt(FunctionalIntReferenceHolder(IntSupplier { tileEntity.currentSmeltTime },
-                IntConsumer { value: Int -> tileEntity.currentSmeltTime = value }).also { currentSmeltTime = it })
+        addSlot(SlotItemHandler(tileEntityMarble.inventory, 0, 56, 34))
+        addSlot(SlotItemHandler(tileEntityMarble.inventory, 1, 116, 35))
+        trackInt(FunctionalIntReferenceHolder(IntSupplier { tileEntityMarble.currentSmeltTime },
+                IntConsumer { value: Int -> tileEntityMarble.currentSmeltTime = value }).also { currentSmeltTime = it })
     }
 }

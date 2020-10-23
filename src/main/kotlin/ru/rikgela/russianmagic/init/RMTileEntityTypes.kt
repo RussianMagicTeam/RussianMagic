@@ -5,7 +5,7 @@ import net.minecraftforge.fml.RegistryObject
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import ru.rikgela.russianmagic.MOD_ID
-import ru.rikgela.russianmagic.tileentity.RMFurnaceTileEntity
+import ru.rikgela.russianmagic.tileentity.RMMarbleFurnaceTileEntity
 import java.util.function.Supplier
 
 object RMTileEntityTypes {
@@ -13,10 +13,10 @@ object RMTileEntityTypes {
             ForgeRegistries.TILE_ENTITIES, MOD_ID)
 
     @JvmField
-    val RM_FURNACE: RegistryObject<TileEntityType<RMFurnaceTileEntity>> = TILE_ENTITY_TYPES
-            .register("rm_furnace") {
+    val RM_MARBLE_FURNACE: RegistryObject<TileEntityType<RMMarbleFurnaceTileEntity>> = TILE_ENTITY_TYPES
+            .register("rm_marble_furnace") {
                 TileEntityType.Builder
-                        .create(Supplier { RMFurnaceTileEntity() }, RMBlocks.RM_FURNACE_BLOCK.get())
+                        .create(Supplier { RMMarbleFurnaceTileEntity() }, RMBlocks.RM_MARBLE_FURNACE_BLOCK.get())
                         .build(null)
             }
 }

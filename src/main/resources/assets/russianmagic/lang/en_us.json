@@ -159,8 +159,8 @@
   "block.russianmagic.kunzite_block": "Kunzite block",
   "block.russianmagic.kunzite_block_ore": "Kunzite ore",
 
-  "block.russianmagic.rm_furnace": "RM furnace",
-  "container.russianmagic.rm_furnace": "RM furnace",
+  "block.russianmagic.rm_marble_furnace": "RM marble furnace",
+  "container.russianmagic.rm_marble_furnace": "RM marble furnace",
 
   "capability.russianmagic.mana": "Mana"
 }

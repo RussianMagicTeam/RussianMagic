@@ -7,9 +7,9 @@ import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.ITextComponent
 import ru.rikgela.russianmagic.MOD_ID
-import ru.rikgela.russianmagic.container.RMFurnaceContainer
+import ru.rikgela.russianmagic.container.RMMarbleFurnaceContainer
 
-class RMFurnaceScreen(private val screenContainer: RMFurnaceContainer, inv: PlayerInventory, titleIn: ITextComponent) : ContainerScreen<RMFurnaceContainer?>(screenContainer, inv, titleIn) {
+class RMMarbleFurnaceScreen(private val screenContainerMarble: RMMarbleFurnaceContainer, inv: PlayerInventory, titleIn: ITextComponent) : ContainerScreen<RMMarbleFurnaceContainer?>(screenContainerMarble, inv, titleIn) {
     override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {
         RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f)
         minecraft!!.getTextureManager().bindTexture(TEXTURE)
@@ -20,8 +20,8 @@ class RMFurnaceScreen(private val screenContainer: RMFurnaceContainer, inv: Play
     override fun drawGuiContainerForegroundLayer(mouseX: Int, mouseY: Int) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY)
         font.drawString(title.formattedText, 8.0f, 8.0f, 0x404040)
-        val curMana = screenContainer.tileEntity.currentMana
-        val maxMana = screenContainer.tileEntity.maxMana
+        val curMana = screenContainerMarble.tileEntityMarble.currentMana
+        val maxMana = screenContainerMarble.tileEntityMarble.maxMana
         val Mana = I18n.format("capability.russianmagic.mana") + ": $curMana/$maxMana"
         font.drawString( Mana, 8.0f, 16.0f, 0x404040)
         font.drawString(playerInventory.displayName.formattedText, 8.0f, 69.0f, 0x404040)
@@ -35,7 +35,7 @@ class RMFurnaceScreen(private val screenContainer: RMFurnaceContainer, inv: Play
 
     companion object {
         private val TEXTURE = ResourceLocation(MOD_ID,
-                "textures/gui/rm_furnace_screen.png")
+                "textures/gui/rm_marble_furnace_screen.png")
     }
 
     init {
