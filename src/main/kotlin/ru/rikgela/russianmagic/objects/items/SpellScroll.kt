@@ -12,7 +12,7 @@ import net.minecraft.util.Hand
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.StringTextComponent
 import net.minecraft.world.World
-import ru.rikgela.russianmagic.mana.Mana.Companion.fromPlayer
+import ru.rikgela.russianmagic.mana.PlayerMana
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
 
 class SpellScroll(properties: Properties) : Item(properties) {
@@ -31,7 +31,7 @@ class SpellScroll(properties: Properties) : Item(properties) {
 
     override fun onItemRightClick(worldIn: World, playerIn: PlayerEntity, handIn: Hand): ActionResult<ItemStack> {
         if(playerIn is ServerPlayerEntity) {
-            val mana = fromPlayer(playerIn)
+            val mana = PlayerMana.fromPlayer(playerIn)
             if (mana.consume(100, playerIn)) {
                 playerIn.addPotionEffect(EffectInstance(Effects.REGENERATION, 500, 255))
                 val message = String.format("Hello there, you have §7%d§r mana left.", mana.currentMana)
