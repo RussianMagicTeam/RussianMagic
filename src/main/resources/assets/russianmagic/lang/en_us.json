@@ -162,5 +162,8 @@
   "block.russianmagic.rm_marble_furnace": "RM marble furnace",
   "container.russianmagic.rm_marble_furnace": "RM marble furnace",
 
+  "block.russianmagic.rm_ebony_furnace": "RM ebony furnace",
+  "container.russianmagic.rm_ebony_furnace": "RM ebony furnace",
+
   "capability.russianmagic.mana": "Mana"
 }

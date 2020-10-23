@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X X",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "russianmagic:stripped_ebony_log"
+    }
+  },
+  "result": {
+    "item": "russianmagic:rm_ebony_furnace"
+  }
+}

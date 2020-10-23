@@ -161,5 +161,8 @@
   "block.russianmagic.rm_marble_furnace": "Мраморная РМ печка",
   "container.russianmagic.rm_marble_furnace": "Мраморная РМ печка",
 
+  "block.russianmagic.rm_ebony_furnace": "РМ печка из черного дерева",
+  "container.russianmagic.rm_ebony_furnace": "РМ печка из черного дерева",
+
   "capability.russianmagic.mana": "Мана"
 }

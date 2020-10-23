@@ -17,6 +17,7 @@ import ru.rikgela.russianmagic.blocks.EbonySaplingBlock
 import ru.rikgela.russianmagic.blocks.EbonyTree
 import ru.rikgela.russianmagic.blocks.RMLeavesBlock
 import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace
+import ru.rikgela.russianmagic.objects.blocks.RMEbonyFurnaceBlock
 import ru.rikgela.russianmagic.objects.blocks.RMMarbleFurnaceBlock
 import java.util.function.Supplier
 
@@ -397,6 +398,12 @@ object RMBlocks {
 
     val RM_MARBLE_FURNACE_BLOCK: RegistryObject<AbstractRMFurnace> = BLOCKS.register<AbstractRMFurnace>("rm_marble_furnace") {
         RMMarbleFurnaceBlock(Block
+                .Properties
+                .from(Blocks.FURNACE))
+    }
+
+    val RM_EBONY_FURNACE_BLOCK: RegistryObject<AbstractRMFurnace> = BLOCKS.register<AbstractRMFurnace>("rm_ebony_furnace") {
+        RMEbonyFurnaceBlock(Block
                 .Properties
                 .from(Blocks.FURNACE))
     }

@@ -9,6 +9,7 @@ import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.container.AbstractRMFurnaceContainer
+import ru.rikgela.russianmagic.container.RMEbonyFurnaceContainer
 import ru.rikgela.russianmagic.container.RMMarbleFurnaceContainer
 
 object RMContainerTypes {
@@ -19,6 +20,13 @@ object RMContainerTypes {
             .register("rm_marble_furnace") {
                 IForgeContainerType.create { windowID: Int, playerInv: PlayerInventory, data: PacketBuffer ->
                     RMMarbleFurnaceContainer(windowID, playerInv, data) as AbstractRMFurnaceContainer
+                }
+            }
+    @JvmField
+    val RM_EBONY_FURNACE_CONTAINER: RegistryObject<ContainerType<AbstractRMFurnaceContainer>> = CONTAINER_TYPES
+            .register("rm_ebony_furnace") {
+                IForgeContainerType.create { windowID: Int, playerInv: PlayerInventory, data: PacketBuffer ->
+                    RMEbonyFurnaceContainer(windowID, playerInv, data) as AbstractRMFurnaceContainer
                 }
             }
 }
