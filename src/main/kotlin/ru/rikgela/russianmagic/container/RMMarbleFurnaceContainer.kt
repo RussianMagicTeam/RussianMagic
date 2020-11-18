@@ -12,7 +12,9 @@ class RMMarbleFurnaceContainer(windowID: Int,
 ) : AbstractRMFurnaceContainer(windowID, RMContainerTypes.RM_MARBLE_FURNACE_CONTAINER.get(), RMBlocks.RM_MARBLE_FURNACE_BLOCK.get(), playerInv, tileEntityFurnace) {
 
     // Client Constructor
-    constructor(windowID: Int, playerInv: PlayerInventory, data: PacketBuffer?) : this(windowID, playerInv, getTileEntity(playerInv, data))
+    constructor(windowID: Int, playerInv: PlayerInventory, data: PacketBuffer?)
+            : this(windowID, playerInv,
+            getTileEntity(playerInv, data))
 
 
 }

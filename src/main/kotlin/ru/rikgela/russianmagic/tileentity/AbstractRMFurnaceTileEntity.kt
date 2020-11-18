@@ -38,7 +38,7 @@ import ru.rikgela.russianmagic.objects.blocks.RMMarbleFurnaceBlock
 import ru.rikgela.russianmagic.util.RMItemHandler
 import java.util.stream.Collectors
 
-abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*> = RMTileEntityTypes.RM_MARBLE_FURNACE.get()) : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver {
+abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>) : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver {
     var customName: ITextComponent? = null
 
     var currentSmeltTime = 0

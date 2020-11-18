@@ -12,7 +12,9 @@ class RMEbonyFurnaceContainer(windowID: Int,
 ) : AbstractRMFurnaceContainer(windowID, RMContainerTypes.RM_EBONY_FURNACE_CONTAINER.get(), RMBlocks.RM_EBONY_FURNACE_BLOCK.get(), playerInv, tileEntityFurnace) {
 
     // Client Constructor
-    constructor(windowID: Int, playerInv: PlayerInventory, data: PacketBuffer?) : this(windowID, playerInv, getTileEntity(playerInv, data))
+    constructor(windowID: Int, playerInv: PlayerInventory, data: PacketBuffer?)
+            : this(windowID, playerInv,
+            getTileEntity(playerInv, data))
 
 
 }
