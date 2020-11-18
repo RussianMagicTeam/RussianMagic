@@ -22,6 +22,7 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import ru.rikgela.russianmagic.common.RMCCMessage
 import ru.rikgela.russianmagic.tileentity.AbstractRMFurnaceTileEntity
+import ru.rikgela.russianmagic.util.RMMekanism
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
 import java.util.*
 import java.util.function.Consumer

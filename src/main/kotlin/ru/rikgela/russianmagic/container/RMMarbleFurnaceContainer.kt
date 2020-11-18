@@ -8,13 +8,11 @@ import ru.rikgela.russianmagic.tileentity.AbstractRMFurnaceTileEntity
 
 class RMMarbleFurnaceContainer(windowID: Int,
                                playerInv: PlayerInventory,
-                               tileEntityFurnace: AbstractRMFurnaceTileEntity
-) : AbstractRMFurnaceContainer(windowID, RMContainerTypes.RM_MARBLE_FURNACE_CONTAINER.get(), RMBlocks.RM_MARBLE_FURNACE_BLOCK.get(), playerInv, tileEntityFurnace) {
+                               tileEntityFurnace: AbstractRMFurnaceTileEntity,
+) : AbstractRMFurnaceContainer(windowID, RMContainerTypes.RM_MARBLE_FURNACE_CONTAINER.get(), playerInv, tileEntityFurnace) {
 
     // Client Constructor
     constructor(windowID: Int, playerInv: PlayerInventory, data: PacketBuffer?)
             : this(windowID, playerInv,
             getTileEntity(playerInv, data))
-
-
 }

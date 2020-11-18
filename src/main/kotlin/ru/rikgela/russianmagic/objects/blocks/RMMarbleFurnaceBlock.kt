@@ -4,6 +4,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.IBlockReader
 import ru.rikgela.russianmagic.init.RMTileEntityTypes
+import ru.rikgela.russianmagic.util.RMMekanism
 
 class RMMarbleFurnaceBlock(properties: Properties) : AbstractRMFurnace(properties) {
 

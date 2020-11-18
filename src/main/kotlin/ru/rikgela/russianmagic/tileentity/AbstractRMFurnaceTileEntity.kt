@@ -36,16 +36,16 @@ import ru.rikgela.russianmagic.mana.ManaReceiver
 import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace
 import ru.rikgela.russianmagic.objects.blocks.RMMarbleFurnaceBlock
 import ru.rikgela.russianmagic.util.RMItemHandler
+import ru.rikgela.russianmagic.util.RMMekanism
 import java.util.stream.Collectors
 
-abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>) : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver {
+abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, var rmMekanism: RMMekanism) : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver {
     var customName: ITextComponent? = null
-
     var currentSmeltTime = 0
 
-    private val mana: IMana = Mana.withParams(100, 1000)
+    private val mana: IMana = Mana.withParams(rmMekanism.tier*100, rmMekanism.tier*1000)
     private val manaReceiver: IManaReceiver = ManaReceiver(mana)
-    val maxSmeltTime = 100
+    val maxSmeltTime = 100/rmMekanism.tier
     val inventory: RMItemHandler = RMItemHandler(2)
 
     fun update() {
@@ -122,11 +122,16 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>) 
         if (stack == null) {
             return null
         }
-        val recipes = findRecipesByType("smelting", world)
-        for (iRecipe in recipes) {
-            val recipe = iRecipe as FurnaceRecipe
-            if (recipe.matches(RecipeWrapper(inventory), this.world!!)) {
-                return recipe
+        for(i in rmMekanism.recipe_shape)
+        {
+            if(i != null) {
+                val recipes = findRecipesByType(i, world)
+                for (iRecipe in recipes) {
+                    val recipe = iRecipe as FurnaceRecipe
+                    if (recipe.matches(RecipeWrapper(inventory), this.world!!)) {
+                        return recipe
+                    }
+                }
             }
         }
         return null

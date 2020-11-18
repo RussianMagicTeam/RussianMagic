@@ -9,6 +9,8 @@ import net.minecraft.inventory.container.Slot
 import net.minecraft.item.ItemStack
 import net.minecraft.network.PacketBuffer
 import net.minecraft.util.IWorldPosCallable
+import net.minecraft.util.math.BlockPos
+import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.items.SlotItemHandler
@@ -16,6 +18,7 @@ import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace
 import ru.rikgela.russianmagic.tileentity.AbstractRMFurnaceTileEntity
 import ru.rikgela.russianmagic.util.FunctionalIntReferenceHolder
 import java.util.*
+import java.util.function.BiFunction
 import java.util.function.IntConsumer
 import java.util.function.IntSupplier
 import javax.annotation.Nonnull
@@ -23,7 +26,6 @@ import kotlin.math.min
 
 abstract class AbstractRMFurnaceContainer(windowID: Int,
                                           private val furnaceType: ContainerType<AbstractRMFurnaceContainer>,
-                                          private val furnaceBlock: AbstractRMFurnace,
                                           private val playerInv: PlayerInventory,
                                           val tileEntityFurnace: AbstractRMFurnaceTileEntity
 ) : Container(furnaceType, windowID) {
@@ -33,7 +35,8 @@ abstract class AbstractRMFurnaceContainer(windowID: Int,
     private val canInteractWithCallable: IWorldPosCallable = IWorldPosCallable.of(tileEntityFurnace.world!!, tileEntityFurnace.pos)
 
     override fun canInteractWith(playerIn: PlayerEntity): Boolean {
-        return isWithinUsableDistance(canInteractWithCallable, playerIn, furnaceBlock)
+        //return isWithinUsableDistance(canInteractWithCallable, playerIn, furnaceBlock)
+        return canInteractWithCallable.applyOrElse(BiFunction { p_216960_2_: World, p_216960_3_: BlockPos -> playerIn.getDistanceSq(p_216960_3_.x.toDouble() + 0.5, p_216960_3_.y.toDouble() + 0.5, p_216960_3_.z.toDouble() + 0.5) <= 64.0 }, true)
     }
 
     private fun transferToInventory(player: PlayerEntity, index: Int): ItemStack {

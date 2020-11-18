@@ -17,8 +17,8 @@ import ru.rikgela.russianmagic.blocks.EbonySaplingBlock
 import ru.rikgela.russianmagic.blocks.EbonyTree
 import ru.rikgela.russianmagic.blocks.RMLeavesBlock
 import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace
-import ru.rikgela.russianmagic.objects.blocks.RMEbonyFurnaceBlock
 import ru.rikgela.russianmagic.objects.blocks.RMMarbleFurnaceBlock
+import ru.rikgela.russianmagic.util.RMMekanism
 import java.util.function.Supplier
 
 object RMBlocks {
@@ -396,14 +396,14 @@ object RMBlocks {
                 .harvestTool(ToolType.PICKAXE))
     }
 
-    val RM_MARBLE_FURNACE_BLOCK: RegistryObject<AbstractRMFurnace> = BLOCKS.register<AbstractRMFurnace>("rm_marble_furnace") {
+    val RM_MARBLE_FURNACE_BLOCK: RegistryObject<RMMarbleFurnaceBlock> = BLOCKS.register<RMMarbleFurnaceBlock>("rm_marble_furnace") {
         RMMarbleFurnaceBlock(Block
                 .Properties
                 .from(Blocks.FURNACE))
     }
 
-    val RM_EBONY_FURNACE_BLOCK: RegistryObject<AbstractRMFurnace> = BLOCKS.register<AbstractRMFurnace>("rm_ebony_furnace") {
-        RMEbonyFurnaceBlock(Block
+    val RM_EBONY_FURNACE_BLOCK: RegistryObject<RMMarbleFurnaceBlock> = BLOCKS.register<RMMarbleFurnaceBlock>("rm_ebony_furnace") {
+        RMMarbleFurnaceBlock(Block
                 .Properties
                 .from(Blocks.FURNACE))
     }

@@ -12,9 +12,10 @@ import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.container.RMMarbleFurnaceContainer
 import ru.rikgela.russianmagic.init.RMTileEntityTypes
 import ru.rikgela.russianmagic.mana.IManaReceiver
+import ru.rikgela.russianmagic.util.RMMekanism
 
-class RMMarbleFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*> = RMTileEntityTypes.RM_MARBLE_FURNACE.get()) : AbstractRMFurnaceTileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver {
-
+class RMMarbleFurnaceTileEntity(rmMekanism: RMMekanism, tileEntityTypeIn: TileEntityType<*>) : AbstractRMFurnaceTileEntity(tileEntityTypeIn, rmMekanism), ITickableTileEntity, INamedContainerProvider, IManaReceiver {
+//  = RMTileEntityTypes.RM_MARBLE_FURNACE.get()
     override fun createMenu(windowID: Int, playerInv: PlayerInventory, playerIn: PlayerEntity): Container {
         return RMMarbleFurnaceContainer(windowID, playerInv, this)
     }
