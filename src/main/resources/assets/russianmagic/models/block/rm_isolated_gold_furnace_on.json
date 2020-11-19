@@ -1,0 +1,8 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "russianmagic:block/rm_isolated_gold_furnace_top",
+    "front": "russianmagic:block/rm_isolated_gold_furnace_front_on",
+    "side": "russianmagic:block/rm_isolated_gold_furnace_side"
+  }
+}

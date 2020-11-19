@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X X",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:gold_block"
+    }
+  },
+  "result": {
+    "item": "russianmagic:rm_gold_furnace"
+  }
+}

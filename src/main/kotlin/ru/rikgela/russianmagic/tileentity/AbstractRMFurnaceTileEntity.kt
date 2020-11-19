@@ -34,12 +34,11 @@ import ru.rikgela.russianmagic.mana.IManaReceiver
 import ru.rikgela.russianmagic.mana.Mana
 import ru.rikgela.russianmagic.mana.ManaReceiver
 import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace
-import ru.rikgela.russianmagic.objects.blocks.RMMarbleFurnaceBlock
 import ru.rikgela.russianmagic.util.RMItemHandler
 import ru.rikgela.russianmagic.util.RMMekanism
 import java.util.stream.Collectors
 
-abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, var rmMekanism: RMMekanism) : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver {
+abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, val rmMekanism: RMMekanism) : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver {
     var customName: ITextComponent? = null
     var currentSmeltTime = 0
 
@@ -47,6 +46,17 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     private val manaReceiver: IManaReceiver = ManaReceiver(mana)
     val maxSmeltTime = 100/rmMekanism.tier
     val inventory: RMItemHandler = RMItemHandler(2)
+
+
+    val name: ITextComponent
+        get() = customName ?: defaultName
+
+    private val defaultName: ITextComponent
+        get() = TranslationTextComponent("container.$MOD_ID.${rmMekanism.name}")
+
+    override fun getDisplayName(): ITextComponent {
+        return name
+    }
 
     fun update() {
         markDirty()
@@ -122,15 +132,13 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         if (stack == null) {
             return null
         }
-        for(i in rmMekanism.recipe_shape)
+        for(recipe_shape: String in rmMekanism.recipe_shape)
         {
-            if(i != null) {
-                val recipes = findRecipesByType(i, world)
-                for (iRecipe in recipes) {
-                    val recipe = iRecipe as FurnaceRecipe
-                    if (recipe.matches(RecipeWrapper(inventory), this.world!!)) {
-                        return recipe
-                    }
+            val recipes = findRecipesByType(recipe_shape, world)
+            for (iRecipe in recipes) {
+                val recipe = iRecipe as FurnaceRecipe
+                if (recipe.matches(RecipeWrapper(inventory), this.world!!)) {
+                    return recipe
                 }
             }
         }
