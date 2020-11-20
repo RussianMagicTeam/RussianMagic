@@ -5,7 +5,6 @@ import net.minecraftforge.fml.RegistryObject
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import ru.rikgela.russianmagic.MOD_ID
-import ru.rikgela.russianmagic.init.RMTileEntityTypes.TILE_ENTITY_TYPES
 import ru.rikgela.russianmagic.tileentity.RMFurnacesTileEntity
 import ru.rikgela.russianmagic.util.RMMekanism
 import java.util.function.Supplier
@@ -22,6 +21,7 @@ object RMTileEntityTypes {
                                 , RMBlocks.RM_GOLD_FURNACE_BLOCK.get())
                         .build(null)
             }
+
     @JvmField
     val RM_ISOLATED_GOLD_FURNACE: RegistryObject<TileEntityType<RMFurnacesTileEntity.RMIsolatedGoldFurnaceTileEntity>> = TILE_ENTITY_TYPES
             .register("rm_isolated_gold_furnace") {
@@ -30,6 +30,7 @@ object RMTileEntityTypes {
                                 , RMBlocks.RM_ISOLATED_GOLD_FURNACE_BLOCK.get())
                         .build(null)
             }
+
     @JvmField
     val RM_EBONY_FURNACE: RegistryObject<TileEntityType<RMFurnacesTileEntity.RMEbonyFurnaceTileEntity>> = TILE_ENTITY_TYPES
             .register("rm_ebony_furnace") {
@@ -38,6 +39,7 @@ object RMTileEntityTypes {
                                 , RMBlocks.RM_EBONY_FURNACE_BLOCK.get())
                         .build(null)
             }
+
     @JvmField
     val RM_MARBLE_FURNACE: RegistryObject<TileEntityType<RMFurnacesTileEntity.RMMarbleFurnaceTileEntity>> = TILE_ENTITY_TYPES
             .register("rm_marble_furnace") {
@@ -47,6 +49,7 @@ object RMTileEntityTypes {
                         )
                         .build(null)
             }
+
     @JvmField
     val RM_WHITE_JADE_FURNACE: RegistryObject<TileEntityType<RMFurnacesTileEntity.RMWhiteJadeFurnaceTileEntity>> = TILE_ENTITY_TYPES
             .register("rm_white_jade_furnace") {
@@ -55,6 +58,7 @@ object RMTileEntityTypes {
                                 , RMBlocks.RM_WHITE_JADE_FURNACE_BLOCK.get())
                         .build(null)
             }
+
     @JvmField
     val RM_RHINESTONE_FURNACE: RegistryObject<TileEntityType<RMFurnacesTileEntity.RMRhinestoneFurnaceTileEntity>> = TILE_ENTITY_TYPES
             .register("rm_rhinestone_furnace") {
@@ -63,6 +67,7 @@ object RMTileEntityTypes {
                                 , RMBlocks.RM_RHINESTONE_FURNACE_BLOCK.get())
                         .build(null)
             }
+
     @JvmField
     val RM_AQUAMARINE_FURNACE: RegistryObject<TileEntityType<RMFurnacesTileEntity.RMAquamarineFurnaceTileEntity>> = TILE_ENTITY_TYPES
             .register("rm_aquamarine_furnace") {

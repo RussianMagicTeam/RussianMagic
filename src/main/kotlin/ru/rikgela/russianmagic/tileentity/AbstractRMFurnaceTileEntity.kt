@@ -47,7 +47,6 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     val maxSmeltTime = 100/rmMekanism.tier
     val inventory: RMItemHandler = RMItemHandler(2)
 
-
     val name: ITextComponent
         get() = customName ?: defaultName
 

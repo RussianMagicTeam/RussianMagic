@@ -16,10 +16,7 @@ import ru.rikgela.russianmagic.blocks.EbonyLogBlock
 import ru.rikgela.russianmagic.blocks.EbonySaplingBlock
 import ru.rikgela.russianmagic.blocks.EbonyTree
 import ru.rikgela.russianmagic.blocks.RMLeavesBlock
-import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace
 import ru.rikgela.russianmagic.objects.blocks.RMFurnacesBlock
-import ru.rikgela.russianmagic.tileentity.AbstractRMFurnaceTileEntity
-import ru.rikgela.russianmagic.util.RMMekanism
 import java.util.function.Supplier
 
 object RMBlocks {
@@ -47,14 +44,14 @@ object RMBlocks {
                 .harvestTool(ToolType.PICKAXE))
     }
     val AQUAMARINE_BLOCK: RegistryObject<Block> = BLOCKS.register<Block>("aquamarine_block") {
-      Block(Block
+        Block(Block
                 .Properties
                 .create(Material.IRON)
                 .hardnessAndResistance(3.0f, 3.0f)
                 .harvestTool(ToolType.PICKAXE))
     }
     val AQUAMARINE_BLOCK_ORE: RegistryObject<Block> = BLOCKS.register<Block>("aquamarine_block_ore") {
-       Block(Block
+        Block(Block
                 .Properties
                 .create(Material.IRON)
                 .hardnessAndResistance(3.0f, 3.0f)
@@ -397,47 +394,54 @@ object RMBlocks {
                 .harvestTool(ToolType.PICKAXE))
     }
 
-    val RM_GOLD_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMGoldFurnaceBlock> = BLOCKS.register<RMFurnacesBlock.RMGoldFurnaceBlock>("rm_gold_furnace") {
-        RMFurnacesBlock.RMGoldFurnaceBlock(Block
-                .Properties
-                .from(Blocks.FURNACE), RMTileEntityTypes.RM_GOLD_FURNACE)
-    }
+    val RM_GOLD_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMGoldFurnaceBlock> = BLOCKS
+            .register<RMFurnacesBlock.RMGoldFurnaceBlock>("rm_gold_furnace") {
+                RMFurnacesBlock.RMGoldFurnaceBlock(Block
+                        .Properties
+                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_GOLD_FURNACE)
+            }
 
-    val RM_ISOLATED_GOLD_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMIsolatedGoldFurnaceBlock> = BLOCKS.register<RMFurnacesBlock.RMIsolatedGoldFurnaceBlock>("rm_isolated_gold_furnace") {
-        RMFurnacesBlock.RMIsolatedGoldFurnaceBlock(Block
-                .Properties
-                .from(Blocks.FURNACE), RMTileEntityTypes.RM_ISOLATED_GOLD_FURNACE)
-    }
+    val RM_ISOLATED_GOLD_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMIsolatedGoldFurnaceBlock> = BLOCKS
+            .register<RMFurnacesBlock.RMIsolatedGoldFurnaceBlock>("rm_isolated_gold_furnace") {
+                RMFurnacesBlock.RMIsolatedGoldFurnaceBlock(Block
+                        .Properties
+                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_ISOLATED_GOLD_FURNACE)
+            }
 
-    val RM_EBONY_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMEbonyFurnaceBlock> = BLOCKS.register<RMFurnacesBlock.RMEbonyFurnaceBlock>("rm_ebony_furnace") {
-        RMFurnacesBlock.RMEbonyFurnaceBlock(Block
-                .Properties
-                .from(Blocks.FURNACE), RMTileEntityTypes.RM_EBONY_FURNACE)
-    }
+    val RM_EBONY_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMEbonyFurnaceBlock> = BLOCKS
+            .register<RMFurnacesBlock.RMEbonyFurnaceBlock>("rm_ebony_furnace") {
+                RMFurnacesBlock.RMEbonyFurnaceBlock(Block
+                        .Properties
+                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_EBONY_FURNACE)
+            }
 
-    val RM_MARBLE_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMMarbleFurnaceBlock> = BLOCKS.register<RMFurnacesBlock.RMMarbleFurnaceBlock>("rm_marble_furnace") {
-        RMFurnacesBlock.RMMarbleFurnaceBlock(Block
-                .Properties
-                .from(Blocks.FURNACE), RMTileEntityTypes.RM_MARBLE_FURNACE)
-    }
+    val RM_MARBLE_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMMarbleFurnaceBlock> = BLOCKS
+            .register<RMFurnacesBlock.RMMarbleFurnaceBlock>("rm_marble_furnace") {
+                RMFurnacesBlock.RMMarbleFurnaceBlock(Block
+                        .Properties
+                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_MARBLE_FURNACE)
+            }
 
-    val RM_WHITE_JADE_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMWhiteJadeFurnaceBlock> = BLOCKS.register<RMFurnacesBlock.RMWhiteJadeFurnaceBlock>("rm_white_jade_furnace") {
-        RMFurnacesBlock.RMWhiteJadeFurnaceBlock(Block
-                .Properties
-                .from(Blocks.FURNACE), RMTileEntityTypes.RM_WHITE_JADE_FURNACE)
-    }
+    val RM_WHITE_JADE_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMWhiteJadeFurnaceBlock> = BLOCKS
+            .register<RMFurnacesBlock.RMWhiteJadeFurnaceBlock>("rm_white_jade_furnace") {
+                RMFurnacesBlock.RMWhiteJadeFurnaceBlock(Block
+                        .Properties
+                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_WHITE_JADE_FURNACE)
+            }
 
-    val RM_RHINESTONE_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMRhinestoneFurnaceBlock> = BLOCKS.register<RMFurnacesBlock.RMRhinestoneFurnaceBlock>("rm_rhinestone_furnace") {
-        RMFurnacesBlock.RMRhinestoneFurnaceBlock(Block
-                .Properties
-                .from(Blocks.FURNACE), RMTileEntityTypes.RM_RHINESTONE_FURNACE)
-    }
+    val RM_RHINESTONE_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMRhinestoneFurnaceBlock> = BLOCKS
+            .register<RMFurnacesBlock.RMRhinestoneFurnaceBlock>("rm_rhinestone_furnace") {
+                RMFurnacesBlock.RMRhinestoneFurnaceBlock(Block
+                        .Properties
+                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_RHINESTONE_FURNACE)
+            }
 
-    val RM_AQUAMARINE_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMAquamarineFurnaceBlock> = BLOCKS.register<RMFurnacesBlock.RMAquamarineFurnaceBlock>("rm_aquamarine_furnace") {
-        RMFurnacesBlock.RMAquamarineFurnaceBlock(Block
-                .Properties
-                .from(Blocks.FURNACE), RMTileEntityTypes.RM_AQUAMARINE_FURNACE)
-    }
+    val RM_AQUAMARINE_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMAquamarineFurnaceBlock> = BLOCKS
+            .register<RMFurnacesBlock.RMAquamarineFurnaceBlock>("rm_aquamarine_furnace") {
+                RMFurnacesBlock.RMAquamarineFurnaceBlock(Block
+                        .Properties
+                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_AQUAMARINE_FURNACE)
+            }
 
     val EBONY_PLANKS: RegistryObject<Block> = BLOCKS.register("ebony_planks") { Block(Block.Properties.from(Blocks.OAK_PLANKS)) }
     val EBONY_LEAVES: RegistryObject<RMLeavesBlock> = BLOCKS.register("ebony_leaves") { RMLeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)) }
