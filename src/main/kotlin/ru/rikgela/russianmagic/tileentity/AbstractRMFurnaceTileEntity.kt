@@ -5,7 +5,6 @@ import net.minecraft.inventory.ISidedInventory
 import net.minecraft.inventory.ItemStackHelper
 import net.minecraft.inventory.container.INamedContainerProvider
 import net.minecraft.item.ItemStack
-import net.minecraft.item.Items
 import net.minecraft.item.crafting.FurnaceRecipe
 import net.minecraft.item.crafting.IRecipe
 import net.minecraft.nbt.CompoundNBT
@@ -19,11 +18,7 @@ import net.minecraft.util.NonNullList
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.World
-import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.util.Constants
-import net.minecraftforge.common.util.LazyOptional
-import net.minecraftforge.items.CapabilityItemHandler
-import net.minecraftforge.items.IItemHandler
 import net.minecraftforge.items.wrapper.RecipeWrapper
 import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.mana.IMana
@@ -167,9 +162,9 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         read(nbt)
     }
 
-    override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> {
-        return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.orEmpty(cap, LazyOptional.of { inventory as IItemHandler })
-    }
+//    override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> {
+//        return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.orEmpty(cap, LazyOptional.of { inventory as IItemHandler })
+//    }
 
     companion object {
         fun findRecipesByType(typeIn: String, world: World?): Set<IRecipe<*>> {
@@ -217,13 +212,9 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
 
     override fun canExtractItem(index: Int, stack: ItemStack, direction: Direction): Boolean {
         if (direction == Direction.DOWN && index == 1) {
-            val item = stack.item
-            if (item !== Items.WATER_BUCKET && item !== Items.BUCKET) {
-                return false
-            }
+            return true
         }
-
-        return true
+        return false
     }
 
     override fun setInventorySlotContents(index: Int, stack: ItemStack) {
