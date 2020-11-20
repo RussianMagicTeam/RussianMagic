@@ -1,11 +1,11 @@
 package ru.rikgela.russianmagic.tileentity
 
 import net.minecraft.entity.player.PlayerEntity
-import net.minecraft.entity.player.PlayerInventory
+import net.minecraft.inventory.ISidedInventory
 import net.minecraft.inventory.ItemStackHelper
-import net.minecraft.inventory.container.Container
 import net.minecraft.inventory.container.INamedContainerProvider
 import net.minecraft.item.ItemStack
+import net.minecraft.item.Items
 import net.minecraft.item.crafting.FurnaceRecipe
 import net.minecraft.item.crafting.IRecipe
 import net.minecraft.nbt.CompoundNBT
@@ -26,9 +26,6 @@ import net.minecraftforge.items.CapabilityItemHandler
 import net.minecraftforge.items.IItemHandler
 import net.minecraftforge.items.wrapper.RecipeWrapper
 import ru.rikgela.russianmagic.MOD_ID
-import ru.rikgela.russianmagic.container.AbstractRMFurnaceContainer
-import ru.rikgela.russianmagic.container.RMMarbleFurnaceContainer
-import ru.rikgela.russianmagic.init.RMTileEntityTypes
 import ru.rikgela.russianmagic.mana.IMana
 import ru.rikgela.russianmagic.mana.IManaReceiver
 import ru.rikgela.russianmagic.mana.Mana
@@ -38,13 +35,19 @@ import ru.rikgela.russianmagic.util.RMItemHandler
 import ru.rikgela.russianmagic.util.RMMekanism
 import java.util.stream.Collectors
 
-abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, val rmMekanism: RMMekanism) : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver {
+abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, val rmMekanism: RMMekanism)
+    : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver, ISidedInventory {
     var customName: ITextComponent? = null
     var currentSmeltTime = 0
 
-    private val mana: IMana = Mana.withParams(rmMekanism.tier*100, rmMekanism.tier*1000)
+    private val mana: IMana = Mana.withParams(rmMekanism.tier * 100, rmMekanism.tier * 1000)
     private val manaReceiver: IManaReceiver = ManaReceiver(mana)
-    val maxSmeltTime = 100/rmMekanism.tier
+    val maxSmeltTime = 100 / rmMekanism.tier
+
+    private val SLOTS_UP = intArrayOf(0)
+    private val SLOTS_DOWN = intArrayOf(1)
+    private val SLOTS_HORIZONTAL = intArrayOf(0)
+
     val inventory: RMItemHandler = RMItemHandler(2)
 
     val name: ITextComponent
@@ -175,6 +178,81 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
                     .collect(Collectors.toSet()) else emptySet()
         }
     }
+
+    override fun getSlotsForFace(side: Direction): IntArray? {
+        return if (side == Direction.DOWN) {
+            SLOTS_DOWN
+        } else {
+            if (side == Direction.UP) SLOTS_UP else SLOTS_HORIZONTAL
+        }
+    }
+
+    override fun getStackInSlot(index: Int): ItemStack {
+        return this.inventory.get(index)
+    }
+
+    override fun decrStackSize(index: Int, count: Int): ItemStack? {
+        return ItemStackHelper.getAndSplit(this.inventory.getList(), index, count)
+    }
+
+    override fun getSizeInventory(): Int {
+        return inventory.size
+    }
+
+    override fun isEmpty(): Boolean {
+        return this.inventory.isEmpty
+    }
+
+    override fun canInsertItem(index: Int, itemStackIn: ItemStack, direction: Direction?): Boolean {
+        return isItemValidForSlot(index, itemStackIn)
+    }
+
+    override fun isUsableByPlayer(player: PlayerEntity): Boolean {
+        return if (world!!.getTileEntity(pos) !== this) {
+            false
+        } else {
+            player.getDistanceSq(pos.x.toDouble() + 0.5, pos.y.toDouble() + 0.5, pos.z.toDouble() + 0.5) <= 64.0
+        }
+    }
+
+    override fun canExtractItem(index: Int, stack: ItemStack, direction: Direction): Boolean {
+        if (direction == Direction.DOWN && index == 1) {
+            val item = stack.item
+            if (item !== Items.WATER_BUCKET && item !== Items.BUCKET) {
+                return false
+            }
+        }
+
+        return true
+    }
+
+    override fun setInventorySlotContents(index: Int, stack: ItemStack) {
+        val itemstack: ItemStack = this.inventory.get(index)
+        val flag = !stack.isEmpty && stack.isItemEqual(itemstack) && ItemStack.areItemStackTagsEqual(stack, itemstack)
+        this.inventory.set(index, stack)
+        if (stack.count > this.inventoryStackLimit) {
+            stack.count = this.inventoryStackLimit
+        }
+
+        //if (index == 0 && !flag) {
+        //    this.cookTimeTotal = this.getCookTime()
+        //    this.currentSmeltTime = 0
+        //    markDirty()
+        //}
+    }
+
+    override fun removeStackFromSlot(index: Int): ItemStack {
+        return inventory.getAndRemove(this.inventory.getList(), index)
+    }
+
+    override fun clear() {
+        return this.inventory.clear()
+    }
+
+    override fun isItemValidForSlot(index: Int, stack: ItemStack?): Boolean {
+        return index in SLOTS_UP || index in SLOTS_HORIZONTAL
+    }
+
 
     //IManaReceiver implementation
     override val currentMana: Int
