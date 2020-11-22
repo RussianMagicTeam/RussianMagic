@@ -1,8 +1,0 @@
-{
-  "parent": "block/orientable",
-  "textures": {
-    "top": "russianmagic:block/rm_gold_furnace_top",
-    "front": "russianmagic:block/rm_gold_furnace_front",
-    "side": "russianmagic:block/rm_gold_furnace_side"
-  }
-}

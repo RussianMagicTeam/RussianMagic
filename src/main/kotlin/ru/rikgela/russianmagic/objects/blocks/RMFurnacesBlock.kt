@@ -8,18 +8,18 @@ import net.minecraftforge.fml.RegistryObject
 import ru.rikgela.russianmagic.tileentity.RMFurnacesTileEntity
 
 object RMFurnacesBlock {
-    class RMGoldFurnaceBlock(properties: Properties,
-                             val registryObject
-                             : RegistryObject<TileEntityType<RMFurnacesTileEntity.RMGoldFurnaceTileEntity>>)
+    class RMDiamondFurnaceBlock(properties: Properties,
+                                val registryObject
+                                : RegistryObject<TileEntityType<RMFurnacesTileEntity.RMDiamondFurnaceTileEntity>>)
         : AbstractRMFurnace(properties) {
         override fun createTileEntity(state: BlockState, world: IBlockReader): TileEntity {
             return registryObject.get().create()!!
         }
     }
 
-    class RMIsolatedGoldFurnaceBlock(properties: Properties,
-                                     val registryObject
-                                     : RegistryObject<TileEntityType<RMFurnacesTileEntity.RMIsolatedGoldFurnaceTileEntity>>)
+    class RMIsolatedDiamondFurnaceBlock(properties: Properties,
+                                        val registryObject
+                                        : RegistryObject<TileEntityType<RMFurnacesTileEntity.RMIsolatedDiamondFurnaceTileEntity>>)
         : AbstractRMFurnace(properties) {
         override fun createTileEntity(state: BlockState, world: IBlockReader): TileEntity {
             return registryObject.get().create()!!

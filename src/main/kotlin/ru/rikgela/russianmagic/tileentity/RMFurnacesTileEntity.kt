@@ -12,9 +12,9 @@ import ru.rikgela.russianmagic.mana.IManaReceiver
 import ru.rikgela.russianmagic.util.RMMekanism
 
 object RMFurnacesTileEntity {
-    class RMGoldFurnaceTileEntity(rmMekanism: RMMekanism,
-                                  tileEntityTypeIn: TileEntityType<*> =
-                                          RMTileEntityTypes.RM_GOLD_FURNACE.get())
+    class RMDiamondFurnaceTileEntity(rmMekanism: RMMekanism,
+                                     tileEntityTypeIn: TileEntityType<*> =
+                                             RMTileEntityTypes.RM_DIAMOND_FURNACE.get())
         : AbstractRMFurnaceTileEntity(tileEntityTypeIn, rmMekanism),
             ITickableTileEntity, INamedContainerProvider, IManaReceiver {
         override fun createMenu(windowID: Int, playerInv: PlayerInventory, playerIn: PlayerEntity): Container {
@@ -22,9 +22,9 @@ object RMFurnacesTileEntity {
         }
     }
 
-    class RMIsolatedGoldFurnaceTileEntity(rmMekanism: RMMekanism,
-                                          tileEntityTypeIn: TileEntityType<*> =
-                                                  RMTileEntityTypes.RM_ISOLATED_GOLD_FURNACE.get())
+    class RMIsolatedDiamondFurnaceTileEntity(rmMekanism: RMMekanism,
+                                             tileEntityTypeIn: TileEntityType<*> =
+                                                     RMTileEntityTypes.RM_ISOLATED_DIAMOND_FURNACE.get())
         : AbstractRMFurnaceTileEntity(tileEntityTypeIn, rmMekanism),
             ITickableTileEntity, INamedContainerProvider, IManaReceiver {
         override fun createMenu(windowID: Int, playerInv: PlayerInventory, playerIn: PlayerEntity): Container {

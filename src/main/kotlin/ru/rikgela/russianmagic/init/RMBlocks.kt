@@ -394,18 +394,18 @@ object RMBlocks {
                 .harvestTool(ToolType.PICKAXE))
     }
 
-    val RM_GOLD_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMGoldFurnaceBlock> = BLOCKS
-            .register<RMFurnacesBlock.RMGoldFurnaceBlock>("rm_gold_furnace") {
-                RMFurnacesBlock.RMGoldFurnaceBlock(Block
+    val RM_DIAMOND_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMDiamondFurnaceBlock> = BLOCKS
+            .register<RMFurnacesBlock.RMDiamondFurnaceBlock>("rm_diamond_furnace") {
+                RMFurnacesBlock.RMDiamondFurnaceBlock(Block
                         .Properties
-                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_GOLD_FURNACE)
+                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_DIAMOND_FURNACE)
             }
 
-    val RM_ISOLATED_GOLD_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMIsolatedGoldFurnaceBlock> = BLOCKS
-            .register<RMFurnacesBlock.RMIsolatedGoldFurnaceBlock>("rm_isolated_gold_furnace") {
-                RMFurnacesBlock.RMIsolatedGoldFurnaceBlock(Block
+    val RM_ISOLATED_DIAMOND_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMIsolatedDiamondFurnaceBlock> = BLOCKS
+            .register<RMFurnacesBlock.RMIsolatedDiamondFurnaceBlock>("rm_isolated_diamond_furnace") {
+                RMFurnacesBlock.RMIsolatedDiamondFurnaceBlock(Block
                         .Properties
-                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_ISOLATED_GOLD_FURNACE)
+                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_ISOLATED_DIAMOND_FURNACE)
             }
 
     val RM_EBONY_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMEbonyFurnaceBlock> = BLOCKS
