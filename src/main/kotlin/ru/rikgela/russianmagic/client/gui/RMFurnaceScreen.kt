@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.ITextComponent
 import ru.rikgela.russianmagic.container.AbstractRMFurnaceContainer
 
-class RMMarbleFurnaceScreen(
+class RMFurnaceScreen(
         private val screenContainerMarble: AbstractRMFurnaceContainer,
         inv: PlayerInventory,
         titleIn: ITextComponent,

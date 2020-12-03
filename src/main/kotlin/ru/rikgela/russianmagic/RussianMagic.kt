@@ -15,7 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import ru.rikgela.russianmagic.client.HUDEventHandler
 import ru.rikgela.russianmagic.client.entity.render.ProjectileEntityRender
-import ru.rikgela.russianmagic.client.gui.RMMarbleFurnaceScreen
+import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
 import ru.rikgela.russianmagic.common.RMCCMessage
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage
@@ -60,7 +60,7 @@ class RussianMagic {
     fun clientSetup(event: FMLClientSetupEvent?) {
         MinecraftForge.EVENT_BUS.register(HUDEventHandler())
         ScreenManager.registerFactory(RMContainerTypes.RM_MARBLE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
-            RMMarbleFurnaceScreen(screenContainer, inv, titleIn,
+            RMFurnaceScreen(screenContainer, inv, titleIn,
                     ResourceLocation(MOD_ID, "textures/gui/rm_marble_furnace_screen.png"))
         }
         //ScreenManager.registerFactory(RMContainerTypes.RM_MARBLE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn -> RMMarbleFurnaceScreen(screenContainer, inv, titleIn) }
