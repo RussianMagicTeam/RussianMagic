@@ -14,20 +14,20 @@ object RMTileEntityTypes {
             ForgeRegistries.TILE_ENTITIES, MOD_ID)
 
     @JvmField
-    val RM_GOLD_FURNACE: RegistryObject<TileEntityType<RMFurnacesTileEntity.RMGoldFurnaceTileEntity>> = TILE_ENTITY_TYPES
-            .register("rm_gold_furnace") {
+    val RM_DIAMOND_FURNACE: RegistryObject<TileEntityType<RMFurnacesTileEntity.RMDiamondFurnaceTileEntity>> = TILE_ENTITY_TYPES
+            .register("rm_diamond_furnace") {
                 TileEntityType.Builder
-                        .create(Supplier { RMFurnacesTileEntity.RMGoldFurnaceTileEntity(RMMekanism(1, "rm_gold_furnace", arrayOf("smelting"))) }
-                                , RMBlocks.RM_GOLD_FURNACE_BLOCK.get())
+                        .create(Supplier { RMFurnacesTileEntity.RMDiamondFurnaceTileEntity(RMMekanism(1, "rm_diamond_furnace", arrayOf("smelting"))) }
+                                , RMBlocks.RM_DIAMOND_FURNACE_BLOCK.get())
                         .build(null)
             }
 
     @JvmField
-    val RM_ISOLATED_GOLD_FURNACE: RegistryObject<TileEntityType<RMFurnacesTileEntity.RMIsolatedGoldFurnaceTileEntity>> = TILE_ENTITY_TYPES
-            .register("rm_isolated_gold_furnace") {
+    val RM_ISOLATED_DIAMOND_FURNACE: RegistryObject<TileEntityType<RMFurnacesTileEntity.RMIsolatedDiamondFurnaceTileEntity>> = TILE_ENTITY_TYPES
+            .register("rm_isolated_diamond_furnace") {
                 TileEntityType.Builder
-                        .create(Supplier { RMFurnacesTileEntity.RMIsolatedGoldFurnaceTileEntity(RMMekanism(1, "rm_isolated_gold_furnace", arrayOf("smelting"))) }
-                                , RMBlocks.RM_ISOLATED_GOLD_FURNACE_BLOCK.get())
+                        .create(Supplier { RMFurnacesTileEntity.RMIsolatedDiamondFurnaceTileEntity(RMMekanism(1, "rm_isolated_diamond_furnace", arrayOf("smelting"))) }
+                                , RMBlocks.RM_ISOLATED_DIAMOND_FURNACE_BLOCK.get())
                         .build(null)
             }
 

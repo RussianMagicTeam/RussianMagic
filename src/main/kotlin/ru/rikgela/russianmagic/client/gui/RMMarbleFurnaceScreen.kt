@@ -6,11 +6,14 @@ import net.minecraft.client.resources.I18n
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.ITextComponent
-import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.container.AbstractRMFurnaceContainer
-import ru.rikgela.russianmagic.container.RMMarbleFurnaceContainer
 
-class RMMarbleFurnaceScreen(private val screenContainerMarble: AbstractRMFurnaceContainer, inv: PlayerInventory, titleIn: ITextComponent) : ContainerScreen<AbstractRMFurnaceContainer?>(screenContainerMarble, inv, titleIn) {
+class RMMarbleFurnaceScreen(
+        private val screenContainerMarble: AbstractRMFurnaceContainer,
+        inv: PlayerInventory,
+        titleIn: ITextComponent,
+        private val TEXTURE: ResourceLocation
+) : ContainerScreen<AbstractRMFurnaceContainer?>(screenContainerMarble, inv, titleIn) {
     override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {
         RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f)
         minecraft!!.getTextureManager().bindTexture(TEXTURE)
@@ -34,10 +37,10 @@ class RMMarbleFurnaceScreen(private val screenContainerMarble: AbstractRMFurnace
         renderHoveredToolTip(mouseX, mouseY)
     }
 
-    companion object {
+    /*companion object {
         private val TEXTURE = ResourceLocation(MOD_ID,
                 "textures/gui/rm_marble_furnace_screen.png")
-    }
+    }*/
 
     init {
         guiLeft = 0

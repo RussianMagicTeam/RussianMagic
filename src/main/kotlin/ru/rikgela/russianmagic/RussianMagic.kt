@@ -59,7 +59,10 @@ class RussianMagic {
     @OnlyIn(Dist.CLIENT)
     fun clientSetup(event: FMLClientSetupEvent?) {
         MinecraftForge.EVENT_BUS.register(HUDEventHandler())
-        ScreenManager.registerFactory(RMContainerTypes.RM_MARBLE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn -> RMMarbleFurnaceScreen(screenContainer, inv, titleIn) }
+        ScreenManager.registerFactory(RMContainerTypes.RM_MARBLE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
+            RMMarbleFurnaceScreen(screenContainer, inv, titleIn,
+                    ResourceLocation(MOD_ID, "textures/gui/rm_marble_furnace_screen.png"))
+        }
         //ScreenManager.registerFactory(RMContainerTypes.RM_MARBLE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn -> RMMarbleFurnaceScreen(screenContainer, inv, titleIn) }
         RMBlocks.clientSetup()
         RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")) }

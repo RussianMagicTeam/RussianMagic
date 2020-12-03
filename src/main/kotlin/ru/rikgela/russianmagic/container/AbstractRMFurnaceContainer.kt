@@ -13,8 +13,6 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
-import net.minecraftforge.items.SlotItemHandler
-import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace
 import ru.rikgela.russianmagic.tileentity.AbstractRMFurnaceTileEntity
 import ru.rikgela.russianmagic.util.FunctionalIntReferenceHolder
 import java.util.*
@@ -139,10 +137,7 @@ abstract class AbstractRMFurnaceContainer(windowID: Int,
                         startY + row * slotSizePlus2))
             }
         }
-
         // Furnace Slots
-        addSlot(SlotItemHandler(tileEntityFurnace.inventory, 0, 56, 34))
-        addSlot(SlotItemHandler(tileEntityFurnace.inventory, 1, 116, 35))
         trackInt(FunctionalIntReferenceHolder(IntSupplier { tileEntityFurnace.currentSmeltTime },
                 IntConsumer { value: Int -> tileEntityFurnace.currentSmeltTime = value }).also { currentSmeltTime = it })
     }

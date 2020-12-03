@@ -225,8 +225,8 @@ object RMItems {
     val KUNZITE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("kunzite_block_ore") { BlockItem(RMBlocks.KUNZITE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
     //Mekanisms
-    val RM_GOLD_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_gold_furnace") { BlockItem(RMBlocks.RM_GOLD_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
-    val RM_ISOLATED_GOLD_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_isolated_gold_furnace") { BlockItem(RMBlocks.RM_ISOLATED_GOLD_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RM_DIAMOND_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_diamond_furnace") { BlockItem(RMBlocks.RM_DIAMOND_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RM_ISOLATED_DIAMOND_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_isolated_diamond_furnace") { BlockItem(RMBlocks.RM_ISOLATED_DIAMOND_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
     val RM_EBONY_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_ebony_furnace") { BlockItem(RMBlocks.RM_EBONY_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val RM_MARBLE_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_marble_furnace") { BlockItem(RMBlocks.RM_MARBLE_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }

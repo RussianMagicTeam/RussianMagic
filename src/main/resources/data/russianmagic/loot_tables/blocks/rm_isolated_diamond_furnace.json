@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "russianmagic:rm_isolated_gold_furnace"
+          "name": "russianmagic:rm_isolated_diamond_furnace"
         }
       ],
       "conditions": [
@@ -14,7 +14,7 @@
           "condition": "minecraft:survives_explosion"
         }
       ],
-      "name": "russianmagic:rm_isolated_gold_furnace"
+      "name": "russianmagic:rm_isolated_diamond_furnace"
     }
   ]
 }

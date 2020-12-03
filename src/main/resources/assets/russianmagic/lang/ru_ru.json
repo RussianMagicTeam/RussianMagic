@@ -149,27 +149,20 @@
   "item.russianmagic.sapphire": "Сапфир",
   "block.russianmagic.sapphire_block": "Блок сапфира",
   "block.russianmagic.sapphire_block_ore": "Руда сапфира",
-
   "item.russianmagic.opal": "Опал",
   "block.russianmagic.opal_block": "Блок опала",
   "block.russianmagic.opal_block_ore": "Руда опала",
-
   "item.russianmagic.kunzite": "Кунцит",
   "block.russianmagic.kunzite_block": "Блок кунцита",
   "block.russianmagic.kunzite_block_ore": "Руда кунцита",
-
-  "block.russianmagic.rm_gold_furnace": "РМ печка из золота",
-  "container.russianmagic.rm_gold_furnace": "РМ печка из золота",
-
-  "block.russianmagic.rm_isolated_gold_furnace": "РМ печка из изолированного золота",
-  "container.russianmagic.rm_isolated_gold_furnace": "РМ печка из изолированного золота",
-
+  "block.russianmagic.rm_diamond_furnace": "РМ печка из золота",
+  "container.russianmagic.rm_diamond_furnace": "РМ печка из золота",
+  "block.russianmagic.rm_isolated_diamond_furnace": "РМ печка из изолированного золота",
+  "container.russianmagic.rm_isolated_diamond_furnace": "РМ печка из изолированного золота",
   "block.russianmagic.rm_ebony_furnace": "РМ печка из черного дерева",
   "container.russianmagic.rm_ebony_furnace": "РМ печка из черного дерева",
-
   "block.russianmagic.rm_marble_furnace": "Мраморная РМ печка",
   "container.russianmagic.rm_marble_furnace": "Мраморная РМ печка",
-
   "block.russianmagic.rm_white_jade_furnace": "РМ печка из белого нефрита",
   "container.russianmagic.rm_white_jade_furnace": "РМ печка из белого нефрита",
 
