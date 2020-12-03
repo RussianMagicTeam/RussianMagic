@@ -59,9 +59,33 @@ class RussianMagic {
     @OnlyIn(Dist.CLIENT)
     fun clientSetup(event: FMLClientSetupEvent?) {
         MinecraftForge.EVENT_BUS.register(HUDEventHandler())
+        ScreenManager.registerFactory(RMContainerTypes.RM_DIAMOND_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
+            RMFurnaceScreen(screenContainer, inv, titleIn,
+                    ResourceLocation(MOD_ID, "textures/gui/rm_furnace1_screen.png"))
+        }
+        ScreenManager.registerFactory(RMContainerTypes.RM_ISOLATED_DIAMOND_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
+            RMFurnaceScreen(screenContainer, inv, titleIn,
+                    ResourceLocation(MOD_ID, "textures/gui/rm_furnace2_screen.png"))
+        }
+        ScreenManager.registerFactory(RMContainerTypes.RM_EBONY_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
+            RMFurnaceScreen(screenContainer, inv, titleIn,
+                    ResourceLocation(MOD_ID, "textures/gui/rm_furnace3_screen.png"))
+        }
         ScreenManager.registerFactory(RMContainerTypes.RM_MARBLE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
             RMFurnaceScreen(screenContainer, inv, titleIn,
-                    ResourceLocation(MOD_ID, "textures/gui/rm_marble_furnace_screen.png"))
+                    ResourceLocation(MOD_ID, "textures/gui/rm_furnace3_screen.png"))
+        }
+        ScreenManager.registerFactory(RMContainerTypes.RM_WHITE_JADE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
+            RMFurnaceScreen(screenContainer, inv, titleIn,
+                    ResourceLocation(MOD_ID, "textures/gui/rm_furnace3_screen.png"))
+        }
+        ScreenManager.registerFactory(RMContainerTypes.RM_RHINESTONE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
+            RMFurnaceScreen(screenContainer, inv, titleIn,
+                    ResourceLocation(MOD_ID, "textures/gui/rm_furnace3_screen.png"))
+        }
+        ScreenManager.registerFactory(RMContainerTypes.RM_AQUAMARINE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
+            RMFurnaceScreen(screenContainer, inv, titleIn,
+                    ResourceLocation(MOD_ID, "textures/gui/rm_furnace3_screen.png"))
         }
         //ScreenManager.registerFactory(RMContainerTypes.RM_MARBLE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn -> RMMarbleFurnaceScreen(screenContainer, inv, titleIn) }
         RMBlocks.clientSetup()
