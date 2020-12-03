@@ -12,8 +12,8 @@ class RMMarbleFurnaceScreen(
         private val screenContainerMarble: AbstractRMFurnaceContainer,
         inv: PlayerInventory,
         titleIn: ITextComponent,
-        private val TEXTURE: ResourceLocation)
-    : ContainerScreen<AbstractRMFurnaceContainer?>(screenContainerMarble, inv, titleIn) {
+        private val TEXTURE: ResourceLocation
+) : ContainerScreen<AbstractRMFurnaceContainer?>(screenContainerMarble, inv, titleIn) {
     override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {
         RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f)
         minecraft!!.getTextureManager().bindTexture(TEXTURE)
