@@ -30,11 +30,11 @@ object RMFurnacesTileEntity {
                                                      RMTileEntityTypes.RM_ISOLATED_DIAMOND_FURNACE.get())
         : AbstractRMFurnaceTileEntity(tileEntityTypeIn, rmMekanism),
             ITickableTileEntity, INamedContainerProvider, IManaReceiver {
-        override val SLOTS_UP = RMFurnacesContainer.RMTwoSupportOneToOneFurnaceContainer.SLOTS_UP
-        override val SLOTS_DOWN = RMFurnacesContainer.RMTwoSupportOneToOneFurnaceContainer.SLOTS_DOWN
-        override val SLOTS_HORIZONTAL = RMFurnacesContainer.RMTwoSupportOneToOneFurnaceContainer.SLOTS_HORIZONTAL
+        override val SLOTS_UP = RMFurnacesContainer.RMOneSupportOneToOneFurnaceContainer.SLOTS_UP
+        override val SLOTS_DOWN = RMFurnacesContainer.RMOneSupportOneToOneFurnaceContainer.SLOTS_DOWN
+        override val SLOTS_HORIZONTAL = RMFurnacesContainer.RMOneSupportOneToOneFurnaceContainer.SLOTS_HORIZONTAL
         override fun createMenu(windowID: Int, playerInv: PlayerInventory, playerIn: PlayerEntity): Container {
-            return RMFurnacesContainer.RMTwoSupportOneToOneFurnaceContainer(windowID, playerInv, this)
+            return RMFurnacesContainer.RMOneSupportOneToOneFurnaceContainer(windowID, playerInv, this)
         }
     }
 
@@ -43,11 +43,11 @@ object RMFurnacesTileEntity {
                                            RMTileEntityTypes.RM_EBONY_FURNACE.get())
         : AbstractRMFurnaceTileEntity(tileEntityTypeIn, rmMekanism),
             ITickableTileEntity, INamedContainerProvider, IManaReceiver {
-        override val SLOTS_UP = RMFurnacesContainer.RMThreeSupportOneToOneFurnaceContainer.SLOTS_UP
-        override val SLOTS_DOWN = RMFurnacesContainer.RMThreeSupportOneToOneFurnaceContainer.SLOTS_DOWN
-        override val SLOTS_HORIZONTAL = RMFurnacesContainer.RMThreeSupportOneToOneFurnaceContainer.SLOTS_HORIZONTAL
+        override val SLOTS_UP = RMFurnacesContainer.RMTwoSupportOneToOneFurnaceContainer.SLOTS_UP
+        override val SLOTS_DOWN = RMFurnacesContainer.RMTwoSupportOneToOneFurnaceContainer.SLOTS_DOWN
+        override val SLOTS_HORIZONTAL = RMFurnacesContainer.RMTwoSupportOneToOneFurnaceContainer.SLOTS_HORIZONTAL
         override fun createMenu(windowID: Int, playerInv: PlayerInventory, playerIn: PlayerEntity): Container {
-            return RMFurnacesContainer.RMThreeSupportOneToOneFurnaceContainer(windowID, playerInv, this)
+            return RMFurnacesContainer.RMTwoSupportOneToOneFurnaceContainer(windowID, playerInv, this)
         }
     }
 
@@ -56,11 +56,11 @@ object RMFurnacesTileEntity {
                                             RMTileEntityTypes.RM_MARBLE_FURNACE.get())
         : AbstractRMFurnaceTileEntity(tileEntityTypeIn, rmMekanism),
             ITickableTileEntity, INamedContainerProvider, IManaReceiver {
-        override val SLOTS_UP = RMFurnacesContainer.RMThreeSupportOneToOneFurnaceContainer.SLOTS_UP
-        override val SLOTS_DOWN = RMFurnacesContainer.RMThreeSupportOneToOneFurnaceContainer.SLOTS_DOWN
-        override val SLOTS_HORIZONTAL = RMFurnacesContainer.RMThreeSupportOneToOneFurnaceContainer.SLOTS_HORIZONTAL
+        override val SLOTS_UP = RMFurnacesContainer.RMTwoSupportOneToOneFurnaceContainer.SLOTS_UP
+        override val SLOTS_DOWN = RMFurnacesContainer.RMTwoSupportOneToOneFurnaceContainer.SLOTS_DOWN
+        override val SLOTS_HORIZONTAL = RMFurnacesContainer.RMTwoSupportOneToOneFurnaceContainer.SLOTS_HORIZONTAL
         override fun createMenu(windowID: Int, playerInv: PlayerInventory, playerIn: PlayerEntity): Container {
-            return RMFurnacesContainer.RMThreeSupportOneToOneFurnaceContainer(windowID, playerInv, this)
+            return RMFurnacesContainer.RMTwoSupportOneToOneFurnaceContainer(windowID, playerInv, this)
         }
     }
 

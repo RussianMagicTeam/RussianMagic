@@ -41,7 +41,7 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     open val SLOTS_UP = intArrayOf()
     open val SLOTS_DOWN = intArrayOf()
     open val SLOTS_HORIZONTAL = intArrayOf()
-    val inventory: RMItemHandler = RMItemHandler(2)
+    val inventory: RMItemHandler = RMItemHandler(2 + rmMekanism.supportSlots)
 
     val name: ITextComponent
         get() = customName ?: defaultName

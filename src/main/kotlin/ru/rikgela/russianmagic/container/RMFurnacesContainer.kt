@@ -28,6 +28,8 @@ object RMFurnacesContainer {
             // Furnace Slots
             addSlot(SlotItemHandler(tileEntityFurnace.inventory, 0, 56, 34))
             addSlot(SlotItemHandler(tileEntityFurnace.inventory, 1, 116, 35))
+            // Support Slots
+            addSlot(SlotItemHandler(tileEntityFurnace.inventory, 2, 22, 34))
         }
     }
 
@@ -51,6 +53,9 @@ object RMFurnacesContainer {
             // Furnace Slots
             addSlot(SlotItemHandler(tileEntityFurnace.inventory, 0, 56, 34))
             addSlot(SlotItemHandler(tileEntityFurnace.inventory, 1, 116, 35))
+            // Support Slots
+            addSlot(SlotItemHandler(tileEntityFurnace.inventory, 2, 22, 24))
+            addSlot(SlotItemHandler(tileEntityFurnace.inventory, 3, 22, 44))
         }
     }
 
@@ -74,6 +79,10 @@ object RMFurnacesContainer {
             // Furnace Slots
             addSlot(SlotItemHandler(tileEntityFurnace.inventory, 0, 56, 34))
             addSlot(SlotItemHandler(tileEntityFurnace.inventory, 1, 116, 35))
+            // Support Slots
+            addSlot(SlotItemHandler(tileEntityFurnace.inventory, 2, 22, 15))
+            addSlot(SlotItemHandler(tileEntityFurnace.inventory, 3, 22, 34))
+            addSlot(SlotItemHandler(tileEntityFurnace.inventory, 4, 22, 53))
         }
     }
 
