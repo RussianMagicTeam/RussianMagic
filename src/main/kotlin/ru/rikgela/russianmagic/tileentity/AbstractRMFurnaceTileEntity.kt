@@ -38,11 +38,9 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     private val mana: IMana = Mana.withParams(rmMekanism.tier * 100, rmMekanism.tier * 1000)
     private val manaReceiver: IManaReceiver = ManaReceiver(mana)
     val maxSmeltTime = 100 / rmMekanism.tier
-
-    private val SLOTS_UP = intArrayOf(0)
-    private val SLOTS_DOWN = intArrayOf(1)
-    private val SLOTS_HORIZONTAL = intArrayOf(0)
-
+    open val SLOTS_UP = intArrayOf()
+    open val SLOTS_DOWN = intArrayOf()
+    open val SLOTS_HORIZONTAL = intArrayOf()
     val inventory: RMItemHandler = RMItemHandler(2)
 
     val name: ITextComponent

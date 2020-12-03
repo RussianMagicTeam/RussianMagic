@@ -16,6 +16,12 @@ class RMMarbleFurnaceContainer(windowID: Int,
             : this(windowID, playerInv,
             getTileEntity(playerInv, data))
 
+    companion object {
+        val SLOTS_UP = intArrayOf(0)
+        val SLOTS_DOWN = intArrayOf(1)
+        val SLOTS_HORIZONTAL = intArrayOf(0)
+    }
+
     init {
         // Furnace Slots
         addSlot(SlotItemHandler(tileEntityFurnace.inventory, 0, 56, 34))
