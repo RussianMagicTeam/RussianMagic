@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X X",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "russianmagic:aquamarine"
+    }
+  },
+  "result": {
+    "item": "russianmagic:rm_aquamarine_furnace"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X X",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "russianmagic:white_jade"
+    }
+  },
+  "result": {
+    "item": "russianmagic:rm_white_jade_furnace"
+  }
+}

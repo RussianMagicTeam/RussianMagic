@@ -225,7 +225,14 @@ object RMItems {
     val KUNZITE_BLOCK_ORE: RegistryObject<Item?>? = ITEMS.register("kunzite_block_ore") { BlockItem(RMBlocks.KUNZITE_BLOCK_ORE.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
     //Mekanisms
+    val RM_DIAMOND_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_diamond_furnace") { BlockItem(RMBlocks.RM_DIAMOND_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RM_ISOLATED_DIAMOND_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_isolated_diamond_furnace") { BlockItem(RMBlocks.RM_ISOLATED_DIAMOND_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+
+    val RM_EBONY_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_ebony_furnace") { BlockItem(RMBlocks.RM_EBONY_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val RM_MARBLE_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_marble_furnace") { BlockItem(RMBlocks.RM_MARBLE_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RM_WHITE_JADE_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_white_jade_furnace") { BlockItem(RMBlocks.RM_WHITE_JADE_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RM_RHINESTONE_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_rhinestone_furnace") { BlockItem(RMBlocks.RM_RHINESTONE_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RM_AQUAMARINE_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_aquamarine_furnace") { BlockItem(RMBlocks.RM_AQUAMARINE_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
     // Spell_Scrolls
     val SPELL_OF_REGENERATION: RegistryObject<Item> = ITEMS.register("spell_of_regeneration") {
@@ -234,7 +241,6 @@ object RMItems {
     val SPELL_OF_FIREBALL: RegistryObject<Item> = ITEMS.register("spell_of_fireball") {
         FireballScroll(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP))
     }
-
 
     //tree
     val EBONY_SAPLING: RegistryObject<Item?>? = ITEMS.register("ebony_sapling") { BlockItem(RMBlocks.EBONY_SAPLING.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }

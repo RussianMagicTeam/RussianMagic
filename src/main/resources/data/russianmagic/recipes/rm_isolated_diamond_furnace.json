@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XHX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:leather"
+    },
+    "H": {
+      "item": "russianmagic:rm_diamond_furnace"
+    }
+  },
+  "result": {
+    "item": "russianmagic:rm_isolated_diamond_furnace"
+  }
+}

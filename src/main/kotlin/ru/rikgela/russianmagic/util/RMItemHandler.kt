@@ -5,7 +5,7 @@ import net.minecraft.item.Items
 import net.minecraft.util.NonNullList
 import net.minecraftforge.items.ItemStackHandler
 
-class RMItemHandler(size: Int, vararg stacks: ItemStack) : ItemStackHandler(size) {
+class RMItemHandler(val size: Int, vararg stacks: ItemStack) : ItemStackHandler(size) {
     fun clear() {
         for (index in 0 until this.slots) {
             stacks[index] = ItemStack.EMPTY
@@ -51,8 +51,24 @@ class RMItemHandler(size: Int, vararg stacks: ItemStack) : ItemStackHandler(size
         }
     }
 
+    fun set(index: Int, items: ItemStack?) {
+        stacks[index] = items
+    }
+
     override fun toString(): String {
         return stacks.toString()
+    }
+
+    fun get(index: Int): ItemStack {
+        return this.stacks[index]
+    }
+
+    fun getList(): NonNullList<ItemStack> {
+        return this.stacks
+    }
+
+    fun getAndRemove(stacks: MutableList<ItemStack>, index: Int): ItemStack {
+        return if (index >= 0 && index < stacks.size) stacks.set(index, ItemStack.EMPTY) else ItemStack.EMPTY
     }
 
     init {

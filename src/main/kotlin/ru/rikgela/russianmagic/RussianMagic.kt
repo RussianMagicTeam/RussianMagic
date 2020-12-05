@@ -15,7 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import ru.rikgela.russianmagic.client.HUDEventHandler
 import ru.rikgela.russianmagic.client.entity.render.ProjectileEntityRender
-import ru.rikgela.russianmagic.client.gui.RMMarbleFurnaceScreen
+import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
 import ru.rikgela.russianmagic.common.RMCCMessage
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage
@@ -59,7 +59,18 @@ class RussianMagic {
     @OnlyIn(Dist.CLIENT)
     fun clientSetup(event: FMLClientSetupEvent?) {
         MinecraftForge.EVENT_BUS.register(HUDEventHandler())
-        ScreenManager.registerFactory(RMContainerTypes.RM_MARBLE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn -> RMMarbleFurnaceScreen(screenContainer, inv, titleIn) }
+        ScreenManager.registerFactory(RMContainerTypes.RM_ONE_SUPPORT_ONE_TO_ONE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
+            RMFurnaceScreen(screenContainer, inv, titleIn,
+                    ResourceLocation(MOD_ID, "textures/gui/rm_furnace1_screen.png"))
+        }
+        ScreenManager.registerFactory(RMContainerTypes.RM_TWO_SUPPORT_ONE_TO_ONE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
+            RMFurnaceScreen(screenContainer, inv, titleIn,
+                    ResourceLocation(MOD_ID, "textures/gui/rm_furnace2_screen.png"))
+        }
+        ScreenManager.registerFactory(RMContainerTypes.RM_THREE_SUPPORT_ONE_TO_ONE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
+            RMFurnaceScreen(screenContainer, inv, titleIn,
+                    ResourceLocation(MOD_ID, "textures/gui/rm_furnace3_screen.png"))
+        }
         RMBlocks.clientSetup()
         RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")) }
     }

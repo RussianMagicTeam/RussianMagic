@@ -9,16 +9,32 @@ import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.container.AbstractRMFurnaceContainer
-import ru.rikgela.russianmagic.container.RMMarbleFurnaceContainer
+import ru.rikgela.russianmagic.container.RMFurnacesContainer
 
 object RMContainerTypes {
     val CONTAINER_TYPES: DeferredRegister<ContainerType<*>> = DeferredRegister(ForgeRegistries.CONTAINERS, MOD_ID)
 
     @JvmField
-    val RM_MARBLE_FURNACE_CONTAINER: RegistryObject<ContainerType<AbstractRMFurnaceContainer>> = CONTAINER_TYPES
-            .register("rm_marble_furnace") {
+    val RM_ONE_SUPPORT_ONE_TO_ONE_FURNACE_CONTAINER: RegistryObject<ContainerType<AbstractRMFurnaceContainer>> = CONTAINER_TYPES
+            .register("rm_diamond_furnace") {
                 IForgeContainerType.create { windowID: Int, playerInv: PlayerInventory, data: PacketBuffer ->
-                    RMMarbleFurnaceContainer(windowID, playerInv, data) as AbstractRMFurnaceContainer
+                    RMFurnacesContainer.RMOneSupportOneToOneFurnaceContainer(windowID, playerInv, data) as AbstractRMFurnaceContainer
+                }
+            }
+
+    @JvmField
+    val RM_TWO_SUPPORT_ONE_TO_ONE_FURNACE_CONTAINER: RegistryObject<ContainerType<AbstractRMFurnaceContainer>> = CONTAINER_TYPES
+            .register("rm_isolated_diamond_furnace") {
+                IForgeContainerType.create { windowID: Int, playerInv: PlayerInventory, data: PacketBuffer ->
+                    RMFurnacesContainer.RMTwoSupportOneToOneFurnaceContainer(windowID, playerInv, data) as AbstractRMFurnaceContainer
+                }
+            }
+
+    @JvmField
+    val RM_THREE_SUPPORT_ONE_TO_ONE_FURNACE_CONTAINER: RegistryObject<ContainerType<AbstractRMFurnaceContainer>> = CONTAINER_TYPES
+            .register("rm_ebony_furnace") {
+                IForgeContainerType.create { windowID: Int, playerInv: PlayerInventory, data: PacketBuffer ->
+                    RMFurnacesContainer.RMThreeSupportOneToOneFurnaceContainer(windowID, playerInv, data) as AbstractRMFurnaceContainer
                 }
             }
 }

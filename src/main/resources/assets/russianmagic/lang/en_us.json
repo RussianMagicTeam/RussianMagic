@@ -150,17 +150,28 @@
   "item.russianmagic.sapphire": "Sapphire",
   "block.russianmagic.sapphire_block": "Sapphire block",
   "block.russianmagic.sapphire_block_ore": "Sapphire ore",
-
   "item.russianmagic.opal": "Opal",
   "block.russianmagic.opal_block": "Opal block",
   "block.russianmagic.opal_block_ore": "Opal ore",
-
   "item.russianmagic.kunzite": "Kunzite",
   "block.russianmagic.kunzite_block": "Kunzite block",
   "block.russianmagic.kunzite_block_ore": "Kunzite ore",
-
+  "block.russianmagic.rm_diamond_furnace": "RM diamond furnace",
+  "container.russianmagic.rm_diamond_furnace": "RM diamond furnace",
+  "block.russianmagic.rm_isolated_diamond_furnace": "RM isolated diamond furnace",
+  "container.russianmagic.rm_isolated_diamond_furnace": "RM isolated diamond furnace",
+  "block.russianmagic.rm_ebony_furnace": "RM ebony furnace",
+  "container.russianmagic.rm_ebony_furnace": "RM ebony furnace",
   "block.russianmagic.rm_marble_furnace": "RM marble furnace",
   "container.russianmagic.rm_marble_furnace": "RM marble furnace",
+  "block.russianmagic.rm_white_jade_furnace": "RM white jade furnace",
+  "container.russianmagic.rm_white_jade_furnace": "RM white jade furnace",
+
+  "block.russianmagic.rm_rhinestone_furnace": "RM rhinestone furnace",
+  "container.russianmagic.rm_rhinestone_furnace": "RM rhinestone furnace",
+
+  "block.russianmagic.rm_aquamarine_furnace": "RM aquamarine furnace",
+  "container.russianmagic.rm_aquamarine_furnace": "RM aquamarine furnace",
 
   "capability.russianmagic.mana": "Mana"
 }
