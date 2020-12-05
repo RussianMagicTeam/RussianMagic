@@ -19,9 +19,9 @@ object RMFurnacesContainer {
                 getTileEntity(playerInv, data))
 
         companion object {
-            val SLOTS_UP = intArrayOf(0)
-            val SLOTS_DOWN = intArrayOf(1)
-            val SLOTS_HORIZONTAL = intArrayOf(0)
+            val upSlots = intArrayOf(0)
+            val downSlots = intArrayOf(1)
+            val horizontalSlots = intArrayOf(0)
         }
 
         init {
@@ -44,9 +44,9 @@ object RMFurnacesContainer {
                 getTileEntity(playerInv, data))
 
         companion object {
-            val SLOTS_UP = intArrayOf(0)
-            val SLOTS_DOWN = intArrayOf(1)
-            val SLOTS_HORIZONTAL = intArrayOf(0)
+            val upSlots = intArrayOf(0)
+            val downSlots = intArrayOf(1)
+            val horizontalSlots = intArrayOf(0)
         }
 
         init {
@@ -70,9 +70,9 @@ object RMFurnacesContainer {
                 getTileEntity(playerInv, data))
 
         companion object {
-            val SLOTS_UP = intArrayOf(0)
-            val SLOTS_DOWN = intArrayOf(1)
-            val SLOTS_HORIZONTAL = intArrayOf(0)
+            val upSlots = intArrayOf(0)
+            val downSlots = intArrayOf(1)
+            val horizontalSlots = intArrayOf(0)
         }
 
         init {

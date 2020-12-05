@@ -38,9 +38,9 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     private val mana: IMana = Mana.withParams(rmMekanism.tier * 100, rmMekanism.tier * 1000)
     private val manaReceiver: IManaReceiver = ManaReceiver(mana)
     val maxSmeltTime = 100 / rmMekanism.tier
-    open val SLOTS_UP = intArrayOf()
-    open val SLOTS_DOWN = intArrayOf()
-    open val SLOTS_HORIZONTAL = intArrayOf()
+    abstract val upSlots: IntArray
+    abstract val downSlots: IntArray
+    abstract val horizontalSlots: IntArray
     val inventory: RMItemHandler = RMItemHandler(2 + rmMekanism.supportSlots)
 
     val name: ITextComponent
@@ -160,10 +160,6 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         read(nbt)
     }
 
-//    override fun <T> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> {
-//        return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.orEmpty(cap, LazyOptional.of { inventory as IItemHandler })
-//    }
-
     companion object {
         fun findRecipesByType(typeIn: String, world: World?): Set<IRecipe<*>> {
             return if (world != null) world.recipeManager.recipes.stream()
@@ -174,9 +170,9 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
 
     override fun getSlotsForFace(side: Direction): IntArray? {
         return if (side == Direction.DOWN) {
-            SLOTS_DOWN
+            downSlots
         } else {
-            if (side == Direction.UP) SLOTS_UP else SLOTS_HORIZONTAL
+            if (side == Direction.UP) upSlots else horizontalSlots
         }
     }
 
@@ -222,12 +218,6 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         if (stack.count > this.inventoryStackLimit) {
             stack.count = this.inventoryStackLimit
         }
-
-        //if (index == 0 && !flag) {
-        //    this.cookTimeTotal = this.getCookTime()
-        //    this.currentSmeltTime = 0
-        //    markDirty()
-        //}
     }
 
     override fun removeStackFromSlot(index: Int): ItemStack {
@@ -239,7 +229,7 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     }
 
     override fun isItemValidForSlot(index: Int, stack: ItemStack?): Boolean {
-        return index in SLOTS_UP || index in SLOTS_HORIZONTAL
+        return index in upSlots || index in horizontalSlots
     }
 
 

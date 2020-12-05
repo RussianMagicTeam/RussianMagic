@@ -37,11 +37,6 @@ class RMFurnaceScreen(
         renderHoveredToolTip(mouseX, mouseY)
     }
 
-    /*companion object {
-        private val TEXTURE = ResourceLocation(MOD_ID,
-                "textures/gui/rm_marble_furnace_screen.png")
-    }*/
-
     init {
         guiLeft = 0
         guiTop = 0

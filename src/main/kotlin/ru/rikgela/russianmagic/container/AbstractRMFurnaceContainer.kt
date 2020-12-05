@@ -33,7 +33,6 @@ abstract class AbstractRMFurnaceContainer(windowID: Int,
     private val canInteractWithCallable: IWorldPosCallable = IWorldPosCallable.of(tileEntityFurnace.world!!, tileEntityFurnace.pos)
 
     override fun canInteractWith(playerIn: PlayerEntity): Boolean {
-        //return isWithinUsableDistance(canInteractWithCallable, playerIn, furnaceBlock)
         return canInteractWithCallable.applyOrElse(BiFunction { p_216960_2_: World, p_216960_3_: BlockPos -> playerIn.getDistanceSq(p_216960_3_.x.toDouble() + 0.5, p_216960_3_.y.toDouble() + 0.5, p_216960_3_.z.toDouble() + 0.5) <= 64.0 }, true)
     }
 
