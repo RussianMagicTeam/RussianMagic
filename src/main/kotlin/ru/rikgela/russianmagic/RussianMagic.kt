@@ -1,10 +1,12 @@
 package ru.rikgela.russianmagic
 
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScreenManager
 import net.minecraft.client.renderer.entity.EntityRendererManager
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.eventbus.api.SubscribeEvent
@@ -16,13 +18,12 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import ru.rikgela.russianmagic.client.HUDEventHandler
 import ru.rikgela.russianmagic.client.entity.render.ProjectileEntityRender
 import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
+import ru.rikgela.russianmagic.client.particle.ManaParticle
+import ru.rikgela.russianmagic.client.particle.ManaParticleFactory
 import ru.rikgela.russianmagic.common.RMCCMessage
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage
-import ru.rikgela.russianmagic.init.RMBlocks
-import ru.rikgela.russianmagic.init.RMContainerTypes
-import ru.rikgela.russianmagic.init.RMItems
-import ru.rikgela.russianmagic.init.RMTileEntityTypes
+import ru.rikgela.russianmagic.init.*
 import ru.rikgela.russianmagic.mana.*
 import ru.rikgela.russianmagic.oregenerator.OreGeneration
 
@@ -43,12 +44,16 @@ class RussianMagic {
         FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLClientSetupEvent ->
             clientSetup(event)
         }
+        FMLJavaModLoadingContext.get().modEventBus.addListener { event: ParticleFactoryRegisterEvent ->
+            particleSetup(event)
+        }
 
         RMItems.ITEMS.register(bus)
         RMBlocks.BLOCKS.register(bus)
         RMEntities.ENTITIES.register(bus)
         RMTileEntityTypes.TILE_ENTITY_TYPES.register(bus)
         RMContainerTypes.CONTAINER_TYPES.register(bus)
+        RMParticles.PARTICLES.register(bus)
         MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
         MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
         MinecraftForge.EVENT_BUS.register(ManaEventHandler())
@@ -72,8 +77,27 @@ class RussianMagic {
                     ResourceLocation(MOD_ID, "textures/gui/rm_furnace3_screen.png"))
         }
         RMBlocks.clientSetup()
-        RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")) }
+        //RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")) }
+        RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager ->
+            ProjectileEntityRender(
+                    renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")
+            )
+        }
+
     }
+
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    fun particleSetup(event: ParticleFactoryRegisterEvent) {
+        Minecraft.getInstance().particles.registerFactory(RMParticles.MANA_PARTICLE.get(), ManaParticleFactory()!)
+    }
+
+    /*object ClientSideRegistry {
+        @SubscribeEvent
+        fun onParticleFactoryRegistration(event: ParticleFactoryRegisterEvent?) {
+            Minecraft.getInstance().particles.registerFactory(RMParticles.MANA_PARTICLE.get(), ManaParticleFactory())
+        }
+    }*/
 
     private fun setup(event: FMLCommonSetupEvent) {
         //preinit

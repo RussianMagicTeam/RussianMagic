@@ -14,6 +14,7 @@ import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.event.ForgeEventFactory
+import ru.rikgela.russianmagic.init.RMParticles
 
 abstract class SpellProjectileEntity protected constructor(p_i50173_1_: EntityType<out SpellProjectileEntity?>?, p_i50173_2_: World?) : Entity(p_i50173_1_, p_i50173_2_) {
     var shootingEntity: LivingEntity? = null
@@ -87,7 +88,10 @@ abstract class SpellProjectileEntity protected constructor(p_i50173_1_: EntityTy
                     world.addParticle(ParticleTypes.BUBBLE, d0 - vec3d.x * 0.25, d1 - vec3d.y * 0.25, d2 - vec3d.z * 0.25, vec3d.x, vec3d.y, vec3d.z)
                 }
                 f = 0.8f
+            } else {
+                world.addParticle(RMParticles.MANA_PARTICLE.get(), d0 - vec3d.x * 0.25, d1 - vec3d.y * 0.25, d2 - vec3d.z * 0.25, vec3d.x, vec3d.y, vec3d.z)
             }
+
             motion = vec3d.add(accelerationX, accelerationY, accelerationZ).scale(f.toDouble())
 //            world.addParticle(particle, d0, d1 + 0.5, d2, 0.0, 0.0, 0.0)
             setPosition(d0, d1, d2)
