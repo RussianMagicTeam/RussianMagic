@@ -455,5 +455,6 @@ object RMBlocks {
     fun clientSetup() {
         RenderTypeLookup.setRenderLayer(EBONY_SAPLING.get(), RenderType.getCutout())
         RenderTypeLookup.setRenderLayer(EBONY_LEAVES.get(), RenderType.getCutout())
+        RenderTypeLookup.setRenderLayer(RHINESTONE_BLOCK.get(), RenderType.getTranslucent())
     }
 }
