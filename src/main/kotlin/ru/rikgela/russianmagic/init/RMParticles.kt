@@ -10,4 +10,5 @@ object RMParticles {
 
     @JvmField
     val MANA_PARTICLE = PARTICLES.register("rm_mana_particle") { BasicParticleType(true) }
+
 }

@@ -14,7 +14,7 @@ class ProjectileEntityModel<T : AbstractProjectileEntity> : EntityModel<T>() {
         textureWidth = 32
         textureHeight = 32
         //bone = ModelRenderer(this)
-        bone.setRotationPoint(-1.3f, 15.0f, -1.8f)
+        bone.setRotationPoint(-1.3f, 0.0f, -1.8f)
         setRotationAngle(bone, -0.6109f, -0.6981f, 0.4363f)
         bone.setTextureOffset(11, 11).addBox(1.3237f, -1.1018f, -2.7027f, 2.0f, 2.0f, 0.0f, 2.0f, true)
         bone.setTextureOffset(11, 0).addBox(0.3237f, -2.1018f, -1.7027f, 4.0f, 4.0f, 4.0f, 2.0f, true)
