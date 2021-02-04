@@ -66,7 +66,7 @@ abstract class SpellProjectileEntity protected constructor(p_i50173_1_: EntityTy
      * Called to update the entity's position/logic.
      */
     override fun tick() {
-        if (world.isRemote || (shootingEntity == null || !shootingEntity!!.removed) && world.isBlockLoaded(BlockPos(this))) {
+        if ((world.isRemote || (shootingEntity == null || !shootingEntity!!.removed) && world.isBlockLoaded(BlockPos(this))) && ticksInAir <= 2000) {
             super.tick()
             if (isFireballFiery) {
                 setFire(1)

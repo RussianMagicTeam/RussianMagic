@@ -96,7 +96,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     // https://mvnrepository.com/artifact/net.jodah/typetools
-    compile group: 'net.jodah', name: 'typetools', version: '0.6.2'
+    // compile group: 'net.jodah', name: 'typetools', version: '0.6.2'
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"

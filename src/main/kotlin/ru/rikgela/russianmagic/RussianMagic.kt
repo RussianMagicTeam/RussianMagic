@@ -83,14 +83,12 @@ class RussianMagic {
             )
         }
         RMBlocks.clientSetup()
-//        RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")) }
+        //RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")) }
         RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager ->
             ProjectileEntityRender(
                 renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")
             )
         }
-
-
     }
 
     @SubscribeEvent
