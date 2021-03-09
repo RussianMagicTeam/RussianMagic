@@ -36,8 +36,7 @@ class FireballScroll(properties: Properties) : Item(properties) {
                 val looking: Vec3d = playerIn.lookVec
                 val projectileEntity = ProjectileEntity(worldIn, playerIn.posX, playerIn.posY + 1.5f, playerIn.posZ, looking.x, looking.y, looking.z)
                 worldIn.addEntity(projectileEntity)
-                val message = String.format("Hello there, you have §7%d§r mana left.", mana.currentMana)
-                playerIn.sendMessage(StringTextComponent(message))
+
             } else {
                 playerIn.sendMessage(StringTextComponent("You don't have enough mana!"))
             }

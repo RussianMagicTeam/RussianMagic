@@ -1,21 +1,6 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "russianmagic:entity/projectile_entity",
-		"particle": "russianmagic:entity/projectile_entity"
-	},
-	"elements": [
-		{
-			"from": [7, 2, 7],
-			"to": [7, 4, 9],
-			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"east": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#0"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#0"}
-			}
-		}
-	]
+      "default": "russianmagic:entity/projectile_entity"
+    }
 }

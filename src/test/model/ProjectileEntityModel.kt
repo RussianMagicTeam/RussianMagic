@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.client.entity.model
+/*package ru.rikgela.russianmagic.client.entity.model
 
 import com.mojang.blaze3d.matrix.MatrixStack
 import com.mojang.blaze3d.vertex.IVertexBuilder
@@ -38,5 +38,5 @@ class ProjectileEntityModel<T : AbstractProjectileEntity> : EntityModel<T>() {
         modelRenderer.rotateAngleZ = z
     }
 
-}
+}*/
 

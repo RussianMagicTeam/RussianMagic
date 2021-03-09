@@ -34,8 +34,8 @@ class ManaEventHandler {
         val player: PlayerEntity = event.player
         if (MANA_CAP != null) {
             val mana: IPlayerMana = player.getCapability(MANA_CAP!!, null).orElse(PlayerMana()) as IPlayerMana
-            val message = String.format("Hello there, you have §7%d§r mana left.", mana.currentMana)
-            player.sendMessage(StringTextComponent(message))
+            //val message = String.format("Hello there, you have §7%d§r mana left.", mana.currentMana)
+            //player.sendMessage(StringTextComponent(message))
             if (player is ServerPlayerEntity)
                 mana.sendToPlayer(player)
         } else {

@@ -21,7 +21,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import ru.rikgela.russianmagic.client.HUDEventHandler
 import ru.rikgela.russianmagic.client.entity.render.ProjectileEntityRender
 import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
-import ru.rikgela.russianmagic.client.particle.ManaParticle
+import ru.rikgela.russianmagic.client.particle.RMParticles.ManaParticle
 import ru.rikgela.russianmagic.common.RMCCMessage
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage
@@ -56,7 +56,7 @@ class RussianMagic {
         RMTileEntityTypes.TILE_ENTITY_TYPES.register(bus)
         RMContainerTypes.CONTAINER_TYPES.register(bus)
         RMParticles.PARTICLES.register(bus)
-        MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
+        //MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
         MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
         MinecraftForge.EVENT_BUS.register(ManaEventHandler())
 
@@ -83,10 +83,10 @@ class RussianMagic {
             )
         }
         RMBlocks.clientSetup()
-        //RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")) }
+        RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")) }
         RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager ->
             ProjectileEntityRender(
-                renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")
+                    renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")
             )
         }
     }
