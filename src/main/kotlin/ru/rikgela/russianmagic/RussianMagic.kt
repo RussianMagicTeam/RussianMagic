@@ -3,6 +3,11 @@ package ru.rikgela.russianmagic
 import net.minecraft.client.gui.ScreenManager
 import net.minecraft.client.renderer.entity.EntityRendererManager
 import net.minecraft.util.ResourceLocation
+import net.minecraft.world.biome.Biomes
+import net.minecraft.world.gen.GenerationStage
+import net.minecraft.world.gen.feature.Feature
+import net.minecraft.world.gen.placement.FrequencyConfig
+import net.minecraft.world.gen.placement.Placement
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.common.MinecraftForge
@@ -13,6 +18,7 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
+import ru.rikgela.russianmagic.blocks.EbonyTree
 import ru.rikgela.russianmagic.client.HUDEventHandler
 import ru.rikgela.russianmagic.client.entity.render.ProjectileEntityRender
 import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
@@ -100,5 +106,9 @@ class RussianMagic {
                 RMCCMessage::encoder,
                 RMCCMessage.Companion::fromPacketBuffer,
                 RMCCMessage::handle)
+        Biomes.JUNGLE.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(EbonyTree.TREE_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP_32.configure(FrequencyConfig(1))))
+        Biomes.JUNGLE_EDGE.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(EbonyTree.TREE_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP_32.configure(FrequencyConfig(1))))
+        Biomes.JUNGLE_HILLS.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(EbonyTree.TREE_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP_32.configure(FrequencyConfig(1))))
+
     }
 }
