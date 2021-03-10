@@ -442,6 +442,15 @@ object RMBlocks {
                         .Properties
                         .from(Blocks.FURNACE), RMTileEntityTypes.RM_AQUAMARINE_FURNACE)
             }
+    val RM_MAGIC_SOURCE_BLOCK: RegistryObject<Block> = BLOCKS
+            .register<Block>("rm_magic_source") {
+                Block(Block
+                        .Properties
+                        .create(Material.IRON)
+                        .hardnessAndResistance(3.0f, 3.0f)
+                        .harvestTool(ToolType.PICKAXE)
+                )
+            }
 
     val EBONY_PLANKS: RegistryObject<Block> = BLOCKS.register("ebony_planks") { Block(Block.Properties.from(Blocks.OAK_PLANKS)) }
     val EBONY_LEAVES: RegistryObject<RMLeavesBlock> = BLOCKS.register("ebony_leaves") { RMLeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)) }
