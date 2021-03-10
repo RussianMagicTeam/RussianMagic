@@ -234,6 +234,9 @@ object RMItems {
     val RM_RHINESTONE_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_rhinestone_furnace") { BlockItem(RMBlocks.RM_RHINESTONE_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val RM_AQUAMARINE_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_aquamarine_furnace") { BlockItem(RMBlocks.RM_AQUAMARINE_FURNACE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
+    val RM_BASIC_MAGIC_SOURCE: RegistryObject<Item> = ITEMS.register("rm_basic_magic_source") { BlockItem(RMBlocks.RM_BASIC_MAGIC_SOURCE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RM_MAGIC_ANALYSATOR: RegistryObject<Item> = ITEMS.register("rm_magic_analisator") { Item(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+
     // Spell_Scrolls
     val SPELL_OF_REGENERATION: RegistryObject<Item> = ITEMS.register("spell_of_regeneration") {
         SpellScroll(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP))

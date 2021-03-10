@@ -166,12 +166,10 @@
   "container.russianmagic.rm_marble_furnace": "RM marble furnace",
   "block.russianmagic.rm_white_jade_furnace": "RM white jade furnace",
   "container.russianmagic.rm_white_jade_furnace": "RM white jade furnace",
-
   "block.russianmagic.rm_rhinestone_furnace": "RM rhinestone furnace",
   "container.russianmagic.rm_rhinestone_furnace": "RM rhinestone furnace",
-
   "block.russianmagic.rm_aquamarine_furnace": "RM aquamarine furnace",
   "container.russianmagic.rm_aquamarine_furnace": "RM aquamarine furnace",
-
-  "capability.russianmagic.mana": "Mana"
+  "capability.russianmagic.mana": "Mana",
+  "block.russianmagic.rm_basic_magic_source": "RM magic source"
 }

@@ -8,29 +8,25 @@ import net.minecraft.tileentity.ITickableTileEntity
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.tileentity.TileEntityType
 import net.minecraft.util.text.ITextComponent
-import net.minecraft.util.text.TranslationTextComponent
 import net.minecraftforge.common.util.Constants
-import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.mana.IMana
-import ru.rikgela.russianmagic.mana.IManaReceiver
+import ru.rikgela.russianmagic.mana.IManaSpreader
 import ru.rikgela.russianmagic.mana.Mana
-import ru.rikgela.russianmagic.mana.ManaReceiver
-import ru.rikgela.russianmagic.util.RMMekanism
+import ru.rikgela.russianmagic.mana.ManaSpreader
 
-abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<*>, val rmMekanism: RMMekanism)
-    : TileEntity(tileEntityTypeIn), ITickableTileEntity, IManaReceiver {
+abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<*>)
+    : TileEntity(tileEntityTypeIn), ITickableTileEntity, IManaSpreader {
     var customName: ITextComponent? = null
 
     private val mana: IMana = Mana
-            .withParams(rmMekanism.tier * 100, rmMekanism.tier * 1000)
-    private val manaReceiver: IManaReceiver = ManaReceiver(mana)
+            .withParams(50, 100000)
+    private val manaSpreader: IManaSpreader = ManaSpreader(mana)
 
-    val name: ITextComponent
-        get() = customName ?: defaultName
+    //val name: ITextComponent
+    //    get() = customName ?: defaultName
 
-    private val defaultName: ITextComponent
-        get() = TranslationTextComponent("container.$MOD_ID.${rmMekanism.name}")
-
+    //private val defaultName: ITextComponent
+    //    get() = TranslationTextComponent("container.$MOD_ID.${rmMekanism.name}")
 
     fun update() {
         markDirty()
@@ -47,7 +43,7 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
 
     override fun tick() {
         if (world?.isRemote == false) {
-
+            mana.fill(1)
         }
     }
 
@@ -100,15 +96,15 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
 
     //IManaReceiver implementation
     override val currentMana: Int
-        get() = manaReceiver.currentMana
+        get() = manaSpreader.currentMana
     override val maxMana: Int
-        get() = manaReceiver.maxMana
-    override val maxTransfer: Int
-        get() = manaReceiver.maxTransfer
+        get() = manaSpreader.maxMana
+    override val maxSpread: Int
+        get() = manaSpreader.maxSpread
 
-    override fun transfer(points: Int): Int {
-        val ret = manaReceiver.transfer(points)
-        if (ret != points) update()
+    override fun spread(points: Int): Int {
+        val ret = manaSpreader.spread(points)
+        if (ret != 0) update()
         return ret
     }
 }

@@ -1,5 +1,6 @@
 package ru.rikgela.russianmagic.init
 
+import RMMagicSourceBlock
 import net.minecraft.block.Block
 import net.minecraft.block.Blocks
 import net.minecraft.block.FlowerPotBlock
@@ -442,14 +443,11 @@ object RMBlocks {
                         .Properties
                         .from(Blocks.FURNACE), RMTileEntityTypes.RM_AQUAMARINE_FURNACE)
             }
-    val RM_MAGIC_SOURCE_BLOCK: RegistryObject<Block> = BLOCKS
-            .register<Block>("rm_magic_source") {
-                Block(Block
+    val RM_BASIC_MAGIC_SOURCE_BLOCK: RegistryObject<RMMagicSourceBlock.RMBasicMagicSource> = BLOCKS
+            .register<RMMagicSourceBlock.RMBasicMagicSource>("rm_basic_magic_source") {
+                RMMagicSourceBlock.RMBasicMagicSource(Block
                         .Properties
-                        .create(Material.IRON)
-                        .hardnessAndResistance(3.0f, 3.0f)
-                        .harvestTool(ToolType.PICKAXE)
-                )
+                        .from(Blocks.IRON_BLOCK), RMTileEntityTypes.RM_BASIC_MAGIC_SOURCE)
             }
 
     val EBONY_PLANKS: RegistryObject<Block> = BLOCKS.register("ebony_planks") { Block(Block.Properties.from(Blocks.OAK_PLANKS)) }
