@@ -36,6 +36,10 @@ abstract class AbstractManaParticle constructor(worldIn: World, xCoordIn: Double
         return IParticleRenderType.PARTICLE_SHEET_OPAQUE
     }
 
+    fun updateColor() {
+        setColor(red / 255.0f, green / 255.0f, blue / 255.0f)
+    }
+
     init {
         particleScale *= rand.nextFloat() * 0.6f + 0.2f
         motionX = xSpeedIn * 0.2f.toDouble() + (Math.random() * 2.0 - 1.0) * 0.02f.toDouble()

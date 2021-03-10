@@ -5,7 +5,6 @@ import net.minecraft.client.gui.ScreenManager
 import net.minecraft.client.particle.IAnimatedSprite
 import net.minecraft.client.particle.ParticleManager
 import net.minecraft.client.renderer.entity.EntityRendererManager
-import net.minecraft.particles.BasicParticleType
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
@@ -21,7 +20,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import ru.rikgela.russianmagic.client.HUDEventHandler
 import ru.rikgela.russianmagic.client.entity.render.ProjectileEntityRender
 import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
-import ru.rikgela.russianmagic.client.particle.RMParticles.ManaParticle
+import ru.rikgela.russianmagic.client.particle.ColoredParticleType
+import ru.rikgela.russianmagic.client.particle.ManaParticle
 import ru.rikgela.russianmagic.common.RMCCMessage
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage
@@ -94,9 +94,9 @@ class RussianMagic {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     fun particleSetup(event: ParticleFactoryRegisterEvent) {
-        Minecraft.getInstance().particles.registerFactory<BasicParticleType>(RMParticles.MANA_PARTICLE.get(),
+        Minecraft.getInstance().particles.registerFactory<ColoredParticleType>(RMParticles.MANA_PARTICLE.get(),
             ParticleManager.IParticleMetaFactory { iAnimatedSprite: IAnimatedSprite ->
-                ManaParticle.Factory(iAnimatedSprite)
+                ManaParticle.Companion.Factory(iAnimatedSprite)
             })
     }
 

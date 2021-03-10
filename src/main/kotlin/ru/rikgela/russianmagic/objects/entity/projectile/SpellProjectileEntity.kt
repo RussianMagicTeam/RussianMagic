@@ -89,7 +89,15 @@ abstract class SpellProjectileEntity protected constructor(p_i50173_1_: EntityTy
                 }
                 f = 0.8f
             } else {
-                world.addParticle(RMParticles.MANA_PARTICLE.get(), d0 - vec3d.x * 0.25, d1 - vec3d.y * 0.25, d2 - vec3d.z * 0.25, vec3d.x, vec3d.y, vec3d.z)
+                world.addParticle(
+                    RMParticles.MANA_PARTICLE.get().copyWithColor(0f, 255f, 0f),
+                    d0 - vec3d.x * 0.25,
+                    d1 - vec3d.y * 0.25,
+                    d2 - vec3d.z * 0.25,
+                    vec3d.x,
+                    vec3d.y,
+                    vec3d.z
+                )
             }
 
             motion = vec3d.add(accelerationX, accelerationY, accelerationZ).scale(f.toDouble())
