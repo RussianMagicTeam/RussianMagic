@@ -33,9 +33,7 @@ class SpellScroll(properties: Properties) : Item(properties) {
         if(playerIn is ServerPlayerEntity) {
             val mana = PlayerMana.fromPlayer(playerIn)
             if (mana.consume(100, playerIn)) {
-                playerIn.addPotionEffect(EffectInstance(Effects.REGENERATION, 500, 255))
-                val message = String.format("Hello there, you have §7%d§r mana left.", mana.currentMana)
-                playerIn.sendMessage(StringTextComponent(message))
+                playerIn.addPotionEffect(EffectInstance(Effects.REGENERATION, 40, 1))
             } else {
                 playerIn.sendMessage(StringTextComponent("You don't have enough mana!"))
             }

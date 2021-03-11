@@ -16,9 +16,8 @@ object RMEntities {
             .register("projectile_entity"
             ) {
                 EntityType.Builder.create({ a: EntityType<ProjectileEntity>, b: World -> ProjectileEntity(a, b) }, EntityClassification.MISC)
-                        .size(0.9f, 1.1f)
+                        .size(0.1f, 0.1f)
                         .build(ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")
                                 .toString())
             }
 }
-
