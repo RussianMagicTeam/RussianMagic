@@ -1,7 +1,6 @@
 package ru.rikgela.russianmagic.objects.items
 
 import net.minecraft.client.util.ITooltipFlag
-import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.item.Item
@@ -35,10 +34,9 @@ class FireballScroll(properties: Properties) : Item(properties) {
             val mana = PlayerMana.fromPlayer(playerIn)
             if (mana.consume(100, playerIn)) {
                 val looking: Vec3d = playerIn.lookVec
-                val projectileEntity = ProjectileEntity(worldIn, playerIn as LivingEntity, looking.x, looking.y, looking.z)
+                val projectileEntity = ProjectileEntity(worldIn, playerIn.posX, playerIn.posY + 1.5f, playerIn.posZ, looking.x, looking.y, looking.z)
                 worldIn.addEntity(projectileEntity)
-                val message = String.format("Hello there, you have §7%d§r mana left.", mana.currentMana)
-                playerIn.sendMessage(StringTextComponent(message))
+
             } else {
                 playerIn.sendMessage(StringTextComponent("You don't have enough mana!"))
             }
