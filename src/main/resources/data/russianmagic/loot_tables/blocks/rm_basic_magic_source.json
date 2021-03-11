@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "russianmagic:rm_basic_magic_source.json"
+          "name": "russianmagic:rm_basic_magic_source"
         }
       ],
       "conditions": [
@@ -14,7 +14,7 @@
           "condition": "minecraft:survives_explosion"
         }
       ],
-      "name": "russianmagic:rm_basic_magic_source.json"
+      "name": "russianmagic:rm_basic_magic_source"
     }
   ]
 }

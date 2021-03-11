@@ -447,7 +447,9 @@ object RMBlocks {
             .register<RMMagicSourceBlock.RMBasicMagicSource>("rm_basic_magic_source") {
                 RMMagicSourceBlock.RMBasicMagicSource(Block
                         .Properties
-                        .from(Blocks.IRON_BLOCK), RMTileEntityTypes.RM_BASIC_MAGIC_SOURCE)
+                        .create(Material.IRON)
+                        .hardnessAndResistance(3.0f, 3.0f)
+                        .harvestTool(ToolType.PICKAXE), RMTileEntityTypes.RM_BASIC_MAGIC_SOURCE)
             }
 
     val EBONY_PLANKS: RegistryObject<Block> = BLOCKS.register("ebony_planks") { Block(Block.Properties.from(Blocks.OAK_PLANKS)) }
