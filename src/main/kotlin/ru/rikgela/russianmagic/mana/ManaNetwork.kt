@@ -31,3 +31,29 @@ class ManaMessage(
         ctx.get()?.packetHandled = true
     }
 }
+
+class ManaReceiverMessage(
+        private val manaReceiver: ManaReceiver<Mana>
+) {
+    companion object {
+        fun fromPacketBuffer(pb: PacketBuffer): ManaReceiverMessage {
+            val ret = ManaReceiver(Mana())
+            ret.loadFromByteArray(pb.readByteArray())
+            return ManaReceiverMessage(ret)
+        }
+    }
+
+    fun encoder(pb: PacketBuffer) {
+        pb.writeByteArray(manaReceiver.toByteArray())
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    fun handle(ctx: Supplier<NetworkEvent.Context?>) {
+        ctx.get()?.enqueueWork {
+            MANA_RECEIVER_CAP?.let {
+                Minecraft.getInstance().player?.getCapability(it)?.orElse(ManaReceiver(Mana()))?.copy(manaReceiver)
+            }
+        }
+        ctx.get()?.packetHandled = true
+    }
+}

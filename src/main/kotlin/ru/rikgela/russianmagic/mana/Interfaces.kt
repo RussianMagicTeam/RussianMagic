@@ -32,6 +32,14 @@ interface IManaSpreader : IManaBase {
 
 interface IManaReceiver : IManaBase {
     val maxTransfer: Int
+    val source_pos_x: Int
+    val source_pos_y: Int
+    val source_pos_z: Int
+    fun setPositionOfMagicSource(pos_x: Int, pos_y: Int, pos_z: Int)
+    fun loadFromByteArray(buff: ByteArray): Int
+    fun toByteArray(): ByteArray
+    fun copy(manaReceiver: IManaReceiver)
     fun transfer(points: Int): Int
 }
+
 

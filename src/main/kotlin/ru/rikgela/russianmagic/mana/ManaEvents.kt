@@ -3,6 +3,7 @@ package ru.rikgela.russianmagic.mana
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
+import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.StringTextComponent
 import net.minecraftforge.event.AttachCapabilitiesEvent
@@ -12,21 +13,40 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.LogicalSide
 import ru.rikgela.russianmagic.MOD_ID
 
-
 class ManaCapabilityHandler {
     @SubscribeEvent
     fun attachCapability(event: AttachCapabilitiesEvent<Entity>) {
         if (event.`object` is PlayerEntity) {
             event.addCapability(MANA_CAP, ManaProvider(PlayerMana()))
         } else {
-            event.addCapability(MANA_CAP, ManaProvider(Mana()))
+            if (event.`object` is TileEntity) {
+                event.addCapability(MANA_CAP, ManaProvider(Mana()))
+                if (event.`object` is IManaReceiver) {
+                    event.addCapability(MANA_RECEIVER_CAP,
+                            ManaReceiverProvider(ManaReceiver(Mana())))
+                }
+            }
         }
     }
 
     companion object {
         val MANA_CAP = ResourceLocation(MOD_ID, "mana")
+        val MANA_RECEIVER_CAP = ResourceLocation(MOD_ID, "manareceiver")
     }
 }
+
+/*class ManaReceiverCapabilityHandler {
+    @SubscribeEvent
+    fun attachCapability(event: AttachCapabilitiesEvent<TileEntity>) {
+        if (event.`object` is IManaReceiver) {
+            event.addCapability(MANA_RECEIVER_CAP, ManaReceiverProvider(ManaReceiver(Mana())))
+        }
+    }
+
+    companion object {
+        val MANA_RECEIVER_CAP = ResourceLocation(MOD_ID, "manaReceiver")
+    }
+}*/
 
 class ManaEventHandler {
     @SubscribeEvent

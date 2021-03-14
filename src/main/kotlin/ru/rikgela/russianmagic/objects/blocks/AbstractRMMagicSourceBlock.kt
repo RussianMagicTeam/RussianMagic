@@ -81,9 +81,10 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
             }
         } else {
             val tile = ((worldIn as ServerWorld).getTileEntity(pos) as AbstractRMMagicSourceTileEntity)
-            player.sendMessage(StringTextComponent(
-                    String.format("Your magic source have §7%d§r mana left.", tile.currentMana)
-            )
+            player.sendMessage(
+                    StringTextComponent(
+                            String.format("Your magic source have §7%d§r mana left.", tile.currentMana)
+                    )
             )
         }
 
