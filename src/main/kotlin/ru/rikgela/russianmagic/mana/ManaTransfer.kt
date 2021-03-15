@@ -3,6 +3,7 @@ package ru.rikgela.russianmagic.mana
 import net.minecraft.nbt.ByteArrayNBT
 import net.minecraft.nbt.INBT
 import net.minecraft.util.Direction
+import net.minecraft.util.math.BlockPos
 import net.minecraftforge.common.capabilities.Capability
 
 class ManaReceiver<T : IMana>(private val mana: T) : IManaReceiver {
@@ -19,55 +20,49 @@ class ManaReceiver<T : IMana>(private val mana: T) : IManaReceiver {
         return mana.fill(points)
     }
 
-    override var source_pos_x = 0
-    override var source_pos_y = 0
-    override var source_pos_z = 0
+    override var magicSource: BlockPos = BlockPos(0, 0, 0)
 
-    override fun setPositionOfMagicSource(pos_x: Int, pos_y: Int, pos_z: Int) {
-        source_pos_x = pos_x
-        source_pos_y = pos_y
-        source_pos_z = pos_z
+
+    override fun setPositionOfMagicSource(magicSourcePos: BlockPos) {
+        magicSource = magicSourcePos
     }
 
     override fun copy(manaReceiver: IManaReceiver) {
-        this.source_pos_x = manaReceiver.source_pos_x
-        this.source_pos_y = manaReceiver.source_pos_y
-        this.source_pos_z = manaReceiver.source_pos_z
+        this.magicSource = manaReceiver.magicSource
     }
 
     override fun toByteArray(): ByteArray {
         return byteArrayOf(
-                ((source_pos_x ushr 24) and 0xFFFF).toByte(),
-                ((source_pos_x ushr 16) and 0xFFFF).toByte(),
-                ((source_pos_x ushr 8) and 0xFFFF).toByte(),
-                (source_pos_x and 0xFFFF).toByte(),
-                ((source_pos_y ushr 24) and 0xFFFF).toByte(),
-                ((source_pos_y ushr 16) and 0xFFFF).toByte(),
-                ((source_pos_y ushr 8) and 0xFFFF).toByte(),
-                (source_pos_y and 0xFFFF).toByte(),
-                ((source_pos_z ushr 24) and 0xFFFF).toByte(),
-                ((source_pos_z ushr 16) and 0xFFFF).toByte(),
-                ((source_pos_z ushr 8) and 0xFFFF).toByte(),
-                (source_pos_z and 0xFFFF).toByte(),
+                ((magicSource.x ushr 24) and 0xFFFF).toByte(),
+                ((magicSource.x ushr 16) and 0xFFFF).toByte(),
+                ((magicSource.x ushr 8) and 0xFFFF).toByte(),
+                (magicSource.x and 0xFFFF).toByte(),
+                ((magicSource.y ushr 24) and 0xFFFF).toByte(),
+                ((magicSource.y ushr 16) and 0xFFFF).toByte(),
+                ((magicSource.y ushr 8) and 0xFFFF).toByte(),
+                (magicSource.y and 0xFFFF).toByte(),
+                ((magicSource.z ushr 24) and 0xFFFF).toByte(),
+                ((magicSource.z ushr 16) and 0xFFFF).toByte(),
+                ((magicSource.z ushr 8) and 0xFFFF).toByte(),
+                (magicSource.z and 0xFFFF).toByte(),
         )
     }
 
     override fun loadFromByteArray(buff: ByteArray): Int {
         var i = 0
-        source_pos_x = buff[i++].toInt() shl 24 or
+        magicSource = BlockPos(buff[i++].toInt() shl 24 or
                 (buff[i++].toInt() and 0xFF shl 16) or
                 (buff[i++].toInt() and 0xFF shl 8) or
-                (buff[i++].toInt() and 0xFF)
-
-        source_pos_y = buff[i++].toInt() shl 24 or
-                (buff[i++].toInt() and 0xFF shl 16) or
-                (buff[i++].toInt() and 0xFF shl 8) or
-                (buff[i++].toInt() and 0xFF)
-
-        source_pos_z = buff[i++].toInt() shl 24 or
-                (buff[i++].toInt() and 0xFF shl 16) or
-                (buff[i++].toInt() and 0xFF shl 8) or
-                (buff[i++].toInt() and 0xFF)
+                (buff[i++].toInt() and 0xFF),
+                buff[i++].toInt() shl 24 or
+                        (buff[i++].toInt() and 0xFF shl 16) or
+                        (buff[i++].toInt() and 0xFF shl 8) or
+                        (buff[i++].toInt() and 0xFF),
+                buff[i++].toInt() shl 24 or
+                        (buff[i++].toInt() and 0xFF shl 16) or
+                        (buff[i++].toInt() and 0xFF shl 8) or
+                        (buff[i++].toInt() and 0xFF)
+        )
         return i
     }
 }

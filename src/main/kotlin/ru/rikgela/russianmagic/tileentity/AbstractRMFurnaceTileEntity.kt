@@ -75,11 +75,7 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     override fun tick() {
         if (world?.isRemote == false) {
             val sourceTileEntity = world?.getTileEntity(
-                    BlockPos(
-                            manaReceiver.source_pos_x,
-                            manaReceiver.source_pos_y,
-                            manaReceiver.source_pos_z
-                    )
+                    manaReceiver.magicSource
             )
             if (sourceTileEntity is IManaSpreader) {
                 mana.fill(sourceTileEntity.spread(manaReceiver.maxTransfer))
@@ -249,12 +245,8 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         get() = manaReceiver.maxMana
     override val maxTransfer: Int
         get() = manaReceiver.maxTransfer
-    override val source_pos_x: Int
-        get() = manaReceiver.source_pos_x
-    override val source_pos_y: Int
-        get() = manaReceiver.source_pos_y
-    override val source_pos_z: Int
-        get() = manaReceiver.source_pos_z
+    override val magicSource: BlockPos
+        get() = manaReceiver.magicSource
 
     override fun loadFromByteArray(buff: ByteArray): Int {
         return manaReceiver.loadFromByteArray(buff)
@@ -264,8 +256,8 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         return manaReceiver.toByteArray()
     }
 
-    override fun setPositionOfMagicSource(pos_x: Int, pos_y: Int, pos_z: Int) {
-        manaReceiver.setPositionOfMagicSource(pos_x, pos_y, pos_z)
+    final override fun setPositionOfMagicSource(magicSourcePos: BlockPos) {
+        manaReceiver.setPositionOfMagicSource(magicSourcePos)
     }
 
     override fun copy(manaReceiver: IManaReceiver) {
@@ -276,5 +268,9 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         val ret = manaReceiver.transfer(points)
         if (ret != points) update()
         return ret
+    }
+
+    init {
+        this.setPositionOfMagicSource(this.getPos())
     }
 }
