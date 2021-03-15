@@ -3,7 +3,6 @@ package ru.rikgela.russianmagic.mana
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.StringTextComponent
 import net.minecraftforge.event.AttachCapabilitiesEvent
@@ -19,12 +18,15 @@ class ManaCapabilityHandler {
         if (event.`object` is PlayerEntity) {
             event.addCapability(MANA_CAP, ManaProvider(PlayerMana()))
         } else {
-            if (event.`object` is TileEntity) {
+            if (event.`object` is IManaReceiver) {
                 event.addCapability(MANA_CAP, ManaProvider(Mana()))
                 if (event.`object` is IManaReceiver) {
                     event.addCapability(MANA_RECEIVER_CAP,
                             ManaReceiverProvider(ManaReceiver(Mana())))
                 }
+            }
+            if (event.`object` is IManaSpreader) {
+                event.addCapability(MANA_CAP, ManaProvider(Mana()))
             }
         }
     }
@@ -35,27 +37,12 @@ class ManaCapabilityHandler {
     }
 }
 
-/*class ManaReceiverCapabilityHandler {
-    @SubscribeEvent
-    fun attachCapability(event: AttachCapabilitiesEvent<TileEntity>) {
-        if (event.`object` is IManaReceiver) {
-            event.addCapability(MANA_RECEIVER_CAP, ManaReceiverProvider(ManaReceiver(Mana())))
-        }
-    }
-
-    companion object {
-        val MANA_RECEIVER_CAP = ResourceLocation(MOD_ID, "manaReceiver")
-    }
-}*/
-
 class ManaEventHandler {
     @SubscribeEvent
     fun onPlayerLogsIn(event: PlayerEvent.PlayerLoggedInEvent) {
         val player: PlayerEntity = event.player
         if (MANA_CAP != null) {
             val mana: IPlayerMana = player.getCapability(MANA_CAP!!, null).orElse(PlayerMana()) as IPlayerMana
-            //val message = String.format("Hello there, you have §7%d§r mana left.", mana.currentMana)
-            //player.sendMessage(StringTextComponent(message))
             if (player is ServerPlayerEntity)
                 mana.sendToPlayer(player)
         } else {

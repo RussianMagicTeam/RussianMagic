@@ -1,16 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "X ",
-    "X ",
-    "X "
+    "XXX",
+    "X#X",
+    "XXX"
   ],
   "key": {
+    "#": {
+      "item": "russianmagic:jasper"
+    },
     "X": {
       "item": "russianmagic:ebony_planks"
     }
   },
   "result": {
-    "item": "russianmagic:rm_magic_analisator"
+    "item": "russianmagic:rm_link_creator"
   }
 }

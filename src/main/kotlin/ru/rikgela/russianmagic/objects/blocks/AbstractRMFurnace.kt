@@ -87,6 +87,7 @@ abstract class AbstractRMFurnace(properties: Properties) : Block(properties) {
     override fun onBlockActivated(state: BlockState, worldIn: World, pos: BlockPos, player: PlayerEntity,
                                   handIn: Hand, hit: BlockRayTraceResult): ActionResultType {
         if (worldIn.isRemote) {
+            super.onBlockActivated(state, worldIn, pos, player, handIn, hit)
             if (KeyboardHelper.isHoldingShift) {
                 RMCCMessage.transferManaToTileEntity(pos.x, pos.y, pos.z)
             } else {

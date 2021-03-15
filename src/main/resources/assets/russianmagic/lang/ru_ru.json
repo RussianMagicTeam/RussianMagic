@@ -48,24 +48,20 @@
 
   "block.russianmagic.marble_block": "Мраморный блок",
   "block.russianmagic.white_jade_block": "Блок белого нефрита",
-
   "block.russianmagic.aquamarine_block": "Блок аквамарина",
   "block.russianmagic.aquamarine_block_ore": "Руда аквамарина",
-
   "block.russianmagic.rhinestone_block": "Блок горного хрусталя",
   "block.russianmagic.rhinestone_block_ore": "Руда горного хрусталя",
-
   "item.russianmagic.spell_of_regeneration": "Заклинание регенерации",
   "item.russianmagic.spell_of_fireball": "Заклинание огненного шара",
-
+  "item.russianmagic.rm_analyzer": "РМ Анализатор",
+  "item.russianmagic.rm_link_creator": "РМ Связыватель",
   "item.russianmagic.jasper": "Яшма",
   "block.russianmagic.jasper_block": "Блок яшмы",
   "block.russianmagic.jasper_block_ore": "Руда яшмы",
-
   "item.russianmagic.chrysolite": "Xризолит",
   "block.russianmagic.chrysolite_block": "Блок хризолита",
   "block.russianmagic.chrysolite_block_ore": "Руда хризолита",
-
   "block.russianmagic.ebony_sapling": "Саженец черного дерева",
   "block.russianmagic.ebony_planks": "Доски из черного дерева",
   "block.russianmagic.ebony_log": "Бревно черного дерева",

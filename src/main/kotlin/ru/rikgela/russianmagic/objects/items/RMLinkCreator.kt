@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.items
+package ru.rikgela.russianmagic.objects.items
 
 import net.minecraft.item.Item
 import net.minecraft.item.ItemUseContext
@@ -8,14 +8,13 @@ import net.minecraft.util.text.StringTextComponent
 import ru.rikgela.russianmagic.mana.IManaReceiver
 import ru.rikgela.russianmagic.mana.IManaSpreader
 
-class RMAnalisatorItem(
+class RMLinkCreator(
         builder: Properties
 ) : Item(builder) {
     var magicSourcePos: BlockPos = BlockPos(0, 0, 0)
     override fun onItemUse(context: ItemUseContext): ActionResultType {
         val world = context.world
         val blockPos = context.pos
-        //val blockState = world.getBlockState(blockPos)
         val playerEntity = context.player
         if (!world.isRemote) {
             val tileentity = world.getTileEntity(blockPos)
