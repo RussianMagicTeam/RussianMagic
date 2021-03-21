@@ -7,6 +7,7 @@ import net.minecraft.util.text.StringTextComponent
 import ru.rikgela.russianmagic.mana.IMana
 import ru.rikgela.russianmagic.mana.IManaReceiver
 import ru.rikgela.russianmagic.mana.IManaSpreader
+import ru.rikgela.russianmagic.mana.IManaTaker
 
 class RMAnalyzer(
         builder: Properties
@@ -15,6 +16,7 @@ class RMAnalyzer(
         val world = context.world
         val blockPos = context.pos
         val playerEntity = context.player
+        var actionResult = ActionResultType.FAIL
         if (!world.isRemote) {
             val tileentity = world.getTileEntity(blockPos)
             if (tileentity is IMana) {
@@ -25,7 +27,7 @@ class RMAnalyzer(
                                         + tileentity.maxMana.toString())
                         )
                 )
-                return ActionResultType.SUCCESS
+                actionResult = ActionResultType.SUCCESS
             }
             if (tileentity is IManaReceiver) {
                 (playerEntity!!).sendMessage(
@@ -35,20 +37,34 @@ class RMAnalyzer(
                                         + tileentity.maxMana.toString())
                         )
                 )
-                return ActionResultType.SUCCESS
+                actionResult = ActionResultType.SUCCESS
             }
             if (tileentity is IManaSpreader) {
                 (playerEntity!!).sendMessage(
-                        StringTextComponent(
-                                String.format("ManaSpreader: "
-                                        + tileentity.currentMana.toString() + ":"
-                                        + tileentity.maxMana.toString())
+                    StringTextComponent(
+                        String.format(
+                            "ManaSpreader: "
+                                    + tileentity.currentMana.toString() + ":"
+                                    + tileentity.maxMana.toString()
                         )
+                    )
                 )
-                return ActionResultType.SUCCESS
+                actionResult = ActionResultType.SUCCESS
+            }
+            if (tileentity is IManaTaker) {
+                (playerEntity!!).sendMessage(
+                    StringTextComponent(
+                        String.format(
+                            "ManaTaker: "
+                                    + tileentity.isConnectedToManaSpreader.toString() + ":"
+                                    + tileentity.spreaderWorldPos
+                        )
+                    )
+                )
+                actionResult = ActionResultType.SUCCESS
             }
         }
-        return ActionResultType.FAIL
+        return actionResult
         //return super.onItemUse(context)
     }
 }

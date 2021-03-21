@@ -111,7 +111,6 @@ class RussianMagic {
         //preinit
         OreGeneration.setupOreGeneration()
         CapabilityManager.INSTANCE.register(IMana::class.java, ManaStorage()) { Mana() }
-        CapabilityManager.INSTANCE.register(IManaReceiver::class.java, ReceiverStorage()) { ManaReceiver(Mana()) }
         @Suppress("INACCESSIBLE_TYPE")
         RMNetworkChannel.registerMessage(
                 networkIndex++,
@@ -133,13 +132,6 @@ class RussianMagic {
                 RMCCMessage::encoder,
                 RMCCMessage.Companion::fromPacketBuffer,
                 RMCCMessage::handle)
-        @Suppress("INACCESSIBLE_TYPE")
-        RMNetworkChannel.registerMessage(
-                networkIndex++,
-                ManaReceiverMessage::class.java,
-                ManaReceiverMessage::encoder,
-                ManaReceiverMessage.Companion::fromPacketBuffer,
-                ManaReceiverMessage::handle)
         Biomes.JUNGLE.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(EbonyTree.TREE_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP_32.configure(FrequencyConfig(1))))
         Biomes.JUNGLE_EDGE.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(EbonyTree.TREE_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP_32.configure(FrequencyConfig(1))))
         Biomes.JUNGLE_HILLS.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(EbonyTree.TREE_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP_32.configure(FrequencyConfig(1))))

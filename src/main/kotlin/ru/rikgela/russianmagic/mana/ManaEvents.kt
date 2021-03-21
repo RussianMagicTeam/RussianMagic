@@ -17,23 +17,11 @@ class ManaCapabilityHandler {
     fun attachCapability(event: AttachCapabilitiesEvent<Entity>) {
         if (event.`object` is PlayerEntity) {
             event.addCapability(MANA_CAP, ManaProvider(PlayerMana()))
-        } else {
-            if (event.`object` is IManaReceiver) {
-                event.addCapability(MANA_CAP, ManaProvider(Mana()))
-                if (event.`object` is IManaReceiver) {
-                    event.addCapability(MANA_RECEIVER_CAP,
-                            ManaReceiverProvider(ManaReceiver(Mana())))
-                }
-            }
-            if (event.`object` is IManaSpreader) {
-                event.addCapability(MANA_CAP, ManaProvider(Mana()))
-            }
         }
     }
 
     companion object {
         val MANA_CAP = ResourceLocation(MOD_ID, "mana")
-        val MANA_RECEIVER_CAP = ResourceLocation(MOD_ID, "manareceiver")
     }
 }
 

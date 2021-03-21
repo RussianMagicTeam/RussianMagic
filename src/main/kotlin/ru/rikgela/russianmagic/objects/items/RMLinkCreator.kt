@@ -5,34 +5,36 @@ import net.minecraft.item.ItemUseContext
 import net.minecraft.util.ActionResultType
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.text.StringTextComponent
-import ru.rikgela.russianmagic.mana.IManaReceiver
 import ru.rikgela.russianmagic.mana.IManaSpreader
+import ru.rikgela.russianmagic.mana.IManaTaker
 
 class RMLinkCreator(
         builder: Properties
 ) : Item(builder) {
-    var magicSourcePos: BlockPos = BlockPos(0, 0, 0)
+    private var manaSpreaderPos: BlockPos = BlockPos(0, 0, 0)
+    private var manaSpreaderWorldId: Int = 0
     override fun onItemUse(context: ItemUseContext): ActionResultType {
         val world = context.world
         val blockPos = context.pos
         val playerEntity = context.player
         if (!world.isRemote) {
-            val tileentity = world.getTileEntity(blockPos)
-            if (tileentity is IManaReceiver) {
-                tileentity.setPositionOfMagicSource(magicSourcePos)
+            val tileEntity = world.getTileEntity(blockPos)
+            if (tileEntity is IManaTaker) {
+                tileEntity.connectToManaSpreader(manaSpreaderPos, world.server!!, manaSpreaderWorldId)
                 (playerEntity!!).sendMessage(
-                        StringTextComponent(
-                                String.format("Link successfully created")
-                        )
+                    StringTextComponent(
+                        String.format("Link successfully created")
+                    )
                 )
                 return ActionResultType.SUCCESS
             }
-            if (tileentity is IManaSpreader) {
-                magicSourcePos = blockPos
+            if (tileEntity is IManaSpreader) {
+                manaSpreaderPos = blockPos
+                manaSpreaderWorldId = playerEntity?.dimension?.id ?: 0
                 (playerEntity!!).sendMessage(
-                        StringTextComponent(
-                                String.format("Spacetime coordinates saved")
-                        )
+                    StringTextComponent(
+                        String.format("Spacetime coordinates saved")
+                    )
                 )
                 return ActionResultType.SUCCESS
             }

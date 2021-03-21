@@ -1,10 +1,7 @@
 package ru.rikgela.russianmagic.mana
 
-import net.minecraft.nbt.ByteArrayNBT
-import net.minecraft.nbt.INBT
-import net.minecraft.util.Direction
+import net.minecraft.server.MinecraftServer
 import net.minecraft.util.math.BlockPos
-import net.minecraftforge.common.capabilities.Capability
 
 class ManaReceiver<T : IMana>(private val mana: T) : IManaReceiver {
     override val currentMana: Int
@@ -18,64 +15,6 @@ class ManaReceiver<T : IMana>(private val mana: T) : IManaReceiver {
 
     override fun transfer(points: Int): Int {
         return mana.fill(points)
-    }
-
-    override var magicSource: BlockPos = BlockPos(0, 0, 0)
-
-
-    override fun setPositionOfMagicSource(magicSourcePos: BlockPos) {
-        magicSource = magicSourcePos
-    }
-
-    override fun copy(manaReceiver: IManaReceiver) {
-        this.magicSource = manaReceiver.magicSource
-    }
-
-    override fun toByteArray(): ByteArray {
-        return byteArrayOf(
-                ((magicSource.x ushr 24) and 0xFFFF).toByte(),
-                ((magicSource.x ushr 16) and 0xFFFF).toByte(),
-                ((magicSource.x ushr 8) and 0xFFFF).toByte(),
-                (magicSource.x and 0xFFFF).toByte(),
-                ((magicSource.y ushr 24) and 0xFFFF).toByte(),
-                ((magicSource.y ushr 16) and 0xFFFF).toByte(),
-                ((magicSource.y ushr 8) and 0xFFFF).toByte(),
-                (magicSource.y and 0xFFFF).toByte(),
-                ((magicSource.z ushr 24) and 0xFFFF).toByte(),
-                ((magicSource.z ushr 16) and 0xFFFF).toByte(),
-                ((magicSource.z ushr 8) and 0xFFFF).toByte(),
-                (magicSource.z and 0xFFFF).toByte(),
-        )
-    }
-
-    override fun loadFromByteArray(buff: ByteArray): Int {
-        var i = 0
-        magicSource = BlockPos(buff[i++].toInt() shl 24 or
-                (buff[i++].toInt() and 0xFF shl 16) or
-                (buff[i++].toInt() and 0xFF shl 8) or
-                (buff[i++].toInt() and 0xFF),
-                buff[i++].toInt() shl 24 or
-                        (buff[i++].toInt() and 0xFF shl 16) or
-                        (buff[i++].toInt() and 0xFF shl 8) or
-                        (buff[i++].toInt() and 0xFF),
-                buff[i++].toInt() shl 24 or
-                        (buff[i++].toInt() and 0xFF shl 16) or
-                        (buff[i++].toInt() and 0xFF shl 8) or
-                        (buff[i++].toInt() and 0xFF)
-        )
-        return i
-    }
-}
-
-class ReceiverStorage : Capability.IStorage<IManaReceiver> {
-    override fun writeNBT(capability: Capability<IManaReceiver>, instance: IManaReceiver, side: Direction?): INBT {
-        return ByteArrayNBT(instance.toByteArray())
-    }
-
-    override fun readNBT(capability: Capability<IManaReceiver>, instance: IManaReceiver, side: Direction?, nbt: INBT) {
-        if (nbt is ByteArrayNBT) {
-            instance.loadFromByteArray(nbt.byteArray)
-        }
     }
 }
 
@@ -91,6 +30,101 @@ class ManaSpreader<T : IMana>(private val mana: T) : IManaSpreader {
 
     override fun spread(points: Int): Int {
         return mana.give(points)
+    }
+}
+
+class ManaTaker : IManaTaker {
+    var spreaderPos: BlockPos? = null
+    var worldId: Int = 0
+    override val isConnectedToManaSpreader: Boolean
+        get() = spreaderPos != null
+    override val spreaderWorldPos: String
+        get() = if (spreaderPos != null) worldId.toString() + ", " + spreaderPos!!.x.toString() + ", " + spreaderPos!!.y.toString() + ", " + spreaderPos!!.z.toString() else "NULL"
+
+    override fun connectToManaSpreader(manaSpreader: BlockPos, server: MinecraftServer, worldId: Int) {
+        server.forgeGetWorldMap().forEach { dim, world ->
+            if (dim.id == worldId) {
+                val te = world.getTileEntity(manaSpreader)
+                if (te is IManaSpreader) {
+                    spreaderPos = manaSpreader
+                    this.worldId = worldId
+                }
+            }
+        }
+    }
+
+    override fun disconnectToManaSpreader() {
+        spreaderPos = null
+    }
+
+    fun getMana(points: Int, server: MinecraftServer): Int {
+        if (!isConnectedToManaSpreader) {
+            return 0
+        }
+        var ret: Int? = null
+        server.forgeGetWorldMap().forEach { dim, world ->
+            if (dim.id == worldId) {
+                val te = world.getTileEntity(spreaderPos!!)
+                if (te is IManaSpreader) {
+                    ret = te.spread(points)
+                } else {
+                    //Todo action if cannot get tileEntity
+                }
+            }
+        }
+        return ret ?: 0
+    }
+
+
+    fun toByteArray(): ByteArray {
+
+        val x = spreaderPos?.x ?: -1
+        val y = spreaderPos?.y ?: -1
+        val z = spreaderPos?.z ?: -1
+        return byteArrayOf(
+            ((worldId ushr 24) and 0xFFFF).toByte(),
+            ((worldId ushr 16) and 0xFFFF).toByte(),
+            ((worldId ushr 8) and 0xFFFF).toByte(),
+            (worldId and 0xFFFF).toByte(),
+            ((x ushr 24) and 0xFFFF).toByte(),
+            ((x ushr 16) and 0xFFFF).toByte(),
+            ((x ushr 8) and 0xFFFF).toByte(),
+            (x and 0xFFFF).toByte(),
+            ((y ushr 24) and 0xFFFF).toByte(),
+            ((y ushr 16) and 0xFFFF).toByte(),
+            ((y ushr 8) and 0xFFFF).toByte(),
+            (y and 0xFFFF).toByte(),
+            ((z ushr 24) and 0xFFFF).toByte(),
+            ((z ushr 16) and 0xFFFF).toByte(),
+            ((z ushr 8) and 0xFFFF).toByte(),
+            (z and 0xFFFF).toByte(),
+        )
+    }
+
+    fun loadFromByteArray(buff: ByteArray): Int {
+        var i = 0
+        worldId = buff[i++].toInt() shl 24 or
+                (buff[i++].toInt() and 0xFF shl 16) or
+                (buff[i++].toInt() and 0xFF shl 8) or
+                (buff[i++].toInt() and 0xFF)
+        spreaderPos = BlockPos(
+            buff[i++].toInt() shl 24 or
+                    (buff[i++].toInt() and 0xFF shl 16) or
+                    (buff[i++].toInt() and 0xFF shl 8) or
+                    (buff[i++].toInt() and 0xFF),
+            buff[i++].toInt() shl 24 or
+                    (buff[i++].toInt() and 0xFF shl 16) or
+                    (buff[i++].toInt() and 0xFF shl 8) or
+                    (buff[i++].toInt() and 0xFF),
+            buff[i++].toInt() shl 24 or
+                    (buff[i++].toInt() and 0xFF shl 16) or
+                    (buff[i++].toInt() and 0xFF shl 8) or
+                    (buff[i++].toInt() and 0xFF)
+        )
+        if (spreaderPos?.y ?: -1 == -1) {
+            spreaderPos = null
+        }
+        return i
     }
 }
 

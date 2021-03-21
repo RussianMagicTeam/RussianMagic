@@ -10,6 +10,7 @@ import net.minecraft.item.crafting.IRecipe
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.network.NetworkManager
 import net.minecraft.network.play.server.SUpdateTileEntityPacket
+import net.minecraft.server.MinecraftServer
 import net.minecraft.tileentity.ITickableTileEntity
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.tileentity.TileEntityType
@@ -28,13 +29,14 @@ import ru.rikgela.russianmagic.util.RMItemHandler
 import ru.rikgela.russianmagic.util.RMMekanism
 import java.util.stream.Collectors
 
-abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, val rmMekanism: RMMekanism)
-    : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver, ISidedInventory {
+abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, val rmMekanism: RMMekanism) :
+    TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver, IManaTaker,
+    ISidedInventory {
     var customName: ITextComponent? = null
     var currentSmeltTime = 0
-
     private val mana: IMana = Mana.withParams(rmMekanism.tier * 100, rmMekanism.tier * 1000)
     private val manaReceiver: IManaReceiver = ManaReceiver(mana)
+    private val manaTaker: ManaTaker = ManaTaker()
     val maxSmeltTime = 100 / rmMekanism.tier
     abstract val upSlots: IntArray
     abstract val downSlots: IntArray
@@ -74,12 +76,7 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
 
     override fun tick() {
         if (world?.isRemote == false) {
-            val sourceTileEntity = world?.getTileEntity(
-                    manaReceiver.magicSource
-            )
-            if (sourceTileEntity is IManaSpreader) {
-                mana.fill(sourceTileEntity.spread(manaReceiver.maxTransfer))
-            }
+            mana.fill(manaTaker.getMana(mana.maxMana - mana.currentMana, world!!.server!!))
             val recipe = getRecipe(inventory.getStackInSlot(0)) ?: return dropProgress()
             if (canBurn(recipe)) {
                 world!!.setBlockState(getPos(), this.blockState.with(AbstractRMFurnace.LIT, true))
@@ -110,7 +107,7 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
             customName = ITextComponent.Serializer.fromJson(compound.getString("CustomName"))
         }
         mana.loadFromByteArray(compound.getByteArray("Mana"))
-        manaReceiver.loadFromByteArray(compound.getByteArray("ManaReceiver"))
+        manaTaker.loadFromByteArray(compound.getByteArray("ManaTaker"))
         val inv = NonNullList.withSize(inventory.slots, ItemStack.EMPTY)
         ItemStackHelper.loadAllItems(compound, inv)
         inventory.setNonNullList(inv)
@@ -120,7 +117,7 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     override fun write(compound: CompoundNBT): CompoundNBT {
         super.write(compound)
         compound.putByteArray("Mana", mana.toByteArray())
-        compound.putByteArray("ManaReceiver", manaReceiver.toByteArray())
+        compound.putByteArray("ManaTaker", manaTaker.toByteArray())
         if (customName != null) {
             compound.putString("CustomName", ITextComponent.Serializer.toJson(customName!!))
         }
@@ -245,24 +242,6 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         get() = manaReceiver.maxMana
     override val maxTransfer: Int
         get() = manaReceiver.maxTransfer
-    override val magicSource: BlockPos
-        get() = manaReceiver.magicSource
-
-    override fun loadFromByteArray(buff: ByteArray): Int {
-        return manaReceiver.loadFromByteArray(buff)
-    }
-
-    override fun toByteArray(): ByteArray {
-        return manaReceiver.toByteArray()
-    }
-
-    final override fun setPositionOfMagicSource(magicSourcePos: BlockPos) {
-        manaReceiver.setPositionOfMagicSource(magicSourcePos)
-    }
-
-    override fun copy(manaReceiver: IManaReceiver) {
-        this.manaReceiver.copy(manaReceiver)
-    }
 
     override fun transfer(points: Int): Int {
         val ret = manaReceiver.transfer(points)
@@ -270,7 +249,19 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         return ret
     }
 
-    init {
-        this.setPositionOfMagicSource(this.getPos())
+
+    override val isConnectedToManaSpreader: Boolean
+        get() = manaTaker.isConnectedToManaSpreader
+
+    override fun connectToManaSpreader(magicSource: BlockPos, server: MinecraftServer, worldId: Int) {
+        manaTaker.connectToManaSpreader(magicSource, server, worldId)
     }
+
+    override fun disconnectToManaSpreader() {
+        manaTaker.disconnectToManaSpreader()
+    }
+
+    override val spreaderWorldPos: String
+        get() = manaTaker.spreaderWorldPos
+
 }
