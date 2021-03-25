@@ -465,5 +465,6 @@ object RMBlocks {
         RenderTypeLookup.setRenderLayer(EBONY_SAPLING.get(), RenderType.getCutout())
         RenderTypeLookup.setRenderLayer(EBONY_LEAVES.get(), RenderType.getCutout())
         RenderTypeLookup.setRenderLayer(RHINESTONE_BLOCK.get(), RenderType.getTranslucent())
+        RenderTypeLookup.setRenderLayer(RM_BASIC_MAGIC_SOURCE_BLOCK.get(), RenderType.getTranslucent())
     }
 }
