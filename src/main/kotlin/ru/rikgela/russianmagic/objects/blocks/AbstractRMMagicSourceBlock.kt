@@ -2,6 +2,7 @@ package ru.rikgela.russianmagic.objects.blocks
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
+import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.ItemStack
@@ -12,7 +13,12 @@ import net.minecraft.util.SoundCategory
 import net.minecraft.util.SoundEvents
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.BlockRayTraceResult
+import net.minecraft.util.math.shapes.IBooleanFunction
+import net.minecraft.util.math.shapes.ISelectionContext
+import net.minecraft.util.math.shapes.VoxelShape
+import net.minecraft.util.math.shapes.VoxelShapes
 import net.minecraft.util.text.StringTextComponent
+import net.minecraft.world.IBlockReader
 import net.minecraft.world.World
 import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.api.distmarker.Dist
@@ -24,12 +30,27 @@ import java.util.*
 
 abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(properties) {
 
+    //protected val SHAPE = makeCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0)
+
+    //override fun getShape(state: BlockState?, worldIn: IBlockReader?, pos: BlockPos?, context: ISelectionContext?): VoxelShape? {
+    //    return this.SHAPE
+    //}
     private var tileEntity: TileEntity? = null
 
     override fun hasTileEntity(state: BlockState): Boolean {
         return true
     }
 
+    override fun getCollisionShape(state: BlockState, worldIn: IBlockReader, pos: BlockPos, context: ISelectionContext): VoxelShape {
+        return VoxelShapes.empty()
+    }
+
+    override fun onEntityCollision(state: BlockState, worldIn: World, pos: BlockPos, entityIn: Entity) {
+        if (!worldIn.isRemote && !entityIn.isPassenger && !entityIn.isBeingRidden && entityIn.isNonBoss && VoxelShapes.compare(VoxelShapes.create(entityIn.boundingBox.offset((-pos.x).toDouble(), (-pos.y).toDouble(), (-pos.z).toDouble())), state.getShape(worldIn, pos), IBooleanFunction.AND)) {
+            RMCCMessage.transferManaFromTileEntity(pos.x, pos.y, pos.z)
+            //entityIn.changeDimension(if (worldIn.dimension.type === DimensionType.THE_END) DimensionType.OVERWORLD else DimensionType.THE_END)
+        }
+    }
     //override fun mirror(state: BlockState, mirrorIn: Mirror): BlockState {
     //return state.rotate(mirrorIn.toRotation(state.get(FACING)))
     //}
