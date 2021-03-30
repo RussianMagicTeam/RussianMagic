@@ -1,6 +1,7 @@
 package ru.rikgela.russianmagic.objects.blocks
 
 import net.minecraft.block.Block
+import net.minecraft.block.BlockRenderType
 import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
@@ -18,6 +19,7 @@ import net.minecraft.util.math.shapes.ISelectionContext
 import net.minecraft.util.math.shapes.VoxelShape
 import net.minecraft.util.math.shapes.VoxelShapes
 import net.minecraft.util.text.StringTextComponent
+import net.minecraft.world.EmptyBlockReader
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.World
 import net.minecraft.world.server.ServerWorld
@@ -30,11 +32,24 @@ import java.util.*
 
 abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(properties) {
 
-    //protected val SHAPE = makeCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0)
+    protected var SHAPE = makeCuboidShape(7.0, 7.0, 7.0, 9.0, 9.0, 9.0)
+    protected var MODEL = BlockRenderType.MODEL
+    override fun getShape(state: BlockState?, worldIn: IBlockReader?, pos: BlockPos?, context: ISelectionContext?): VoxelShape? {
+        if (worldIn is EmptyBlockReader) return this.SHAPE
+        val shift: Float = (worldIn?.getTileEntity(pos) as AbstractRMMagicSourceTileEntity).currentMana.toFloat() / (worldIn.getTileEntity(pos) as AbstractRMMagicSourceTileEntity).maxMana.toFloat()
+        this.SHAPE = makeCuboidShape(7.0 - 7.0 * shift,
+                7.0 - 7.0 * shift,
+                7.0 - 7.0 * shift,
+                9.0 + 7.0 * shift,
+                9.0 + 7.0 * shift,
+                9.0 + 7.0 * shift)
+        return this.SHAPE
+    }
 
-    //override fun getShape(state: BlockState?, worldIn: IBlockReader?, pos: BlockPos?, context: ISelectionContext?): VoxelShape? {
-    //    return this.SHAPE
-    //}
+    override fun getRenderType(state: BlockState?): BlockRenderType? {
+        return MODEL
+    }
+
     private var tileEntity: TileEntity? = null
 
     override fun hasTileEntity(state: BlockState): Boolean {
@@ -84,6 +99,7 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
             worldIn.playSound(d0, d1, d2, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0f, 1.0f,
                     false)
         }
+
 //        val direction = stateIn.get(FACING)
 //        val directionAxis = direction.axis
 //        val d4 = rand.nextDouble() * 0.6 - 0.3

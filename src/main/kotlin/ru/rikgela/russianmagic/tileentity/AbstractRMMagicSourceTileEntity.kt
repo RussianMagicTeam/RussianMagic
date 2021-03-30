@@ -19,7 +19,7 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
     var customName: ITextComponent? = null
 
     private val mana: IMana = Mana
-            .withParams(50, 100000)
+            .withParams(50, 500)
     private val manaSpreader: IManaSpreader = ManaSpreader(mana)
 
     //val name: ITextComponent
@@ -44,6 +44,7 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
     override fun tick() {
         if (world?.isRemote == false) {
             mana.fill(1)
+            update()
         }
     }
 

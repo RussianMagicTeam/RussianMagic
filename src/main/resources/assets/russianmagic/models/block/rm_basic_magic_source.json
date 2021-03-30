@@ -1,5 +1,5 @@
 {
-  "parent": "block/cube_all",
+  "parent": "block/template_torch",
   "textures": {
     "all": "russianmagic:block/rm_basic_magic_source.json"
   }
