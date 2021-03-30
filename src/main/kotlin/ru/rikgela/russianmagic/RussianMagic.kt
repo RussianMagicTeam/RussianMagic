@@ -26,7 +26,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import ru.rikgela.russianmagic.blocks.EbonyTree
 import ru.rikgela.russianmagic.client.HUDEventHandler
-import ru.rikgela.russianmagic.client.block.render.RMBasicMagicSourceBlock
+import ru.rikgela.russianmagic.client.block.render.AbstractRMMagicSourceTileEntityRenderer
 import ru.rikgela.russianmagic.client.entity.render.ProjectileEntityRender
 import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
 import ru.rikgela.russianmagic.client.particle.ColoredParticleType
@@ -94,7 +94,7 @@ class RussianMagic {
         }
         RMBlocks.clientSetup()
         RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")) }
-        ClientRegistry.bindTileEntityRenderer(RMTileEntityTypes.RM_BASIC_MAGIC_SOURCE.get()) { renderManagerIn: TileEntityRendererDispatcher -> RMBasicMagicSourceBlock(renderManagerIn) }
+        ClientRegistry.bindTileEntityRenderer(RMTileEntityTypes.RM_BASIC_MAGIC_SOURCE.get()) { renderManagerIn: TileEntityRendererDispatcher -> AbstractRMMagicSourceTileEntityRenderer(renderManagerIn) }
         //ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.DRYER, new DryerTileEntityRenderer(TileEntityRendererDispatcher.instance));
     }
 
