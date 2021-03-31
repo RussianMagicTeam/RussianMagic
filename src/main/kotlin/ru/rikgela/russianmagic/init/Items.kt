@@ -11,10 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries
 import ru.rikgela.russianmagic.ItemGroups
 import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.items.RMAxeItem
-import ru.rikgela.russianmagic.objects.items.FireballScroll
-import ru.rikgela.russianmagic.objects.items.RMAnalyzer
-import ru.rikgela.russianmagic.objects.items.RMLinkCreator
-import ru.rikgela.russianmagic.objects.items.SpellScroll
+import ru.rikgela.russianmagic.objects.items.*
 import java.util.function.Supplier
 
 
@@ -239,6 +236,7 @@ object RMItems {
     val RM_BASIC_MAGIC_SOURCE: RegistryObject<Item> = ITEMS.register("rm_basic_magic_source") { BlockItem(RMBlocks.RM_BASIC_MAGIC_SOURCE_BLOCK.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val RM_ANALYZER: RegistryObject<Item> = ITEMS.register("rm_analyzer") { RMAnalyzer(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
     val RM_LINK_CREATOR: RegistryObject<Item> = ITEMS.register("rm_link_creator") { RMLinkCreator(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RM_LINK_DESTROYER: RegistryObject<Item> = ITEMS.register("rm_link_destroyer") { RMLinkDestroyer(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }
 
     // Spell_Scrolls
     val SPELL_OF_REGENERATION: RegistryObject<Item> = ITEMS.register("spell_of_regeneration") {

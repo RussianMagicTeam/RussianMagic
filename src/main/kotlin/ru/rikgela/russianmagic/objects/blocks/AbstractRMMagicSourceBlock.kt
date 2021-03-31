@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.item.ItemStack
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ActionResultType
@@ -61,7 +62,7 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
     }
 
     override fun onEntityCollision(state: BlockState, worldIn: World, pos: BlockPos, entityIn: Entity) {
-        if (!worldIn.isRemote && !entityIn.isPassenger && !entityIn.isBeingRidden && entityIn.isNonBoss && VoxelShapes.compare(VoxelShapes.create(entityIn.boundingBox.offset((-pos.x).toDouble(), (-pos.y).toDouble(), (-pos.z).toDouble())), state.getShape(worldIn, pos), IBooleanFunction.AND)) {
+        if (!worldIn.isRemote && entityIn is ServerPlayerEntity && VoxelShapes.compare(VoxelShapes.create(entityIn.boundingBox.offset((-pos.x).toDouble(), (-pos.y).toDouble(), (-pos.z).toDouble())), state.getShape(worldIn, pos), IBooleanFunction.AND)) {
             RMCCMessage.transferManaFromTileEntity(pos.x, pos.y, pos.z)
             //entityIn.changeDimension(if (worldIn.dimension.type === DimensionType.THE_END) DimensionType.OVERWORLD else DimensionType.THE_END)
         }

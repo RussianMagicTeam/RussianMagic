@@ -1,5 +1,6 @@
 package ru.rikgela.russianmagic.objects.items
 
+import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemUseContext
 import net.minecraft.util.ActionResultType
@@ -7,6 +8,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.text.StringTextComponent
 import ru.rikgela.russianmagic.mana.IManaSpreader
 import ru.rikgela.russianmagic.mana.IManaTaker
+import ru.rikgela.russianmagic.mana.PlayerMana
 
 class RMLinkCreator(
         builder: Properties
@@ -21,22 +23,30 @@ class RMLinkCreator(
             val tileEntity = world.getTileEntity(blockPos)
             if (tileEntity is IManaTaker) {
                 tileEntity.connectToManaSpreader(manaSpreaderPos, world.server!!, manaSpreaderWorldId)
-                (playerEntity!!).sendMessage(
-                    StringTextComponent(
-                        String.format("Link successfully created")
-                    )
-                )
-                return ActionResultType.SUCCESS
+                if (playerEntity is ServerPlayerEntity) {
+                    if (PlayerMana.fromPlayer(playerEntity).consume(100, playerEntity)) {
+                        (playerEntity).sendMessage(
+                                StringTextComponent(
+                                        String.format("Link successfully created")
+                                )
+                        )
+                        return ActionResultType.SUCCESS
+                    }
+                }
             }
             if (tileEntity is IManaSpreader) {
                 manaSpreaderPos = blockPos
                 manaSpreaderWorldId = playerEntity?.dimension?.id ?: 0
-                (playerEntity!!).sendMessage(
-                    StringTextComponent(
-                        String.format("Spacetime coordinates saved")
-                    )
-                )
-                return ActionResultType.SUCCESS
+                if (playerEntity is ServerPlayerEntity) {
+                    if (PlayerMana.fromPlayer(playerEntity).consume(100, playerEntity)) {
+                        (playerEntity).sendMessage(
+                                StringTextComponent(
+                                        String.format("Spacetime coordinates saved")
+                                )
+                        )
+                        return ActionResultType.SUCCESS
+                    }
+                }
             }
         }
         return super.onItemUse(context)

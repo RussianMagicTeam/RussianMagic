@@ -42,7 +42,7 @@ interface IManaReceiver : IManaBase {
 interface IManaTaker {
     val isConnectedToManaSpreader: Boolean
     val spreaderWorldPos: String
-    fun connectToManaSpreader(magicSource: BlockPos, server: MinecraftServer, worldId: Int)
+    fun connectToManaSpreader(manaSpreader: BlockPos, server: MinecraftServer, worldId: Int)
     fun disconnectToManaSpreader()
 }
 
