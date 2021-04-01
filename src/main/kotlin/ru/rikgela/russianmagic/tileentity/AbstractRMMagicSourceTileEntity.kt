@@ -74,15 +74,6 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
         read(nbt)
     }
 
-
-    /*fun isUsableByPlayer(player: PlayerEntity): Boolean {
-        return if (world!!.getTileEntity(pos) !== this) {
-            false
-        } else {
-            player.getDistanceSq(pos.x.toDouble() + 0.5, pos.y.toDouble() + 0.5, pos.z.toDouble() + 0.5) <= 64.0
-        }
-    }
-*/
     //IManaReceiver implementation
     override val currentMana: Int
         get() = manaSpreader.currentMana

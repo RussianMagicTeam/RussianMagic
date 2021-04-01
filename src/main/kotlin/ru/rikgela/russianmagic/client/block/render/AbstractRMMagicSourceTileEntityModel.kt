@@ -23,7 +23,7 @@ class AbstractRMMagicSourceTileEntityModel : Model(Function { locationIn: Resour
         model.render(ms, buffer, light, overlay)
     }
 
-    override fun render(ms: MatrixStack, buffer: IVertexBuilder, light: Int, overlay: Int, r: Float, g: Float, b: Float, a: Float) {
+    override fun render(matrixStack: MatrixStack, buffer: IVertexBuilder, light: Int, overlay: Int, r: Float, g: Float, b: Float, a: Float) {
         throw UnsupportedOperationException("unimplemented")
     }
 
