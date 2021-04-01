@@ -99,7 +99,6 @@ class RussianMagic {
             )
         }
         ClientRegistry.bindTileEntityRenderer(RMTileEntityTypes.RM_BASIC_MAGIC_SOURCE.get()) { renderManagerIn: TileEntityRendererDispatcher -> AbstractRMMagicSourceTileEntityRenderer(renderManagerIn) }
-        //ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.DRYER, new DryerTileEntityRenderer(TileEntityRendererDispatcher.instance));
     }
 
     @SubscribeEvent

@@ -22,7 +22,6 @@ import net.minecraft.util.text.StringTextComponent
 import net.minecraft.world.EmptyBlockReader
 import net.minecraft.world.IBlockReader
 import net.minecraft.world.World
-import net.minecraft.world.server.ServerWorld
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import ru.rikgela.russianmagic.common.RMCCMessage
@@ -86,18 +85,19 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
     override fun onBlockActivated(state: BlockState, worldIn: World, pos: BlockPos, player: PlayerEntity,
                                   handIn: Hand, hit: BlockRayTraceResult): ActionResultType {
         if (worldIn.isRemote) {
-            if (KeyboardHelper.isHoldingShift) {
-                RMCCMessage.transferManaFromTileEntity(pos.x, pos.y, pos.z)
-            }
-        } else {
-            val tile = ((worldIn as ServerWorld).getTileEntity(pos) as AbstractRMMagicSourceTileEntity)
-            player.sendMessage(
-                    StringTextComponent(
-                            String.format("Your magic source have §7%d§r mana left.", tile.currentMana)
+            if (player.heldItemMainhand.isEmpty) {
+                if (KeyboardHelper.isHoldingShift) {
+                    RMCCMessage.transferManaFromTileEntity(pos.x, pos.y, pos.z)
+                } else {
+                    val tile = (worldIn.getTileEntity(pos) as AbstractRMMagicSourceTileEntity)
+                    player.sendMessage(
+                            StringTextComponent(
+                                    String.format("Your magic source have §7%d§r mana left.", tile.currentMana)
+                            )
                     )
-            )
+                }
+            }
         }
-
         return ActionResultType.SUCCESS
     }
 
