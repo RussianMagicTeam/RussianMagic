@@ -253,8 +253,8 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     override val isConnectedToManaSpreader: Boolean
         get() = manaTaker.isConnectedToManaSpreader
 
-    override fun connectToManaSpreader(magicSource: BlockPos, server: MinecraftServer, worldId: Int) {
-        manaTaker.connectToManaSpreader(magicSource, server, worldId)
+    override fun connectToManaSpreader(manaSpreader: BlockPos, server: MinecraftServer, worldId: Int) {
+        manaTaker.connectToManaSpreader(manaSpreader, server, worldId)
     }
 
     override fun disconnectToManaSpreader() {

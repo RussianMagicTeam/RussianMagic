@@ -31,22 +31,22 @@ import java.util.*
 
 abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(properties) {
 
-    private var SHAPE = makeCuboidShape(7.0, 7.0, 7.0, 9.0, 9.0, 9.0)
-    private var MODEL = BlockRenderType.MODEL
+    private var shape = makeCuboidShape(7.0, 7.0, 7.0, 9.0, 9.0, 9.0)
+    private var model = BlockRenderType.MODEL
     override fun getShape(state: BlockState?, worldIn: IBlockReader?, pos: BlockPos, context: ISelectionContext?): VoxelShape? {
-        if (worldIn is EmptyBlockReader) return this.SHAPE
+        if (worldIn is EmptyBlockReader) return this.shape
         val shift: Float = (worldIn?.getTileEntity(pos) as AbstractRMMagicSourceTileEntity).currentMana.toFloat() / (worldIn.getTileEntity(pos) as AbstractRMMagicSourceTileEntity).maxMana.toFloat()
-        this.SHAPE = makeCuboidShape(7.0 - 6.0 * shift,
+        this.shape = makeCuboidShape(7.0 - 6.0 * shift,
                 7.0 - 6.0 * shift,
                 7.0 - 6.0 * shift,
                 9.0 + 6.0 * shift,
                 9.0 + 6.0 * shift,
                 9.0 + 6.0 * shift)
-        return this.SHAPE
+        return this.shape
     }
 
     override fun getRenderType(state: BlockState?): BlockRenderType? {
-        return MODEL
+        return model
     }
 
     override fun hasTileEntity(state: BlockState): Boolean {
