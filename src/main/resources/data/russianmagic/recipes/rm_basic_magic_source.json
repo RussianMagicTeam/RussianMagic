@@ -1,0 +1,40 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "QWE",
+    "ASD",
+    "ZXC"
+  ],
+  "key": {
+    "Q": {
+      "item": "russianmagic:agate_block"
+    },
+    "W": {
+      "item": "russianmagic:amethyst_block"
+    },
+    "E": {
+      "item": "russianmagic:ametrine_block"
+    },
+    "A": {
+      "item": "russianmagic:aquamarine_block"
+    },
+    "S": {
+      "item": "russianmagic:beryl_block"
+    },
+    "D": {
+      "item": "russianmagic:carnelian_block"
+    },
+    "Z": {
+      "item": "russianmagic:chalcedony_block"
+    },
+    "X": {
+      "item": "russianmagic:charoite_block"
+    },
+    "C": {
+      "item": "russianmagic:chrysolite_block"
+    }
+  },
+  "result": {
+    "item": "russianmagic:rm_basic_magic_source"
+  }
+}

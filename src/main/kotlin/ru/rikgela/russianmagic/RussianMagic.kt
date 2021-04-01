@@ -5,6 +5,7 @@ import net.minecraft.client.gui.ScreenManager
 import net.minecraft.client.particle.IAnimatedSprite
 import net.minecraft.client.particle.ParticleManager
 import net.minecraft.client.renderer.entity.EntityRendererManager
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.biome.Biomes
 import net.minecraft.world.gen.GenerationStage
@@ -17,6 +18,7 @@ import net.minecraftforge.client.event.ParticleFactoryRegisterEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.eventbus.api.SubscribeEvent
+import net.minecraftforge.fml.client.registry.ClientRegistry
 import net.minecraftforge.fml.client.registry.RenderingRegistry
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
@@ -24,6 +26,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import ru.rikgela.russianmagic.blocks.EbonyTree
 import ru.rikgela.russianmagic.client.HUDEventHandler
+import ru.rikgela.russianmagic.client.block.render.AbstractRMMagicSourceTileEntityRenderer
 import ru.rikgela.russianmagic.client.entity.render.ProjectileEntityRender
 import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
 import ru.rikgela.russianmagic.client.particle.ColoredParticleType
@@ -64,6 +67,7 @@ class RussianMagic {
         RMParticles.PARTICLES.register(bus)
         //MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
         MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
+        //MinecraftForge.EVENT_BUS.register(ManaReceiverCapabilityHandler())
         MinecraftForge.EVENT_BUS.register(ManaEventHandler())
 
     }
@@ -79,22 +83,22 @@ class RussianMagic {
         ScreenManager.registerFactory(RMContainerTypes.RM_TWO_SUPPORT_ONE_TO_ONE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
             RMFurnaceScreen(
                 screenContainer, inv, titleIn,
-                ResourceLocation(MOD_ID, "textures/gui/rm_furnace2_screen.png")
+                    ResourceLocation(MOD_ID, "textures/gui/rm_furnace2_screen.png")
             )
         }
         ScreenManager.registerFactory(RMContainerTypes.RM_THREE_SUPPORT_ONE_TO_ONE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
             RMFurnaceScreen(
-                screenContainer, inv, titleIn,
-                ResourceLocation(MOD_ID, "textures/gui/rm_furnace3_screen.png")
+                    screenContainer, inv, titleIn,
+                    ResourceLocation(MOD_ID, "textures/gui/rm_furnace3_screen.png")
             )
         }
         RMBlocks.clientSetup()
-        RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")) }
         RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager ->
             ProjectileEntityRender(
                     renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")
             )
         }
+        ClientRegistry.bindTileEntityRenderer(RMTileEntityTypes.RM_BASIC_MAGIC_SOURCE.get()) { renderManagerIn: TileEntityRendererDispatcher -> AbstractRMMagicSourceTileEntityRenderer(renderManagerIn) }
     }
 
     @SubscribeEvent

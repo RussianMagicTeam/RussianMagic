@@ -1,6 +1,8 @@
 package ru.rikgela.russianmagic.mana
 
 import net.minecraft.entity.player.ServerPlayerEntity
+import net.minecraft.server.MinecraftServer
+import net.minecraft.util.math.BlockPos
 
 interface IManaBase {
     val currentMana: Int
@@ -13,6 +15,9 @@ interface IMana : IManaBase {
     //returned last needed byte.
     fun loadFromByteArray(buff: ByteArray): Int
     fun consume(points: Int): Boolean
+
+    //Returns how much mana was transferred
+    fun give(points: Int): Int
     fun fill(points: Int): Int
     fun copy(mana: IMana)
 }
@@ -24,9 +29,21 @@ interface IPlayerMana : IMana {
     fun sendToPlayer(player: ServerPlayerEntity)
 }
 
-interface IManaSpreader : IManaBase
+interface IManaSpreader : IManaBase {
+    val maxSpread: Int
+    fun spread(points: Int): Int
+}
 
 interface IManaReceiver : IManaBase {
     val maxTransfer: Int
     fun transfer(points: Int): Int
 }
+
+interface IManaTaker {
+    val isConnectedToManaSpreader: Boolean
+    val spreaderWorldPos: String
+    fun connectToManaSpreader(manaSpreader: BlockPos, server: MinecraftServer, worldId: Int)
+    fun disconnectToManaSpreader()
+}
+
+

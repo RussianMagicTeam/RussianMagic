@@ -66,6 +66,16 @@ open class Mana : IMana {
         return false
     }
 
+    override fun give(points: Int): Int {
+        if (currentMana >= points) {
+            currentMana -= points
+            return points
+        }
+        val tmp: Int = currentMana
+        currentMana = 0
+        return tmp
+    }
+
     override fun fill(points: Int): Int {
         val count = min(maxMana - currentMana, points)
         currentMana += count

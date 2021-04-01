@@ -12,14 +12,11 @@ import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.LogicalSide
 import ru.rikgela.russianmagic.MOD_ID
 
-
 class ManaCapabilityHandler {
     @SubscribeEvent
     fun attachCapability(event: AttachCapabilitiesEvent<Entity>) {
         if (event.`object` is PlayerEntity) {
             event.addCapability(MANA_CAP, ManaProvider(PlayerMana()))
-        } else {
-            event.addCapability(MANA_CAP, ManaProvider(Mana()))
         }
     }
 
@@ -34,8 +31,6 @@ class ManaEventHandler {
         val player: PlayerEntity = event.player
         if (MANA_CAP != null) {
             val mana: IPlayerMana = player.getCapability(MANA_CAP!!, null).orElse(PlayerMana()) as IPlayerMana
-            //val message = String.format("Hello there, you have §7%d§r mana left.", mana.currentMana)
-            //player.sendMessage(StringTextComponent(message))
             if (player is ServerPlayerEntity)
                 mana.sendToPlayer(player)
         } else {

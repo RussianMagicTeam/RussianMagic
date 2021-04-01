@@ -10,33 +10,33 @@ import net.minecraft.item.crafting.IRecipe
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.network.NetworkManager
 import net.minecraft.network.play.server.SUpdateTileEntityPacket
+import net.minecraft.server.MinecraftServer
 import net.minecraft.tileentity.ITickableTileEntity
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.tileentity.TileEntityType
 import net.minecraft.util.Direction
 import net.minecraft.util.NonNullList
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.TranslationTextComponent
 import net.minecraft.world.World
 import net.minecraftforge.common.util.Constants
 import net.minecraftforge.items.wrapper.RecipeWrapper
 import ru.rikgela.russianmagic.MOD_ID
-import ru.rikgela.russianmagic.mana.IMana
-import ru.rikgela.russianmagic.mana.IManaReceiver
-import ru.rikgela.russianmagic.mana.Mana
-import ru.rikgela.russianmagic.mana.ManaReceiver
+import ru.rikgela.russianmagic.mana.*
 import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace
 import ru.rikgela.russianmagic.util.RMItemHandler
 import ru.rikgela.russianmagic.util.RMMekanism
 import java.util.stream.Collectors
 
-abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, val rmMekanism: RMMekanism)
-    : TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver, ISidedInventory {
+abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, val rmMekanism: RMMekanism) :
+    TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver, IManaTaker,
+    ISidedInventory {
     var customName: ITextComponent? = null
     var currentSmeltTime = 0
-
     private val mana: IMana = Mana.withParams(rmMekanism.tier * 100, rmMekanism.tier * 1000)
     private val manaReceiver: IManaReceiver = ManaReceiver(mana)
+    private val manaTaker: ManaTaker = ManaTaker()
     val maxSmeltTime = 100 / rmMekanism.tier
     abstract val upSlots: IntArray
     abstract val downSlots: IntArray
@@ -76,6 +76,7 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
 
     override fun tick() {
         if (world?.isRemote == false) {
+            mana.fill(manaTaker.getMana(mana.maxMana - mana.currentMana, world!!.server!!))
             val recipe = getRecipe(inventory.getStackInSlot(0)) ?: return dropProgress()
             if (canBurn(recipe)) {
                 world!!.setBlockState(getPos(), this.blockState.with(AbstractRMFurnace.LIT, true))
@@ -106,6 +107,7 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
             customName = ITextComponent.Serializer.fromJson(compound.getString("CustomName"))
         }
         mana.loadFromByteArray(compound.getByteArray("Mana"))
+        manaTaker.loadFromByteArray(compound.getByteArray("ManaTaker"))
         val inv = NonNullList.withSize(inventory.slots, ItemStack.EMPTY)
         ItemStackHelper.loadAllItems(compound, inv)
         inventory.setNonNullList(inv)
@@ -115,6 +117,7 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     override fun write(compound: CompoundNBT): CompoundNBT {
         super.write(compound)
         compound.putByteArray("Mana", mana.toByteArray())
+        compound.putByteArray("ManaTaker", manaTaker.toByteArray())
         if (customName != null) {
             compound.putString("CustomName", ITextComponent.Serializer.toJson(customName!!))
         }
@@ -232,7 +235,6 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         return index in upSlots || index in horizontalSlots
     }
 
-
     //IManaReceiver implementation
     override val currentMana: Int
         get() = manaReceiver.currentMana
@@ -246,4 +248,20 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         if (ret != points) update()
         return ret
     }
+
+
+    override val isConnectedToManaSpreader: Boolean
+        get() = manaTaker.isConnectedToManaSpreader
+
+    override fun connectToManaSpreader(manaSpreader: BlockPos, server: MinecraftServer, worldId: Int) {
+        manaTaker.connectToManaSpreader(manaSpreader, server, worldId)
+    }
+
+    override fun disconnectToManaSpreader() {
+        manaTaker.disconnectToManaSpreader()
+    }
+
+    override val spreaderWorldPos: String
+        get() = manaTaker.spreaderWorldPos
+
 }

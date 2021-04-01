@@ -6,6 +6,7 @@ import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.tileentity.RMFurnacesTileEntity
+import ru.rikgela.russianmagic.tileentity.RMMagicSourcesTileEntity
 import ru.rikgela.russianmagic.util.RMMekanism
 import java.util.function.Supplier
 
@@ -74,6 +75,15 @@ object RMTileEntityTypes {
                 TileEntityType.Builder
                         .create(Supplier { RMFurnacesTileEntity.RMAquamarineFurnaceTileEntity(RMMekanism(5, 3, "rm_aquamarine_furnace", arrayOf("smelting"))) }
                                 , RMBlocks.RM_AQUAMARINE_FURNACE_BLOCK.get())
+                        .build(null)
+            }
+
+    @JvmField
+    val RM_BASIC_MAGIC_SOURCE: RegistryObject<TileEntityType<RMMagicSourcesTileEntity.RMBasicMagicSourceTileEntity>> = TILE_ENTITY_TYPES
+            .register("rm_basic_magic_source") {
+                TileEntityType.Builder
+                        .create(Supplier { RMMagicSourcesTileEntity.RMBasicMagicSourceTileEntity() }
+                                , RMBlocks.RM_BASIC_MAGIC_SOURCE_BLOCK.get())
                         .build(null)
             }
 }

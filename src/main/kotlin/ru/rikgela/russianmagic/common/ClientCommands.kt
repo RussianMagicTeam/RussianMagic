@@ -1,6 +1,7 @@
 package ru.rikgela.russianmagic.common
 
 import com.google.gson.Gson
+import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.inventory.container.INamedContainerProvider
 import net.minecraft.network.PacketBuffer
@@ -11,6 +12,7 @@ import net.minecraftforge.fml.network.NetworkEvent
 import net.minecraftforge.fml.network.NetworkHooks
 import ru.rikgela.russianmagic.mana.IMana
 import ru.rikgela.russianmagic.mana.IManaReceiver
+import ru.rikgela.russianmagic.mana.IManaSpreader
 import ru.rikgela.russianmagic.mana.MANA_CAP
 import ru.rikgela.russianmagic.tileentity.AbstractRMFurnaceTileEntity
 import java.util.function.Supplier
@@ -21,7 +23,7 @@ class RMCCMessage(
 ) {
     companion object {
         enum class Commands {
-            OPEN_GUI, TRANSFER_MANA_FROM_PLAYER_TO_TILE_ENTITY
+            OPEN_GUI, TRANSFER_MANA_FROM_PLAYER_TO_TILE_ENTITY, TRANSFER_MANA_FROM_TILE_ENTITY_TO_PLAYER
         }
         data class Command(
                 val cmd: Commands,
@@ -45,7 +47,9 @@ class RMCCMessage(
 
         @OnlyIn(Dist.CLIENT)
         fun send(msg: RMCCMessage) {
-            RMNetworkChannel.sendToServer(msg)
+            if (Minecraft.getInstance().connection != null) {
+                RMNetworkChannel.sendToServer(msg)
+            }
         }
 
         @OnlyIn(Dist.CLIENT)
@@ -60,6 +64,14 @@ class RMCCMessage(
         fun transferManaToTileEntity(x: Int, y: Int, z: Int) {
             val pos = Pos(x, y, z)
             val cmd = Command(Commands.TRANSFER_MANA_FROM_PLAYER_TO_TILE_ENTITY, Gson().toJson(pos))
+            val msg = RMCCMessage(cmd)
+            send(msg)
+        }
+
+        @OnlyIn(Dist.CLIENT)
+        fun transferManaFromTileEntity(x: Int, y: Int, z: Int) {
+            val pos = Pos(x, y, z)
+            val cmd = Command(Commands.TRANSFER_MANA_FROM_TILE_ENTITY_TO_PLAYER, Gson().toJson(pos))
             val msg = RMCCMessage(cmd)
             send(msg)
         }
@@ -87,6 +99,18 @@ class RMCCMessage(
                         val playerMana: IMana = playerEntity.getCapability(MANA_CAP!!).orElseThrow { RuntimeException("WTF???") } as IMana
                         val transferManaCount = playerMana.currentMana - tile.transfer(playerMana.currentMana)
                         if (transferManaCount > 0) playerMana.consume(transferManaCount)
+                    }
+                }
+            } else if (cmd.cmd == Commands.TRANSFER_MANA_FROM_TILE_ENTITY_TO_PLAYER) {
+                val pos = Gson().fromJson(cmd.data, Pos::class.java)
+                val tile = world.getTileEntity(BlockPos(pos.x, pos.y, pos.z))
+                if (tile is IManaSpreader) {
+                    if (MANA_CAP != null) {
+                        val playerMana: IMana = playerEntity.getCapability(MANA_CAP!!).orElseThrow { RuntimeException("WTF???") } as IMana
+                        val transferManaCount = tile.spread(
+                                playerMana.maxMana - playerMana.currentMana
+                        )
+                        if (transferManaCount > 0) playerMana.fill(transferManaCount)
                     }
                 }
             }
