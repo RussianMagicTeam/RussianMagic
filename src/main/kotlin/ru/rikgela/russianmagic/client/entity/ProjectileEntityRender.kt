@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.client.entity.render
+package ru.rikgela.russianmagic.client.entity
 
 import com.mojang.blaze3d.matrix.MatrixStack
 import net.minecraft.client.renderer.IRenderTypeBuffer

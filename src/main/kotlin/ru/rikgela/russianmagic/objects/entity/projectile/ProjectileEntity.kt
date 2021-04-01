@@ -15,7 +15,7 @@ import net.minecraft.util.math.RayTraceResult
 import net.minecraft.world.World
 import net.minecraftforge.event.ForgeEventFactory
 import net.minecraftforge.fml.network.NetworkHooks
-import ru.rikgela.russianmagic.RMEntities
+import ru.rikgela.russianmagic.init.RMEntities
 
 class ProjectileEntity : AbstractProjectileEntity {
     constructor(p_i50160_1_: EntityType<out ProjectileEntity>, p_i50160_2_: World) : super(p_i50160_1_, p_i50160_2_)
@@ -32,7 +32,7 @@ class ProjectileEntity : AbstractProjectileEntity {
                     entity.setFire(5)
                     val flag = entity.attackEntityFrom(causeFireballDamage(this, shootingEntity), 5.0f)
                     if (flag) {
-                        applyEnchantments(shootingEntity, entity)
+                        applyEnchantments(shootingEntity!!, entity)
                     } else {
                         entity.fireTimer = i
                     }
@@ -61,6 +61,9 @@ class ProjectileEntity : AbstractProjectileEntity {
     }
 }
 
-fun causeFireballDamage(fireball: SpellProjectileEntity?, indirectEntityIn: Entity?): DamageSource? {
-    return if (indirectEntityIn == null) IndirectEntityDamageSource("onFire", fireball, fireball).setFireDamage().setProjectile() else IndirectEntityDamageSource("fireball", fireball, indirectEntityIn).setFireDamage().setProjectile()
+fun causeFireballDamage(fireball: SpellProjectileEntity, indirectEntityIn: Entity?): DamageSource {
+    return if (indirectEntityIn == null)
+        IndirectEntityDamageSource("onFire", fireball, fireball).setFireDamage().setProjectile()
+    else
+        IndirectEntityDamageSource("fireball", fireball, indirectEntityIn).setFireDamage().setProjectile()
 }

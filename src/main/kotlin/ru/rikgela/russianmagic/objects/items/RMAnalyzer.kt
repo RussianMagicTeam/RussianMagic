@@ -5,7 +5,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemUseContext
 import net.minecraft.util.ActionResultType
 import net.minecraft.util.text.StringTextComponent
-import ru.rikgela.russianmagic.mana.*
+import ru.rikgela.russianmagic.objects.mana.*
 
 class RMAnalyzer(
         builder: Properties

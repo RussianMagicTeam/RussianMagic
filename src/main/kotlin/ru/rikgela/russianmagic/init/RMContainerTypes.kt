@@ -8,8 +8,8 @@ import net.minecraftforge.fml.RegistryObject
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import ru.rikgela.russianmagic.MOD_ID
-import ru.rikgela.russianmagic.container.AbstractRMFurnaceContainer
-import ru.rikgela.russianmagic.container.RMFurnacesContainer
+import ru.rikgela.russianmagic.objects.container.AbstractRMFurnaceContainer
+import ru.rikgela.russianmagic.objects.container.RMFurnacesContainer
 
 object RMContainerTypes {
     val CONTAINER_TYPES: DeferredRegister<ContainerType<*>> = DeferredRegister(ForgeRegistries.CONTAINERS, MOD_ID)
@@ -18,7 +18,7 @@ object RMContainerTypes {
     val RM_ONE_SUPPORT_ONE_TO_ONE_FURNACE_CONTAINER: RegistryObject<ContainerType<AbstractRMFurnaceContainer>> = CONTAINER_TYPES
             .register("rm_diamond_furnace") {
                 IForgeContainerType.create { windowID: Int, playerInv: PlayerInventory, data: PacketBuffer ->
-                    RMFurnacesContainer.RMOneSupportOneToOneFurnaceContainer(windowID, playerInv, data) as AbstractRMFurnaceContainer
+                    RMFurnacesContainer.RMOneSupportOneToOneFurnaceContainer(windowID, playerInv, data)
                 }
             }
 
@@ -26,7 +26,7 @@ object RMContainerTypes {
     val RM_TWO_SUPPORT_ONE_TO_ONE_FURNACE_CONTAINER: RegistryObject<ContainerType<AbstractRMFurnaceContainer>> = CONTAINER_TYPES
             .register("rm_isolated_diamond_furnace") {
                 IForgeContainerType.create { windowID: Int, playerInv: PlayerInventory, data: PacketBuffer ->
-                    RMFurnacesContainer.RMTwoSupportOneToOneFurnaceContainer(windowID, playerInv, data) as AbstractRMFurnaceContainer
+                    RMFurnacesContainer.RMTwoSupportOneToOneFurnaceContainer(windowID, playerInv, data)
                 }
             }
 
@@ -34,7 +34,7 @@ object RMContainerTypes {
     val RM_THREE_SUPPORT_ONE_TO_ONE_FURNACE_CONTAINER: RegistryObject<ContainerType<AbstractRMFurnaceContainer>> = CONTAINER_TYPES
             .register("rm_ebony_furnace") {
                 IForgeContainerType.create { windowID: Int, playerInv: PlayerInventory, data: PacketBuffer ->
-                    RMFurnacesContainer.RMThreeSupportOneToOneFurnaceContainer(windowID, playerInv, data) as AbstractRMFurnaceContainer
+                    RMFurnacesContainer.RMThreeSupportOneToOneFurnaceContainer(windowID, playerInv, data)
                 }
             }
 }

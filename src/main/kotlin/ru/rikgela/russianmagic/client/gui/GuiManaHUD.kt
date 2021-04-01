@@ -6,7 +6,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.text.TextFormatting
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
-import ru.rikgela.russianmagic.mana.PlayerMana
+import ru.rikgela.russianmagic.objects.mana.PlayerMana
 import java.awt.Color
 
 @OnlyIn(Dist.CLIENT)

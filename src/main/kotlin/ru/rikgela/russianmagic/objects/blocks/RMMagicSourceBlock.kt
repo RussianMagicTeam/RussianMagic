@@ -4,7 +4,7 @@ import net.minecraft.tileentity.TileEntityType
 import net.minecraft.world.IBlockReader
 import net.minecraftforge.fml.RegistryObject
 import ru.rikgela.russianmagic.objects.blocks.AbstractRMMagicSourceBlock
-import ru.rikgela.russianmagic.tileentity.RMMagicSourcesTileEntity
+import ru.rikgela.russianmagic.objects.tileentity.RMMagicSourcesTileEntity
 
 object RMMagicSourceBlock {
     class RMBasicMagicSource(properties: Properties,

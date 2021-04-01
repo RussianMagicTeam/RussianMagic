@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.mana
+package ru.rikgela.russianmagic.objects.mana
 
 import net.minecraft.nbt.INBT
 import net.minecraft.nbt.IntNBT
@@ -12,11 +12,6 @@ import net.minecraftforge.common.util.LazyOptional
 var MANA_CAP: Capability<IMana>? = null
 
 class ManaProvider(private val instance: IMana?) : ICapabilitySerializable<INBT> {
-
-    @Override
-    fun hasCapability(capability: Capability<Any>, facing: Direction): Boolean {
-        return capability == MANA_CAP
-    }
 
     override fun <T : Any?> getCapability(cap: Capability<T>, side: Direction?): LazyOptional<T> {
         return if (cap == MANA_CAP) LazyOptional.of { instance as T } else LazyOptional.empty()

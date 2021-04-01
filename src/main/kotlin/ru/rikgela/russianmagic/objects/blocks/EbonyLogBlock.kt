@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.blocks
+package ru.rikgela.russianmagic.objects.blocks
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState

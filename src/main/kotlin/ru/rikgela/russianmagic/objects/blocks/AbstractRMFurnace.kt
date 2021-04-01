@@ -20,7 +20,7 @@ import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import ru.rikgela.russianmagic.common.RMCCMessage
-import ru.rikgela.russianmagic.tileentity.AbstractRMFurnaceTileEntity
+import ru.rikgela.russianmagic.objects.tileentity.AbstractRMFurnaceTileEntity
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
 import java.util.*
 import java.util.function.Consumer
@@ -84,14 +84,13 @@ abstract class AbstractRMFurnace(properties: Properties) : Block(properties) {
     override fun onBlockActivated(state: BlockState, worldIn: World, pos: BlockPos, player: PlayerEntity,
                                   handIn: Hand, hit: BlockRayTraceResult): ActionResultType {
         if (worldIn.isRemote) {
-            if (KeyboardHelper.isHoldingShift) {
-                RMCCMessage.transferManaToTileEntity(pos.x, pos.y, pos.z)
-            } else {
+            if (KeyboardHelper.isHoldingShift)
                 if (player.heldItemMainhand.isEmpty)
-                    RMCCMessage.openTileEntityGui(pos.x, pos.y, pos.z)
+                    RMCCMessage.transferManaToTileEntity(pos.x, pos.y, pos.z)
                 else
                     super.onBlockActivated(state, worldIn, pos, player, handIn, hit)
-            }
+            else
+                RMCCMessage.openTileEntityGui(pos.x, pos.y, pos.z)
         }
         return ActionResultType.SUCCESS
     }

@@ -10,11 +10,11 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fml.network.NetworkEvent
 import net.minecraftforge.fml.network.NetworkHooks
-import ru.rikgela.russianmagic.mana.IMana
-import ru.rikgela.russianmagic.mana.IManaReceiver
-import ru.rikgela.russianmagic.mana.IManaSpreader
-import ru.rikgela.russianmagic.mana.MANA_CAP
-import ru.rikgela.russianmagic.tileentity.AbstractRMFurnaceTileEntity
+import ru.rikgela.russianmagic.objects.mana.IMana
+import ru.rikgela.russianmagic.objects.mana.IManaReceiver
+import ru.rikgela.russianmagic.objects.mana.IManaSpreader
+import ru.rikgela.russianmagic.objects.mana.MANA_CAP
+import ru.rikgela.russianmagic.objects.tileentity.AbstractRMFurnaceTileEntity
 import java.util.function.Supplier
 
 

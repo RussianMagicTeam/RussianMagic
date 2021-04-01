@@ -5,7 +5,7 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.tileentity.TileEntityType
 import net.minecraft.world.IBlockReader
 import net.minecraftforge.fml.RegistryObject
-import ru.rikgela.russianmagic.tileentity.RMFurnacesTileEntity
+import ru.rikgela.russianmagic.objects.tileentity.RMFurnacesTileEntity
 
 object RMFurnacesBlock {
     class RMDiamondFurnaceBlock(properties: Properties,

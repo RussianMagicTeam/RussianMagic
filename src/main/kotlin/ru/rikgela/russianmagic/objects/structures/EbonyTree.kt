@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.blocks
+package ru.rikgela.russianmagic.objects.structures
 
 import net.minecraft.block.trees.Tree
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider

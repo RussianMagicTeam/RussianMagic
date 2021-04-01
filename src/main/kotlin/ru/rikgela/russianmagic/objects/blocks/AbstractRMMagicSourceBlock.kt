@@ -25,7 +25,7 @@ import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import ru.rikgela.russianmagic.common.RMCCMessage
-import ru.rikgela.russianmagic.tileentity.AbstractRMMagicSourceTileEntity
+import ru.rikgela.russianmagic.objects.tileentity.AbstractRMMagicSourceTileEntity
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
 import java.util.*
 

@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.blocks
+package ru.rikgela.russianmagic.objects.blocks
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
@@ -96,7 +96,7 @@ class RMLeavesBlock(properties: Properties) : Block(properties), IShearable {
         builder.add(DISTANCE, PERSISTENT)
     }
 
-    override fun getStateForPlacement(context: BlockItemUseContext): BlockState? {
+    override fun getStateForPlacement(context: BlockItemUseContext): BlockState {
         return updateDistance(defaultState.with(PERSISTENT, java.lang.Boolean.valueOf(true)), context.world, context.pos)
     }
 
