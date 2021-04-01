@@ -1,6 +1,7 @@
 package ru.rikgela.russianmagic.common
 
 import com.google.gson.Gson
+import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.inventory.container.INamedContainerProvider
 import net.minecraft.network.PacketBuffer
@@ -46,7 +47,9 @@ class RMCCMessage(
 
         @OnlyIn(Dist.CLIENT)
         fun send(msg: RMCCMessage) {
-            RMNetworkChannel.sendToServer(msg)
+            if (Minecraft.getInstance().connection != null) {
+                RMNetworkChannel.sendToServer(msg)
+            }
         }
 
         @OnlyIn(Dist.CLIENT)
