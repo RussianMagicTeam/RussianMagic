@@ -14,8 +14,5 @@ object RMMagicSourceBlock {
         override fun createTileEntity(state: BlockState, world: IBlockReader): TileEntity {
             return registryObject.get().create()!!
         }
-        //override fun createNewTileEntity(worldIn: IBlockReader?): TileEntity? {
-        //    return registryObject.get().create()!!//EndPortalTileEntity()
-        //}
     }
 }

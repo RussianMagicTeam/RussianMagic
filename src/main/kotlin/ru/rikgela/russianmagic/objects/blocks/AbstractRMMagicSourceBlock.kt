@@ -63,10 +63,6 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
         }
     }
 
-    override fun getLightValue(state: BlockState): Int {
-        return super.lightValue
-    }
-
     override fun hasComparatorInputOverride(state: BlockState): Boolean {
         return true
     }
