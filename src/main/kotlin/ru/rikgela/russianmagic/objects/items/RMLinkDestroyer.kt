@@ -5,8 +5,8 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemUseContext
 import net.minecraft.util.ActionResultType
 import net.minecraft.util.text.StringTextComponent
-import ru.rikgela.russianmagic.mana.IManaTaker
-import ru.rikgela.russianmagic.mana.PlayerMana
+import ru.rikgela.russianmagic.objects.mana.IManaTaker
+import ru.rikgela.russianmagic.objects.mana.PlayerMana
 
 class RMLinkDestroyer(
         builder: Properties

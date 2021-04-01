@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.client.block.render
+package ru.rikgela.russianmagic.client.block
 
 import com.mojang.blaze3d.matrix.MatrixStack
 import com.mojang.blaze3d.vertex.IVertexBuilder
@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import ru.rikgela.russianmagic.MOD_ID
-import ru.rikgela.russianmagic.tileentity.AbstractRMMagicSourceTileEntity
+import ru.rikgela.russianmagic.objects.tileentity.AbstractRMMagicSourceTileEntity
 import java.util.function.Function
 
 

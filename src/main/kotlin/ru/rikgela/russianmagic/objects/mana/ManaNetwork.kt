@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.mana
+package ru.rikgela.russianmagic.objects.mana
 
 import net.minecraft.client.Minecraft
 import net.minecraft.network.PacketBuffer

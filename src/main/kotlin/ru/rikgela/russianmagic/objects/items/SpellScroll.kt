@@ -12,7 +12,7 @@ import net.minecraft.util.Hand
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.StringTextComponent
 import net.minecraft.world.World
-import ru.rikgela.russianmagic.mana.PlayerMana
+import ru.rikgela.russianmagic.objects.mana.PlayerMana
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
 
 class SpellScroll(properties: Properties) : Item(properties) {

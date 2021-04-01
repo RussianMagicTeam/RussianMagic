@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.tileentity
+package ru.rikgela.russianmagic.objects.tileentity
 
 import net.minecraft.tileentity.TileEntityType
 import ru.rikgela.russianmagic.init.RMTileEntityTypes

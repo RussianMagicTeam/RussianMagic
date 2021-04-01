@@ -6,7 +6,7 @@ import net.minecraft.client.resources.I18n
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.util.ResourceLocation
 import net.minecraft.util.text.ITextComponent
-import ru.rikgela.russianmagic.container.AbstractRMFurnaceContainer
+import ru.rikgela.russianmagic.objects.container.AbstractRMFurnaceContainer
 
 class RMFurnaceScreen(
         private val screenContainerMarble: AbstractRMFurnaceContainer,

@@ -13,12 +13,11 @@ import net.minecraftforge.fml.RegistryObject
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import ru.rikgela.russianmagic.MOD_ID
-import ru.rikgela.russianmagic.blocks.EbonyLogBlock
-import ru.rikgela.russianmagic.blocks.EbonySaplingBlock
-import ru.rikgela.russianmagic.blocks.EbonyTree
-import ru.rikgela.russianmagic.blocks.RMLeavesBlock
+import ru.rikgela.russianmagic.objects.blocks.EbonyLogBlock
+import ru.rikgela.russianmagic.objects.blocks.EbonySaplingBlock
 import ru.rikgela.russianmagic.objects.blocks.RMFurnacesBlock
-import java.util.function.Supplier
+import ru.rikgela.russianmagic.objects.blocks.RMLeavesBlock
+import ru.rikgela.russianmagic.objects.structures.EbonyTree
 
 object RMBlocks {
     @JvmStatic
@@ -454,9 +453,8 @@ object RMBlocks {
 
     val EBONY_PLANKS: RegistryObject<Block> = BLOCKS.register("ebony_planks") { Block(Block.Properties.from(Blocks.OAK_PLANKS)) }
     val EBONY_LEAVES: RegistryObject<RMLeavesBlock> = BLOCKS.register("ebony_leaves") { RMLeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)) }
-    val EBONY_SAPLING: RegistryObject<EbonySaplingBlock> = BLOCKS.register("ebony_sapling") { EbonySaplingBlock(Supplier { EbonyTree() }, Block.Properties.from(Blocks.OAK_SAPLING)) }
-    val POTTED_EBONY_SAPLING: RegistryObject<FlowerPotBlock> = BLOCKS.register("potted_ebony_sapling") { FlowerPotBlock(null, Supplier { EBONY_SAPLING.get() }, Block.Properties.create(Material.MISCELLANEOUS).notSolid()) }
-
+    val EBONY_SAPLING: RegistryObject<EbonySaplingBlock> = BLOCKS.register("ebony_sapling") { EbonySaplingBlock({ EbonyTree() }, Block.Properties.from(Blocks.OAK_SAPLING)) }
+    val POTTED_EBONY_SAPLING: RegistryObject<FlowerPotBlock> = BLOCKS.register("potted_ebony_sapling") { FlowerPotBlock(null, { EBONY_SAPLING.get() }, Block.Properties.create(Material.MISCELLANEOUS).notSolid()) }
     val EBONY_LOG: RegistryObject<EbonyLogBlock> = BLOCKS.register("ebony_log") { EbonyLogBlock(MaterialColor.WOOD, Block.Properties.from(Blocks.OAK_LOG)) }
     val STRIPPED_EBONY_LOG: RegistryObject<EbonyLogBlock> = BLOCKS.register("stripped_ebony_log") { EbonyLogBlock(MaterialColor.WOOD, Block.Properties.from(Blocks.OAK_LOG)) }
     val EBONY_WOOD: RegistryObject<EbonyLogBlock> = BLOCKS.register("ebony_wood") { EbonyLogBlock(MaterialColor.WOOD, Block.Properties.from(Blocks.OAK_WOOD)) }

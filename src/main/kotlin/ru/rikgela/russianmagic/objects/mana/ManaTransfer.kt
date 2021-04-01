@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.mana
+package ru.rikgela.russianmagic.objects.mana
 
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.math.BlockPos

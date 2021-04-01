@@ -1,10 +1,10 @@
-package ru.rikgela.russianmagic.container
+package ru.rikgela.russianmagic.objects.container
 
 import net.minecraft.entity.player.PlayerInventory
 import net.minecraft.network.PacketBuffer
 import net.minecraftforge.items.SlotItemHandler
 import ru.rikgela.russianmagic.init.RMContainerTypes
-import ru.rikgela.russianmagic.tileentity.AbstractRMFurnaceTileEntity
+import ru.rikgela.russianmagic.objects.tileentity.AbstractRMFurnaceTileEntity
 
 object RMFurnacesContainer {
 

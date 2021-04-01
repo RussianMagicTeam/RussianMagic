@@ -1,41 +1,24 @@
 package ru.rikgela.russianmagic
 
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.ScreenManager
 import net.minecraft.client.particle.IAnimatedSprite
-import net.minecraft.client.particle.ParticleManager
-import net.minecraft.client.renderer.entity.EntityRendererManager
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher
-import net.minecraft.util.ResourceLocation
-import net.minecraft.world.biome.Biomes
-import net.minecraft.world.gen.GenerationStage
-import net.minecraft.world.gen.feature.Feature
-import net.minecraft.world.gen.placement.FrequencyConfig
-import net.minecraft.world.gen.placement.Placement
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.common.capabilities.CapabilityManager
 import net.minecraftforge.eventbus.api.SubscribeEvent
-import net.minecraftforge.fml.client.registry.ClientRegistry
-import net.minecraftforge.fml.client.registry.RenderingRegistry
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
-import ru.rikgela.russianmagic.blocks.EbonyTree
-import ru.rikgela.russianmagic.client.HUDEventHandler
-import ru.rikgela.russianmagic.client.block.render.AbstractRMMagicSourceTileEntityRenderer
-import ru.rikgela.russianmagic.client.entity.render.ProjectileEntityRender
-import ru.rikgela.russianmagic.client.gui.RMFurnaceScreen
 import ru.rikgela.russianmagic.client.particle.ColoredParticleType
 import ru.rikgela.russianmagic.client.particle.ManaParticle
 import ru.rikgela.russianmagic.common.RMCCMessage
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage
 import ru.rikgela.russianmagic.init.*
-import ru.rikgela.russianmagic.mana.*
+import ru.rikgela.russianmagic.objects.mana.*
 import ru.rikgela.russianmagic.oregenerator.OreGeneration
 
 
@@ -65,9 +48,7 @@ class RussianMagic {
         RMTileEntityTypes.TILE_ENTITY_TYPES.register(bus)
         RMContainerTypes.CONTAINER_TYPES.register(bus)
         RMParticles.PARTICLES.register(bus)
-        //MinecraftForge.EVENT_BUS.register(MyForgeEventHandler())
         MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
-        //MinecraftForge.EVENT_BUS.register(ManaReceiverCapabilityHandler())
         MinecraftForge.EVENT_BUS.register(ManaEventHandler())
 
     }
@@ -75,39 +56,17 @@ class RussianMagic {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     fun clientSetup(event: FMLClientSetupEvent?) {
-        MinecraftForge.EVENT_BUS.register(HUDEventHandler())
-        ScreenManager.registerFactory(RMContainerTypes.RM_ONE_SUPPORT_ONE_TO_ONE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
-            RMFurnaceScreen(screenContainer, inv, titleIn,
-                    ResourceLocation(MOD_ID, "textures/gui/rm_furnace1_screen.png"))
-        }
-        ScreenManager.registerFactory(RMContainerTypes.RM_TWO_SUPPORT_ONE_TO_ONE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
-            RMFurnaceScreen(
-                screenContainer, inv, titleIn,
-                    ResourceLocation(MOD_ID, "textures/gui/rm_furnace2_screen.png")
-            )
-        }
-        ScreenManager.registerFactory(RMContainerTypes.RM_THREE_SUPPORT_ONE_TO_ONE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
-            RMFurnaceScreen(
-                    screenContainer, inv, titleIn,
-                    ResourceLocation(MOD_ID, "textures/gui/rm_furnace3_screen.png")
-            )
-        }
         RMBlocks.clientSetup()
-        RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager ->
-            ProjectileEntityRender(
-                    renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")
-            )
-        }
-        ClientRegistry.bindTileEntityRenderer(RMTileEntityTypes.RM_BASIC_MAGIC_SOURCE.get()) { renderManagerIn: TileEntityRendererDispatcher -> AbstractRMMagicSourceTileEntityRenderer(renderManagerIn) }
+        RMRenderInit.setupScreens()
     }
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     fun particleSetup(event: ParticleFactoryRegisterEvent) {
-        Minecraft.getInstance().particles.registerFactory<ColoredParticleType>(RMParticles.MANA_PARTICLE.get(),
-            ParticleManager.IParticleMetaFactory { iAnimatedSprite: IAnimatedSprite ->
-                ManaParticle.Companion.Factory(iAnimatedSprite)
-            })
+        Minecraft.getInstance().particles.registerFactory<ColoredParticleType>(RMParticles.MANA_PARTICLE.get()
+        ) { iAnimatedSprite: IAnimatedSprite ->
+            ManaParticle.Companion.Factory(iAnimatedSprite)
+        }
     }
 
     private fun setup(event: FMLCommonSetupEvent) {
@@ -135,9 +94,5 @@ class RussianMagic {
                 RMCCMessage::encoder,
                 RMCCMessage.Companion::fromPacketBuffer,
                 RMCCMessage::handle)
-        Biomes.JUNGLE.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(EbonyTree.TREE_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP_32.configure(FrequencyConfig(1))))
-        Biomes.JUNGLE_EDGE.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(EbonyTree.TREE_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP_32.configure(FrequencyConfig(1))))
-        Biomes.JUNGLE_HILLS.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.NORMAL_TREE.withConfiguration(EbonyTree.TREE_CONFIG).withPlacement(Placement.COUNT_HEIGHTMAP_32.configure(FrequencyConfig(1))))
-
     }
 }

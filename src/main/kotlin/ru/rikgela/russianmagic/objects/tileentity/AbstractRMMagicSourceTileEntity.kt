@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.tileentity
+package ru.rikgela.russianmagic.objects.tileentity
 
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.network.NetworkManager
@@ -8,10 +8,10 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.tileentity.TileEntityType
 import net.minecraft.util.text.ITextComponent
 import net.minecraftforge.common.util.Constants
-import ru.rikgela.russianmagic.mana.IMana
-import ru.rikgela.russianmagic.mana.IManaSpreader
-import ru.rikgela.russianmagic.mana.Mana
-import ru.rikgela.russianmagic.mana.ManaSpreader
+import ru.rikgela.russianmagic.objects.mana.IMana
+import ru.rikgela.russianmagic.objects.mana.IManaSpreader
+import ru.rikgela.russianmagic.objects.mana.Mana
+import ru.rikgela.russianmagic.objects.mana.ManaSpreader
 
 abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<*>)
     : TileEntity(tileEntityTypeIn), ITickableTileEntity, IManaSpreader {

@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.container
+package ru.rikgela.russianmagic.objects.container
 
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.PlayerInventory
@@ -13,18 +13,15 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
-import ru.rikgela.russianmagic.tileentity.AbstractRMFurnaceTileEntity
+import ru.rikgela.russianmagic.objects.tileentity.AbstractRMFurnaceTileEntity
 import ru.rikgela.russianmagic.util.FunctionalIntReferenceHolder
 import java.util.*
-import java.util.function.BiFunction
-import java.util.function.IntConsumer
-import java.util.function.IntSupplier
 import javax.annotation.Nonnull
 import kotlin.math.min
 
 abstract class AbstractRMFurnaceContainer(windowID: Int,
-                                          private val furnaceType: ContainerType<AbstractRMFurnaceContainer>,
-                                          private val playerInv: PlayerInventory,
+                                          furnaceType: ContainerType<AbstractRMFurnaceContainer>,
+                                          playerInv: PlayerInventory,
                                           val tileEntityFurnace: AbstractRMFurnaceTileEntity
 ) : Container(furnaceType, windowID) {
 
@@ -33,7 +30,7 @@ abstract class AbstractRMFurnaceContainer(windowID: Int,
     private val canInteractWithCallable: IWorldPosCallable = IWorldPosCallable.of(tileEntityFurnace.world!!, tileEntityFurnace.pos)
 
     override fun canInteractWith(playerIn: PlayerEntity): Boolean {
-        return canInteractWithCallable.applyOrElse(BiFunction { p_216960_2_: World, p_216960_3_: BlockPos -> playerIn.getDistanceSq(p_216960_3_.x.toDouble() + 0.5, p_216960_3_.y.toDouble() + 0.5, p_216960_3_.z.toDouble() + 0.5) <= 64.0 }, true)
+        return canInteractWithCallable.applyOrElse({ _: World, blockPos: BlockPos -> playerIn.getDistanceSq(blockPos.x.toDouble() + 0.5, blockPos.y.toDouble() + 0.5, blockPos.z.toDouble() + 0.5) <= 64.0 }, true)
     }
 
     private fun transferToInventory(player: PlayerEntity, index: Int): ItemStack {
@@ -137,7 +134,7 @@ abstract class AbstractRMFurnaceContainer(windowID: Int,
             }
         }
         // Furnace Slots
-        trackInt(FunctionalIntReferenceHolder(IntSupplier { tileEntityFurnace.currentSmeltTime },
-                IntConsumer { value: Int -> tileEntityFurnace.currentSmeltTime = value }).also { currentSmeltTime = it })
+        trackInt(FunctionalIntReferenceHolder({ tileEntityFurnace.currentSmeltTime },
+                { value: Int -> tileEntityFurnace.currentSmeltTime = value }).also { currentSmeltTime = it })
     }
 }

@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.tileentity
+package ru.rikgela.russianmagic.objects.tileentity
 
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.ISidedInventory
@@ -23,8 +23,8 @@ import net.minecraft.world.World
 import net.minecraftforge.common.util.Constants
 import net.minecraftforge.items.wrapper.RecipeWrapper
 import ru.rikgela.russianmagic.MOD_ID
-import ru.rikgela.russianmagic.mana.*
 import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace
+import ru.rikgela.russianmagic.objects.mana.*
 import ru.rikgela.russianmagic.util.RMItemHandler
 import ru.rikgela.russianmagic.util.RMMekanism
 import java.util.stream.Collectors
@@ -215,8 +215,6 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     }
 
     override fun setInventorySlotContents(index: Int, stack: ItemStack) {
-        val itemstack: ItemStack = this.inventory.get(index)
-        val flag = !stack.isEmpty && stack.isItemEqual(itemstack) && ItemStack.areItemStackTagsEqual(stack, itemstack)
         this.inventory.set(index, stack)
         if (stack.count > this.inventoryStackLimit) {
             stack.count = this.inventoryStackLimit

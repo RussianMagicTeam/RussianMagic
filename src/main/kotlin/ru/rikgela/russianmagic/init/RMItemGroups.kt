@@ -12,5 +12,5 @@ class ItemGroup(name: String, private val iconSupplier: Supplier<ItemStack?>) : 
 }
 
 object ItemGroups {
-    val RUSSIAN_MAGIC_ITEM_GROUP: ItemGroup = ru.rikgela.russianmagic.ItemGroup("russian_magic_items", Supplier { ItemStack(RMItems.STONE_MAGIC_OBJECT.get()) })
+    val RUSSIAN_MAGIC_ITEM_GROUP: ItemGroup = ItemGroup("russian_magic_items") { ItemStack(RMItems.STONE_MAGIC_OBJECT.get()) }
 }

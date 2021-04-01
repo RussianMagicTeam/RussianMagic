@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic
+package ru.rikgela.russianmagic.init
 
 import net.minecraft.entity.EntityClassification
 import net.minecraft.entity.EntityType
@@ -7,6 +7,7 @@ import net.minecraft.world.World
 import net.minecraftforge.fml.RegistryObject
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
+import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.objects.entity.projectile.ProjectileEntity
 
 object RMEntities {
