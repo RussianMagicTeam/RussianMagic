@@ -83,7 +83,7 @@ class RussianMagic {
         ScreenManager.registerFactory(RMContainerTypes.RM_TWO_SUPPORT_ONE_TO_ONE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
             RMFurnaceScreen(
                 screenContainer, inv, titleIn,
-                ResourceLocation(MOD_ID, "textures/gui/rm_furnace2_screen.png")
+                    ResourceLocation(MOD_ID, "textures/gui/rm_furnace2_screen.png")
             )
         }
         ScreenManager.registerFactory(RMContainerTypes.RM_THREE_SUPPORT_ONE_TO_ONE_FURNACE_CONTAINER.get()) { screenContainer, inv, titleIn ->
@@ -93,7 +93,11 @@ class RussianMagic {
             )
         }
         RMBlocks.clientSetup()
-        RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager -> ProjectileEntityRender(renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")) }
+        RenderingRegistry.registerEntityRenderingHandler(RMEntities.PROJECTILE_ENTITY.get()) { renderManagerIn: EntityRendererManager ->
+            ProjectileEntityRender(
+                    renderManagerIn, ResourceLocation(MOD_ID, "textures/entity/projectile_entity.png")
+            )
+        }
         ClientRegistry.bindTileEntityRenderer(RMTileEntityTypes.RM_BASIC_MAGIC_SOURCE.get()) { renderManagerIn: TileEntityRendererDispatcher -> AbstractRMMagicSourceTileEntityRenderer(renderManagerIn) }
         //ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.DRYER, new DryerTileEntityRenderer(TileEntityRendererDispatcher.instance));
     }

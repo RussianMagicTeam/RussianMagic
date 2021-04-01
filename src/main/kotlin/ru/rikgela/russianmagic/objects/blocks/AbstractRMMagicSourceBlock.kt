@@ -8,7 +8,6 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.item.ItemStack
-import net.minecraft.tileentity.TileEntity
 import net.minecraft.util.ActionResultType
 import net.minecraft.util.Hand
 import net.minecraft.util.SoundCategory
@@ -33,25 +32,23 @@ import java.util.*
 
 abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(properties) {
 
-    protected var SHAPE = makeCuboidShape(7.0, 7.0, 7.0, 9.0, 9.0, 9.0)
-    protected var MODEL = BlockRenderType.MODEL
-    override fun getShape(state: BlockState?, worldIn: IBlockReader?, pos: BlockPos?, context: ISelectionContext?): VoxelShape? {
+    private var SHAPE = makeCuboidShape(7.0, 7.0, 7.0, 9.0, 9.0, 9.0)
+    private var MODEL = BlockRenderType.MODEL
+    override fun getShape(state: BlockState?, worldIn: IBlockReader?, pos: BlockPos, context: ISelectionContext?): VoxelShape? {
         if (worldIn is EmptyBlockReader) return this.SHAPE
         val shift: Float = (worldIn?.getTileEntity(pos) as AbstractRMMagicSourceTileEntity).currentMana.toFloat() / (worldIn.getTileEntity(pos) as AbstractRMMagicSourceTileEntity).maxMana.toFloat()
-        this.SHAPE = makeCuboidShape(7.0 - 7.0 * shift,
-                7.0 - 7.0 * shift,
-                7.0 - 7.0 * shift,
-                9.0 + 7.0 * shift,
-                9.0 + 7.0 * shift,
-                9.0 + 7.0 * shift)
+        this.SHAPE = makeCuboidShape(7.0 - 6.0 * shift,
+                7.0 - 6.0 * shift,
+                7.0 - 6.0 * shift,
+                9.0 + 6.0 * shift,
+                9.0 + 6.0 * shift,
+                9.0 + 6.0 * shift)
         return this.SHAPE
     }
 
     override fun getRenderType(state: BlockState?): BlockRenderType? {
         return MODEL
     }
-
-    private var tileEntity: TileEntity? = null
 
     override fun hasTileEntity(state: BlockState): Boolean {
         return true
@@ -64,32 +61,16 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
     override fun onEntityCollision(state: BlockState, worldIn: World, pos: BlockPos, entityIn: Entity) {
         if (!worldIn.isRemote && entityIn is ServerPlayerEntity && VoxelShapes.compare(VoxelShapes.create(entityIn.boundingBox.offset((-pos.x).toDouble(), (-pos.y).toDouble(), (-pos.z).toDouble())), state.getShape(worldIn, pos), IBooleanFunction.AND)) {
             RMCCMessage.transferManaFromTileEntity(pos.x, pos.y, pos.z)
-            //entityIn.changeDimension(if (worldIn.dimension.type === DimensionType.THE_END) DimensionType.OVERWORLD else DimensionType.THE_END)
         }
     }
-    //override fun mirror(state: BlockState, mirrorIn: Mirror): BlockState {
-    //return state.rotate(mirrorIn.toRotation(state.get(FACING)))
-    //}
-
-    //override fun rotate(state: BlockState, rot: Rotation): BlockState {
-    //return state.with(FACING, rot.rotate(state.get(FACING)))
-    //}
 
     override fun getLightValue(state: BlockState): Int {
         return super.lightValue
     }
 
-    //override fun getStateForPlacement(context: BlockItemUseContext): BlockState? {
-    //return defaultState.with(FACING, context.placementHorizontalFacing.opposite)
-    //}
-
     override fun hasComparatorInputOverride(state: BlockState): Boolean {
         return true
     }
-
-//    override fun getComparatorInputOverride(blockState: BlockState, worldIn: World, pos: BlockPos): Int {
-//        return Container.calcRedstone(worldIn.getTileEntity(pos))
-//    }
 
     @OnlyIn(Dist.CLIENT)
     override fun animateTick(stateIn: BlockState, worldIn: World, pos: BlockPos, rand: Random) {
@@ -100,15 +81,6 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
             worldIn.playSound(d0, d1, d2, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0f, 1.0f,
                     false)
         }
-
-//        val direction = stateIn.get(FACING)
-//        val directionAxis = direction.axis
-//        val d4 = rand.nextDouble() * 0.6 - 0.3
-//        val d5 = if (directionAxis === Direction.Axis.X) direction.xOffset.toDouble() * 0.52 else d4
-//        val d6 = rand.nextDouble() * 6.0 / 16.0
-//        val d7 = if (directionAxis === Direction.Axis.Z) direction.zOffset.toDouble() * 0.52 else d4
-//        worldIn.addParticle(ParticleTypes.SMOKE, d0 + d5, d1 + d6, d2 + d7, 0.0, 0.0, 0.0)
-//        worldIn.addParticle(ParticleTypes.FLAME, d0 + d5, d1 + d6, d2 + d7, 0.0, 0.0, 0.0)
     }
 
     override fun onBlockActivated(state: BlockState, worldIn: World, pos: BlockPos, player: PlayerEntity,
@@ -130,7 +102,6 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
     }
 
     override fun onReplaced(state: BlockState, worldIn: World, pos: BlockPos, newState: BlockState, isMoving: Boolean) {
-        val tile = worldIn.getTileEntity(pos)
         if (state.hasTileEntity() && state.block !== newState.block) {
             worldIn.removeTileEntity(pos)
         }
@@ -145,12 +116,4 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
             }
         }
     }
-
-    //companion object {
-    //val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
-    //}
-
-    //init {
-    //defaultState = stateContainer.baseState.with(FACING, Direction.NORTH)
-    //}
 }

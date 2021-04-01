@@ -16,7 +16,7 @@ import ru.rikgela.russianmagic.tileentity.AbstractRMMagicSourceTileEntity
 import java.util.function.Function
 
 
-class AbstractRMMagicSourceTileEntityModel : Model(Function { locationIn: ResourceLocation? -> RenderType.getEntityTranslucent(locationIn) }) {
+class AbstractRMMagicSourceTileEntityModel : Model(Function { locationIn: ResourceLocation -> RenderType.getEntityTranslucent(locationIn) }) {
 
     private val model: ModelRenderer
     fun renderCrystal(ms: MatrixStack, buffer: IVertexBuilder, light: Int, overlay: Int) {
@@ -28,11 +28,11 @@ class AbstractRMMagicSourceTileEntityModel : Model(Function { locationIn: Resour
     }
 
     init {
-        textureWidth = 64
-        textureHeight = 64
-        model = ModelRenderer(this, 22, 0)
+        textureWidth = 16
+        textureHeight = 128
+        model = ModelRenderer(this, 16, 16)
         model.setRotationPoint(0.0f, 0.0f, 0.0f)
-        model.addBox(0f, 0f, 0f, 2f, 2f, 2f, 0.0f)
+        model.addBox(0f, 0f, 0f, 16f, 16f, 16f, 0.0f)
     }
 }
 
@@ -46,8 +46,8 @@ class AbstractRMMagicSourceTileEntityRenderer(p_i226016_1_: TileEntityRendererDi
         val buffer = buffers.getBuffer(layer)
         matrixStack.push()
         val shift: Float = tileEntityIn.currentMana.toFloat() / tileEntityIn.maxMana.toFloat()
-        matrixStack.translate((7.0 - 7.0 * shift) / 16.0, (7.0 - 7.0 * shift) / 16.0, (7.0 - 7.0 * shift) / 16.0)
-        matrixStack.scale(1F + 7.0F * (shift), 1F + 7.0F * shift, 1F + 7.0F * shift)
+        matrixStack.translate((7.0 - 6.0 * shift) / 16.0, (7.0 - 6.0 * shift) / 16.0, (7.0 - 6.0 * shift) / 16.0)
+        matrixStack.scale((1F + 6.0F * (shift)) / 8F, (1F + 6.0F * (shift)) / 8F, (1F + 6.0F * (shift)) / 8F)
         model.renderCrystal(matrixStack, buffer, light, overlay)
         matrixStack.pop()
     }

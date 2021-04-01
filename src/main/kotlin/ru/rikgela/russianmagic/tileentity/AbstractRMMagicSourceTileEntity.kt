@@ -1,6 +1,5 @@
 package ru.rikgela.russianmagic.tileentity
 
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.network.NetworkManager
 import net.minecraft.network.play.server.SUpdateTileEntityPacket
@@ -22,23 +21,12 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
             .withParams(50, 500)
     private val manaSpreader: IManaSpreader = ManaSpreader(mana)
 
-    //val name: ITextComponent
-    //    get() = customName ?: defaultName
-
-    //private val defaultName: ITextComponent
-    //    get() = TranslationTextComponent("container.$MOD_ID.${rmMekanism.name}")
-
-    fun update() {
+    private fun update() {
         markDirty()
         if (world != null && world?.isRemote != true) {
             world!!.notifyBlockUpdate(getPos(), this.blockState, this.blockState,
                     Constants.BlockFlags.BLOCK_UPDATE)
         }
-    }
-
-    private fun dropProgress() {
-        world!!.setBlockState(getPos(), this.blockState)
-        update()
     }
 
     override fun tick() {
@@ -87,14 +75,14 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
     }
 
 
-    fun isUsableByPlayer(player: PlayerEntity): Boolean {
+    /*fun isUsableByPlayer(player: PlayerEntity): Boolean {
         return if (world!!.getTileEntity(pos) !== this) {
             false
         } else {
             player.getDistanceSq(pos.x.toDouble() + 0.5, pos.y.toDouble() + 0.5, pos.z.toDouble() + 0.5) <= 64.0
         }
     }
-
+*/
     //IManaReceiver implementation
     override val currentMana: Int
         get() = manaSpreader.currentMana
