@@ -51,7 +51,7 @@ class RMItemHandler(val size: Int, vararg stacks: ItemStack) : ItemStackHandler(
         }
     }
 
-    fun set(index: Int, items: ItemStack?) {
+    fun set(index: Int, items: ItemStack) {
         stacks[index] = items
     }
 
