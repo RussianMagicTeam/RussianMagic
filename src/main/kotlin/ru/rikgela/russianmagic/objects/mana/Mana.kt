@@ -4,15 +4,13 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.ByteArrayNBT
 import net.minecraft.nbt.INBT
+import net.minecraft.util.DamageSource
 import net.minecraft.util.Direction
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.capabilities.Capability.IStorage
 import net.minecraftforge.fml.network.PacketDistributor
 import ru.rikgela.russianmagic.common.RMNetworkChannel
-import java.lang.Float.floatToIntBits
-import java.lang.Float.intBitsToFloat
 import java.lang.Integer.max
-import kotlin.math.min
 
 open class Mana : IMana {
     companion object {
@@ -76,20 +74,18 @@ open class Mana : IMana {
         return tmp
     }
 
-    override fun fill(points: Int): Int {
-        val count = min(maxMana - currentMana, points)
-        currentMana += count
-        return points - count
+    override fun fill(points: Int) {
+        //val count = min(maxMana - currentMana, points)
+        currentMana += points
     }
 }
 
 class PlayerMana : Mana(), IPlayerMana {
     companion object {
-        fun withParams(startManaCount: Int, maxManaCount: Int, manaPerTick: Float): PlayerMana {
+        fun withParams(startManaCount: Int, maxManaCount: Int): PlayerMana {
             val ret = PlayerMana()
             ret.currentMana = startManaCount
             ret.maxMana = maxManaCount
-            ret.manaPerTick = manaPerTick
             return ret
         }
 
@@ -101,8 +97,8 @@ class PlayerMana : Mana(), IPlayerMana {
         }
     }
 
-    override var manaPerTick = 1F
-    private var ticks = 0
+    //override var manaPerTick = 1F
+    var averageConsume = 100
 
     override fun sendToPlayer(player: ServerPlayerEntity) {
         RMNetworkChannel.send(PacketDistributor.PLAYER.with { player }, ManaMessage(this))
@@ -110,6 +106,8 @@ class PlayerMana : Mana(), IPlayerMana {
 
     override fun consume(points: Int, player: ServerPlayerEntity): Boolean {
         return if (consume(points)) {
+            if (points > maxMana / 10)
+                player.attackEntityFrom(DamageSource.MAGIC, (100F * (points - maxMana / 10F) / maxMana))
             sendToPlayer(player)
             true
         } else {
@@ -117,33 +115,37 @@ class PlayerMana : Mana(), IPlayerMana {
         }
     }
 
-    override fun tick() {
+    private var ticks = 0
+
+    override fun playerTick(playerIn: ServerPlayerEntity) {
         if (ticks % 20 == 0) {
-            fill(max((20 * manaPerTick).toInt(), 1))
-        }
-        if (ticks % 100 == 0) {
-            manaPerTick = if (manaPerTick <= 10000) (manaPerTick * 1.1).toFloat() else 10000.0F
+            if (currentMana <= maxMana)
+                fill(max((maxMana - currentMana) / 100, 1))
+            else
+                consume(max(((currentMana - maxMana) * (3F / 20F)).toInt(), 1), playerIn)
         }
         ticks++
     }
 
     override fun toByteArray(): ByteArray {
-        val manaPerTick = floatToIntBits(this.manaPerTick)
+        //val manaPerTick = floatToIntBits(this.manaPerTick)
         var ret = super.toByteArray()
-        ret += ((manaPerTick ushr 24) and 0xFFFF).toByte()
+        /*ret += ((manaPerTick ushr 24) and 0xFFFF).toByte()
         ret += ((manaPerTick ushr 16) and 0xFFFF).toByte()
         ret += ((manaPerTick ushr 8) and 0xFFFF).toByte()
         ret += (manaPerTick and 0xFFFF).toByte()
+        */
         return ret
     }
 
     override fun loadFromByteArray(buff: ByteArray): Int {
         var i = super.loadFromByteArray(buff)
-        val manaPerTickBits = buff[i++].toInt() shl 24 or
+        /*val manaPerTickBits = buff[i++].toInt() shl 24 or
                 (buff[i++].toInt() and 0xFF shl 16) or
                 (buff[i++].toInt() and 0xFF shl 8) or
                 (buff[i++].toInt() and 0xFF)
         manaPerTick = intBitsToFloat(manaPerTickBits)
+        */
         return i
     }
 }

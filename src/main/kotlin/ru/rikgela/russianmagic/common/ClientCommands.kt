@@ -10,11 +10,9 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fml.network.NetworkEvent
 import net.minecraftforge.fml.network.NetworkHooks
-import ru.rikgela.russianmagic.objects.mana.IMana
-import ru.rikgela.russianmagic.objects.mana.IManaReceiver
-import ru.rikgela.russianmagic.objects.mana.IManaSpreader
-import ru.rikgela.russianmagic.objects.mana.MANA_CAP
+import ru.rikgela.russianmagic.objects.mana.*
 import ru.rikgela.russianmagic.objects.tileentity.AbstractRMFurnaceTileEntity
+import java.lang.Integer.min
 import java.util.function.Supplier
 
 
@@ -97,7 +95,7 @@ class RMCCMessage(
                 if (tile is IManaReceiver) {
                     if (MANA_CAP != null) {
                         val playerMana: IMana = playerEntity.getCapability(MANA_CAP!!).orElseThrow { RuntimeException("WTF???") } as IMana
-                        val transferManaCount = playerMana.currentMana - tile.transfer(playerMana.currentMana)
+                        val transferManaCount = playerMana.currentMana //- tile.transfer(playerMana.currentMana)
                         if (transferManaCount > 0) playerMana.consume(transferManaCount)
                     }
                 }
@@ -106,11 +104,8 @@ class RMCCMessage(
                 val tile = world.getTileEntity(BlockPos(pos.x, pos.y, pos.z))
                 if (tile is IManaSpreader) {
                     if (MANA_CAP != null) {
-                        val playerMana: IMana = playerEntity.getCapability(MANA_CAP!!).orElseThrow { RuntimeException("WTF???") } as IMana
-                        val transferManaCount = tile.spread(
-                                playerMana.maxMana - playerMana.currentMana
-                        )
-                        if (transferManaCount > 0) playerMana.fill(transferManaCount)
+                        val playerMana: IPlayerMana = playerEntity.getCapability(MANA_CAP!!).orElseThrow { RuntimeException("WTF???") } as IPlayerMana
+                        playerMana.fill(tile.spread(min(tile.maxSpread, tile.currentMana)))
                     }
                 }
             }

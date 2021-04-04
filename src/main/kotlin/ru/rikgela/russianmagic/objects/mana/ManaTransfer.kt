@@ -13,8 +13,8 @@ class ManaReceiver<T : IMana>(private val mana: T) : IManaReceiver {
     override val maxTransfer: Int
         get() = maxMana - currentMana
 
-    override fun transfer(points: Int): Int {
-        return mana.fill(points)
+    override fun transfer(points: Int) {
+        mana.fill((points))
     }
 }
 

@@ -18,13 +18,13 @@ interface IMana : IManaBase {
 
     //Returns how much mana was transferred
     fun give(points: Int): Int
-    fun fill(points: Int): Int
+    fun fill(points: Int)
     fun copy(mana: IMana)
 }
 
 interface IPlayerMana : IMana {
-    val manaPerTick: Float
-    fun tick()
+    //val manaPerTick: Float
+    fun playerTick(playerIn: ServerPlayerEntity)
     fun consume(points: Int, player: ServerPlayerEntity): Boolean
     fun sendToPlayer(player: ServerPlayerEntity)
 }
@@ -36,7 +36,7 @@ interface IManaSpreader : IManaBase {
 
 interface IManaReceiver : IManaBase {
     val maxTransfer: Int
-    fun transfer(points: Int): Int
+    fun transfer(points: Int)
 }
 
 interface IManaTaker {

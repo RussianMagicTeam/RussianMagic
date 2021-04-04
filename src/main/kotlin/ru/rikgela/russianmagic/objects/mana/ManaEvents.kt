@@ -42,7 +42,7 @@ class ManaEventHandler {
     fun onPlayerTick(event: TickEvent.PlayerTickEvent) {
         if (event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END) {
             val mana = PlayerMana.fromPlayer(event.player)
-            mana.tick()
+            mana.playerTick(event.player as ServerPlayerEntity)
             mana.sendToPlayer(event.player as ServerPlayerEntity)
         }
     }

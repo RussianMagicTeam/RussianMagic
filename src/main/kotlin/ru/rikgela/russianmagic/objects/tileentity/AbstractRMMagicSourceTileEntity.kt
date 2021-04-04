@@ -31,11 +31,10 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
 
     override fun tick() {
         if (world?.isRemote == false) {
-            mana.fill(1)
+                mana.fill(Integer.max((maxMana - currentMana) / 100, 1))
             update()
         }
     }
-
 
     override fun read(compound: CompoundNBT) {
         super.read(compound)

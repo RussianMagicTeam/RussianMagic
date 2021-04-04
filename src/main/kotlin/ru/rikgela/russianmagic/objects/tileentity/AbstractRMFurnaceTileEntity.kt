@@ -241,10 +241,11 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     override val maxTransfer: Int
         get() = manaReceiver.maxTransfer
 
-    override fun transfer(points: Int): Int {
-        val ret = manaReceiver.transfer(points)
-        if (ret != points) update()
-        return ret
+    override fun transfer(points: Int) {
+        //if (points <= ((mana.maxMana - mana.currentMana) / mana.maxMana)){
+        manaReceiver.transfer(points)
+        update()
+        //}
     }
 
 

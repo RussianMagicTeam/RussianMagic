@@ -32,7 +32,7 @@ class ProjectileEntity : AbstractProjectileEntity {
                     entity.setFire(5)
                     val flag = entity.attackEntityFrom(causeFireballDamage(this, shootingEntity), 5.0f)
                     if (flag) {
-                        applyEnchantments(shootingEntity!!, entity)
+                        applyEnchantments(shootingEntity, entity)
                     } else {
                         entity.fireTimer = i
                     }
