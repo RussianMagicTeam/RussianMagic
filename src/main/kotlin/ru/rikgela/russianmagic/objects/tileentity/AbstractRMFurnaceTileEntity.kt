@@ -76,7 +76,7 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
 
     override fun tick() {
         if (world?.isRemote == false) {
-            mana.fill(manaTaker.getMana(mana.maxMana - mana.currentMana, world!!.server!!))
+            mana.fill(manaTaker.getMana(mana.baseMaxMana - mana.currentMana, world!!.server!!))
             val recipe = getRecipe(inventory.getStackInSlot(0)) ?: return dropProgress()
             if (canBurn(recipe)) {
                 world!!.setBlockState(getPos(), this.blockState.with(AbstractRMFurnace.LIT, true))
@@ -236,8 +236,8 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     //IManaReceiver implementation
     override val currentMana: Int
         get() = manaReceiver.currentMana
-    override val maxMana: Int
-        get() = manaReceiver.maxMana
+    override val baseMaxMana: Int
+        get() = manaReceiver.baseMaxMana
     override val maxTransfer: Int
         get() = manaReceiver.maxTransfer
 

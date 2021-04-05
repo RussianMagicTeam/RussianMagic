@@ -31,7 +31,8 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
 
     override fun tick() {
         if (world?.isRemote == false) {
-                mana.fill(Integer.max((maxMana - currentMana) / 100, 1))
+            if (currentMana < baseMaxMana)
+                mana.fill(Integer.max((baseMaxMana - currentMana) / 100, 1))
             update()
         }
     }
@@ -76,8 +77,8 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
     //IManaReceiver implementation
     override val currentMana: Int
         get() = manaSpreader.currentMana
-    override val maxMana: Int
-        get() = manaSpreader.maxMana
+    override val baseMaxMana: Int
+        get() = manaSpreader.baseMaxMana
     override val maxSpread: Int
         get() = manaSpreader.maxSpread
 

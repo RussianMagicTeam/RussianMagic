@@ -24,7 +24,7 @@ class RMAnalyzer(
                                 StringTextComponent(
                                         String.format("Mana: "
                                                 + tileentity.currentMana.toString() + ":"
-                                                + tileentity.maxMana.toString())
+                                                + tileentity.baseMaxMana.toString())
                                 )
                         )
                         actionResult = ActionResultType.SUCCESS
@@ -34,7 +34,7 @@ class RMAnalyzer(
                                 StringTextComponent(
                                         String.format("ManaReceiver: "
                                                 + tileentity.currentMana.toString() + ":"
-                                                + tileentity.maxMana.toString())
+                                                + tileentity.baseMaxMana.toString())
                                 )
                         )
                         actionResult = ActionResultType.SUCCESS
@@ -45,7 +45,7 @@ class RMAnalyzer(
                                         String.format(
                                                 "ManaSpreader: "
                                                         + tileentity.currentMana.toString() + ":"
-                                                        + tileentity.maxMana.toString()
+                                                        + tileentity.baseMaxMana.toString()
                                         )
                                 )
                         )

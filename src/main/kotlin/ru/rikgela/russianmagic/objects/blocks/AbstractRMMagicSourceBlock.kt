@@ -27,6 +27,7 @@ import net.minecraftforge.api.distmarker.OnlyIn
 import ru.rikgela.russianmagic.common.RMCCMessage
 import ru.rikgela.russianmagic.objects.tileentity.AbstractRMMagicSourceTileEntity
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
+import java.lang.Float.min
 import java.util.*
 
 abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(properties) {
@@ -35,7 +36,7 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
     private var model = BlockRenderType.MODEL
     override fun getShape(state: BlockState?, worldIn: IBlockReader?, pos: BlockPos, context: ISelectionContext?): VoxelShape? {
         if (worldIn is EmptyBlockReader) return this.shape
-        val shift: Float = (worldIn?.getTileEntity(pos) as AbstractRMMagicSourceTileEntity).currentMana.toFloat() / (worldIn.getTileEntity(pos) as AbstractRMMagicSourceTileEntity).maxMana.toFloat()
+        val shift: Float = min((worldIn?.getTileEntity(pos) as AbstractRMMagicSourceTileEntity).currentMana.toFloat() / (worldIn.getTileEntity(pos) as AbstractRMMagicSourceTileEntity).baseMaxMana.toFloat(), 1F)
         this.shape = makeCuboidShape(7.0 - 6.0 * shift,
                 7.0 - 6.0 * shift,
                 7.0 - 6.0 * shift,

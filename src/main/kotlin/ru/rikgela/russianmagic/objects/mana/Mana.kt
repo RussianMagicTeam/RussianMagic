@@ -10,6 +10,9 @@ import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.capabilities.Capability.IStorage
 import net.minecraftforge.fml.network.PacketDistributor
 import ru.rikgela.russianmagic.common.RMNetworkChannel
+import ru.rikgela.russianmagic.objects.tileentity.AbstractRMMagicSourceTileEntity
+import java.lang.Float.floatToIntBits
+import java.lang.Float.intBitsToFloat
 import java.lang.Integer.max
 
 open class Mana : IMana {
@@ -17,7 +20,7 @@ open class Mana : IMana {
         fun withParams(startManaCount: Int, maxManaCount: Int): Mana {
             val ret = Mana()
             ret.currentMana = startManaCount
-            ret.maxMana = maxManaCount
+            ret.baseMaxMana = maxManaCount
             return ret
         }
     }
@@ -32,10 +35,10 @@ open class Mana : IMana {
                 ((currentMana ushr 16) and 0xFFFF).toByte(),
                 ((currentMana ushr 8) and 0xFFFF).toByte(),
                 (currentMana and 0xFFFF).toByte(),
-                ((maxMana ushr 24) and 0xFFFF).toByte(),
-                ((maxMana ushr 16) and 0xFFFF).toByte(),
-                ((maxMana ushr 8) and 0xFFFF).toByte(),
-                (maxMana and 0xFFFF).toByte()
+                ((baseMaxMana ushr 24) and 0xFFFF).toByte(),
+                ((baseMaxMana ushr 16) and 0xFFFF).toByte(),
+                ((baseMaxMana ushr 8) and 0xFFFF).toByte(),
+                (baseMaxMana and 0xFFFF).toByte()
         )
     }
 
@@ -46,7 +49,7 @@ open class Mana : IMana {
                 (buff[i++].toInt() and 0xFF shl 8) or
                 (buff[i++].toInt() and 0xFF)
 
-        maxMana = buff[i++].toInt() shl 24 or
+        baseMaxMana = buff[i++].toInt() shl 24 or
                 (buff[i++].toInt() and 0xFF shl 16) or
                 (buff[i++].toInt() and 0xFF shl 8) or
                 (buff[i++].toInt() and 0xFF)
@@ -54,7 +57,7 @@ open class Mana : IMana {
     }
 
     override var currentMana = 250
-    override var maxMana = 1000
+    override var baseMaxMana = 1000
 
     override fun consume(points: Int): Boolean {
         if (currentMana >= points) {
@@ -85,7 +88,9 @@ class PlayerMana : Mana(), IPlayerMana {
         fun withParams(startManaCount: Int, maxManaCount: Int): PlayerMana {
             val ret = PlayerMana()
             ret.currentMana = startManaCount
-            ret.maxMana = maxManaCount
+            ret.baseMaxMana = maxManaCount
+            ret.lvl = 0
+            ret.lvlExp = 0F
             return ret
         }
 
@@ -97,8 +102,18 @@ class PlayerMana : Mana(), IPlayerMana {
         }
     }
 
-    //override var manaPerTick = 1F
-    var averageConsume = 100
+    private var lvl = 0
+    private var lvlExp = 0F
+    private var tmpProgress = 0F
+    var maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
+
+    private fun delta(): Float {
+        if (lvlExp < 0.17F)
+            return lvlExp * 2F
+        if (lvlExp < 0.33F)
+            return 0.33F - (lvlExp - 0.17F) * 4F
+        return (lvlExp - 0.5F) * 2
+    }
 
     override fun sendToPlayer(player: ServerPlayerEntity) {
         RMNetworkChannel.send(PacketDistributor.PLAYER.with { player }, ManaMessage(this))
@@ -106,8 +121,18 @@ class PlayerMana : Mana(), IPlayerMana {
 
     override fun consume(points: Int, player: ServerPlayerEntity): Boolean {
         return if (consume(points)) {
-            if (points > maxMana / 10)
-                player.attackEntityFrom(DamageSource.MAGIC, (100F * (points - maxMana / 10F) / maxMana))
+            if (points > maxMana / 10) {
+                player.attackEntityFrom(DamageSource.MAGIC, (100F * (points - maxMana * 0.1F) / maxMana))
+            }
+            if (player.isAlive)
+                tmpProgress += points / 1000F
+            if (tmpProgress > 100) {
+                if (lvlExp < 0.33F) {
+                    lvlExp += 0.01F
+                    tmpProgress = 0F
+                    maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
+                }
+            }
             sendToPlayer(player)
             true
         } else {
@@ -115,37 +140,61 @@ class PlayerMana : Mana(), IPlayerMana {
         }
     }
 
+    fun overload(points: Int, player: ServerPlayerEntity) {
+        if (player.world.getTileEntity(player.position) is AbstractRMMagicSourceTileEntity) {
+            consume(points)
+            lvlExp += 0.01F
+            if (lvlExp > 0.99F) {
+                lvl++
+                lvlExp = 0F
+            }
+            maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
+        } else
+            consume(points, player)
+    }
+
     private var ticks = 0
+    private val koef = 3F / 20F
 
     override fun playerTick(playerIn: ServerPlayerEntity) {
-        if (ticks % 20 == 0) {
+        if (ticks > 20) {
+            ticks = 0
             if (currentMana <= maxMana)
-                fill(max((maxMana - currentMana) / 100, 1))
+                fill(max((maxMana.toInt() - currentMana) / 100, 1))
             else
-                consume(max(((currentMana - maxMana) * (3F / 20F)).toInt(), 1), playerIn)
+                if (lvlExp > 0.32F)
+                    overload(max(((currentMana - maxMana) * koef).toInt(), 1), playerIn)
+                else
+                    consume(max(((currentMana - maxMana) * koef).toInt(), 1), playerIn)
         }
         ticks++
     }
 
     override fun toByteArray(): ByteArray {
-        //val manaPerTick = floatToIntBits(this.manaPerTick)
+        val lvl_exp = floatToIntBits(this.lvlExp)
         var ret = super.toByteArray()
-        /*ret += ((manaPerTick ushr 24) and 0xFFFF).toByte()
-        ret += ((manaPerTick ushr 16) and 0xFFFF).toByte()
-        ret += ((manaPerTick ushr 8) and 0xFFFF).toByte()
-        ret += (manaPerTick and 0xFFFF).toByte()
-        */
+        ret += ((lvl_exp ushr 24) and 0xFFFF).toByte()
+        ret += ((lvl_exp ushr 16) and 0xFFFF).toByte()
+        ret += ((lvl_exp ushr 8) and 0xFFFF).toByte()
+        ret += (lvl_exp and 0xFFFF).toByte()
+        ret += ((lvl ushr 24) and 0xFFFF).toByte()
+        ret += ((lvl ushr 16) and 0xFFFF).toByte()
+        ret += ((lvl ushr 8) and 0xFFFF).toByte()
+        ret += (lvl and 0xFFFF).toByte()
         return ret
     }
 
     override fun loadFromByteArray(buff: ByteArray): Int {
         var i = super.loadFromByteArray(buff)
-        /*val manaPerTickBits = buff[i++].toInt() shl 24 or
+        val lvlExpBits = buff[i++].toInt() shl 24 or
                 (buff[i++].toInt() and 0xFF shl 16) or
                 (buff[i++].toInt() and 0xFF shl 8) or
                 (buff[i++].toInt() and 0xFF)
-        manaPerTick = intBitsToFloat(manaPerTickBits)
-        */
+        lvl = buff[i++].toInt() shl 24 or
+                (buff[i++].toInt() and 0xFF shl 16) or
+                (buff[i++].toInt() and 0xFF shl 8) or
+                (buff[i++].toInt() and 0xFF)
+        lvlExp = intBitsToFloat(lvlExpBits)
         return i
     }
 }

@@ -23,16 +23,16 @@ class GuiManaHUD(
 
         val x = minecraft.mainWindow.scaledWidth * xPos / 100
         val y = minecraft.mainWindow.scaledHeight * yPos / 100
-        var color = "337CFF".toInt(16)
+        var color = 0x337CFF
         if (mana.currentMana > mana.maxMana) {
-            val colorRed = ("33".toInt(16) - (("33".toInt(16) - "FF".toInt(16))).toFloat() * min((mana.currentMana - mana.maxMana).toFloat() / (mana.maxMana.toFloat() * 2F), 1F)).toInt()
-            val colorGreen = ("7C".toInt(16) - (("7C".toInt(16) - "00".toInt(16))).toFloat() * min((mana.currentMana - mana.maxMana).toFloat() / (mana.maxMana.toFloat() * 2F), 1F)).toInt()
-            val colorBlue = ("FF".toInt(16) - (("FF".toInt(16) - "00".toInt(16))).toFloat() * min((mana.currentMana - mana.maxMana).toFloat() / (mana.maxMana.toFloat() * 2F), 1F)).toInt()
-            color = colorRed * "10000".toInt(16) + colorGreen * "100".toInt(16) + colorBlue
+            val lambda = min((mana.currentMana - mana.maxMana).toFloat() / (mana.maxMana.toFloat() * 2F), 1F)
+            val colorRed = (0x33 - ((0x33 - 0xFF)).toFloat() * lambda).toInt()
+            val colorGreen = (0x7C - ((0x7C - 0x00)).toFloat() * lambda).toInt()
+            val colorBlue = (0xFF - ((0xFF - 0x00)).toFloat() * lambda).toInt()
+            color = colorRed * 0x10000 + colorGreen * 0x100 + colorBlue
         }
-        //(("337CFF".toInt(16) - ("337CFF".toInt(16) - "FF0000".toInt(16))).toFloat() * max((mana.currentMana - mana.maxMana).toFloat() / (mana.maxMana.toFloat() * 2F), 0F)).toInt()
-        fill(x, y, width + x, y - height, -0x1000000 or "C9CAB9".toInt(16))
-        fillGradient(x, y, (width * min(mana.currentMana.toFloat() / mana.maxMana.toFloat(), 1F)).toInt() + x, y - height, -0x1000000 or color, Color(-0x1000000 or "1145A1".toInt(16)).darker().rgb)
+        fill(x, y, width + x, y - height, -0x1000000 or 0xC9CAB9)
+        fillGradient(x, y, (width * min(mana.currentMana.toFloat() / mana.maxMana.toFloat(), 1F)).toInt() + x, y - height, -0x1000000 or color, Color(-0x1000000 or 0x1145A1).darker().rgb)
     }
 
     fun printHud() {

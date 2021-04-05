@@ -6,7 +6,7 @@ import net.minecraft.util.math.BlockPos
 
 interface IManaBase {
     val currentMana: Int
-    val maxMana: Int
+    val baseMaxMana: Int
 }
 
 interface IMana : IManaBase {
