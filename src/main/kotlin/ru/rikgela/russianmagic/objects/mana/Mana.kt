@@ -10,7 +10,6 @@ import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.capabilities.Capability.IStorage
 import net.minecraftforge.fml.network.PacketDistributor
 import ru.rikgela.russianmagic.common.RMNetworkChannel
-import ru.rikgela.russianmagic.objects.tileentity.AbstractRMMagicSourceTileEntity
 import java.lang.Float.floatToIntBits
 import java.lang.Float.intBitsToFloat
 import java.lang.Integer.max
@@ -104,8 +103,8 @@ class PlayerMana : Mana(), IPlayerMana {
 
     private var lvl = 0
     private var lvlExp = 0F
-    private var tmpProgress = 0F
     var maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
+    var isInReborn = false
 
     private fun delta(): Float {
         if (lvlExp < 0.17F)
@@ -121,17 +120,25 @@ class PlayerMana : Mana(), IPlayerMana {
 
     override fun consume(points: Int, player: ServerPlayerEntity): Boolean {
         return if (consume(points)) {
-            if (points > maxMana / 10) {
-                player.attackEntityFrom(DamageSource.MAGIC, (100F * (points - maxMana * 0.1F) / maxMana))
-            }
-            if (player.isAlive)
-                tmpProgress += points / 1000F
-            if (tmpProgress > 100) {
-                if (lvlExp < 0.33F) {
-                    lvlExp += 0.01F
-                    tmpProgress = 0F
+            if (isInReborn) {
+                lvlExp += points / 1000F
+                maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
+            } else {
+                if (points > maxMana / 10) {
+                    player.attackEntityFrom(DamageSource.MAGIC, (100F * (points - maxMana * 0.1F) / maxMana))
+                }
+                if (player.isAlive) {
+                    if (lvlExp < 0.33F) {
+                        isInReborn = false
+                        lvlExp += points / 1000F
+                        maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
+                    }
+                }
+                if (lvlExp >= 1F) {
+                    lvlExp -= 1F
                     maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
                 }
+
             }
             sendToPlayer(player)
             true
@@ -141,16 +148,10 @@ class PlayerMana : Mana(), IPlayerMana {
     }
 
     fun overload(points: Int, player: ServerPlayerEntity) {
-        if (player.world.getTileEntity(player.position) is AbstractRMMagicSourceTileEntity) {
-            consume(points)
-            lvlExp += 0.01F
-            if (lvlExp > 0.99F) {
-                lvl++
-                lvlExp = 0F
-            }
-            maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
-        } else
-            consume(points, player)
+        if (lvlExp >= 0.33F) {
+            isInReborn = true
+        }
+        consume(points, player)
     }
 
     private var ticks = 0
@@ -159,13 +160,15 @@ class PlayerMana : Mana(), IPlayerMana {
     override fun playerTick(playerIn: ServerPlayerEntity) {
         if (ticks > 20) {
             ticks = 0
+            val prevIsInReborn = isInReborn
             if (currentMana <= maxMana)
                 fill(max((maxMana.toInt() - currentMana) / 100, 1))
-            else
-                if (lvlExp > 0.32F)
-                    overload(max(((currentMana - maxMana) * koef).toInt(), 1), playerIn)
-                else
-                    consume(max(((currentMana - maxMana) * koef).toInt(), 1), playerIn)
+            else {
+                overload(max(((currentMana - maxMana) * koef).toInt(), 1), playerIn)
+            }
+            if (prevIsInReborn > isInReborn) {
+                maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * (0.33F - (lvlExp - 0.17F) * 4F)
+            }
         }
         ticks++
     }
