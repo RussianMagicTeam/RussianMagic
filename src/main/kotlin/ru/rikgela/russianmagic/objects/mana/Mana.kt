@@ -123,6 +123,11 @@ class PlayerMana : Mana(), IPlayerMana {
             if (isInReborn) {
                 lvlExp += points / 1000F
                 maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
+                if (lvlExp >= 1F) {
+                    lvl += 1
+                    lvlExp -= 1F
+                    maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
+                }
             } else {
                 if (points > maxMana / 10) {
                     player.attackEntityFrom(DamageSource.MAGIC, (100F * (points - maxMana * 0.1F) / maxMana))
@@ -133,10 +138,6 @@ class PlayerMana : Mana(), IPlayerMana {
                         lvlExp += points / 1000F
                         maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
                     }
-                }
-                if (lvlExp >= 1F) {
-                    lvlExp -= 1F
-                    maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
                 }
 
             }
@@ -175,6 +176,7 @@ class PlayerMana : Mana(), IPlayerMana {
 
     override fun toByteArray(): ByteArray {
         val lvl_exp = floatToIntBits(this.lvlExp)
+        val maxMana = floatToIntBits(this.maxMana)
         var ret = super.toByteArray()
         ret += ((lvl_exp ushr 24) and 0xFFFF).toByte()
         ret += ((lvl_exp ushr 16) and 0xFFFF).toByte()
@@ -184,6 +186,10 @@ class PlayerMana : Mana(), IPlayerMana {
         ret += ((lvl ushr 16) and 0xFFFF).toByte()
         ret += ((lvl ushr 8) and 0xFFFF).toByte()
         ret += (lvl and 0xFFFF).toByte()
+        ret += ((maxMana ushr 24) and 0xFFFF).toByte()
+        ret += ((maxMana ushr 16) and 0xFFFF).toByte()
+        ret += ((maxMana ushr 8) and 0xFFFF).toByte()
+        ret += (maxMana and 0xFFFF).toByte()
         return ret
     }
 
@@ -197,7 +203,12 @@ class PlayerMana : Mana(), IPlayerMana {
                 (buff[i++].toInt() and 0xFF shl 16) or
                 (buff[i++].toInt() and 0xFF shl 8) or
                 (buff[i++].toInt() and 0xFF)
+        val maxManaBits = buff[i++].toInt() shl 24 or
+                (buff[i++].toInt() and 0xFF shl 16) or
+                (buff[i++].toInt() and 0xFF shl 8) or
+                (buff[i++].toInt() and 0xFF)
         lvlExp = intBitsToFloat(lvlExpBits)
+        maxMana = intBitsToFloat(maxManaBits)
         return i
     }
 }
