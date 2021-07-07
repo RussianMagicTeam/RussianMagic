@@ -9,24 +9,24 @@ import java.util.function.Supplier
 
 
 class ManaMessage(
-        private val mana: Mana
+    private val manaBytes: ByteArray
 ) {
     companion object {
         fun fromPacketBuffer(pb: PacketBuffer): ManaMessage {
-            val ret = Mana()
-            ret.loadFromByteArray(pb.readByteArray())
-            return ManaMessage(ret)
+            return ManaMessage(pb.readByteArray())
         }
     }
 
     fun encoder(pb: PacketBuffer) {
-        pb.writeByteArray(mana.toByteArray())
+        pb.writeByteArray(manaBytes)
     }
 
     @OnlyIn(Dist.CLIENT)
     fun handle(ctx: Supplier<NetworkEvent.Context?>) {
         ctx.get()?.enqueueWork {
-            MANA_CAP?.let { Minecraft.getInstance().player?.getCapability(it)?.orElse(Mana())?.copy(mana) }
+            MANA_CAP?.let {
+                Minecraft.getInstance().player?.getCapability(it)?.orElse(Mana())?.loadFromByteArray(manaBytes)
+            }
         }
         ctx.get()?.packetHandled = true
     }

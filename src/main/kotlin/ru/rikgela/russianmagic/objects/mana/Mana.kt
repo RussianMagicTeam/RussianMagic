@@ -115,7 +115,7 @@ class PlayerMana : Mana(), IPlayerMana {
     }
 
     override fun sendToPlayer(player: ServerPlayerEntity) {
-        RMNetworkChannel.send(PacketDistributor.PLAYER.with { player }, ManaMessage(this))
+        RMNetworkChannel.send(PacketDistributor.PLAYER.with { player }, ManaMessage(this.toByteArray()))
     }
 
     override fun consume(points: Int, player: ServerPlayerEntity): Boolean {
