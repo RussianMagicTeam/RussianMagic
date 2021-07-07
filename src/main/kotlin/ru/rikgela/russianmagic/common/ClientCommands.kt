@@ -94,8 +94,10 @@ class RMCCMessage(
                 val tile = world.getTileEntity(BlockPos(pos.x, pos.y, pos.z))
                 if (tile is IManaReceiver) {
                     if (MANA_CAP != null) {
-                        val playerMana: IMana = playerEntity.getCapability(MANA_CAP!!).orElseThrow { RuntimeException("WTF???") } as IMana
-                        val transferManaCount = playerMana.currentMana //- tile.transfer(playerMana.currentMana)
+                        val playerMana: IMana =
+                            playerEntity.getCapability(MANA_CAP!!).orElseThrow { RuntimeException("WTF???") } as IMana
+                        val transferManaCount = playerMana.currentMana
+                        tile.transfer(playerMana.currentMana)
                         if (transferManaCount > 0) playerMana.consume(transferManaCount)
                     }
                 }
