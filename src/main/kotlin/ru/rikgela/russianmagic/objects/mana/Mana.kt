@@ -101,8 +101,8 @@ class PlayerMana : Mana(), IPlayerMana {
         }
     }
 
-    private var lvl = 0
-    private var lvlExp = 0F
+    override var lvl = 0
+    override var lvlExp = 0F
     var maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
     var isInReborn = false
 

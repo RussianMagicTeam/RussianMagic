@@ -21,6 +21,14 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
             .withParams(50, 500)
     private val manaSpreader: IManaSpreader = ManaSpreader(mana)
 
+    //IManaReceiver implementation
+    override val currentMana: Int
+        get() = manaSpreader.currentMana
+    override val baseMaxMana: Int
+        get() = manaSpreader.baseMaxMana
+    override val maxSpread: Int
+        get() = manaSpreader.maxSpread
+
     private fun update() {
         markDirty()
         if (world != null && world?.isRemote != true) {
@@ -73,14 +81,6 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
     override fun handleUpdateTag(nbt: CompoundNBT) {
         read(nbt)
     }
-
-    //IManaReceiver implementation
-    override val currentMana: Int
-        get() = manaSpreader.currentMana
-    override val baseMaxMana: Int
-        get() = manaSpreader.baseMaxMana
-    override val maxSpread: Int
-        get() = manaSpreader.maxSpread
 
     override fun spread(points: Int): Int {
         val ret = manaSpreader.spread(points)

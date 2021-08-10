@@ -49,6 +49,25 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     private val defaultName: ITextComponent
         get() = TranslationTextComponent("container.$MOD_ID.${rmMekanism.name}")
 
+    override val isConnectedToManaSpreader: Boolean
+        get() = manaTaker.isConnectedToManaSpreader
+
+    override fun disconnectToManaSpreader() {
+        manaTaker.disconnectToManaSpreader()
+    }
+
+    override val spreaderWorldPos: String
+        get() = manaTaker.spreaderWorldPos
+
+    //IManaReceiver implementation
+    override val currentMana: Int
+        get() = manaReceiver.currentMana
+    override val baseMaxMana: Int
+        get() = manaReceiver.baseMaxMana
+    override val maxTransfer: Int
+        get() = manaReceiver.maxTransfer
+
+
     override fun getDisplayName(): ITextComponent {
         return name
     }
@@ -233,14 +252,6 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         return index in upSlots || index in horizontalSlots
     }
 
-    //IManaReceiver implementation
-    override val currentMana: Int
-        get() = manaReceiver.currentMana
-    override val baseMaxMana: Int
-        get() = manaReceiver.baseMaxMana
-    override val maxTransfer: Int
-        get() = manaReceiver.maxTransfer
-
     override fun transfer(points: Int) {
         //if (points <= ((mana.maxMana - mana.currentMana) / mana.maxMana)){
         manaReceiver.transfer(points)
@@ -248,19 +259,8 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         //}
     }
 
-
-    override val isConnectedToManaSpreader: Boolean
-        get() = manaTaker.isConnectedToManaSpreader
-
     override fun connectToManaSpreader(manaSpreader: BlockPos, server: MinecraftServer, worldId: Int) {
         manaTaker.connectToManaSpreader(manaSpreader, server, worldId)
     }
-
-    override fun disconnectToManaSpreader() {
-        manaTaker.disconnectToManaSpreader()
-    }
-
-    override val spreaderWorldPos: String
-        get() = manaTaker.spreaderWorldPos
 
 }

@@ -24,6 +24,8 @@ interface IMana : IManaBase {
 
 interface IPlayerMana : IMana {
     //val manaPerTick: Float
+    var lvlExp: Float
+    var lvl: Int
     fun playerTick(playerIn: ServerPlayerEntity)
     fun consume(points: Int, player: ServerPlayerEntity): Boolean
     fun sendToPlayer(player: ServerPlayerEntity)
