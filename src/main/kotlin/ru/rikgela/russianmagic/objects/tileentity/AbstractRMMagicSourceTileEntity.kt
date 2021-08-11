@@ -1,5 +1,6 @@
 package ru.rikgela.russianmagic.objects.tileentity
 
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.CompoundNBT
 import net.minecraft.network.NetworkManager
 import net.minecraft.network.play.server.SUpdateTileEntityPacket
@@ -29,11 +30,33 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
     override val maxSpread: Int
         get() = manaSpreader.maxSpread
 
+    var player_uuid: ITextComponent? = null
+
+    fun ManaisUsableByPlayer(player: PlayerEntity): Float {
+        if (world!!.getTileEntity(pos) !== this || player.displayNameAndUUID != player_uuid) {
+            return 0F
+        } else {
+            return 1F / player.getDistanceSq(pos.x.toDouble() + 0.5, pos.y.toDouble() + 0.5, pos.z.toDouble() + 0.5)
+                .toFloat()
+        }
+    }
+
+    fun ManaisUsableByTileEntity(player: PlayerEntity): Float {
+        if (world!!.getTileEntity(pos) !== this || player.displayNameAndUUID != player_uuid) {
+            return 0F
+        } else {
+            return 1F / player.getDistanceSq(pos.x.toDouble() + 0.5, pos.y.toDouble() + 0.5, pos.z.toDouble() + 0.5)
+                .toFloat()
+        }
+    }
+
     private fun update() {
         markDirty()
         if (world != null && world?.isRemote != true) {
-            world!!.notifyBlockUpdate(getPos(), this.blockState, this.blockState,
-                    Constants.BlockFlags.BLOCK_UPDATE)
+            world!!.notifyBlockUpdate(
+                getPos(), this.blockState, this.blockState,
+                Constants.BlockFlags.BLOCK_UPDATE
+            )
         }
     }
 
@@ -50,12 +73,18 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
         if (compound.contains("CustomName", Constants.NBT.TAG_STRING)) {
             customName = ITextComponent.Serializer.fromJson(compound.getString("CustomName"))
         }
+        if (compound.contains("PlayerUUID", Constants.NBT.TAG_STRING)) {
+            player_uuid = ITextComponent.Serializer.fromJson(compound.getString("PlayerUUID"))
+        }
         mana.loadFromByteArray(compound.getByteArray("Mana"))
     }
 
     override fun write(compound: CompoundNBT): CompoundNBT {
         super.write(compound)
         compound.putByteArray("Mana", mana.toByteArray())
+        if (player_uuid != null) {
+            compound.putString("PlayerUUID", ITextComponent.Serializer.toJson(player_uuid!!))
+        }
         if (customName != null) {
             compound.putString("CustomName", ITextComponent.Serializer.toJson(customName!!))
         }
@@ -82,8 +111,8 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
         read(nbt)
     }
 
-    override fun spread(points: Int): Int {
-        val ret = manaSpreader.spread(points)
+    override fun spread(points: Int, rate: Float): Int {
+        val ret = manaSpreader.spread(points, rate)
         if (ret != 0) update()
         return ret
     }

@@ -106,8 +106,14 @@ class RMCCMessage(
                 val tile = world.getTileEntity(BlockPos(pos.x, pos.y, pos.z))
                 if (tile is IManaSpreader) {
                     if (MANA_CAP != null) {
-                        val playerMana: IPlayerMana = playerEntity.getCapability(MANA_CAP!!).orElseThrow { RuntimeException("WTF???") } as IPlayerMana
-                        playerMana.fill(tile.spread(min(tile.maxSpread, tile.currentMana)))
+                        val playerMana: IPlayerMana = playerEntity.getCapability(MANA_CAP!!)
+                            .orElseThrow { RuntimeException("WTF???") } as IPlayerMana
+                        playerMana.fill(
+                            tile.spread(
+                                min(tile.maxSpread, tile.currentMana),
+                                tile.getDistanceSq(playerEntity.posX, playerEntity.posY, playerEntity.posZ).toFloat()
+                            )
+                        )
                     }
                 }
             }

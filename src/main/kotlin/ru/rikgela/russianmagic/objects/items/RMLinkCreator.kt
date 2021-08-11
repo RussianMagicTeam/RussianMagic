@@ -22,7 +22,7 @@ class RMLinkCreator(
         if (!world.isRemote) {
             val tileEntity = world.getTileEntity(blockPos)
             if (tileEntity is IManaTaker) {
-                tileEntity.connectToManaSpreader(manaSpreaderPos, world.server!!, manaSpreaderWorldId)
+                tileEntity.connectToManaSpreader(manaSpreaderPos, tileEntity.pos, world.server!!, manaSpreaderWorldId)
                 if (playerEntity is ServerPlayerEntity) {
                     if (PlayerMana.fromPlayer(playerEntity).consume(100, playerEntity)) {
                         (playerEntity).sendMessage(

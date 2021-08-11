@@ -6,6 +6,7 @@ import net.minecraft.nbt.ByteArrayNBT
 import net.minecraft.nbt.INBT
 import net.minecraft.util.DamageSource
 import net.minecraft.util.Direction
+import net.minecraft.util.math.BlockPos
 import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.capabilities.Capability.IStorage
 import net.minecraftforge.fml.network.PacketDistributor
@@ -66,14 +67,31 @@ open class Mana : IMana {
         return false
     }
 
-    override fun give(points: Int): Int {
-        if (currentMana >= points) {
-            currentMana -= points
-            return points
+//    override fun give(points: Int): Int {
+//        if (currentMana >= points) {
+//            currentMana -= points
+//            return points
+//        }
+//        val tmp: Int = currentMana
+//        currentMana = 0
+//        return tmp
+//    }
+
+    override fun give(points: Int, rate: Float): Int {
+        var after_rate_to_send = (points * rate).toInt()
+        if (after_rate_to_send == 0) return 0
+
+        val after_rate_consume = (after_rate_to_send / rate).toInt()
+        if (currentMana >= after_rate_consume) {
+            currentMana -= after_rate_consume
+            return if (rate > 1F) points else if (rate < 0F) 0 else after_rate_to_send
+        } else {
+            after_rate_to_send = (currentMana * rate).toInt()
+            if (after_rate_to_send == 0) return 0
+            val tmp: Int = if (rate > 1) currentMana else if (rate < 0) 0 else after_rate_to_send
+            currentMana = 0
+            return tmp
         }
-        val tmp: Int = currentMana
-        currentMana = 0
-        return tmp
     }
 
     override fun fill(points: Int) {
@@ -105,6 +123,9 @@ class PlayerMana : Mana(), IPlayerMana {
     override var lvlExp = 0F
     var maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
     var isInReborn = false
+    override var magicSource = BlockPos(-1, -1, -1)
+    private var ticks = 0
+    private val koef = 3F / 20F
 
     private fun delta(): Float {
         if (lvlExp < 0.17F)
@@ -121,7 +142,7 @@ class PlayerMana : Mana(), IPlayerMana {
     override fun consume(points: Int, player: ServerPlayerEntity): Boolean {
         return if (consume(points)) {
             if (isInReborn) {
-                lvlExp += points / 1000F
+                lvlExp += points / (baseMaxMana + baseMaxMana * lvl)
                 maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
                 if (lvlExp >= 1F) {
                     lvl += 1
@@ -135,7 +156,7 @@ class PlayerMana : Mana(), IPlayerMana {
                 if (player.isAlive) {
                     if (lvlExp < 0.33F) {
                         isInReborn = false
-                        lvlExp += points / 1000F
+                        lvlExp += points / (baseMaxMana + baseMaxMana * lvl)
                         maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
                     }
                 }
@@ -154,9 +175,6 @@ class PlayerMana : Mana(), IPlayerMana {
         }
         consume(points, player)
     }
-
-    private var ticks = 0
-    private val koef = 3F / 20F
 
     override fun playerTick(playerIn: ServerPlayerEntity) {
         if (ticks > 20) {
@@ -178,6 +196,9 @@ class PlayerMana : Mana(), IPlayerMana {
         val lvl_exp = floatToIntBits(this.lvlExp)
         val maxMana = floatToIntBits(this.maxMana)
         var ret = super.toByteArray()
+        val x = magicSource.x
+        val y = magicSource.y
+        val z = magicSource.z
         ret += ((lvl_exp ushr 24) and 0xFFFF).toByte()
         ret += ((lvl_exp ushr 16) and 0xFFFF).toByte()
         ret += ((lvl_exp ushr 8) and 0xFFFF).toByte()
@@ -190,6 +211,18 @@ class PlayerMana : Mana(), IPlayerMana {
         ret += ((maxMana ushr 16) and 0xFFFF).toByte()
         ret += ((maxMana ushr 8) and 0xFFFF).toByte()
         ret += (maxMana and 0xFFFF).toByte()
+        ret += ((x ushr 24) and 0xFFFF).toByte()
+        ret += ((x ushr 16) and 0xFFFF).toByte()
+        ret += ((x ushr 8) and 0xFFFF).toByte()
+        ret += (x and 0xFFFF).toByte()
+        ret += ((y ushr 24) and 0xFFFF).toByte()
+        ret += ((y ushr 16) and 0xFFFF).toByte()
+        ret += ((y ushr 8) and 0xFFFF).toByte()
+        ret += (y and 0xFFFF).toByte()
+        ret += ((z ushr 24) and 0xFFFF).toByte()
+        ret += ((z ushr 16) and 0xFFFF).toByte()
+        ret += ((z ushr 8) and 0xFFFF).toByte()
+        ret += (z and 0xFFFF).toByte()
         return ret
     }
 
@@ -207,6 +240,20 @@ class PlayerMana : Mana(), IPlayerMana {
                 (buff[i++].toInt() and 0xFF shl 16) or
                 (buff[i++].toInt() and 0xFF shl 8) or
                 (buff[i++].toInt() and 0xFF)
+        magicSource = BlockPos(
+            buff[i++].toInt() shl 24 or
+                    (buff[i++].toInt() and 0xFF shl 16) or
+                    (buff[i++].toInt() and 0xFF shl 8) or
+                    (buff[i++].toInt() and 0xFF),
+            buff[i++].toInt() shl 24 or
+                    (buff[i++].toInt() and 0xFF shl 16) or
+                    (buff[i++].toInt() and 0xFF shl 8) or
+                    (buff[i++].toInt() and 0xFF),
+            buff[i++].toInt() shl 24 or
+                    (buff[i++].toInt() and 0xFF shl 16) or
+                    (buff[i++].toInt() and 0xFF shl 8) or
+                    (buff[i++].toInt() and 0xFF)
+        )
         lvlExp = intBitsToFloat(lvlExpBits)
         maxMana = intBitsToFloat(maxManaBits)
         return i

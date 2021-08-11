@@ -17,7 +17,7 @@ interface IMana : IManaBase {
     fun consume(points: Int): Boolean
 
     //Returns how much mana was transferred
-    fun give(points: Int): Int
+    fun give(points: Int, rate: Float): Int
     fun fill(points: Int)
     fun copy(mana: IMana)
 }
@@ -26,6 +26,7 @@ interface IPlayerMana : IMana {
     //val manaPerTick: Float
     var lvlExp: Float
     var lvl: Int
+    var magicSource: BlockPos
     fun playerTick(playerIn: ServerPlayerEntity)
     fun consume(points: Int, player: ServerPlayerEntity): Boolean
     fun sendToPlayer(player: ServerPlayerEntity)
@@ -33,7 +34,7 @@ interface IPlayerMana : IMana {
 
 interface IManaSpreader : IManaBase {
     val maxSpread: Int
-    fun spread(points: Int): Int
+    fun spread(points: Int, rate: Float): Int
 }
 
 interface IManaReceiver : IManaBase {
@@ -44,7 +45,7 @@ interface IManaReceiver : IManaBase {
 interface IManaTaker {
     val isConnectedToManaSpreader: Boolean
     val spreaderWorldPos: String
-    fun connectToManaSpreader(manaSpreader: BlockPos, server: MinecraftServer, worldId: Int)
+    fun connectToManaSpreader(manaSpreader: BlockPos, manaConsumer: BlockPos, server: MinecraftServer, worldId: Int)
     fun disconnectToManaSpreader()
 }
 

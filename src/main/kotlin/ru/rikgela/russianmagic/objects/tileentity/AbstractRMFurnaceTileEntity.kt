@@ -46,6 +46,9 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     val name: ITextComponent
         get() = customName ?: defaultName
 
+    val rate: Float
+        get() = manaTaker.rate
+
     private val defaultName: ITextComponent
         get() = TranslationTextComponent("container.$MOD_ID.${rmMekanism.name}")
 
@@ -95,7 +98,7 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
 
     override fun tick() {
         if (world?.isRemote == false) {
-            mana.fill(manaTaker.getMana(mana.baseMaxMana - mana.currentMana, world!!.server!!))
+            this.mana.fill(manaTaker.getMana(mana.baseMaxMana - mana.currentMana, world!!.server!!))
             val recipe = getRecipe(inventory.getStackInSlot(0)) ?: return dropProgress()
             if (canBurn(recipe)) {
                 world!!.setBlockState(getPos(), this.blockState.with(AbstractRMFurnace.LIT, true))
@@ -259,8 +262,13 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         //}
     }
 
-    override fun connectToManaSpreader(manaSpreader: BlockPos, server: MinecraftServer, worldId: Int) {
-        manaTaker.connectToManaSpreader(manaSpreader, server, worldId)
+    override fun connectToManaSpreader(
+        manaSpreader: BlockPos,
+        manaConsumer: BlockPos,
+        server: MinecraftServer,
+        worldId: Int
+    ) {
+        manaTaker.connectToManaSpreader(manaSpreader, manaConsumer, server, worldId)
     }
 
 }

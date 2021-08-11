@@ -25,6 +25,7 @@ import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import ru.rikgela.russianmagic.common.RMCCMessage
+import ru.rikgela.russianmagic.objects.mana.IPlayerMana
 import ru.rikgela.russianmagic.objects.tileentity.AbstractRMMagicSourceTileEntity
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
 import java.lang.Float.min
@@ -34,6 +35,8 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
 
     private var shape = makeCuboidShape(7.0, 7.0, 7.0, 9.0, 9.0, 9.0)
     private var model = BlockRenderType.MODEL
+
+
     override fun getShape(state: BlockState?, worldIn: IBlockReader?, pos: BlockPos, context: ISelectionContext?): VoxelShape? {
         if (worldIn is EmptyBlockReader) return this.shape
         val shift: Float = min((worldIn?.getTileEntity(pos) as AbstractRMMagicSourceTileEntity).currentMana.toFloat() / (worldIn.getTileEntity(pos) as AbstractRMMagicSourceTileEntity).baseMaxMana.toFloat(), 1F)
@@ -110,6 +113,9 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
             val tile = worldIn.getTileEntity(pos)
             if (tile is AbstractRMMagicSourceTileEntity) {
                 tile.customName = stack.displayName
+                tile.player_uuid = (placer as PlayerEntity).displayNameAndUUID
+                if (placer is IPlayerMana)
+                    placer.magicSource = pos
             }
         }
     }

@@ -2,6 +2,9 @@ package ru.rikgela.russianmagic.objects.mana
 
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.math.BlockPos
+import java.lang.Float.floatToIntBits
+import java.lang.Float.intBitsToFloat
+import kotlin.math.sqrt
 
 class ManaReceiver<T : IMana>(private val mana: T) : IManaReceiver {
     override val currentMana: Int
@@ -28,26 +31,40 @@ class ManaSpreader<T : IMana>(private val mana: T) : IManaSpreader {
     override val maxSpread: Int
         get() = currentMana
 
-    override fun spread(points: Int): Int {
-        return mana.give(points)
+    override fun spread(points: Int, rate: Float): Int {
+        return mana.give(points, rate)
     }
 }
 
 class ManaTaker : IManaTaker {
     var spreaderPos: BlockPos? = null
+    var rate: Float = 1F
     var worldId: Int = 0
     override val isConnectedToManaSpreader: Boolean
         get() = spreaderPos != null
     override val spreaderWorldPos: String
         get() = if (spreaderPos != null) worldId.toString() + ", " + spreaderPos!!.x.toString() + ", " + spreaderPos!!.y.toString() + ", " + spreaderPos!!.z.toString() else "NULL"
 
-    override fun connectToManaSpreader(manaSpreader: BlockPos, server: MinecraftServer, worldId: Int) {
+    override fun connectToManaSpreader(
+        manaSpreader: BlockPos,
+        manaConsumer: BlockPos,
+        server: MinecraftServer,
+        worldId: Int
+    ) {
         server.forgeGetWorldMap().forEach { dim, world ->
             if (dim.id == worldId) {
                 val te = world.getTileEntity(manaSpreader)
                 if (te is IManaSpreader) {
                     spreaderPos = manaSpreader
                     this.worldId = worldId
+                    val distance = sqrt(
+                        te.getDistanceSq(
+                            manaConsumer.x.toDouble(),
+                            manaConsumer.y.toDouble(),
+                            manaConsumer.z.toDouble()
+                        ).toFloat()
+                    )
+                    rate = if (distance > 99) 1F / distance else (1F - distance * 0.01).toFloat()
                 }
             }
         }
@@ -55,6 +72,7 @@ class ManaTaker : IManaTaker {
 
     override fun disconnectToManaSpreader() {
         spreaderPos = null
+        rate = 1F
     }
 
     fun getMana(points: Int, server: MinecraftServer): Int {
@@ -66,7 +84,7 @@ class ManaTaker : IManaTaker {
             if (dim.id == worldId) {
                 val te = world.getTileEntity(spreaderPos!!)
                 if (te is IManaSpreader) {
-                    ret = te.spread(points)
+                    ret = te.spread(points, rate)
                 } else {
                     //Todo action if cannot get tileEntity
                 }
@@ -77,10 +95,10 @@ class ManaTaker : IManaTaker {
 
 
     fun toByteArray(): ByteArray {
-
         val x = spreaderPos?.x ?: -1
         val y = spreaderPos?.y ?: -1
         val z = spreaderPos?.z ?: -1
+        val rate = floatToIntBits(this.rate)
         return byteArrayOf(
             ((worldId ushr 24) and 0xFFFF).toByte(),
             ((worldId ushr 16) and 0xFFFF).toByte(),
@@ -98,6 +116,10 @@ class ManaTaker : IManaTaker {
             ((z ushr 16) and 0xFFFF).toByte(),
             ((z ushr 8) and 0xFFFF).toByte(),
             (z and 0xFFFF).toByte(),
+            ((rate ushr 24) and 0xFFFF).toByte(),
+            ((rate ushr 16) and 0xFFFF).toByte(),
+            ((rate ushr 8) and 0xFFFF).toByte(),
+            (rate and 0xFFFF).toByte()
         )
     }
 
@@ -121,6 +143,11 @@ class ManaTaker : IManaTaker {
                     (buff[i++].toInt() and 0xFF shl 8) or
                     (buff[i++].toInt() and 0xFF)
         )
+        val rate = buff[i++].toInt() shl 24 or
+                (buff[i++].toInt() and 0xFF shl 16) or
+                (buff[i++].toInt() and 0xFF shl 8) or
+                (buff[i++].toInt() and 0xFF)
+        this.rate = intBitsToFloat(rate)
         if (spreaderPos?.y ?: -1 == -1) {
             spreaderPos = null
         }
