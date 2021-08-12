@@ -4,6 +4,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.nbt.ByteArrayNBT
 import net.minecraft.nbt.INBT
+import net.minecraft.server.MinecraftServer
 import net.minecraft.util.DamageSource
 import net.minecraft.util.Direction
 import net.minecraft.util.math.BlockPos
@@ -100,7 +101,7 @@ open class Mana : IMana {
     }
 }
 
-class PlayerMana : Mana(), IPlayerMana {
+class PlayerMana : Mana(), IPlayerMana, IManaTaker {
     companion object {
         fun withParams(startManaCount: Int, maxManaCount: Int): PlayerMana {
             val ret = PlayerMana()
@@ -119,13 +120,36 @@ class PlayerMana : Mana(), IPlayerMana {
         }
     }
 
-    override var lvl = 0
+    override var lvl = 1
     override var lvlExp = 0F
-    var maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
+    var maxMana = baseMaxMana * lvl + (baseMaxMana * lvl) * delta()
     var isInReborn = false
-    override var magicSource = BlockPos(-1, -1, -1)
     private var ticks = 0
     private val koef = 3F / 20F
+
+    private val manaTaker: ManaTaker = ManaTaker()
+
+    override val isConnectedToManaSpreader: Boolean
+        get() = manaTaker.isConnectedToManaSpreader
+
+    override val spreaderWorldPos: String
+        get() = manaTaker.spreaderWorldPos
+
+    override fun connectToManaSpreader(
+        manaSpreader: BlockPos,
+        manaConsumer: BlockPos,
+        server: MinecraftServer,
+        worldId: Int
+    ) {
+        manaTaker.connectToManaSpreader(manaSpreader, server, worldId)
+    }
+
+    override fun disconnectToManaSpreader() {
+        manaTaker.disconnectToManaSpreader()
+    }
+
+    val rate: Float
+        get() = manaTaker.rate
 
     private fun delta(): Float {
         if (lvlExp < 0.17F)
@@ -140,14 +164,17 @@ class PlayerMana : Mana(), IPlayerMana {
     }
 
     override fun consume(points: Int, player: ServerPlayerEntity): Boolean {
-        return if (consume(points)) {
+        val manaFromMagicSource = manaTaker.getMana((points * 0.9F).toInt(), player.getServer()!!, player.position)
+        var manaCore = (baseMaxMana * lvl).toFloat()
+        return if (consume(points - manaFromMagicSource)) {
             if (isInReborn) {
-                lvlExp += points / (baseMaxMana + baseMaxMana * lvl)
-                maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
+                lvlExp += (points - manaFromMagicSource) / manaCore
+                maxMana = manaCore + manaCore * delta()
                 if (lvlExp >= 1F) {
                     lvl += 1
                     lvlExp -= 1F
-                    maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
+                    manaCore = (baseMaxMana * lvl).toFloat()
+                    maxMana = manaCore + manaCore * delta()
                 }
             } else {
                 if (points > maxMana / 10) {
@@ -156,15 +183,16 @@ class PlayerMana : Mana(), IPlayerMana {
                 if (player.isAlive) {
                     if (lvlExp < 0.33F) {
                         isInReborn = false
-                        lvlExp += points / (baseMaxMana + baseMaxMana * lvl)
-                        maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * delta()
+                        lvlExp += (points - manaFromMagicSource) / manaCore
+                        if (lvlExp > 0.33F) lvlExp = 0.33F
+                        maxMana = manaCore + manaCore * delta()
                     }
                 }
-
             }
             sendToPlayer(player)
             true
         } else {
+            player.attackEntityFrom(DamageSource.MAGIC, (100F * (manaFromMagicSource) / maxMana))
             false
         }
     }
@@ -186,7 +214,8 @@ class PlayerMana : Mana(), IPlayerMana {
                 overload(max(((currentMana - maxMana) * koef).toInt(), 1), playerIn)
             }
             if (prevIsInReborn > isInReborn) {
-                maxMana = baseMaxMana + baseMaxMana * lvl + (baseMaxMana + baseMaxMana * lvl) * (0.33F - (lvlExp - 0.17F) * 4F)
+                val manaCore = (baseMaxMana * lvl)
+                maxMana = manaCore + manaCore * (0.33F - (lvlExp - 0.17F) * 4F)
             }
         }
         ticks++
@@ -196,9 +225,6 @@ class PlayerMana : Mana(), IPlayerMana {
         val lvl_exp = floatToIntBits(this.lvlExp)
         val maxMana = floatToIntBits(this.maxMana)
         var ret = super.toByteArray()
-        val x = magicSource.x
-        val y = magicSource.y
-        val z = magicSource.z
         ret += ((lvl_exp ushr 24) and 0xFFFF).toByte()
         ret += ((lvl_exp ushr 16) and 0xFFFF).toByte()
         ret += ((lvl_exp ushr 8) and 0xFFFF).toByte()
@@ -211,18 +237,6 @@ class PlayerMana : Mana(), IPlayerMana {
         ret += ((maxMana ushr 16) and 0xFFFF).toByte()
         ret += ((maxMana ushr 8) and 0xFFFF).toByte()
         ret += (maxMana and 0xFFFF).toByte()
-        ret += ((x ushr 24) and 0xFFFF).toByte()
-        ret += ((x ushr 16) and 0xFFFF).toByte()
-        ret += ((x ushr 8) and 0xFFFF).toByte()
-        ret += (x and 0xFFFF).toByte()
-        ret += ((y ushr 24) and 0xFFFF).toByte()
-        ret += ((y ushr 16) and 0xFFFF).toByte()
-        ret += ((y ushr 8) and 0xFFFF).toByte()
-        ret += (y and 0xFFFF).toByte()
-        ret += ((z ushr 24) and 0xFFFF).toByte()
-        ret += ((z ushr 16) and 0xFFFF).toByte()
-        ret += ((z ushr 8) and 0xFFFF).toByte()
-        ret += (z and 0xFFFF).toByte()
         return ret
     }
 
@@ -240,24 +254,11 @@ class PlayerMana : Mana(), IPlayerMana {
                 (buff[i++].toInt() and 0xFF shl 16) or
                 (buff[i++].toInt() and 0xFF shl 8) or
                 (buff[i++].toInt() and 0xFF)
-        magicSource = BlockPos(
-            buff[i++].toInt() shl 24 or
-                    (buff[i++].toInt() and 0xFF shl 16) or
-                    (buff[i++].toInt() and 0xFF shl 8) or
-                    (buff[i++].toInt() and 0xFF),
-            buff[i++].toInt() shl 24 or
-                    (buff[i++].toInt() and 0xFF shl 16) or
-                    (buff[i++].toInt() and 0xFF shl 8) or
-                    (buff[i++].toInt() and 0xFF),
-            buff[i++].toInt() shl 24 or
-                    (buff[i++].toInt() and 0xFF shl 16) or
-                    (buff[i++].toInt() and 0xFF shl 8) or
-                    (buff[i++].toInt() and 0xFF)
-        )
         lvlExp = intBitsToFloat(lvlExpBits)
         maxMana = intBitsToFloat(maxManaBits)
         return i
     }
+
 }
 
 class ManaStorage : IStorage<IMana> {

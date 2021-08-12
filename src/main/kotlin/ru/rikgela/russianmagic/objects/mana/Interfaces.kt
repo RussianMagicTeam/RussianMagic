@@ -22,11 +22,10 @@ interface IMana : IManaBase {
     fun copy(mana: IMana)
 }
 
-interface IPlayerMana : IMana {
+interface IPlayerMana : IMana, IManaTaker {
     //val manaPerTick: Float
     var lvlExp: Float
     var lvl: Int
-    var magicSource: BlockPos
     fun playerTick(playerIn: ServerPlayerEntity)
     fun consume(points: Int, player: ServerPlayerEntity): Boolean
     fun sendToPlayer(player: ServerPlayerEntity)

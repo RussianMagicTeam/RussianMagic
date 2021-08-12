@@ -25,7 +25,7 @@ import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import ru.rikgela.russianmagic.common.RMCCMessage
-import ru.rikgela.russianmagic.objects.mana.IPlayerMana
+import ru.rikgela.russianmagic.objects.mana.PlayerMana
 import ru.rikgela.russianmagic.objects.tileentity.AbstractRMMagicSourceTileEntity
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
 import java.lang.Float.min
@@ -109,13 +109,14 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
 
     override fun onBlockPlacedBy(worldIn: World, pos: BlockPos, state: BlockState, placer: LivingEntity?, stack: ItemStack) {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack)
-        if (stack.hasDisplayName()) {
+        if (!stack.hasDisplayName()) {
             val tile = worldIn.getTileEntity(pos)
             if (tile is AbstractRMMagicSourceTileEntity) {
                 tile.customName = stack.displayName
                 tile.player_uuid = (placer as PlayerEntity).displayNameAndUUID
-                if (placer is IPlayerMana)
-                    placer.magicSource = pos
+                if (placer is ServerPlayerEntity)
+                    PlayerMana.fromPlayer(placer)
+                        .connectToManaSpreader(pos, placer.position, worldIn.server!!, worldIn.worldType.id)
             }
         }
     }

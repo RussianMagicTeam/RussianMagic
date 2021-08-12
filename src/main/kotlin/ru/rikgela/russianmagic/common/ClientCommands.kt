@@ -111,8 +111,9 @@ class RMCCMessage(
                         playerMana.fill(
                             tile.spread(
                                 min(tile.maxSpread, tile.currentMana),
-                                tile.getDistanceSq(playerEntity.posX, playerEntity.posY, playerEntity.posZ).toFloat()
+                                0.1F
                             )
+
                         )
                     }
                 }

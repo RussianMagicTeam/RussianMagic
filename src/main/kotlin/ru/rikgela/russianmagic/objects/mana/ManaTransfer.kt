@@ -70,12 +70,28 @@ class ManaTaker : IManaTaker {
         }
     }
 
+    fun connectToManaSpreader(
+        manaSpreader: BlockPos,
+        server: MinecraftServer,
+        worldId: Int
+    ) {
+        server.forgeGetWorldMap().forEach { dim, world ->
+            if (dim.id == worldId) {
+                val te = world.getTileEntity(manaSpreader)
+                if (te is IManaSpreader) {
+                    spreaderPos = manaSpreader
+                    this.worldId = worldId
+                }
+            }
+        }
+    }
+
     override fun disconnectToManaSpreader() {
         spreaderPos = null
         rate = 1F
     }
 
-    fun getMana(points: Int, server: MinecraftServer): Int {
+    fun getMana(points: Int, server: MinecraftServer, manaConsumer: BlockPos = BlockPos(-1, -1, -1)): Int {
         if (!isConnectedToManaSpreader) {
             return 0
         }
@@ -84,7 +100,18 @@ class ManaTaker : IManaTaker {
             if (dim.id == worldId) {
                 val te = world.getTileEntity(spreaderPos!!)
                 if (te is IManaSpreader) {
+                    if (manaConsumer != BlockPos(-1, -1, -1)) {
+                        val distance = sqrt(
+                            te.getDistanceSq(
+                                manaConsumer.x.toDouble(),
+                                manaConsumer.y.toDouble(),
+                                manaConsumer.z.toDouble()
+                            ).toFloat()
+                        )
+                        rate = if (distance > 99) 1F / distance else (1F - distance * 0.01).toFloat()
+                    }
                     ret = te.spread(points, rate)
+
                 } else {
                     //Todo action if cannot get tileEntity
                 }
