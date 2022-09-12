@@ -12,7 +12,7 @@ import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.StringTextComponent
 import net.minecraft.world.World
 import ru.rikgela.russianmagic.objects.entity.projectile.ProjectileEntity
-import ru.rikgela.russianmagic.objects.mana.PlayerMana
+import ru.rikgela.russianmagic.objects.player.mana.PlayerMana
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
 
 class FireballScroll(properties: Properties) : Item(properties) {

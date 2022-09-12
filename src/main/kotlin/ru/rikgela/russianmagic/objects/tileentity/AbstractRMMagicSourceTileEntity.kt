@@ -12,7 +12,7 @@ import net.minecraftforge.common.util.Constants
 import ru.rikgela.russianmagic.objects.mana.IMana
 import ru.rikgela.russianmagic.objects.mana.IManaSpreader
 import ru.rikgela.russianmagic.objects.mana.Mana
-import ru.rikgela.russianmagic.objects.mana.ManaSpreader
+import ru.rikgela.russianmagic.objects.mana.transfer.ManaSpreader
 
 abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<*>)
     : TileEntity(tileEntityTypeIn), ITickableTileEntity, IManaSpreader {

@@ -1,6 +1,5 @@
 package ru.rikgela.russianmagic.objects.mana
 
-import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.server.MinecraftServer
 import net.minecraft.util.math.BlockPos
 
@@ -20,15 +19,6 @@ interface IMana : IManaBase {
     fun give(points: Int, rate: Float): Int
     fun fill(points: Int)
     fun copy(mana: IMana)
-}
-
-interface IPlayerMana : IMana, IManaTaker {
-    //val manaPerTick: Float
-    var lvlExp: Float
-    var lvl: Int
-    fun playerTick(playerIn: ServerPlayerEntity)
-    fun consume(points: Int, player: ServerPlayerEntity): Boolean
-    fun sendToPlayer(player: ServerPlayerEntity)
 }
 
 interface IManaSpreader : IManaBase {

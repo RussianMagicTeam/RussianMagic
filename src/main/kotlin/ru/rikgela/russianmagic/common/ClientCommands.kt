@@ -1,5 +1,6 @@
 package ru.rikgela.russianmagic.common
 
+import PLAYER_MANA_CAP
 import com.google.gson.Gson
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.ServerPlayerEntity
@@ -10,7 +11,10 @@ import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fml.network.NetworkEvent
 import net.minecraftforge.fml.network.NetworkHooks
-import ru.rikgela.russianmagic.objects.mana.*
+import ru.rikgela.russianmagic.objects.mana.IMana
+import ru.rikgela.russianmagic.objects.mana.IManaReceiver
+import ru.rikgela.russianmagic.objects.mana.IManaSpreader
+import ru.rikgela.russianmagic.objects.player.mana.IPlayerMana
 import ru.rikgela.russianmagic.objects.tileentity.AbstractRMFurnaceTileEntity
 import java.lang.Integer.min
 import java.util.function.Supplier
@@ -93,9 +97,9 @@ class RMCCMessage(
                 val pos = Gson().fromJson(cmd.data, Pos::class.java)
                 val tile = world.getTileEntity(BlockPos(pos.x, pos.y, pos.z))
                 if (tile is IManaReceiver) {
-                    if (MANA_CAP != null) {
+                    if (PLAYER_MANA_CAP != null) {
                         val playerMana: IMana =
-                            playerEntity.getCapability(MANA_CAP!!).orElseThrow { RuntimeException("WTF???") } as IMana
+                            playerEntity.getCapability(PLAYER_MANA_CAP!!).orElseThrow { RuntimeException("WTF???") } as IMana
                         val transferManaCount = playerMana.currentMana
                         tile.transfer(playerMana.currentMana)
                         if (transferManaCount > 0) playerMana.consume(transferManaCount)
@@ -105,15 +109,14 @@ class RMCCMessage(
                 val pos = Gson().fromJson(cmd.data, Pos::class.java)
                 val tile = world.getTileEntity(BlockPos(pos.x, pos.y, pos.z))
                 if (tile is IManaSpreader) {
-                    if (MANA_CAP != null) {
-                        val playerMana: IPlayerMana = playerEntity.getCapability(MANA_CAP!!)
+                    if (PLAYER_MANA_CAP != null) {
+                        val playerMana: IPlayerMana = playerEntity.getCapability(PLAYER_MANA_CAP!!)
                             .orElseThrow { RuntimeException("WTF???") } as IPlayerMana
                         playerMana.fill(
                             tile.spread(
                                 min(tile.maxSpread, tile.currentMana),
                                 0.1F
                             )
-
                         )
                     }
                 }

@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.text.StringTextComponent
 import ru.rikgela.russianmagic.objects.mana.IManaSpreader
 import ru.rikgela.russianmagic.objects.mana.IManaTaker
-import ru.rikgela.russianmagic.objects.mana.PlayerMana
+import ru.rikgela.russianmagic.objects.player.mana.PlayerMana
 
 class RMLinkCreator(
         builder: Properties

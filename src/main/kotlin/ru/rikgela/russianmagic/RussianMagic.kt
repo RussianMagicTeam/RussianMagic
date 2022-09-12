@@ -1,5 +1,7 @@
 package ru.rikgela.russianmagic
 
+import MagicHealthEventHandler
+import Reborn
 import net.minecraft.client.Minecraft
 import net.minecraft.client.particle.IAnimatedSprite
 import net.minecraftforge.api.distmarker.Dist
@@ -19,6 +21,13 @@ import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage
 import ru.rikgela.russianmagic.init.*
 import ru.rikgela.russianmagic.objects.mana.*
+import ru.rikgela.russianmagic.objects.player.IMagicHealth
+import ru.rikgela.russianmagic.objects.player.MagicHealth
+import ru.rikgela.russianmagic.objects.player.magichealth.MagicHealthCapabilityHandler
+import ru.rikgela.russianmagic.objects.player.magichealth.MagicHealthNetwork
+import ru.rikgela.russianmagic.objects.player.magichealth.MagicHealthStorage
+import ru.rikgela.russianmagic.objects.player.mana.*
+import ru.rikgela.russianmagic.objects.player.reborn.*
 import ru.rikgela.russianmagic.oregenerator.OreGeneration
 
 
@@ -48,8 +57,12 @@ class RussianMagic {
         RMTileEntityTypes.TILE_ENTITY_TYPES.register(bus)
         RMContainerTypes.CONTAINER_TYPES.register(bus)
         RMParticles.PARTICLES.register(bus)
-        MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
-        MinecraftForge.EVENT_BUS.register(ManaEventHandler())
+        MinecraftForge.EVENT_BUS.register(PlayerManaCapabilityHandler())
+        MinecraftForge.EVENT_BUS.register(PlayerManaEventHandler())
+        MinecraftForge.EVENT_BUS.register(MagicHealthCapabilityHandler())
+        MinecraftForge.EVENT_BUS.register(MagicHealthEventHandler())
+        MinecraftForge.EVENT_BUS.register(RebornCapabilityHandler())
+        MinecraftForge.EVENT_BUS.register(RebornEventHandler())
 
     }
 
@@ -73,6 +86,10 @@ class RussianMagic {
         //preinit
         OreGeneration.setupOreGeneration()
         CapabilityManager.INSTANCE.register(IMana::class.java, ManaStorage()) { Mana() }
+        CapabilityManager.INSTANCE.register(IMagicHealth::class.java, MagicHealthStorage()) { MagicHealth() }
+        CapabilityManager.INSTANCE.register(IPlayerMana::class.java, PlayerManaStorage()) { PlayerMana() }
+        CapabilityManager.INSTANCE.register(IReborn::class.java, RebornStorage()) { Reborn() }
+
         @Suppress("INACCESSIBLE_TYPE")
         RMNetworkChannel.registerMessage(
                 networkIndex++,
@@ -94,5 +111,26 @@ class RussianMagic {
                 RMCCMessage::encoder,
                 RMCCMessage.Companion::fromPacketBuffer,
                 RMCCMessage::handle)
+        @Suppress("INACCESSIBLE_TYPE")
+        RMNetworkChannel.registerMessage(
+            networkIndex++,
+            MagicHealthNetwork::class.java,
+            MagicHealthNetwork::encoder,
+            MagicHealthNetwork.Companion::fromPacketBuffer,
+            MagicHealthNetwork::handle)
+        @Suppress("INACCESSIBLE_TYPE")
+        RMNetworkChannel.registerMessage(
+            networkIndex++,
+            PlayerManaNetwork::class.java,
+            PlayerManaNetwork::encoder,
+            PlayerManaNetwork.Companion::fromPacketBuffer,
+            PlayerManaNetwork::handle)
+        @Suppress("INACCESSIBLE_TYPE")
+        RMNetworkChannel.registerMessage(
+            networkIndex++,
+            RebornNetwork::class.java,
+            RebornNetwork::encoder,
+            RebornNetwork.Companion::fromPacketBuffer,
+            RebornNetwork::handle)
     }
 }

@@ -6,21 +6,20 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.text.TextFormatting
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
-import ru.rikgela.russianmagic.objects.mana.PlayerMana
+import ru.rikgela.russianmagic.objects.player.mana.PlayerMana
 import java.awt.Color
 import java.lang.Float.min
 
 @OnlyIn(Dist.CLIENT)
-class GuiManaHUD(
+class ManaHUD(
         private val height: Int = 10,
         private val width: Int = 100,
         private val xPos: Int = 1,
-        private val yPos: Int = 95,
+        private val yPos: Int = 94,
 ) : AbstractGui() {
 
     fun drawHUD() {
         val mana = PlayerMana.fromPlayer(minecraft.player as PlayerEntity)
-
         val x = minecraft.mainWindow.scaledWidth * xPos / 100
         val y = minecraft.mainWindow.scaledHeight * yPos / 100
         var color = 0x337CFF

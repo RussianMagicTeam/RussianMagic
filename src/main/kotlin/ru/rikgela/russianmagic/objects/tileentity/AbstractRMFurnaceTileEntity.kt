@@ -25,6 +25,8 @@ import net.minecraftforge.items.wrapper.RecipeWrapper
 import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace
 import ru.rikgela.russianmagic.objects.mana.*
+import ru.rikgela.russianmagic.objects.mana.transfer.ManaReceiver
+import ru.rikgela.russianmagic.objects.mana.transfer.ManaTaker
 import ru.rikgela.russianmagic.util.RMItemHandler
 import ru.rikgela.russianmagic.util.RMMekanism
 import java.util.stream.Collectors
