@@ -51,10 +51,46 @@ object OreGeneration {
         (naturalStone, RMBlocks.MARBLE_BLOCK.get().defaultState, 55))
                 .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 10, 256))))
 
-
         Biomes.RIVER.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
         (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
                 .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+
+        Biomes.COLD_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+        (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+
+        Biomes.DEEP_COLD_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+        (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+
+        Biomes.DEEP_FROZEN_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+        (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+
+        Biomes.DEEP_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+        (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+
+        Biomes.DEEP_LUKEWARM_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+        (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+
+        Biomes.DEEP_WARM_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+        (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+
+        Biomes.FROZEN_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+        (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+
+        Biomes.LUKEWARM_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+        (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+
+        Biomes.WARM_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+        (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+
 
         Biomes.SWAMP.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
         (naturalStone, RMBlocks.WHITE_JADE_BLOCK.get().defaultState, 55))
