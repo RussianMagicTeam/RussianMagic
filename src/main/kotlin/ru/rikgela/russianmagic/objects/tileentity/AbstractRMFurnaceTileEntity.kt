@@ -48,7 +48,7 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     val name: ITextComponent
         get() = customName ?: defaultName
 
-    val rate: Float
+    override val rate: Float
         get() = manaTaker.rate
 
     private val defaultName: ITextComponent
@@ -268,9 +268,10 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         manaSpreader: BlockPos,
         manaConsumer: BlockPos,
         server: MinecraftServer,
-        worldId: Int
+        worldId: Int,
+        sensitivity: Float
     ) {
-        manaTaker.connectToManaSpreader(manaSpreader, manaConsumer, server, worldId)
+        manaTaker.connectToManaSpreader(manaSpreader, manaConsumer, server, worldId, sensitivity)
     }
 
 }

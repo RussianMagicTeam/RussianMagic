@@ -1,6 +1,7 @@
 package ru.rikgela.russianmagic.objects.player.mana
 
 import PLAYER_MANA_CAP
+import Reborn
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.server.MinecraftServer
@@ -15,21 +16,21 @@ import ru.rikgela.russianmagic.objects.mana.transfer.ManaTaker
 
 class PlayerMana : Mana(), IPlayerMana, IManaTaker {
     // Properties
-    var maxMana = 0.0F
-    private var ticks = 0
-    private val koef = 3F / 20F
-    var canCast = true
-
+    var maxMana: Float = 1000.0F
+    private var ticks: Int = 0
+    private val koef: Float = 3F / 20F
+    private var canCast: Boolean = true
+    private val sensitivity: Float = 0.1F
     private var manaTaker: ManaTaker = ManaTaker()
+
+    override val rate: Float
+        get() = manaTaker.rate
 
     override val isConnectedToManaSpreader: Boolean
         get() = manaTaker.isConnectedToManaSpreader
 
     override val spreaderWorldPos: String
         get() = manaTaker.spreaderWorldPos
-
-    val rate: Float
-        get() = manaTaker.rate
 
     // To save
     override fun toByteArray(): ByteArray {
@@ -81,15 +82,13 @@ class PlayerMana : Mana(), IPlayerMana, IManaTaker {
     override fun playerTick(playerIn: ServerPlayerEntity) {
         if (ticks >= 20) {
             ticks = 0
-            val reborn = Reborn.fromPlayer(playerIn)
-            if (currentMana <= maxMana)
-                fill(Integer.max((maxMana.toInt() - currentMana) / 100, 1))
-            else {
-                consume(Integer.max(((currentMana - maxMana) * koef).toInt(), 1), playerIn)
-            }
-            maxMana = baseMaxMana.toFloat() * reborn.rebornStage
+            naturalManaBreath(playerIn)
         }
         ticks++
+    }
+
+    fun maxManaRefresh(reborn: Reborn){
+        maxMana = baseMaxMana.toFloat() * reborn.rebornStage
     }
 
     // Methods
@@ -97,9 +96,10 @@ class PlayerMana : Mana(), IPlayerMana, IManaTaker {
         manaSpreader: BlockPos,
         manaConsumer: BlockPos,
         server: MinecraftServer,
-        worldId: Int
+        worldId: Int,
+        sensitivity: Float
     ) {
-        manaTaker.connectToManaSpreader(manaSpreader, server, worldId)
+        manaTaker.connectToManaSpreader(manaSpreader, server, worldId, this.sensitivity)
     }
 
     override fun disconnectToManaSpreader() {
@@ -114,14 +114,61 @@ class PlayerMana : Mana(), IPlayerMana, IManaTaker {
         canCast = true
     }
 
-    override fun consume(points: Int, player: ServerPlayerEntity): Boolean {
+    fun meditationStart(meditationDepth: Float){
+        this.blockMana()
+        manaTaker.rate = sensitivity * (meditationDepth)
+    }
+
+    fun meditationStop(){
+        this.allowMana()
+        manaTaker.rate = sensitivity
+    }
+
+    private fun naturalManaBreath(playerIn: ServerPlayerEntity){
+        val reborn: Reborn = Reborn.fromPlayer(playerIn)
+        if (this.currentMana >= this.maxMana * 10){
+            if (!reborn.isInReborn){
+                reborn.startReborn(playerIn)
+            }
+        }
+        else{
+            if (reborn.isInReborn) {
+                reborn.stopReborn(playerIn)
+            }
+        }
+        val meditation = MeditationReborn.fromPlayer(playerIn)
+        if (meditation.inMeditation) {
+            val curMaxMana = maxMana * 10
+            if (currentMana <= curMaxMana) {
+                fill(Integer.max((curMaxMana.toInt() - currentMana) / 100, 1))
+                fill(manaTaker.getMana(curMaxMana.toInt(), playerIn.getServer()!!, playerIn.position))
+            }
+            else {
+                val points = Integer.max(((currentMana - curMaxMana) * koef).toInt(), 1)
+                consume(points)
+                sendToPlayer(playerIn)
+            }
+        }
+        else {
+            if (currentMana <= maxMana)
+                fill(Integer.max((maxMana.toInt() - currentMana) / 100, 1))
+            else {
+                val points = Integer.max(((currentMana - maxMana) * koef).toInt(), 1)
+                consume(points)
+                reborn.addPrepare(points * 0.0001F)
+                sendToPlayer(playerIn)
+            }
+        }
+    }
+    
+    override fun artificialConsume(points: Int, player: ServerPlayerEntity): Boolean {
         if(canCast){
             val manaFromMagicSource = manaTaker.getMana((points * 0.9F).toInt(), player.getServer()!!, player.position)
             return if (consume(points - manaFromMagicSource)) {
                 if (points > maxMana / 10) {
                     player.attackEntityFrom(DamageSource.MAGIC, (100F * (points - maxMana * 0.1F) / maxMana))
                 }
-                Reborn.fromPlayer(player).addPrepare(points * 0.1F)
+                Reborn.fromPlayer(player).addPrepare(points * 0.01F)
                 sendToPlayer(player)
                 true
             } else {

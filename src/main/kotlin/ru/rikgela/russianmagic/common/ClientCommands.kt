@@ -115,7 +115,7 @@ class RMCCMessage(
                         playerMana.fill(
                             tile.spread(
                                 min(tile.maxSpread, tile.currentMana),
-                                0.1F
+                                playerMana.rate
                             )
                         )
                     }

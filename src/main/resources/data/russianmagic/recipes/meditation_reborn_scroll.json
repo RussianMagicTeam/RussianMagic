@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X#X",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "russianmagic:agate"
+    },
+    "#": {
+      "item": "minecraft:paper"
+    }
+  },
+  "result": {
+    "item": "russianmagic:meditation_reborn_scroll"
+  }
+}

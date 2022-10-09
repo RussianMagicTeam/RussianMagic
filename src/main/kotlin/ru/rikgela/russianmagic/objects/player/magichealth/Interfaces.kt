@@ -8,6 +8,7 @@ interface IMagicHealthBase {
 }
 
 interface IMagicHealth : IMagicHealthBase {
+    fun playerTick(playerIn: ServerPlayerEntity)
     fun toByteArray(): ByteArray
     fun harmMagicHealth(points: Int)
     fun healMagicHealth(points: Int)

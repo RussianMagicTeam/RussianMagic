@@ -245,6 +245,9 @@ object RMItems {
     val SPELL_OF_FIREBALL: RegistryObject<Item> = ITEMS.register("spell_of_fireball") {
         FireballScroll(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP))
     }
+    val MEDITATION_REBORN_SCROLL: RegistryObject<Item> = ITEMS.register("meditation_reborn_scroll") {
+        MeditationRebornScroll(Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP))
+    }
 
     //tree
     val EBONY_SAPLING: RegistryObject<Item?>? = ITEMS.register("ebony_sapling") { BlockItem(RMBlocks.EBONY_SAPLING.get(), Item.Properties().group(ItemGroups.RUSSIAN_MAGIC_ITEM_GROUP)) }

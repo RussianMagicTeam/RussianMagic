@@ -32,7 +32,7 @@ class FireballScroll(properties: Properties) : Item(properties) {
     override fun onItemRightClick(worldIn: World, playerIn: PlayerEntity, handIn: Hand): ActionResult<ItemStack> {
         if(playerIn is ServerPlayerEntity) {
             val mana = PlayerMana.fromPlayer(playerIn)
-            if (mana.consume(100, playerIn)) {
+            if (mana.artificialConsume(100, playerIn)) {
                 val looking: Vec3d = playerIn.lookVec
                 val projectileEntity = ProjectileEntity(worldIn, playerIn.posX, playerIn.posY + 1.5f, playerIn.posZ, looking.x, looking.y, looking.z)
                 worldIn.addEntity(projectileEntity)

@@ -19,7 +19,7 @@ class RMAnalyzer(
         if (!world.isRemote) {
             val tileentity = world.getTileEntity(blockPos)
             if (playerEntity is ServerPlayerEntity)
-                if (PlayerMana.fromPlayer(playerEntity).consume(100, playerEntity)) {
+                if (PlayerMana.fromPlayer(playerEntity).artificialConsume(100, playerEntity)) {
                     if (tileentity is IMana) {
                         (playerEntity).sendMessage(
                                 StringTextComponent(

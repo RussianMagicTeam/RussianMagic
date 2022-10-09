@@ -20,7 +20,7 @@ class RMLinkDestroyer(
             if (tileEntity is IManaTaker) {
                 tileEntity.disconnectToManaSpreader()
                 if (playerEntity is ServerPlayerEntity)
-                    if (PlayerMana.fromPlayer(playerEntity).consume(30, playerEntity)) {
+                    if (PlayerMana.fromPlayer(playerEntity).artificialConsume(30, playerEntity)) {
                         (playerEntity).sendMessage(
                                 StringTextComponent(
                                         String.format("Link was destroyed successfully")

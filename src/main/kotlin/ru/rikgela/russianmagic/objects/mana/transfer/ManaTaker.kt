@@ -6,14 +6,21 @@ import ru.rikgela.russianmagic.objects.mana.IManaSpreader
 import ru.rikgela.russianmagic.objects.mana.IManaTaker
 import java.lang.Float.floatToIntBits
 import java.lang.Float.intBitsToFloat
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 class ManaTaker : IManaTaker {
 
     // Properties
     var spreaderPos: BlockPos? = null
-    var rate: Float = 1F
+    override var rate: Float = 0F
+        set(value){
+            field = max(min(value, 1F), 0F)
+        }
     var worldId: Int = 0
+    val baseDistance = 100F
+    var trueDistance = 0F
     override val isConnectedToManaSpreader: Boolean
         get() = spreaderPos != null
     override val spreaderWorldPos: String
@@ -78,6 +85,7 @@ class ManaTaker : IManaTaker {
         if ((spreaderPos?.y ?: -1) == -1) {
             spreaderPos = null
         }
+        this.trueDistance = this.baseDistance * this.rate
         return i
     }
 
@@ -89,7 +97,8 @@ class ManaTaker : IManaTaker {
         manaSpreader: BlockPos,
         manaConsumer: BlockPos,
         server: MinecraftServer,
-        worldId: Int
+        worldId: Int,
+        sensitivity: Float
     ) {
         server.forgeGetWorldMap().forEach { dim, world ->
             if (dim.id == worldId) {
@@ -104,7 +113,8 @@ class ManaTaker : IManaTaker {
                             manaConsumer.z.toDouble()
                         ).toFloat()
                     )
-                    rate = if (distance > 99) 1F / distance else (1F - distance * 0.01).toFloat()
+                    this.rate = sensitivity * if (distance > 99) 1F / distance else (1F - distance * 0.01).toFloat()
+                    this.trueDistance = this.baseDistance * this.rate
                 }
             }
         }
@@ -113,7 +123,8 @@ class ManaTaker : IManaTaker {
     fun connectToManaSpreader(
         manaSpreader: BlockPos,
         server: MinecraftServer,
-        worldId: Int
+        worldId: Int,
+        rate: Float
     ) {
         server.forgeGetWorldMap().forEach { dim, world ->
             if (dim.id == worldId) {
@@ -121,14 +132,17 @@ class ManaTaker : IManaTaker {
                 if (te is IManaSpreader) {
                     spreaderPos = manaSpreader
                     this.worldId = worldId
+                    this.rate = rate
+                    this.trueDistance = this.baseDistance * this.rate
                 }
             }
         }
     }
 
     override fun disconnectToManaSpreader() {
-        spreaderPos = null
-        rate = 1F
+        this.spreaderPos = null
+        this.rate = 0F
+        this.trueDistance = 0F
     }
 
 
@@ -149,10 +163,11 @@ class ManaTaker : IManaTaker {
                                 manaConsumer.z.toDouble()
                             ).toFloat()
                         )
-                        rate = if (distance > 99) 1F / distance else (1F - distance * 0.01).toFloat()
+                        val rate =
+                            if (distance >= trueDistance) (1F / distance) * this.rate
+                            else (1F - distance / trueDistance) * this.rate
+                        ret = te.spread(points, rate)
                     }
-                    ret = te.spread(points, rate)
-
                 } else {
                     //Todo action if cannot get tileEntity
                 }

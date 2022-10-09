@@ -7,6 +7,6 @@ import ru.rikgela.russianmagic.objects.mana.IManaTaker
 interface IPlayerMana : IMana, IManaTaker {
     //val manaPerTick: Float
     fun playerTick(playerIn: ServerPlayerEntity)
-    fun consume(points: Int, player: ServerPlayerEntity): Boolean
+    fun artificialConsume(points: Int, player: ServerPlayerEntity): Boolean
     fun sendToPlayer(player: ServerPlayerEntity)
 }

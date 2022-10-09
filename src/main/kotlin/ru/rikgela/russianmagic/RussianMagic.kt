@@ -1,6 +1,11 @@
 package ru.rikgela.russianmagic
 
+import IMeditationReborn
 import MagicHealthEventHandler
+import MeditationReborn
+import MeditationRebornEventHandler
+import MeditationRebornNetwork
+import MeditationRebornStorage
 import Reborn
 import net.minecraft.client.Minecraft
 import net.minecraft.client.particle.IAnimatedSprite
@@ -27,6 +32,7 @@ import ru.rikgela.russianmagic.objects.player.magichealth.MagicHealthCapabilityH
 import ru.rikgela.russianmagic.objects.player.magichealth.MagicHealthNetwork
 import ru.rikgela.russianmagic.objects.player.magichealth.MagicHealthStorage
 import ru.rikgela.russianmagic.objects.player.mana.*
+import ru.rikgela.russianmagic.objects.player.meditation.reborn.MeditationRebornCapabilityHandler
 import ru.rikgela.russianmagic.objects.player.reborn.*
 import ru.rikgela.russianmagic.oregenerator.OreGeneration
 
@@ -63,6 +69,8 @@ class RussianMagic {
         MinecraftForge.EVENT_BUS.register(MagicHealthEventHandler())
         MinecraftForge.EVENT_BUS.register(RebornCapabilityHandler())
         MinecraftForge.EVENT_BUS.register(RebornEventHandler())
+        MinecraftForge.EVENT_BUS.register(MeditationRebornCapabilityHandler())
+        MinecraftForge.EVENT_BUS.register(MeditationRebornEventHandler())
 
     }
 
@@ -89,6 +97,7 @@ class RussianMagic {
         CapabilityManager.INSTANCE.register(IMagicHealth::class.java, MagicHealthStorage()) { MagicHealth() }
         CapabilityManager.INSTANCE.register(IPlayerMana::class.java, PlayerManaStorage()) { PlayerMana() }
         CapabilityManager.INSTANCE.register(IReborn::class.java, RebornStorage()) { Reborn() }
+        CapabilityManager.INSTANCE.register(IMeditationReborn::class.java, MeditationRebornStorage()) { MeditationReborn() }
 
         @Suppress("INACCESSIBLE_TYPE")
         RMNetworkChannel.registerMessage(
@@ -132,5 +141,12 @@ class RussianMagic {
             RebornNetwork::encoder,
             RebornNetwork.Companion::fromPacketBuffer,
             RebornNetwork::handle)
+        @Suppress("INACCESSIBLE_TYPE")
+        RMNetworkChannel.registerMessage(
+            networkIndex++,
+            MeditationRebornNetwork::class.java,
+            MeditationRebornNetwork::encoder,
+            MeditationRebornNetwork.Companion::fromPacketBuffer,
+            MeditationRebornNetwork::handle)
     }
 }

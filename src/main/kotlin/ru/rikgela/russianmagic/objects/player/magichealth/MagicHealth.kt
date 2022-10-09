@@ -3,17 +3,27 @@ package ru.rikgela.russianmagic.objects.player
 import MAGIC_HEALTH_CAP
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
+import net.minecraft.potion.EffectInstance
+import net.minecraft.potion.Effects
 import net.minecraftforge.fml.network.PacketDistributor
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.objects.player.magichealth.MagicHealthNetwork
 import java.lang.Integer.max
 import java.lang.Integer.min
+import kotlin.random.Random
 
 open class MagicHealth: IMagicHealth {
 
     // Properties
     override var curMagicHealth = 1000
     override var maxMagicHealth = 1000
+    var ticks = 0
+    val magicDiseases: List<EffectInstance> = listOf(
+        EffectInstance(Effects.WEAKNESS, 200, 1),
+        EffectInstance(Effects.BLINDNESS, 200, 1),
+        EffectInstance(Effects.WITHER, 200, 1)
+    )
+    private val magicRandom: Random = Random(System.nanoTime())
 
     // To save
     override fun toByteArray(): ByteArray {
@@ -68,6 +78,16 @@ open class MagicHealth: IMagicHealth {
 
     override fun sendToPlayer(player: ServerPlayerEntity) {
         RMNetworkChannel.send(PacketDistributor.PLAYER.with { player }, MagicHealthNetwork(this.toByteArray()))
+    }
+
+    override fun playerTick(playerIn: ServerPlayerEntity){
+        if (ticks == 200){
+            if (magicRandom.nextInt(0, this.maxMagicHealth + 1) > this.curMagicHealth){
+                playerIn.addPotionEffect(magicDiseases[magicRandom.nextInt(0, magicDiseases.size)])
+            }
+            ticks = 0
+        }
+        ticks += 1
     }
 
     // Methods

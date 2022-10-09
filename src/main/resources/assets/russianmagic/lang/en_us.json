@@ -51,11 +51,14 @@
   "block.russianmagic.aquamarine_block": "Aquamarine block",
   "block.russianmagic.aquamarine_block_ore": "Aquamarine ore",
   "block.russianmagic.rhinestone_block": "Rhinestone block",
+
   "item.russianmagic.spell_of_regeneration": "Spell of Regeneration",
   "item.russianmagic.spell_of_fireball": "Spell of Fireball",
   "item.russianmagic.rm_analyzer": "RM Analyzer",
   "item.russianmagic.rm_link_creator": "RM Link creator",
   "item.russianmagic.rm_link_destroyer": "RM Link destroyer",
+  "item.russinmagic.meditation_reborn_scroll": "Scroll of Reborn meditation",
+
   "item.russianmagic.jasper": "Jasper",
   "block.russianmagic.jasper_block": "Jasper block",
   "block.russianmagic.jasper_block_ore": "Jasper ore",

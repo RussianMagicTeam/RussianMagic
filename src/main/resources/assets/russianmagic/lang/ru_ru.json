@@ -51,11 +51,14 @@
   "block.russianmagic.aquamarine_block_ore": "Руда аквамарина",
   "block.russianmagic.rhinestone_block": "Блок горного хрусталя",
   "block.russianmagic.rhinestone_block_ore": "Руда горного хрусталя",
+
   "item.russianmagic.spell_of_regeneration": "Заклинание регенерации",
   "item.russianmagic.spell_of_fireball": "Заклинание огненного шара",
   "item.russianmagic.rm_analyzer": "РМ Анализатор",
   "item.russianmagic.rm_link_creator": "РМ Связыватель",
   "item.russianmagic.rm_link_destroyer": "РМ разрушитель связей",
+  "item.russinmagic.meditation_reborn_scroll": "Свиток медитации перерождения",
+
   "item.russianmagic.jasper": "Яшма",
   "block.russianmagic.jasper_block": "Блок яшмы",
   "block.russianmagic.jasper_block_ore": "Руда яшмы",

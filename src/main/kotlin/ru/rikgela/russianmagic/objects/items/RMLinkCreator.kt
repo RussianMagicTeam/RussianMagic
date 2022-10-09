@@ -24,7 +24,7 @@ class RMLinkCreator(
             if (tileEntity is IManaTaker) {
                 tileEntity.connectToManaSpreader(manaSpreaderPos, tileEntity.pos, world.server!!, manaSpreaderWorldId)
                 if (playerEntity is ServerPlayerEntity) {
-                    if (PlayerMana.fromPlayer(playerEntity).consume(100, playerEntity)) {
+                    if (PlayerMana.fromPlayer(playerEntity).artificialConsume(100, playerEntity)) {
                         (playerEntity).sendMessage(
                                 StringTextComponent(
                                         String.format("Link successfully created")
@@ -38,7 +38,7 @@ class RMLinkCreator(
                 manaSpreaderPos = blockPos
                 manaSpreaderWorldId = playerEntity?.dimension?.id ?: 0
                 if (playerEntity is ServerPlayerEntity) {
-                    if (PlayerMana.fromPlayer(playerEntity).consume(100, playerEntity)) {
+                    if (PlayerMana.fromPlayer(playerEntity).artificialConsume(100, playerEntity)) {
                         (playerEntity).sendMessage(
                                 StringTextComponent(
                                         String.format("Spacetime coordinates saved")
