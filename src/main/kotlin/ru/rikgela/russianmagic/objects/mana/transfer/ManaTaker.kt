@@ -168,6 +168,9 @@ class ManaTaker : IManaTaker {
                             else (1F - distance / trueDistance) * this.rate
                         ret = te.spread(points, rate)
                     }
+                    else{
+                        ret = te.spread(points, this.rate)
+                    }
                 } else {
                     //Todo action if cannot get tileEntity
                 }

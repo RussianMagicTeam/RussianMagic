@@ -61,17 +61,23 @@ open class Mana : IMana {
     }
 
     override fun give(points: Int, rate: Float): Int {
-        var after_rate_to_send = (points * rate).toInt()
-        if (after_rate_to_send == 0) return 0
+        if (points <= 0){
+            return 0
+        }
+        var afterRateToSend = (points * rate).toInt()
+        if (afterRateToSend == 0) return 0
 
-        val after_rate_consume = (after_rate_to_send / rate).toInt()
-        if (currentMana >= after_rate_consume) {
-            currentMana -= after_rate_consume
-            return if (rate > 1F) points else if (rate < 0F) 0 else after_rate_to_send
+        val afterRateConsume = (afterRateToSend / rate).toInt()
+        if (afterRateConsume == 0){
+            return 0
+        }
+        if (currentMana >= afterRateConsume) {
+            currentMana -= afterRateConsume
+            return if (rate > 1F) points else if (rate < 0F) 0 else afterRateToSend
         } else {
-            after_rate_to_send = (currentMana * rate).toInt()
-            if (after_rate_to_send == 0) return 0
-            val tmp: Int = if (rate > 1) currentMana else if (rate < 0) 0 else after_rate_to_send
+            afterRateToSend = (currentMana * rate).toInt()
+            if (afterRateToSend == 0) return 0
+            val tmp: Int = if (rate > 1) currentMana else if (rate < 0) 0 else afterRateToSend
             currentMana = 0
             return tmp
         }

@@ -13,6 +13,7 @@ import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.objects.mana.IManaTaker
 import ru.rikgela.russianmagic.objects.mana.Mana
 import ru.rikgela.russianmagic.objects.mana.transfer.ManaTaker
+import ru.rikgela.russianmagic.objects.player.MagicHealth
 
 class PlayerMana : Mana(), IPlayerMana, IManaTaker {
     // Properties
@@ -167,6 +168,7 @@ class PlayerMana : Mana(), IPlayerMana, IManaTaker {
             return if (consume(points - manaFromMagicSource)) {
                 if (points > maxMana / 10) {
                     player.attackEntityFrom(DamageSource.MAGIC, (100F * (points - maxMana * 0.1F) / maxMana))
+                    MagicHealth.fromPlayer(player).harmMagicHealth((100F * (points - maxMana * 0.1F) / maxMana).toInt())
                 }
                 Reborn.fromPlayer(player).addPrepare(points * 0.01F)
                 sendToPlayer(player)

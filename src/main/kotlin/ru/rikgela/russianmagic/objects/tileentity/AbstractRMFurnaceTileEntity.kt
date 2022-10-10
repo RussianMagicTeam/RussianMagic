@@ -30,6 +30,8 @@ import ru.rikgela.russianmagic.objects.mana.transfer.ManaTaker
 import ru.rikgela.russianmagic.util.RMItemHandler
 import ru.rikgela.russianmagic.util.RMMekanism
 import java.util.stream.Collectors
+import kotlin.math.ceil
+import kotlin.math.roundToInt
 
 abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, val rmMekanism: RMMekanism) :
     TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver, IManaTaker,
@@ -100,7 +102,17 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
 
     override fun tick() {
         if (world?.isRemote == false) {
-            this.mana.fill(manaTaker.getMana(mana.baseMaxMana - mana.currentMana, world!!.server!!))
+            if (mana.baseMaxMana != mana.currentMana) {
+                val diffMana = mana.baseMaxMana - mana.currentMana
+                val manaToRequest = diffMana / manaTaker.rate
+                if (diffMana > 0){
+                    this.mana.fill(manaTaker.getMana(ceil(manaToRequest).toInt(), world!!.server!!))
+                }
+                else{
+                    val points = Integer.max(((currentMana - mana.baseMaxMana) * (3F/20F)).toInt(), 1)
+                    this.mana.consume(points)
+                }
+            }
             val recipe = getRecipe(inventory.getStackInSlot(0)) ?: return dropProgress()
             if (canBurn(recipe)) {
                 world!!.setBlockState(getPos(), this.blockState.with(AbstractRMFurnace.LIT, true))
@@ -258,10 +270,8 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     }
 
     override fun transfer(points: Int) {
-        //if (points <= ((mana.maxMana - mana.currentMana) / mana.maxMana)){
         manaReceiver.transfer(points)
         update()
-        //}
     }
 
     override fun connectToManaSpreader(
