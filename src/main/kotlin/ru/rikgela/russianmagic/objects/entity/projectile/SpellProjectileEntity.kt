@@ -16,17 +16,17 @@ import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.event.ForgeEventFactory
 import ru.rikgela.russianmagic.init.RMParticles
 
-abstract class SpellProjectileEntity protected constructor(p_i50173_1_: EntityType<out SpellProjectileEntity?>?, p_i50173_2_: World?) : Entity(p_i50173_1_, p_i50173_2_) {
+abstract class SpellProjectileEntity protected constructor(p_i50173_1_: EntityType<out SpellProjectileEntity?>?, p_i50173_2_: World?) : Entity(p_i50173_1_ as EntityType<*>, p_i50173_2_!!) {
     var shootingEntity: LivingEntity? = null
     private var ticksAlive = 0
     private var ticksInAir = 0
-    var accelerationX = 0.0
-    var accelerationY = 0.0
-    var accelerationZ = 0.0
+    private var accelerationX = 0.0
+    private var accelerationY = 0.0
+    private var accelerationZ = 0.0
 
     constructor(p_i50174_1_: EntityType<out SpellProjectileEntity?>?, p_i50174_2_: Double, p_i50174_4_: Double, p_i50174_6_: Double, p_i50174_8_: Double, p_i50174_10_: Double, p_i50174_12_: Double, p_i50174_14_: World?) : this(p_i50174_1_, p_i50174_14_) {
-        setLocationAndAngles(p_i50174_2_, p_i50174_4_, p_i50174_6_, rotationYaw, rotationPitch)
-        setPosition(p_i50174_2_, p_i50174_4_, p_i50174_6_)
+        this.setLocationAndAngles(p_i50174_2_, p_i50174_4_, p_i50174_6_, rotationYaw, rotationPitch)
+        this.setPosition(p_i50174_2_, p_i50174_4_, p_i50174_6_)
         val d0 = MathHelper.sqrt(p_i50174_8_ * p_i50174_8_ + p_i50174_10_ * p_i50174_10_ + p_i50174_12_ * p_i50174_12_).toDouble()
         accelerationX = p_i50174_8_ / d0 * 0.1
         accelerationY = p_i50174_10_ / d0 * 0.1
@@ -35,8 +35,8 @@ abstract class SpellProjectileEntity protected constructor(p_i50173_1_: EntityTy
 
     constructor(p_i50175_1_: EntityType<out SpellProjectileEntity?>?, p_i50175_2_: LivingEntity, p_i50175_3_: Double, p_i50175_5_: Double, p_i50175_7_: Double, p_i50175_9_: World?) : this(p_i50175_1_, p_i50175_9_) {
         shootingEntity = p_i50175_2_
-        setLocationAndAngles(p_i50175_2_.posX, p_i50175_2_.posY + 0.5F, p_i50175_2_.posZ, p_i50175_2_.rotationYaw, p_i50175_2_.rotationPitch)
-        recenterBoundingBox()
+        this.setLocationAndAngles(p_i50175_2_.posX, p_i50175_2_.posY + 0.5F, p_i50175_2_.posZ, p_i50175_2_.rotationYaw, p_i50175_2_.rotationPitch)
+        this.recenterBoundingBox()
         motion = Vec3d.ZERO
         //p_i50175_3_ = p_i50175_3_ + this.rand.nextGaussian() * 0.4D;
         //p_i50175_5_ = p_i50175_5_ + this.rand.nextGaussian() * 0.4D;
@@ -58,7 +58,7 @@ abstract class SpellProjectileEntity protected constructor(p_i50173_1_: EntityTy
         if (java.lang.Double.isNaN(d0)) {
             d0 = 4.0
         }
-        d0 = d0 * 64.0
+        d0 *= 64.0
         return distance < d0 * d0
     }
 
@@ -66,15 +66,15 @@ abstract class SpellProjectileEntity protected constructor(p_i50173_1_: EntityTy
      * Called to update the entity's position/logic.
      */
     override fun tick() {
-        if ((world.isRemote || (shootingEntity == null || !shootingEntity!!.removed) && world.isBlockLoaded(BlockPos(this))) && ticksInAir <= 2000) {
+        if ((world.isRemote || (shootingEntity == null || shootingEntity!!.isAlive) && world.isBlockLoaded(BlockPos(this))) && ticksInAir <= 2000) {
             super.tick()
             if (isFireballFiery) {
                 setFire(1)
             }
             ++ticksInAir
-            val raytraceresult = ProjectileHelper.rayTrace(this, true, ticksInAir >= 25, shootingEntity, RayTraceContext.BlockMode.COLLIDER)
-            if (raytraceresult.type != RayTraceResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
-                onImpact(raytraceresult)
+            val rayTraceResult = ProjectileHelper.rayTrace(this, true, ticksInAir >= 25, shootingEntity, RayTraceContext.BlockMode.COLLIDER)
+            if (rayTraceResult.type != RayTraceResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, rayTraceResult)) {
+                onImpact(rayTraceResult)
             }
             val vec3d = motion
             val d0 = posX + vec3d.x
@@ -84,7 +84,6 @@ abstract class SpellProjectileEntity protected constructor(p_i50173_1_: EntityTy
             var f = motionFactor
             if (this.isInWater) {
                 for (i in 0..3) {
-                    val f1 = 0.25f
                     world.addParticle(ParticleTypes.BUBBLE, d0 - vec3d.x * 0.25, d1 - vec3d.y * 0.25, d2 - vec3d.z * 0.25, vec3d.x, vec3d.y, vec3d.z)
                 }
                 f = 0.8f
@@ -108,8 +107,8 @@ abstract class SpellProjectileEntity protected constructor(p_i50173_1_: EntityTy
         }
     }
 
-    protected val isFireballFiery: Boolean
-        protected get() = false
+    private val isFireballFiery: Boolean
+        get() = false
 
 //    protected val particle: IParticleData
 //        protected get() = ParticleTypes.SMOKE
@@ -117,25 +116,25 @@ abstract class SpellProjectileEntity protected constructor(p_i50173_1_: EntityTy
     /**
      * Return the motion factor for this projectile. The factor is multiplied by the original motion.
      */
-    protected val motionFactor: Float
-        protected get() = 0.95f
+    private val motionFactor: Float
+        get() = 0.95f
 
     /**
      * Called when this EntityFireball hits a block or entity.
      */
     protected open fun onImpact(result: RayTraceResult) {
-        val `raytraceresult$type` = result.type
-        if (`raytraceresult$type` == RayTraceResult.Type.BLOCK) {
-            val blockraytraceresult = result as BlockRayTraceResult
-            val blockstate = world.getBlockState(blockraytraceresult.pos)
-            blockstate.onProjectileCollision(world, blockstate, blockraytraceresult, this)
+        val rayTraceResultType = result.type
+        if (rayTraceResultType == RayTraceResult.Type.BLOCK) {
+            val blockRayTraceResult = result as BlockRayTraceResult
+            val blockState = world.getBlockState(blockRayTraceResult.pos)
+            blockState.onProjectileCollision(world, blockState, blockRayTraceResult, this)
         }
     }
 
     public override fun writeAdditional(compound: CompoundNBT) {
         val vec3d = motion
-        compound.put("direction", newDoubleNBTList(*doubleArrayOf(vec3d.x, vec3d.y, vec3d.z)))
-        compound.put("power", newDoubleNBTList(*doubleArrayOf(accelerationX, accelerationY, accelerationZ)))
+        compound.put("direction", newDoubleNBTList(vec3d.x, vec3d.y, vec3d.z))
+        compound.put("power", newDoubleNBTList(accelerationX, accelerationY, accelerationZ))
         compound.putInt("life", ticksAlive)
     }
 
@@ -144,17 +143,17 @@ abstract class SpellProjectileEntity protected constructor(p_i50173_1_: EntityTy
      */
     public override fun readAdditional(compound: CompoundNBT) {
         if (compound.contains("power", 9)) {
-            val listnbt = compound.getList("power", 6)
-            if (listnbt.size == 3) {
-                accelerationX = listnbt.getDouble(0)
-                accelerationY = listnbt.getDouble(1)
-                accelerationZ = listnbt.getDouble(2)
+            val listNbt = compound.getList("power", 6)
+            if (listNbt.size == 3) {
+                accelerationX = listNbt.getDouble(0)
+                accelerationY = listNbt.getDouble(1)
+                accelerationZ = listNbt.getDouble(2)
             }
         }
         ticksAlive = compound.getInt("life")
         if (compound.contains("direction", 9) && compound.getList("direction", 6).size == 3) {
-            val listnbt1 = compound.getList("direction", 6)
-            this.setMotion(listnbt1.getDouble(0), listnbt1.getDouble(1), listnbt1.getDouble(2))
+            val listNbt1 = compound.getList("direction", 6)
+            this.setMotion(listNbt1.getDouble(0), listNbt1.getDouble(1), listNbt1.getDouble(2))
         } else {
             this.remove()
         }

@@ -1,7 +1,5 @@
 package ru.rikgela.russianmagic.objects.player.mana
 
-import PLAYER_MANA_CAP
-import Reborn
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.server.MinecraftServer
@@ -13,7 +11,9 @@ import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.objects.mana.IManaTaker
 import ru.rikgela.russianmagic.objects.mana.Mana
 import ru.rikgela.russianmagic.objects.mana.transfer.ManaTaker
-import ru.rikgela.russianmagic.objects.player.MagicHealth
+import ru.rikgela.russianmagic.objects.player.magichealth.MagicHealth
+import ru.rikgela.russianmagic.objects.player.meditation.reborn.MeditationReborn
+import ru.rikgela.russianmagic.objects.player.reborn.Reborn
 
 class PlayerMana : Mana(), IPlayerMana, IManaTaker {
     // Properties
@@ -59,7 +59,7 @@ class PlayerMana : Mana(), IPlayerMana, IManaTaker {
         return i
     }
 
-    // Initializators
+    // Initializers
     companion object {
         fun withParams(startManaCount: Int, maxManaCount: Int): PlayerMana {
             val ret = PlayerMana()

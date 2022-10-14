@@ -13,14 +13,14 @@ import kotlin.math.sqrt
 class ManaTaker : IManaTaker {
 
     // Properties
-    var spreaderPos: BlockPos? = null
+    private var spreaderPos: BlockPos? = null
     override var rate: Float = 0F
         set(value){
             field = max(min(value, 1F), 0F)
         }
-    var worldId: Int = 0
-    val baseDistance = 100F
-    var trueDistance = 0F
+    private var worldId: Int = 0
+    private val baseDistance = 100F
+    private var trueDistance = 0F
     override val isConnectedToManaSpreader: Boolean
         get() = spreaderPos != null
     override val spreaderWorldPos: String
@@ -100,7 +100,7 @@ class ManaTaker : IManaTaker {
         worldId: Int,
         sensitivity: Float
     ) {
-        server.forgeGetWorldMap().forEach { dim, world ->
+        server.forgeGetWorldMap().forEach { (dim, world) ->
             if (dim.id == worldId) {
                 val te = world.getTileEntity(manaSpreader)
                 if (te is IManaSpreader) {
@@ -126,7 +126,7 @@ class ManaTaker : IManaTaker {
         worldId: Int,
         rate: Float
     ) {
-        server.forgeGetWorldMap().forEach { dim, world ->
+        server.forgeGetWorldMap().forEach { (dim, world) ->
             if (dim.id == worldId) {
                 val te = world.getTileEntity(manaSpreader)
                 if (te is IManaSpreader) {
@@ -151,7 +151,7 @@ class ManaTaker : IManaTaker {
             return 0
         }
         var ret: Int? = null
-        server.forgeGetWorldMap().forEach { dim, world ->
+        server.forgeGetWorldMap().forEach { (dim, world) ->
             if (dim.id == worldId) {
                 val te = world.getTileEntity(spreaderPos!!)
                 if (te is IManaSpreader) {

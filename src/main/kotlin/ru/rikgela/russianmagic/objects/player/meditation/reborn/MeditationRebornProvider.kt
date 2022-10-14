@@ -1,3 +1,5 @@
+package ru.rikgela.russianmagic.objects.player.meditation.reborn
+
 import net.minecraft.nbt.INBT
 import net.minecraft.nbt.IntNBT
 import net.minecraft.util.Direction

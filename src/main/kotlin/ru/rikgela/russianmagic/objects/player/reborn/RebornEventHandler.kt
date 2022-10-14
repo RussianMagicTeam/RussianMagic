@@ -1,7 +1,5 @@
 package ru.rikgela.russianmagic.objects.player.reborn
 
-import REBORN_CAP
-import Reborn
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.util.text.StringTextComponent
@@ -19,7 +17,7 @@ class RebornEventHandler {
             if (player is ServerPlayerEntity)
                 playerReborn.sendToPlayer(player)
         } else {
-            player.sendMessage(StringTextComponent("Player Reborn not registered!"))
+            player.sendMessage(StringTextComponent("Player ru.rikgela.russianmagic.objects.player.reborn.Reborn not registered!"))
         }
     }
 

@@ -28,12 +28,12 @@ class RMFurnaceScreen(
         font.drawString(title.formattedText, 8.0f, 8.0f, 0x404040)
         val curMana = screenContainerMarble.tileEntityFurnace.currentMana
         val maxMana = screenContainerMarble.tileEntityFurnace.baseMaxMana
-        val Mana = I18n.format("capability.russianmagic.mana") + ": $curMana/$maxMana"
-        font.drawString(Mana, 8.0f, 16.0f, 0x404040)
+        val mana = I18n.format("capability.russianmagic.mana") + ": $curMana/$maxMana"
+        font.drawString(mana, 8.0f, 16.0f, 0x404040)
         font.drawString(playerInventory.displayName.formattedText, 8.0f, 69.0f, 0x404040)
         val df = DecimalFormat("00.00")
-        val Rate = "Rate: " + df.format(screenContainerMarble.tileEntityFurnace.rate * 100) + "%"
-        font.drawString(Rate, 8.0f, 24.0f, 0x404040)
+        val rate = "Rate: " + df.format(screenContainerMarble.tileEntityFurnace.rate * 100) + "%"
+        font.drawString(rate, 8.0f, 24.0f, 0x404040)
     }
 
     override fun render(mouseX: Int, mouseY: Int, partialTicks: Float) {

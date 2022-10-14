@@ -1,9 +1,10 @@
-
+package ru.rikgela.russianmagic.objects.player.meditation.reborn
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraftforge.fml.network.PacketDistributor
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.objects.player.mana.PlayerMana
+import ru.rikgela.russianmagic.objects.player.reborn.Reborn
 import kotlin.math.max
 import kotlin.math.min
 
@@ -51,7 +52,7 @@ open class MeditationReborn: IMeditationReborn {
         return i
     }
 
-    // Initializators
+    // Initializers
     companion object {
         fun withParams(inMeditation: Boolean, meditationProgress: Float, sinkingSpeed: Float): MeditationReborn {
             val ret = MeditationReborn()

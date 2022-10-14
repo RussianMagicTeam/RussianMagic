@@ -1,6 +1,5 @@
 package ru.rikgela.russianmagic.objects.player.mana
 
-import PLAYER_MANA_CAP
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.util.text.StringTextComponent

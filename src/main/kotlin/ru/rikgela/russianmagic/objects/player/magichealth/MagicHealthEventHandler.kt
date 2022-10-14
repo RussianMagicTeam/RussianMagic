@@ -1,4 +1,5 @@
-import MAGIC_HEALTH_CAP
+package ru.rikgela.russianmagic.objects.player.magichealth
+
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.util.text.StringTextComponent
@@ -6,9 +7,6 @@ import net.minecraftforge.event.TickEvent
 import net.minecraftforge.event.entity.player.PlayerEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.LogicalSide
-import ru.rikgela.russianmagic.objects.player.IMagicHealth
-import ru.rikgela.russianmagic.objects.player.MagicHealth
-import ru.rikgela.russianmagic.objects.player.mana.PlayerMana
 
 class MagicHealthEventHandler {
     @SubscribeEvent

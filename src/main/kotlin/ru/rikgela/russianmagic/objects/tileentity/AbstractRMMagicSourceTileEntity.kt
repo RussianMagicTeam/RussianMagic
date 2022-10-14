@@ -30,22 +30,22 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
     override val maxSpread: Int
         get() = manaSpreader.maxSpread
 
-    var player_uuid: ITextComponent? = null
+    var playerUuid: ITextComponent? = null
 
-    fun ManaisUsableByPlayer(player: PlayerEntity): Float {
-        if (world!!.getTileEntity(pos) !== this || player.displayNameAndUUID != player_uuid) {
-            return 0F
+    fun manaIsUsableByPlayer(player: PlayerEntity): Float {
+        return if (world!!.getTileEntity(pos) !== this || player.displayNameAndUUID != playerUuid) {
+            0F
         } else {
-            return 1F / player.getDistanceSq(pos.x.toDouble() + 0.5, pos.y.toDouble() + 0.5, pos.z.toDouble() + 0.5)
+            1F / player.getDistanceSq(pos.x.toDouble() + 0.5, pos.y.toDouble() + 0.5, pos.z.toDouble() + 0.5)
                 .toFloat()
         }
     }
 
-    fun ManaisUsableByTileEntity(player: PlayerEntity): Float {
-        if (world!!.getTileEntity(pos) !== this || player.displayNameAndUUID != player_uuid) {
-            return 0F
+    fun manaIsUsableByTileEntity(player: PlayerEntity): Float {
+        return if (world!!.getTileEntity(pos) !== this || player.displayNameAndUUID != playerUuid) {
+            0F
         } else {
-            return 1F / player.getDistanceSq(pos.x.toDouble() + 0.5, pos.y.toDouble() + 0.5, pos.z.toDouble() + 0.5)
+            1F / player.getDistanceSq(pos.x.toDouble() + 0.5, pos.y.toDouble() + 0.5, pos.z.toDouble() + 0.5)
                 .toFloat()
         }
     }
@@ -74,7 +74,7 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
             customName = ITextComponent.Serializer.fromJson(compound.getString("CustomName"))
         }
         if (compound.contains("PlayerUUID", Constants.NBT.TAG_STRING)) {
-            player_uuid = ITextComponent.Serializer.fromJson(compound.getString("PlayerUUID"))
+            playerUuid = ITextComponent.Serializer.fromJson(compound.getString("PlayerUUID"))
         }
         mana.loadFromByteArray(compound.getByteArray("Mana"))
     }
@@ -82,8 +82,8 @@ abstract class AbstractRMMagicSourceTileEntity(tileEntityTypeIn: TileEntityType<
     override fun write(compound: CompoundNBT): CompoundNBT {
         super.write(compound)
         compound.putByteArray("Mana", mana.toByteArray())
-        if (player_uuid != null) {
-            compound.putString("PlayerUUID", ITextComponent.Serializer.toJson(player_uuid!!))
+        if (playerUuid != null) {
+            compound.putString("PlayerUUID", ITextComponent.Serializer.toJson(playerUuid!!))
         }
         if (customName != null) {
             compound.putString("CustomName", ITextComponent.Serializer.toJson(customName!!))

@@ -1,4 +1,4 @@
-
+package ru.rikgela.russianmagic.objects.player.meditation.reborn
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.util.text.StringTextComponent

@@ -1,3 +1,5 @@
+package ru.rikgela.russianmagic.objects.player.meditation.reborn
+
 import net.minecraft.entity.player.ServerPlayerEntity
 
 interface IBaseMeditationReborn {

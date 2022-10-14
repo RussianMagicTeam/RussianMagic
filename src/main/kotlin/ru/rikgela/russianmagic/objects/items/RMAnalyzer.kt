@@ -5,7 +5,10 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemUseContext
 import net.minecraft.util.ActionResultType
 import net.minecraft.util.text.StringTextComponent
-import ru.rikgela.russianmagic.objects.mana.*
+import ru.rikgela.russianmagic.objects.mana.IMana
+import ru.rikgela.russianmagic.objects.mana.IManaReceiver
+import ru.rikgela.russianmagic.objects.mana.IManaSpreader
+import ru.rikgela.russianmagic.objects.mana.IManaTaker
 import ru.rikgela.russianmagic.objects.player.mana.PlayerMana
 
 class RMAnalyzer(
@@ -17,48 +20,48 @@ class RMAnalyzer(
         val playerEntity = context.player
         var actionResult = ActionResultType.FAIL
         if (!world.isRemote) {
-            val tileentity = world.getTileEntity(blockPos)
+            val tileEntity = world.getTileEntity(blockPos)
             if (playerEntity is ServerPlayerEntity)
                 if (PlayerMana.fromPlayer(playerEntity).artificialConsume(100, playerEntity)) {
-                    if (tileentity is IMana) {
+                    if (tileEntity is IMana) {
                         (playerEntity).sendMessage(
                                 StringTextComponent(
                                         String.format("Mana: "
-                                                + tileentity.currentMana.toString() + ":"
-                                                + tileentity.baseMaxMana.toString())
+                                                + tileEntity.currentMana.toString() + ":"
+                                                + tileEntity.baseMaxMana.toString())
                                 )
                         )
                         actionResult = ActionResultType.SUCCESS
                     }
-                    if (tileentity is IManaReceiver) {
+                    if (tileEntity is IManaReceiver) {
                         (playerEntity).sendMessage(
                                 StringTextComponent(
                                         String.format("ManaReceiver: "
-                                                + tileentity.currentMana.toString() + ":"
-                                                + tileentity.baseMaxMana.toString())
+                                                + tileEntity.currentMana.toString() + ":"
+                                                + tileEntity.baseMaxMana.toString())
                                 )
                         )
                         actionResult = ActionResultType.SUCCESS
                     }
-                    if (tileentity is IManaSpreader) {
+                    if (tileEntity is IManaSpreader) {
                         (playerEntity).sendMessage(
                                 StringTextComponent(
                                         String.format(
                                                 "ManaSpreader: "
-                                                        + tileentity.currentMana.toString() + ":"
-                                                        + tileentity.baseMaxMana.toString()
+                                                        + tileEntity.currentMana.toString() + ":"
+                                                        + tileEntity.baseMaxMana.toString()
                                         )
                                 )
                         )
                         actionResult = ActionResultType.SUCCESS
                     }
-                    if (tileentity is IManaTaker) {
+                    if (tileEntity is IManaTaker) {
                         (playerEntity).sendMessage(
                                 StringTextComponent(
                                         String.format(
                                                 "ManaTaker: "
-                                                        + tileentity.isConnectedToManaSpreader.toString() + ":"
-                                                        + tileentity.spreaderWorldPos
+                                                        + tileEntity.isConnectedToManaSpreader.toString() + ":"
+                                                        + tileEntity.spreaderWorldPos
                                         )
                                 )
                         )

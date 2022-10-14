@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.objects.player
+package ru.rikgela.russianmagic.objects.player.magichealth
 
 import net.minecraft.entity.player.ServerPlayerEntity
 

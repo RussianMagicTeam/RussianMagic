@@ -1,12 +1,13 @@
+package ru.rikgela.russianmagic.objects.player.reborn
+
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.util.text.StringTextComponent
 import net.minecraftforge.fml.network.PacketDistributor
 import ru.rikgela.russianmagic.common.RMNetworkChannel
-import ru.rikgela.russianmagic.objects.player.MagicHealth
+import ru.rikgela.russianmagic.objects.player.magichealth.MagicHealth
 import ru.rikgela.russianmagic.objects.player.mana.PlayerMana
-import ru.rikgela.russianmagic.objects.player.reborn.IReborn
-import ru.rikgela.russianmagic.objects.player.reborn.RebornNetwork
+import ru.rikgela.russianmagic.objects.player.meditation.reborn.MeditationReborn
 import kotlin.math.max
 import kotlin.math.min
 
@@ -22,7 +23,7 @@ open class Reborn: IReborn {
     override fun toByteArray(): ByteArray {
         val rebornPrepare = java.lang.Float.floatToIntBits(this.rebornPrepare)
         val rebornProgress = java.lang.Float.floatToIntBits(this.rebornProgress)
-        val ret = byteArrayOf(
+        return byteArrayOf(
             ((rebornPrepare ushr 24) and 0xFFFF).toByte(),
             ((rebornPrepare ushr 16) and 0xFFFF).toByte(),
             ((rebornPrepare ushr 8) and 0xFFFF).toByte(),
@@ -37,7 +38,6 @@ open class Reborn: IReborn {
             ((rebornStage ushr 8) and 0xFFFF).toByte(),
             (rebornStage and 0xFFFF).toByte(),
         )
-        return ret
     }
 
     // To load
@@ -61,7 +61,7 @@ open class Reborn: IReborn {
         return i
     }
 
-    // Initializators
+    // Initializers
     companion object {
         fun withParams(rebornPrepare: Float, isInReborn: Boolean, rebornProgress: Float, rebornStage: Int): Reborn {
             val ret = Reborn()
@@ -121,7 +121,7 @@ open class Reborn: IReborn {
         if (this.rebornPrepare == 100F){
             this.isInReborn = true
             PlayerMana.fromPlayer(playerIn).blockMana()
-            playerIn.sendMessage(StringTextComponent("Reborn is started!"))
+            playerIn.sendMessage(StringTextComponent("ru.rikgela.russianmagic.objects.player.reborn.Reborn is started!"))
             sendToPlayer(playerIn)
         }
         else{
@@ -136,7 +136,7 @@ open class Reborn: IReborn {
         this.isInReborn = false
         MagicHealth.fromPlayer(playerIn).harmMagicHealth(this.rebornProgress.toInt())
         PlayerMana.fromPlayer(playerIn).allowMana()
-        playerIn.sendMessage(StringTextComponent("Reborn is stopped!"))
+        playerIn.sendMessage(StringTextComponent("ru.rikgela.russianmagic.objects.player.reborn.Reborn is stopped!"))
         sendToPlayer(playerIn)
     }
 }

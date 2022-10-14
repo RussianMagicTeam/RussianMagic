@@ -24,16 +24,18 @@ import net.minecraftforge.common.util.Constants
 import net.minecraftforge.items.wrapper.RecipeWrapper
 import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace
-import ru.rikgela.russianmagic.objects.mana.*
+import ru.rikgela.russianmagic.objects.mana.IMana
+import ru.rikgela.russianmagic.objects.mana.IManaReceiver
+import ru.rikgela.russianmagic.objects.mana.IManaTaker
+import ru.rikgela.russianmagic.objects.mana.Mana
 import ru.rikgela.russianmagic.objects.mana.transfer.ManaReceiver
 import ru.rikgela.russianmagic.objects.mana.transfer.ManaTaker
 import ru.rikgela.russianmagic.util.RMItemHandler
 import ru.rikgela.russianmagic.util.RMMekanism
 import java.util.stream.Collectors
 import kotlin.math.ceil
-import kotlin.math.roundToInt
 
-abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, val rmMekanism: RMMekanism) :
+abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, private val rmMekanism: RMMekanism) :
     TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver, IManaTaker,
     ISidedInventory {
     var customName: ITextComponent? = null
@@ -79,7 +81,7 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         return name
     }
 
-    fun update() {
+    private fun update() {
         markDirty()
         if (world != null && world?.isRemote != true) {
             world!!.notifyBlockUpdate(getPos(), this.blockState, this.blockState,
@@ -93,7 +95,7 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         update()
     }
 
-    fun canBurn(recipe: FurnaceRecipe): Boolean {
+    private fun canBurn(recipe: FurnaceRecipe): Boolean {
         return mana.currentMana >= 10 &&
                 (inventory.getStackInSlot(1).count == 0
                         || (inventory.getStackInSlot(1).item == recipe.recipeOutput.item

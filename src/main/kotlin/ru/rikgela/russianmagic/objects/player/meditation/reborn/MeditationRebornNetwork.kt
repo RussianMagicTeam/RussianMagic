@@ -1,3 +1,5 @@
+package ru.rikgela.russianmagic.objects.player.meditation.reborn
+
 import net.minecraft.client.Minecraft
 import net.minecraft.network.PacketBuffer
 import net.minecraftforge.api.distmarker.Dist

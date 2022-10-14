@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.oregenerator
+package ru.rikgela.russianmagic.init
 
 
 import net.minecraft.world.biome.Biomes
@@ -9,7 +9,6 @@ import net.minecraft.world.gen.placement.CountRangeConfig
 import net.minecraft.world.gen.placement.FrequencyConfig
 import net.minecraft.world.gen.placement.Placement
 import net.minecraftforge.registries.ForgeRegistries
-import ru.rikgela.russianmagic.init.RMBlocks
 import ru.rikgela.russianmagic.objects.structures.EbonyTree
 
 

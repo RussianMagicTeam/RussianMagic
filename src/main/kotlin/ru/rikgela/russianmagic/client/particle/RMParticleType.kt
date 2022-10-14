@@ -7,8 +7,6 @@ import net.minecraft.particles.IParticleData
 import net.minecraft.particles.IParticleData.IDeserializer
 import net.minecraft.particles.ParticleType
 import net.minecraft.util.registry.Registry
-import net.minecraftforge.api.distmarker.Dist
-import net.minecraftforge.api.distmarker.OnlyIn
 
 
 class ColoredParticleType(
@@ -16,7 +14,7 @@ class ColoredParticleType(
     val red: Float = 0f,
     val green: Float = 0f,
     val blue: Float = 0f,
-    val hash: Int? = null
+    private val hash: Int? = null
 ) :
     ParticleType<ColoredParticleType>(alwaysShow, DESERIALIZER), IParticleData {
     override fun getType(): ParticleType<ColoredParticleType> {

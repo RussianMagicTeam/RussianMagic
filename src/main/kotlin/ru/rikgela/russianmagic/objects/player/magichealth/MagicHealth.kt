@@ -1,13 +1,11 @@
-package ru.rikgela.russianmagic.objects.player
+package ru.rikgela.russianmagic.objects.player.magichealth
 
-import MAGIC_HEALTH_CAP
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.entity.player.ServerPlayerEntity
 import net.minecraft.potion.EffectInstance
 import net.minecraft.potion.Effects
 import net.minecraftforge.fml.network.PacketDistributor
 import ru.rikgela.russianmagic.common.RMNetworkChannel
-import ru.rikgela.russianmagic.objects.player.magichealth.MagicHealthNetwork
 import java.lang.Integer.max
 import java.lang.Integer.min
 import kotlin.random.Random
@@ -17,8 +15,8 @@ open class MagicHealth: IMagicHealth {
     // Properties
     override var curMagicHealth = 1000
     override var maxMagicHealth = 1000
-    var ticks = 0
-    val magicDiseases: List<EffectInstance> = listOf(
+    private var ticks = 0
+    private val magicDiseases: List<EffectInstance> = listOf(
         EffectInstance(Effects.WEAKNESS, 200, 1),
         EffectInstance(Effects.BLINDNESS, 200, 1),
         EffectInstance(Effects.WITHER, 200, 1)
@@ -53,7 +51,7 @@ open class MagicHealth: IMagicHealth {
         return i
     }
 
-    // Initializators
+    // Initializers
     companion object {
         fun withParams(startCurMagicHealth: Int, startMaxMagicHealth: Int): MagicHealth {
             val ret = MagicHealth()

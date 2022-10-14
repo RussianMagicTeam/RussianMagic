@@ -1,7 +1,5 @@
 package ru.rikgela.russianmagic.objects.player.meditation.reborn
 
-import MeditationReborn
-import MeditationRebornProvider
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.ResourceLocation

@@ -1,3 +1,5 @@
+package ru.rikgela.russianmagic.objects.player.magichealth
+
 import net.minecraft.nbt.INBT
 import net.minecraft.nbt.IntNBT
 import net.minecraft.util.Direction
@@ -5,7 +7,6 @@ import net.minecraftforge.common.capabilities.Capability
 import net.minecraftforge.common.capabilities.CapabilityInject
 import net.minecraftforge.common.capabilities.ICapabilitySerializable
 import net.minecraftforge.common.util.LazyOptional
-import ru.rikgela.russianmagic.objects.player.IMagicHealth
 
 @CapabilityInject(IMagicHealth::class)
 var MAGIC_HEALTH_CAP: Capability<IMagicHealth>? = null

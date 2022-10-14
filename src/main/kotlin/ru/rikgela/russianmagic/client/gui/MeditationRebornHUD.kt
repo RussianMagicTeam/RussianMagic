@@ -6,9 +6,8 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.text.TextFormatting
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
-import ru.rikgela.russianmagic.objects.player.MagicHealth
+import ru.rikgela.russianmagic.objects.player.meditation.reborn.MeditationReborn
 import java.awt.Color
-import java.lang.Float.min
 
 @OnlyIn(Dist.CLIENT)
 class MeditationRebornHUD(

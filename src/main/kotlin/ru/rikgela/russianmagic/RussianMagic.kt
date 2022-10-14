@@ -1,12 +1,5 @@
 package ru.rikgela.russianmagic
 
-import IMeditationReborn
-import MagicHealthEventHandler
-import MeditationReborn
-import MeditationRebornEventHandler
-import MeditationRebornNetwork
-import MeditationRebornStorage
-import Reborn
 import net.minecraft.client.Minecraft
 import net.minecraft.client.particle.IAnimatedSprite
 import net.minecraftforge.api.distmarker.Dist
@@ -19,22 +12,19 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
-import ru.rikgela.russianmagic.client.particle.ColoredParticleType
 import ru.rikgela.russianmagic.client.particle.ManaParticle
 import ru.rikgela.russianmagic.common.RMCCMessage
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage
 import ru.rikgela.russianmagic.init.*
-import ru.rikgela.russianmagic.objects.mana.*
-import ru.rikgela.russianmagic.objects.player.IMagicHealth
-import ru.rikgela.russianmagic.objects.player.MagicHealth
-import ru.rikgela.russianmagic.objects.player.magichealth.MagicHealthCapabilityHandler
-import ru.rikgela.russianmagic.objects.player.magichealth.MagicHealthNetwork
-import ru.rikgela.russianmagic.objects.player.magichealth.MagicHealthStorage
+import ru.rikgela.russianmagic.objects.mana.IMana
+import ru.rikgela.russianmagic.objects.mana.Mana
+import ru.rikgela.russianmagic.objects.mana.ManaMessage
+import ru.rikgela.russianmagic.objects.mana.ManaStorage
+import ru.rikgela.russianmagic.objects.player.magichealth.*
 import ru.rikgela.russianmagic.objects.player.mana.*
-import ru.rikgela.russianmagic.objects.player.meditation.reborn.MeditationRebornCapabilityHandler
+import ru.rikgela.russianmagic.objects.player.meditation.reborn.*
 import ru.rikgela.russianmagic.objects.player.reborn.*
-import ru.rikgela.russianmagic.oregenerator.OreGeneration
 
 
 const val MOD_ID = "russianmagic"
@@ -46,7 +36,7 @@ class RussianMagic {
     init {
         val bus = FMLJavaModLoadingContext.get().modEventBus
 
-        // Register the setup method for modloading
+        // Register the setup method for modLoading
         FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLCommonSetupEvent ->
             setup(event)
         }
@@ -84,14 +74,14 @@ class RussianMagic {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     fun particleSetup(event: ParticleFactoryRegisterEvent) {
-        Minecraft.getInstance().particles.registerFactory<ColoredParticleType>(RMParticles.MANA_PARTICLE.get()
+        Minecraft.getInstance().particles.registerFactory(RMParticles.MANA_PARTICLE.get()
         ) { iAnimatedSprite: IAnimatedSprite ->
             ManaParticle.Companion.Factory(iAnimatedSprite)
         }
     }
 
     private fun setup(event: FMLCommonSetupEvent) {
-        //preinit
+        //preInit
         OreGeneration.setupOreGeneration()
         CapabilityManager.INSTANCE.register(IMana::class.java, ManaStorage()) { Mana() }
         CapabilityManager.INSTANCE.register(IMagicHealth::class.java, MagicHealthStorage()) { MagicHealth() }

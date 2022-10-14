@@ -4,8 +4,6 @@ import net.minecraft.client.particle.IAnimatedSprite
 import net.minecraft.client.particle.IParticleFactory
 import net.minecraft.client.particle.Particle
 import net.minecraft.world.World
-import net.minecraftforge.api.distmarker.Dist
-import net.minecraftforge.api.distmarker.OnlyIn
 
 
 class ManaParticle private constructor(
@@ -35,13 +33,13 @@ class ManaParticle private constructor(
                 ySpeed: Double,
                 zSpeed: Double
             ): Particle {
-                val manaparticle = ManaParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed)
-                manaparticle.red = typeIn.red
-                manaparticle.green = typeIn.green
-                manaparticle.blue = typeIn.blue
-                manaparticle.updateColor()
-                manaparticle.selectSpriteRandomly(spriteSet)
-                return manaparticle
+                val manaParticle = ManaParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed)
+                manaParticle.red = typeIn.red
+                manaParticle.green = typeIn.green
+                manaParticle.blue = typeIn.blue
+                manaParticle.updateColor()
+                manaParticle.selectSpriteRandomly(spriteSet)
+                return manaParticle
             }
         }
     }

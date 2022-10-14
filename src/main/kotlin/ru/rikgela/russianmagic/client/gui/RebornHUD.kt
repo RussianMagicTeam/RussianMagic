@@ -6,8 +6,7 @@ import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.text.TextFormatting
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
-import net.minecraftforge.event.world.NoteBlockEvent
-import ru.rikgela.russianmagic.objects.player.mana.PlayerMana
+import ru.rikgela.russianmagic.objects.player.reborn.Reborn
 import java.awt.Color
 import java.lang.Float.min
 

@@ -35,7 +35,7 @@ open class Mana : IMana {
         return i
     }
 
-    // Initializators
+    // Initializers
     companion object {
         fun withParams(startManaCount: Int, maxManaCount: Int): Mana {
             val ret = Mana()

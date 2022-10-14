@@ -1,6 +1,6 @@
 package ru.rikgela.russianmagic.common
 
-import PLAYER_MANA_CAP
+import ru.rikgela.russianmagic.objects.player.mana.PLAYER_MANA_CAP
 import com.google.gson.Gson
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.player.ServerPlayerEntity

@@ -1,6 +1,5 @@
 package ru.rikgela.russianmagic.objects.player.mana
 
-import PLAYER_MANA_CAP
 import net.minecraft.client.Minecraft
 import net.minecraft.network.PacketBuffer
 import net.minecraftforge.api.distmarker.Dist

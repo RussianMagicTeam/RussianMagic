@@ -1,6 +1,5 @@
 package ru.rikgela.russianmagic.objects.blocks
 
-import com.google.gson.Gson
 import net.minecraft.block.Block
 import net.minecraft.block.BlockRenderType
 import net.minecraft.block.BlockState
@@ -26,7 +25,6 @@ import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import ru.rikgela.russianmagic.common.RMCCMessage
-import ru.rikgela.russianmagic.objects.mana.IManaSpreader
 import ru.rikgela.russianmagic.objects.player.mana.IPlayerMana
 import ru.rikgela.russianmagic.objects.player.mana.PlayerMana
 import ru.rikgela.russianmagic.objects.tileentity.AbstractRMMagicSourceTileEntity
@@ -129,7 +127,7 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
             val tile = worldIn.getTileEntity(pos)
             if (tile is AbstractRMMagicSourceTileEntity) {
                 tile.customName = stack.displayName
-                tile.player_uuid = (placer as PlayerEntity).displayNameAndUUID
+                tile.playerUuid = (placer as PlayerEntity).displayNameAndUUID
                 if (placer is ServerPlayerEntity)
                     PlayerMana.fromPlayer(placer)
                         .connectToManaSpreader(pos, placer.position, worldIn.server!!, worldIn.worldType.id)

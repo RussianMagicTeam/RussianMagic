@@ -1,12 +1,10 @@
 package ru.rikgela.russianmagic.objects.player.magichealth
 
-import MAGIC_HEALTH_CAP
 import net.minecraft.client.Minecraft
 import net.minecraft.network.PacketBuffer
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import net.minecraftforge.fml.network.NetworkEvent
-import ru.rikgela.russianmagic.objects.player.MagicHealth
 import java.util.function.Supplier
 
 class MagicHealthNetwork(

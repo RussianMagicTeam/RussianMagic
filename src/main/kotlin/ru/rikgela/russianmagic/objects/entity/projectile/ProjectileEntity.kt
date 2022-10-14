@@ -1,6 +1,5 @@
 package ru.rikgela.russianmagic.objects.entity.projectile
 
-//import ru.rikgela.russianmagic.objects.entity.projectile.AbstractProjectileEntity
 import net.minecraft.block.Blocks
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
@@ -32,16 +31,16 @@ class ProjectileEntity : AbstractProjectileEntity {
                     entity.setFire(5)
                     val flag = entity.attackEntityFrom(causeFireballDamage(this, shootingEntity), 5.0f)
                     if (flag) {
-                        applyEnchantments(shootingEntity, entity)
+                        applyEnchantments(shootingEntity!!, entity)
                     } else {
                         entity.fireTimer = i
                     }
                 }
             } else if (shootingEntity == null || shootingEntity !is MobEntity || ForgeEventFactory.getMobGriefingEvent(world, shootingEntity)) {
-                val blockraytraceresult = result as BlockRayTraceResult
-                val blockpos = blockraytraceresult.pos.offset(blockraytraceresult.face)
-                if (world.isAirBlock(blockpos)) {
-                    world.setBlockState(blockpos, Blocks.FIRE.defaultState)
+                val blockRayTraceResult = result as BlockRayTraceResult
+                val blockPos = blockRayTraceResult.pos.offset(blockRayTraceResult.face)
+                if (world.isAirBlock(blockPos)) {
+                    world.setBlockState(blockPos, Blocks.FIRE.defaultState)
                 }
             }
             this.remove()

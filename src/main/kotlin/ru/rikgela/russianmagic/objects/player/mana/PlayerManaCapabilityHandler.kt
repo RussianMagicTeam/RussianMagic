@@ -1,6 +1,5 @@
 package ru.rikgela.russianmagic.objects.player.mana
 
-import PlayerManaProvider
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.util.ResourceLocation
