@@ -156,7 +156,7 @@ class PlayerMana : Mana(), IPlayerMana, IManaTaker {
             else {
                 val points = Integer.max(((currentMana - maxMana) * koef).toInt(), 1)
                 consume(points)
-                reborn.addPrepare(points * 0.0001F)
+                reborn.addPrepare(points * 0.00001F)
                 sendToPlayer(playerIn)
             }
         }
@@ -170,7 +170,7 @@ class PlayerMana : Mana(), IPlayerMana, IManaTaker {
                     player.attackEntityFrom(DamageSource.MAGIC, (100F * (points - maxMana * 0.1F) / maxMana))
                     MagicHealth.fromPlayer(player).harmMagicHealth((100F * (points - maxMana * 0.1F) / maxMana).toInt())
                 }
-                Reborn.fromPlayer(player).addPrepare(points * 0.01F)
+                Reborn.fromPlayer(player).addPrepare(points / this.maxMana)
                 sendToPlayer(player)
                 true
             } else {

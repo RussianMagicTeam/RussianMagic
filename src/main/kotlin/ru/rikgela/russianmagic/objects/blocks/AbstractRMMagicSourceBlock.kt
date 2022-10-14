@@ -1,5 +1,6 @@
 package ru.rikgela.russianmagic.objects.blocks
 
+import com.google.gson.Gson
 import net.minecraft.block.Block
 import net.minecraft.block.BlockRenderType
 import net.minecraft.block.BlockState
@@ -25,6 +26,8 @@ import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import ru.rikgela.russianmagic.common.RMCCMessage
+import ru.rikgela.russianmagic.objects.mana.IManaSpreader
+import ru.rikgela.russianmagic.objects.player.mana.IPlayerMana
 import ru.rikgela.russianmagic.objects.player.mana.PlayerMana
 import ru.rikgela.russianmagic.objects.tileentity.AbstractRMMagicSourceTileEntity
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
@@ -62,8 +65,21 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
     }
 
     override fun onEntityCollision(state: BlockState, worldIn: World, pos: BlockPos, entityIn: Entity) {
-        if (!worldIn.isRemote && entityIn is ServerPlayerEntity && VoxelShapes.compare(VoxelShapes.create(entityIn.boundingBox.offset((-pos.x).toDouble(), (-pos.y).toDouble(), (-pos.z).toDouble())), state.getShape(worldIn, pos), IBooleanFunction.AND)) {
-            RMCCMessage.transferManaFromTileEntity(pos.x, pos.y, pos.z)
+        if (
+            !worldIn.isRemote && entityIn is ServerPlayerEntity
+            && VoxelShapes.compare(
+                VoxelShapes.create(
+                    entityIn.boundingBox.offset((-pos.x).toDouble(), (-pos.y).toDouble(), (-pos.z).toDouble())
+                ), state.getShape(worldIn, pos), IBooleanFunction.AND)
+        ) {
+            val tile = worldIn.getTileEntity(BlockPos(pos.x, pos.y, pos.z)) as AbstractRMMagicSourceTileEntity
+            val playerMana: IPlayerMana = PlayerMana.fromPlayer(entityIn)
+            playerMana.fill(
+                tile.spread(
+                    Integer.min(tile.maxSpread, tile.currentMana),
+                    playerMana.rate
+                )
+            )
         }
     }
 
@@ -89,7 +105,7 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
                 if (KeyboardHelper.isHoldingShift) {
                     RMCCMessage.transferManaFromTileEntity(pos.x, pos.y, pos.z)
                 } else {
-                    val tile = (worldIn.getTileEntity(pos) as AbstractRMMagicSourceTileEntity)
+                    val tile = worldIn.getTileEntity(pos) as AbstractRMMagicSourceTileEntity
                     player.sendMessage(
                             StringTextComponent(
                                     String.format("Your magic source have §7%d§r mana left.", tile.currentMana)

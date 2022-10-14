@@ -7,6 +7,8 @@ import net.minecraft.particles.IParticleData
 import net.minecraft.particles.IParticleData.IDeserializer
 import net.minecraft.particles.ParticleType
 import net.minecraft.util.registry.Registry
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
 
 
 class ColoredParticleType(
@@ -45,8 +47,8 @@ class ColoredParticleType(
         }
     }
 
-    fun copyWithColor(red: Float, green: Float, blue: Float): ColoredParticleType {
-        return ColoredParticleType(this.alwaysShow, red, green, blue, this.hashCode())
+    fun copyWithColor(alwaysShow: Boolean, red: Float, green: Float, blue: Float): ColoredParticleType {
+        return ColoredParticleType(alwaysShow, red, green, blue, this.hashCode())
     }
 
     override fun hashCode(): Int {

@@ -1,5 +1,6 @@
 package ru.rikgela.russianmagic.objects.blocks
 
+import com.google.gson.Gson
 import net.minecraft.block.Block
 import net.minecraft.block.BlockState
 import net.minecraft.entity.LivingEntity
@@ -20,6 +21,9 @@ import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import ru.rikgela.russianmagic.common.RMCCMessage
+import ru.rikgela.russianmagic.objects.mana.IMana
+import ru.rikgela.russianmagic.objects.mana.IManaReceiver
+import ru.rikgela.russianmagic.objects.player.mana.PlayerMana
 import ru.rikgela.russianmagic.objects.tileentity.AbstractRMFurnaceTileEntity
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
 import java.util.*

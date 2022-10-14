@@ -5,11 +5,8 @@ import net.minecraft.client.particle.SpriteTexturedParticle
 import net.minecraft.tags.FluidTags
 import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
-import net.minecraftforge.api.distmarker.Dist
-import net.minecraftforge.api.distmarker.OnlyIn
 
 
-@OnlyIn(Dist.CLIENT)
 abstract class AbstractManaParticle constructor(worldIn: World, xCoordIn: Double, yCoordIn: Double, zCoordIn: Double, xSpeedIn: Double, ySpeedIn: Double, zSpeedIn: Double) : SpriteTexturedParticle(worldIn, xCoordIn, yCoordIn, zCoordIn) {
     var red: Float = 0.0f
     var blue: Float = 0.0f

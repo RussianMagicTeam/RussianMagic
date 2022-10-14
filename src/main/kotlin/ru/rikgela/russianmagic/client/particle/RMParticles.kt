@@ -7,7 +7,7 @@ import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 
-@OnlyIn(Dist.CLIENT)
+
 class ManaParticle private constructor(
     worldIn: World,
     xCoordIn: Double, yCoordIn: Double, zCoordIn: Double,
@@ -24,7 +24,6 @@ class ManaParticle private constructor(
     }
 
     companion object {
-        @OnlyIn(Dist.CLIENT)
         class Factory(private val spriteSet: IAnimatedSprite) : IParticleFactory<ColoredParticleType> {
             override fun makeParticle(
                 typeIn: ColoredParticleType,
