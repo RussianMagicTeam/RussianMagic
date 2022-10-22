@@ -12,7 +12,6 @@ import net.minecraftforge.registries.ForgeRegistries
 import ru.rikgela.russianmagic.init.RMBlocks
 import ru.rikgela.russianmagic.objects.structures.EbonyTree
 
-
 object OreGeneration {
     fun setupOreGeneration() {
         for (biome in ForgeRegistries.BIOMES) {
@@ -20,12 +19,105 @@ object OreGeneration {
 
             biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
             (naturalStone, RMBlocks.RHINESTONE_BLOCK_ORE.get().defaultState, 90))
-                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(100, 120, 10, 256))))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(100, 120, 100, 256))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.AMETHYST_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.AGATE_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.AMETRINE_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.BERYL_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.ONYX_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.CARNELIAN_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.CHALCEDONY_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.CHAROITE_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.CITRINE_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.TOPAZ_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.TANZANITE_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.SITALL_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.SAPPHIRE_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.RUBY_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.PERUNITE_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.OPAL_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.KUNZITE_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.JASPER_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.IOLITE_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.HELIODOR_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.GARNET_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.CORAL_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 30))))
+
+            biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
+            (naturalStone, RMBlocks.CHRYSOLITE_BLOCK_ORE.get().defaultState, 3))
+                    .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(20, 0, 0, 200))))
+
         }
         val naturalStone = OreFeatureConfig.FillerBlockType.NATURAL_STONE
         Biomes.OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
         (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
-                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(10, 0, 10, 256))))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(10, 0, 10, 65))))
 
         Biomes.SNOWY_BEACH.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
         (naturalStone, RMBlocks.MARBLE_BLOCK.get().defaultState, 55))
@@ -53,43 +145,43 @@ object OreGeneration {
 
         Biomes.RIVER.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
         (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
-                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 65))))
 
         Biomes.COLD_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
         (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
-                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 65))))
 
         Biomes.DEEP_COLD_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
         (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
-                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 65))))
 
         Biomes.DEEP_FROZEN_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
         (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
-                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 65))))
 
         Biomes.DEEP_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
         (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
-                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 65))))
 
         Biomes.DEEP_LUKEWARM_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
         (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
-                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 65))))
 
         Biomes.DEEP_WARM_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
         (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
-                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 65))))
 
         Biomes.FROZEN_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
         (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
-                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 65))))
 
         Biomes.LUKEWARM_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
         (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
-                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 65))))
 
         Biomes.WARM_OCEAN.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
         (naturalStone, RMBlocks.AQUAMARINE_BLOCK_ORE.get().defaultState, 100))
-                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 256))))
+                .withPlacement(Placement.COUNT_RANGE.configure(CountRangeConfig(5, 0, 10, 65))))
 
 
         Biomes.SWAMP.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, Feature.ORE.withConfiguration(OreFeatureConfig
