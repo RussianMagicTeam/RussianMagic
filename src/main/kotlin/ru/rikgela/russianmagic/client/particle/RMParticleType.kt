@@ -14,7 +14,7 @@ class ColoredParticleType(
     val red: Float = 0f,
     val green: Float = 0f,
     val blue: Float = 0f,
-    val hash: Int? = null
+    private val hash: Int? = null
 ) :
     ParticleType<ColoredParticleType>(alwaysShow, DESERIALIZER), IParticleData {
     override fun getType(): ParticleType<ColoredParticleType> {
@@ -45,8 +45,8 @@ class ColoredParticleType(
         }
     }
 
-    fun copyWithColor(red: Float, green: Float, blue: Float): ColoredParticleType {
-        return ColoredParticleType(this.alwaysShow, red, green, blue, this.hashCode())
+    fun copyWithColor(alwaysShow: Boolean, red: Float, green: Float, blue: Float): ColoredParticleType {
+        return ColoredParticleType(alwaysShow, red, green, blue, this.hashCode())
     }
 
     override fun hashCode(): Int {

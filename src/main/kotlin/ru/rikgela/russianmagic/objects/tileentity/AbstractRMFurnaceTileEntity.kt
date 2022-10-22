@@ -24,12 +24,18 @@ import net.minecraftforge.common.util.Constants
 import net.minecraftforge.items.wrapper.RecipeWrapper
 import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace
-import ru.rikgela.russianmagic.objects.mana.*
+import ru.rikgela.russianmagic.objects.mana.IMana
+import ru.rikgela.russianmagic.objects.mana.IManaReceiver
+import ru.rikgela.russianmagic.objects.mana.IManaTaker
+import ru.rikgela.russianmagic.objects.mana.Mana
+import ru.rikgela.russianmagic.objects.mana.transfer.ManaReceiver
+import ru.rikgela.russianmagic.objects.mana.transfer.ManaTaker
 import ru.rikgela.russianmagic.util.RMItemHandler
 import ru.rikgela.russianmagic.util.RMMekanism
 import java.util.stream.Collectors
+import kotlin.math.ceil
 
-abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, val rmMekanism: RMMekanism) :
+abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, private val rmMekanism: RMMekanism) :
     TileEntity(tileEntityTypeIn), ITickableTileEntity, INamedContainerProvider, IManaReceiver, IManaTaker,
     ISidedInventory {
     var customName: ITextComponent? = null
@@ -46,14 +52,36 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
     val name: ITextComponent
         get() = customName ?: defaultName
 
+    override val rate: Float
+        get() = manaTaker.rate
+
     private val defaultName: ITextComponent
         get() = TranslationTextComponent("container.$MOD_ID.${rmMekanism.name}")
+
+    override val isConnectedToManaSpreader: Boolean
+        get() = manaTaker.isConnectedToManaSpreader
+
+    override fun disconnectToManaSpreader() {
+        manaTaker.disconnectToManaSpreader()
+    }
+
+    override val spreaderWorldPos: String
+        get() = manaTaker.spreaderWorldPos
+
+    //IManaReceiver implementation
+    override val currentMana: Int
+        get() = manaReceiver.currentMana
+    override val baseMaxMana: Int
+        get() = manaReceiver.baseMaxMana
+    override val maxTransfer: Int
+        get() = manaReceiver.maxTransfer
+
 
     override fun getDisplayName(): ITextComponent {
         return name
     }
 
-    fun update() {
+    private fun update() {
         markDirty()
         if (world != null && world?.isRemote != true) {
             world!!.notifyBlockUpdate(getPos(), this.blockState, this.blockState,
@@ -67,7 +95,7 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         update()
     }
 
-    fun canBurn(recipe: FurnaceRecipe): Boolean {
+    private fun canBurn(recipe: FurnaceRecipe): Boolean {
         return mana.currentMana >= 10 &&
                 (inventory.getStackInSlot(1).count == 0
                         || (inventory.getStackInSlot(1).item == recipe.recipeOutput.item
@@ -76,7 +104,17 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
 
     override fun tick() {
         if (world?.isRemote == false) {
-            mana.fill(manaTaker.getMana(mana.maxMana - mana.currentMana, world!!.server!!))
+            if (mana.baseMaxMana != mana.currentMana) {
+                val diffMana = mana.baseMaxMana - mana.currentMana
+                val manaToRequest = diffMana / manaTaker.rate
+                if (diffMana > 0){
+                    this.mana.fill(manaTaker.getMana(ceil(manaToRequest).toInt(), world!!.server!!))
+                }
+                else{
+                    val points = Integer.max(((currentMana - mana.baseMaxMana) * (3F/20F)).toInt(), 1)
+                    this.mana.consume(points)
+                }
+            }
             val recipe = getRecipe(inventory.getStackInSlot(0)) ?: return dropProgress()
             if (canBurn(recipe)) {
                 world!!.setBlockState(getPos(), this.blockState.with(AbstractRMFurnace.LIT, true))
@@ -233,33 +271,19 @@ abstract class AbstractRMFurnaceTileEntity(tileEntityTypeIn: TileEntityType<*>, 
         return index in upSlots || index in horizontalSlots
     }
 
-    //IManaReceiver implementation
-    override val currentMana: Int
-        get() = manaReceiver.currentMana
-    override val maxMana: Int
-        get() = manaReceiver.maxMana
-    override val maxTransfer: Int
-        get() = manaReceiver.maxTransfer
-
-    override fun transfer(points: Int): Int {
-        val ret = manaReceiver.transfer(points)
-        if (ret != points) update()
-        return ret
+    override fun transfer(points: Int) {
+        manaReceiver.transfer(points)
+        update()
     }
 
-
-    override val isConnectedToManaSpreader: Boolean
-        get() = manaTaker.isConnectedToManaSpreader
-
-    override fun connectToManaSpreader(manaSpreader: BlockPos, server: MinecraftServer, worldId: Int) {
-        manaTaker.connectToManaSpreader(manaSpreader, server, worldId)
+    override fun connectToManaSpreader(
+        manaSpreader: BlockPos,
+        manaConsumer: BlockPos,
+        server: MinecraftServer,
+        worldId: Int,
+        sensitivity: Float
+    ) {
+        manaTaker.connectToManaSpreader(manaSpreader, manaConsumer, server, worldId, sensitivity)
     }
-
-    override fun disconnectToManaSpreader() {
-        manaTaker.disconnectToManaSpreader()
-    }
-
-    override val spreaderWorldPos: String
-        get() = manaTaker.spreaderWorldPos
 
 }

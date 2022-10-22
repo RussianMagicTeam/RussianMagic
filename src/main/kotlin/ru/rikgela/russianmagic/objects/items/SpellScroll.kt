@@ -12,7 +12,7 @@ import net.minecraft.util.Hand
 import net.minecraft.util.text.ITextComponent
 import net.minecraft.util.text.StringTextComponent
 import net.minecraft.world.World
-import ru.rikgela.russianmagic.objects.mana.PlayerMana
+import ru.rikgela.russianmagic.objects.player.mana.PlayerMana
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
 
 class SpellScroll(properties: Properties) : Item(properties) {
@@ -32,7 +32,7 @@ class SpellScroll(properties: Properties) : Item(properties) {
     override fun onItemRightClick(worldIn: World, playerIn: PlayerEntity, handIn: Hand): ActionResult<ItemStack> {
         if(playerIn is ServerPlayerEntity) {
             val mana = PlayerMana.fromPlayer(playerIn)
-            if (mana.consume(100, playerIn)) {
+            if (mana.artificialConsume(100, playerIn)) {
                 playerIn.addPotionEffect(EffectInstance(Effects.REGENERATION, 40, 1))
             } else {
                 playerIn.sendMessage(StringTextComponent("You don't have enough mana!"))

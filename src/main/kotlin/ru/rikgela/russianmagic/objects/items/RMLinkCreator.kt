@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos
 import net.minecraft.util.text.StringTextComponent
 import ru.rikgela.russianmagic.objects.mana.IManaSpreader
 import ru.rikgela.russianmagic.objects.mana.IManaTaker
-import ru.rikgela.russianmagic.objects.mana.PlayerMana
+import ru.rikgela.russianmagic.objects.player.mana.PlayerMana
 
 class RMLinkCreator(
         builder: Properties
@@ -22,9 +22,9 @@ class RMLinkCreator(
         if (!world.isRemote) {
             val tileEntity = world.getTileEntity(blockPos)
             if (tileEntity is IManaTaker) {
-                tileEntity.connectToManaSpreader(manaSpreaderPos, world.server!!, manaSpreaderWorldId)
+                tileEntity.connectToManaSpreader(manaSpreaderPos, tileEntity.pos, world.server!!, manaSpreaderWorldId)
                 if (playerEntity is ServerPlayerEntity) {
-                    if (PlayerMana.fromPlayer(playerEntity).consume(100, playerEntity)) {
+                    if (PlayerMana.fromPlayer(playerEntity).artificialConsume(100, playerEntity)) {
                         (playerEntity).sendMessage(
                                 StringTextComponent(
                                         String.format("Link successfully created")
@@ -38,7 +38,7 @@ class RMLinkCreator(
                 manaSpreaderPos = blockPos
                 manaSpreaderWorldId = playerEntity?.dimension?.id ?: 0
                 if (playerEntity is ServerPlayerEntity) {
-                    if (PlayerMana.fromPlayer(playerEntity).consume(100, playerEntity)) {
+                    if (PlayerMana.fromPlayer(playerEntity).artificialConsume(100, playerEntity)) {
                         (playerEntity).sendMessage(
                                 StringTextComponent(
                                         String.format("Spacetime coordinates saved")

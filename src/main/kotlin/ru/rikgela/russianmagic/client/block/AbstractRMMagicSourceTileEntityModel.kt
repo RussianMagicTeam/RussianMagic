@@ -45,7 +45,7 @@ class AbstractRMMagicSourceTileEntityRenderer(p_i226016_1_: TileEntityRendererDi
         val layer = RenderType.getEntityTranslucent(texture)
         val buffer = buffers.getBuffer(layer)
         matrixStack.push()
-        val shift: Float = tileEntityIn.currentMana.toFloat() / tileEntityIn.maxMana.toFloat()
+        val shift: Float = tileEntityIn.currentMana.toFloat() / tileEntityIn.baseMaxMana.toFloat()
         matrixStack.translate((7.0 - 6.0 * shift) / 16.0, (7.0 - 6.0 * shift) / 16.0, (7.0 - 6.0 * shift) / 16.0)
         matrixStack.scale((1F + 6.0F * (shift)) / 8F, (1F + 6.0F * (shift)) / 8F, (1F + 6.0F * (shift)) / 8F)
         model.renderCrystal(matrixStack, buffer, light, overlay)

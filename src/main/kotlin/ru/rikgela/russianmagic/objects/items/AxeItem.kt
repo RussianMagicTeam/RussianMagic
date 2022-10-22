@@ -1,4 +1,4 @@
-package ru.rikgela.russianmagic.items
+package ru.rikgela.russianmagic.objects.items
 
 import com.google.common.collect.ImmutableMap
 import net.minecraft.block.Block
@@ -33,7 +33,11 @@ class RMAxeItem(tier: IItemTier,
             if (!world.isRemote) {
                 world.setBlockState(blockPos, block.defaultState.with(RotatedPillarBlock.AXIS, blockState.get(RotatedPillarBlock.AXIS)), 11)
                 if (playerEntity != null) {
-                    context.item.damageItem(1, playerEntity, { p_220040_1_: PlayerEntity -> p_220040_1_.sendBreakAnimation(context.hand) })
+                    context.item.damageItem(1, playerEntity) { p_220040_1_: PlayerEntity ->
+                        p_220040_1_.sendBreakAnimation(
+                            context.hand
+                        )
+                    }
                 }
             }
             ActionResultType.SUCCESS

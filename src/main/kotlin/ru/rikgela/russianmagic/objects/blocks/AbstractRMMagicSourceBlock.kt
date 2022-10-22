@@ -25,17 +25,22 @@ import net.minecraft.world.World
 import net.minecraftforge.api.distmarker.Dist
 import net.minecraftforge.api.distmarker.OnlyIn
 import ru.rikgela.russianmagic.common.RMCCMessage
+import ru.rikgela.russianmagic.objects.player.mana.IPlayerMana
+import ru.rikgela.russianmagic.objects.player.mana.PlayerMana
 import ru.rikgela.russianmagic.objects.tileentity.AbstractRMMagicSourceTileEntity
 import ru.rikgela.russianmagic.util.helpers.KeyboardHelper
+import java.lang.Float.min
 import java.util.*
 
 abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(properties) {
 
     private var shape = makeCuboidShape(7.0, 7.0, 7.0, 9.0, 9.0, 9.0)
     private var model = BlockRenderType.MODEL
+
+
     override fun getShape(state: BlockState?, worldIn: IBlockReader?, pos: BlockPos, context: ISelectionContext?): VoxelShape? {
         if (worldIn is EmptyBlockReader) return this.shape
-        val shift: Float = (worldIn?.getTileEntity(pos) as AbstractRMMagicSourceTileEntity).currentMana.toFloat() / (worldIn.getTileEntity(pos) as AbstractRMMagicSourceTileEntity).maxMana.toFloat()
+        val shift: Float = min((worldIn?.getTileEntity(pos) as AbstractRMMagicSourceTileEntity).currentMana.toFloat() / (worldIn.getTileEntity(pos) as AbstractRMMagicSourceTileEntity).baseMaxMana.toFloat(), 1F)
         this.shape = makeCuboidShape(7.0 - 6.0 * shift,
                 7.0 - 6.0 * shift,
                 7.0 - 6.0 * shift,
@@ -58,8 +63,21 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
     }
 
     override fun onEntityCollision(state: BlockState, worldIn: World, pos: BlockPos, entityIn: Entity) {
-        if (!worldIn.isRemote && entityIn is ServerPlayerEntity && VoxelShapes.compare(VoxelShapes.create(entityIn.boundingBox.offset((-pos.x).toDouble(), (-pos.y).toDouble(), (-pos.z).toDouble())), state.getShape(worldIn, pos), IBooleanFunction.AND)) {
-            RMCCMessage.transferManaFromTileEntity(pos.x, pos.y, pos.z)
+        if (
+            !worldIn.isRemote && entityIn is ServerPlayerEntity
+            && VoxelShapes.compare(
+                VoxelShapes.create(
+                    entityIn.boundingBox.offset((-pos.x).toDouble(), (-pos.y).toDouble(), (-pos.z).toDouble())
+                ), state.getShape(worldIn, pos), IBooleanFunction.AND)
+        ) {
+            val tile = worldIn.getTileEntity(BlockPos(pos.x, pos.y, pos.z)) as AbstractRMMagicSourceTileEntity
+            val playerMana: IPlayerMana = PlayerMana.fromPlayer(entityIn)
+            playerMana.fill(
+                tile.spread(
+                    Integer.min(tile.maxSpread, tile.currentMana),
+                    playerMana.rate
+                )
+            )
         }
     }
 
@@ -85,7 +103,7 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
                 if (KeyboardHelper.isHoldingShift) {
                     RMCCMessage.transferManaFromTileEntity(pos.x, pos.y, pos.z)
                 } else {
-                    val tile = (worldIn.getTileEntity(pos) as AbstractRMMagicSourceTileEntity)
+                    val tile = worldIn.getTileEntity(pos) as AbstractRMMagicSourceTileEntity
                     player.sendMessage(
                             StringTextComponent(
                                     String.format("Your magic source have §7%d§r mana left.", tile.currentMana)
@@ -105,10 +123,14 @@ abstract class AbstractRMMagicSourceBlock(properties: Properties) : Block(proper
 
     override fun onBlockPlacedBy(worldIn: World, pos: BlockPos, state: BlockState, placer: LivingEntity?, stack: ItemStack) {
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack)
-        if (stack.hasDisplayName()) {
+        if (!stack.hasDisplayName()) {
             val tile = worldIn.getTileEntity(pos)
             if (tile is AbstractRMMagicSourceTileEntity) {
                 tile.customName = stack.displayName
+                tile.playerUuid = (placer as PlayerEntity).displayNameAndUUID
+                if (placer is ServerPlayerEntity)
+                    PlayerMana.fromPlayer(placer)
+                        .connectToManaSpreader(pos, placer.position, worldIn.server!!, worldIn.worldType.id)
             }
         }
     }

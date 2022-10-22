@@ -12,14 +12,19 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
-import ru.rikgela.russianmagic.client.particle.ColoredParticleType
 import ru.rikgela.russianmagic.client.particle.ManaParticle
 import ru.rikgela.russianmagic.common.RMCCMessage
 import ru.rikgela.russianmagic.common.RMNetworkChannel
 import ru.rikgela.russianmagic.common.RMNetworkMessage
 import ru.rikgela.russianmagic.init.*
-import ru.rikgela.russianmagic.objects.mana.*
-import ru.rikgela.russianmagic.oregenerator.OreGeneration
+import ru.rikgela.russianmagic.objects.mana.IMana
+import ru.rikgela.russianmagic.objects.mana.Mana
+import ru.rikgela.russianmagic.objects.mana.ManaMessage
+import ru.rikgela.russianmagic.objects.mana.ManaStorage
+import ru.rikgela.russianmagic.objects.player.magichealth.*
+import ru.rikgela.russianmagic.objects.player.mana.*
+import ru.rikgela.russianmagic.objects.player.meditation.reborn.*
+import ru.rikgela.russianmagic.objects.player.reborn.*
 
 
 const val MOD_ID = "russianmagic"
@@ -31,7 +36,7 @@ class RussianMagic {
     init {
         val bus = FMLJavaModLoadingContext.get().modEventBus
 
-        // Register the setup method for modloading
+        // Register the setup method for modLoading
         FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLCommonSetupEvent ->
             setup(event)
         }
@@ -48,8 +53,14 @@ class RussianMagic {
         RMTileEntityTypes.TILE_ENTITY_TYPES.register(bus)
         RMContainerTypes.CONTAINER_TYPES.register(bus)
         RMParticles.PARTICLES.register(bus)
-        MinecraftForge.EVENT_BUS.register(ManaCapabilityHandler())
-        MinecraftForge.EVENT_BUS.register(ManaEventHandler())
+        MinecraftForge.EVENT_BUS.register(PlayerManaCapabilityHandler())
+        MinecraftForge.EVENT_BUS.register(PlayerManaEventHandler())
+        MinecraftForge.EVENT_BUS.register(MagicHealthCapabilityHandler())
+        MinecraftForge.EVENT_BUS.register(MagicHealthEventHandler())
+        MinecraftForge.EVENT_BUS.register(RebornCapabilityHandler())
+        MinecraftForge.EVENT_BUS.register(RebornEventHandler())
+        MinecraftForge.EVENT_BUS.register(MeditationRebornCapabilityHandler())
+        MinecraftForge.EVENT_BUS.register(MeditationRebornEventHandler())
 
     }
 
@@ -63,16 +74,21 @@ class RussianMagic {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     fun particleSetup(event: ParticleFactoryRegisterEvent) {
-        Minecraft.getInstance().particles.registerFactory<ColoredParticleType>(RMParticles.MANA_PARTICLE.get()
+        Minecraft.getInstance().particles.registerFactory(RMParticles.MANA_PARTICLE.get()
         ) { iAnimatedSprite: IAnimatedSprite ->
             ManaParticle.Companion.Factory(iAnimatedSprite)
         }
     }
 
     private fun setup(event: FMLCommonSetupEvent) {
-        //preinit
+        //preInit
         OreGeneration.setupOreGeneration()
         CapabilityManager.INSTANCE.register(IMana::class.java, ManaStorage()) { Mana() }
+        CapabilityManager.INSTANCE.register(IMagicHealth::class.java, MagicHealthStorage()) { MagicHealth() }
+        CapabilityManager.INSTANCE.register(IPlayerMana::class.java, PlayerManaStorage()) { PlayerMana() }
+        CapabilityManager.INSTANCE.register(IReborn::class.java, RebornStorage()) { Reborn() }
+        CapabilityManager.INSTANCE.register(IMeditationReborn::class.java, MeditationRebornStorage()) { MeditationReborn() }
+
         @Suppress("INACCESSIBLE_TYPE")
         RMNetworkChannel.registerMessage(
                 networkIndex++,
@@ -94,5 +110,33 @@ class RussianMagic {
                 RMCCMessage::encoder,
                 RMCCMessage.Companion::fromPacketBuffer,
                 RMCCMessage::handle)
+        @Suppress("INACCESSIBLE_TYPE")
+        RMNetworkChannel.registerMessage(
+            networkIndex++,
+            MagicHealthNetwork::class.java,
+            MagicHealthNetwork::encoder,
+            MagicHealthNetwork.Companion::fromPacketBuffer,
+            MagicHealthNetwork::handle)
+        @Suppress("INACCESSIBLE_TYPE")
+        RMNetworkChannel.registerMessage(
+            networkIndex++,
+            PlayerManaNetwork::class.java,
+            PlayerManaNetwork::encoder,
+            PlayerManaNetwork.Companion::fromPacketBuffer,
+            PlayerManaNetwork::handle)
+        @Suppress("INACCESSIBLE_TYPE")
+        RMNetworkChannel.registerMessage(
+            networkIndex++,
+            RebornNetwork::class.java,
+            RebornNetwork::encoder,
+            RebornNetwork.Companion::fromPacketBuffer,
+            RebornNetwork::handle)
+        @Suppress("INACCESSIBLE_TYPE")
+        RMNetworkChannel.registerMessage(
+            networkIndex++,
+            MeditationRebornNetwork::class.java,
+            MeditationRebornNetwork::encoder,
+            MeditationRebornNetwork.Companion::fromPacketBuffer,
+            MeditationRebornNetwork::handle)
     }
 }

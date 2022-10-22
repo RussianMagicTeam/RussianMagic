@@ -16,40 +16,42 @@ import net.minecraftforge.api.distmarker.OnlyIn
 
 @OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem::class)
 abstract class AbstractProjectileEntity : SpellProjectileEntity, IRendersAsItem {
-    constructor(p_i50166_1_: EntityType<out AbstractProjectileEntity>, p_i50166_2_: World) : super(p_i50166_1_, p_i50166_2_) {}
-    constructor(p_i50167_1_: EntityType<out AbstractProjectileEntity>, p_i50167_2_: Double, p_i50167_4_: Double, p_i50167_6_: Double, p_i50167_8_: Double, p_i50167_10_: Double, p_i50167_12_: Double, p_i50167_14_: World) : super(p_i50167_1_, p_i50167_2_, p_i50167_4_, p_i50167_6_, p_i50167_8_, p_i50167_10_, p_i50167_12_, p_i50167_14_) {}
-    constructor(p_i50168_1_: EntityType<out AbstractProjectileEntity>, p_i50168_2_: LivingEntity, p_i50168_3_: Double, p_i50168_5_: Double, p_i50168_7_: Double, p_i50168_9_: World) : super(p_i50168_1_, p_i50168_2_, p_i50168_3_, p_i50168_5_, p_i50168_7_, p_i50168_9_) {}
+    constructor(p_i50166_1_: EntityType<out AbstractProjectileEntity>, p_i50166_2_: World) : super(p_i50166_1_, p_i50166_2_)
+    constructor(p_i50167_1_: EntityType<out AbstractProjectileEntity>, p_i50167_2_: Double, p_i50167_4_: Double, p_i50167_6_: Double, p_i50167_8_: Double, p_i50167_10_: Double, p_i50167_12_: Double, p_i50167_14_: World) : super(p_i50167_1_, p_i50167_2_, p_i50167_4_, p_i50167_6_, p_i50167_8_, p_i50167_10_, p_i50167_12_, p_i50167_14_)
+    constructor(p_i50168_1_: EntityType<out AbstractProjectileEntity>, p_i50168_2_: LivingEntity, p_i50168_3_: Double, p_i50168_5_: Double, p_i50168_7_: Double, p_i50168_9_: World) : super(p_i50168_1_, p_i50168_2_, p_i50168_3_, p_i50168_5_, p_i50168_7_, p_i50168_9_)
 
     protected var stack: ItemStack
-        protected get() = getDataManager().get(STACK) as ItemStack
+        get() = getDataManager().get(STACK!!) as ItemStack
         set(p_213898_1_) {
             if (p_213898_1_.item !== Items.FIRE_CHARGE || p_213898_1_.hasTag()) {
-                getDataManager().set(STACK, Util.make(p_213898_1_.copy(), { p_213897_0_: ItemStack -> p_213897_0_.count = 1 }))
+                getDataManager().set(STACK!!, Util.make(p_213898_1_.copy()) { p_213897_0_: ItemStack ->
+                    p_213897_0_.count = 1
+                })
             }
         }
 
     @OnlyIn(Dist.CLIENT)
     override fun getItem(): ItemStack {
-        val itemstack = stack
-        return if (itemstack.isEmpty) ItemStack(Items.FIRE_CHARGE) else itemstack
+        val itemStack = stack
+        return if (itemStack.isEmpty) ItemStack(Items.FIRE_CHARGE) else itemStack
     }
 
     override fun registerData() {
-        getDataManager().register(STACK, ItemStack.EMPTY)
+        getDataManager().register(STACK!!, ItemStack.EMPTY)
     }
 
     override fun writeAdditional(compound: CompoundNBT) {
         super.writeAdditional(compound)
-        val itemstack = stack
-        if (!itemstack.isEmpty) {
-            compound.put("Item", itemstack.write(CompoundNBT()))
+        val itemStack = stack
+        if (!itemStack.isEmpty) {
+            compound.put("Item", itemStack.write(CompoundNBT()))
         }
     }
 
     override fun readAdditional(compound: CompoundNBT) {
         super.readAdditional(compound)
-        val itemstack = ItemStack.read(compound.getCompound("Item"))
-        stack = itemstack
+        val itemStack = ItemStack.read(compound.getCompound("Item"))
+        stack = itemStack
     }
 
     companion object {

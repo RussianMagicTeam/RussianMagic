@@ -122,19 +122,19 @@ abstract class AbstractRMFurnaceContainer(windowID: Int,
         // Hotbar
         val hotbarY = 142
         for (column in 0..8) {
-            addSlot(Slot(playerInv, column, startX + column * slotSizePlus2, hotbarY))
+            this.addSlot(Slot(playerInv, column, startX + column * slotSizePlus2, hotbarY))
         }
 
         // Main Player Inventory
         val startY = 84
         for (row in 0..2) {
             for (column in 0..8) {
-                addSlot(Slot(playerInv, 9 + row * 9 + column, startX + column * slotSizePlus2,
+                this.addSlot(Slot(playerInv, 9 + row * 9 + column, startX + column * slotSizePlus2,
                         startY + row * slotSizePlus2))
             }
         }
         // Furnace Slots
-        trackInt(FunctionalIntReferenceHolder({ tileEntityFurnace.currentSmeltTime },
+        this.trackInt(FunctionalIntReferenceHolder({ tileEntityFurnace.currentSmeltTime },
                 { value: Int -> tileEntityFurnace.currentSmeltTime = value }).also { currentSmeltTime = it })
     }
 }
