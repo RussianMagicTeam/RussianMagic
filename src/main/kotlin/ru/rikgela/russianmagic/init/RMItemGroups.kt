@@ -1,15 +1,17 @@
 package ru.rikgela.russianmagic.init
 
-import net.minecraft.item.ItemGroup
-import net.minecraft.item.ItemStack
+import net.minecraft.world.item.CreativeModeTab
+import net.minecraft.world.item.ItemStack
 import java.util.function.Supplier
 
-class ItemGroup(name: String, private val iconSupplier: Supplier<ItemStack?>) : ItemGroup(name) {
-    override fun createIcon(): ItemStack? {
+class RMCreativeModeTab(name: String, private val iconSupplier: Supplier<ItemStack?>) : CreativeModeTab(name) {
+    override fun makeIcon(): ItemStack? {
         return iconSupplier.get()
     }
 }
 
-object ItemGroups {
-    val RUSSIAN_MAGIC_ITEM_GROUP: ItemGroup = ItemGroup("russian_magic_items") { ItemStack(RMItems.STONE_MAGIC_OBJECT.get()) }
+object RMCreativeModeTabs {
+    val RUSSIAN_MAGIC_ITEM_GROUP: RMCreativeModeTab = RMCreativeModeTab("russian_magic_items") {
+        ItemStack(RMItems.STONE_MAGIC_OBJECT.get())
+    }
 }
