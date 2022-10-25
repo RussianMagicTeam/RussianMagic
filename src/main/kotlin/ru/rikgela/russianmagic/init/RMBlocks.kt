@@ -1,15 +1,17 @@
 package ru.rikgela.russianmagic.init
 
 
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.GlassBlock
-import net.minecraft.world.level.block.SoundType
+import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.Material
 import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import net.minecraftforge.registries.RegistryObject
 import ru.rikgela.russianmagic.MOD_ID
+import ru.rikgela.russianmagic.objects.blocks.EbonyRotatedPillarBlock
+import ru.rikgela.russianmagic.objects.blocks.EbonyTreeGrower
+import ru.rikgela.russianmagic.objects.blocks.RMLeavesBlock
+
 
 object RMBlocks {
     val BLOCKS: DeferredRegister<Block> = DeferredRegister.create(ForgeRegistries.BLOCKS, MOD_ID)
@@ -44,6 +46,7 @@ object RMBlocks {
             ).noOcclusion()
         )
     }
+
     val AQUAMARINE_BLOCK_ORE: RegistryObject<Block> = BLOCKS.register("aquamarine_block_ore") {
         Block(
             BlockBehaviour.Properties
@@ -499,13 +502,36 @@ object RMBlocks {
             BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F, 3.0F).sound(SoundType.WOOD)
         )
     }
-//    val EBONY_LEAVES: RegistryObject<RMLeavesBlock> = BLOCKS.register("ebony_leaves") { RMLeavesBlock(Block.Properties.from(Blocks.OAK_LEAVES)) }
-//    val EBONY_SAPLING: RegistryObject<EbonySaplingBlock> = BLOCKS.register("ebony_sapling") { EbonySaplingBlock({ EbonyTree() }, Block.Properties.from(Blocks.OAK_SAPLING)) }
-//    val POTTED_EBONY_SAPLING: RegistryObject<FlowerPotBlock> = BLOCKS.register("potted_ebony_sapling") { FlowerPotBlock(null, { EBONY_SAPLING.get() }, Block.Properties.create(Material.MISCELLANEOUS).notSolid()) }
-//    val EBONY_LOG: RegistryObject<EbonyLogBlock> = BLOCKS.register("ebony_log") { EbonyLogBlock(MaterialColor.WOOD, Block.Properties.from(Blocks.OAK_LOG)) }
-//    val STRIPPED_EBONY_LOG: RegistryObject<EbonyLogBlock> = BLOCKS.register("stripped_ebony_log") { EbonyLogBlock(MaterialColor.WOOD, Block.Properties.from(Blocks.OAK_LOG)) }
-//    val EBONY_WOOD: RegistryObject<EbonyLogBlock> = BLOCKS.register("ebony_wood") { EbonyLogBlock(MaterialColor.WOOD, Block.Properties.from(Blocks.OAK_WOOD)) }
-//    val STRIPPED_EBONY_WOOD: RegistryObject<EbonyLogBlock> = BLOCKS.register("stripped_ebony_wood") { EbonyLogBlock(MaterialColor.WOOD, Block.Properties.from(Blocks.OAK_WOOD)) }
+//    val EBONY_LEAVES: RegistryObject<RMLeavesBlock> = BLOCKS.register("ebony_leaves") {
+//        Blocks.OAK_LOG
+//        RMLeavesBlock(BlockBehaviour.Properties.of(Blocks.OAK_LEAVES))
+//    }
+
+    val EBONY_LEAVES: RegistryObject<RMLeavesBlock> = BLOCKS.register("ebony_leaves") {
+        RMLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES))
+    }
+
+//    val POTTED_EBONY_SAPLING: RegistryObject<FlowerPotBlock> = BLOCKS.register("potted_ebony_sapling") {
+//        FlowerPotBlock(null, { EBONY_SAPLING.get() }, Block.Properties.create(Material.MISCELLANEOUS).notSolid())
+//    }
+    val EBONY_SAPLING: RegistryObject<Block> = BLOCKS.register("ebony_sapling") {
+        SaplingBlock(
+            EbonyTreeGrower(),
+            BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)
+        )
+    }
+    val EBONY_LOG: RegistryObject<EbonyRotatedPillarBlock> = BLOCKS.register("ebony_log") {
+        EbonyRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LOG))
+    }
+    val STRIPPED_EBONY_LOG: RegistryObject<EbonyRotatedPillarBlock> = BLOCKS.register("stripped_ebony_log") {
+        EbonyRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG))
+    }
+    val EBONY_WOOD: RegistryObject<EbonyRotatedPillarBlock> = BLOCKS.register("ebony_wood") {
+        EbonyRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD))
+    }
+    val STRIPPED_EBONY_WOOD: RegistryObject<EbonyRotatedPillarBlock> = BLOCKS.register("stripped_ebony_wood") {
+        EbonyRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD))
+    }
 //    fun clientSetup() {
 ////        RenderTypeLookup.setRenderLayer(EBONY_SAPLING.get(), RenderType.getCutout())
 ////        RenderTypeLookup.setRenderLayer(EBONY_LEAVES.get(), RenderType.getCutout())

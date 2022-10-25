@@ -12,6 +12,7 @@ import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import net.minecraftforge.registries.RegistryObject
 import ru.rikgela.russianmagic.MOD_ID
+import ru.rikgela.russianmagic.objects.items.RMAxeItem
 import java.util.List
 
 
@@ -182,11 +183,11 @@ object RMItems {
     }
 
     // Instruments
-//    val EBONY_PLANKS_AXE: RegistryObject<Item> = ITEMS.register("ebony_planks_axe") {
-//        RMAxeItem(RMForgeTier.EBONY_PLANKS_TIER, 6.0f, -3.1f, Item.Properties().tab(
-//            RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
-//        )
-//    }
+    val EBONY_PLANKS_AXE: RegistryObject<Item> = ITEMS.register("ebony_planks_axe") {
+        RMAxeItem(RMForgeTier.EBONY_PLANKS_TIER, 6.0f, -3.1f, Item.Properties().tab(
+            RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
+        )
+    }
     val EBONY_PLANKS_SHOVEL: RegistryObject<Item> = ITEMS.register("ebony_planks_shovel") {
         ShovelItem(RMForgeTier.EBONY_PLANKS_TIER, 1.5f, -3.0f, Item.Properties().tab(
             RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
@@ -208,11 +209,11 @@ object RMItems {
         )
     }
 
-//    val MARBLE_AXE: RegistryObject<Item> = ITEMS.register("marble_axe") {
-//        RMAxeItem(RMForgeTier.MARBLE_TIER, 6.0f, -3.1f, Item.Properties().tab(
-//            RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
-//        )
-//    }
+    val MARBLE_AXE: RegistryObject<Item> = ITEMS.register("marble_axe") {
+        RMAxeItem(RMForgeTier.MARBLE_TIER, 6.0f, -3.1f, Item.Properties().tab(
+            RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
+        )
+    }
     val MARBLE_SHOVEL: RegistryObject<Item> = ITEMS.register("marble_shovel") {
         ShovelItem(RMForgeTier.MARBLE_TIER, 1.5f, -3.0f, Item.Properties().tab(
             RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
@@ -234,11 +235,11 @@ object RMItems {
         )
     }
 
-//    val WHITE_JADE_AXE: RegistryObject<Item> = ITEMS.register("white_jade_axe") {
-//        RMAxeItem(RMForgeTier.WHITE_JADE_TIER, 6.0f, -3.1f, Item.Properties().tab(
-//            RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
-//        )
-//    }
+    val WHITE_JADE_AXE: RegistryObject<Item> = ITEMS.register("white_jade_axe") {
+        RMAxeItem(RMForgeTier.WHITE_JADE_TIER, 6.0f, -3.1f, Item.Properties().tab(
+            RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
+        )
+    }
     val WHITE_JADE_SHOVEL: RegistryObject<Item> = ITEMS.register("white_jade_shovel") {
         ShovelItem(RMForgeTier.WHITE_JADE_TIER, 1.5f, -3.0f, Item.Properties().tab(
             RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
@@ -260,11 +261,11 @@ object RMItems {
         )
     }
 
-//    val RHINESTONE_AXE: RegistryObject<Item> = ITEMS.register("rhinestone_axe") {
-//        RMAxeItem(RMForgeTier.RHINESTONE_TIER, 6.0f, -3.1f, Item.Properties().tab(
-//            RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
-//        )
-//    }
+    val RHINESTONE_AXE: RegistryObject<Item> = ITEMS.register("rhinestone_axe") {
+        RMAxeItem(RMForgeTier.RHINESTONE_TIER, 6.0f, -3.1f, Item.Properties().tab(
+            RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
+        )
+    }
     val RHINESTONE_SHOVEL: RegistryObject<Item> = ITEMS.register("rhinestone_shovel") {
         ShovelItem(RMForgeTier.RHINESTONE_TIER, 1.5f, -3.0f, Item.Properties().tab(
             RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
@@ -286,11 +287,11 @@ object RMItems {
         )
     }
 
-//    val AQUAMARINE_AXE: RegistryObject<Item> = ITEMS.register("aquamarine_axe") {
-//        RMAxeItem(RMForgeTier.AQUAMARINE_TIER, 6.0f, -3.1f, Item.Properties().tab(
-//            RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
-//        )
-//    }
+    val AQUAMARINE_AXE: RegistryObject<Item> = ITEMS.register("aquamarine_axe") {
+        RMAxeItem(RMForgeTier.AQUAMARINE_TIER, 6.0f, -3.1f, Item.Properties().tab(
+            RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
+        )
+    }
     val AQUAMARINE_SHOVEL: RegistryObject<Item> = ITEMS.register("aquamarine_shovel") {
         ShovelItem(RMForgeTier.AQUAMARINE_TIER, 1.5f, -3.0f, Item.Properties().tab(
             RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
@@ -528,11 +529,23 @@ object RMItems {
 //    }
 //
 //    //tree
-//    val EBONY_SAPLING: RegistryObject<BlockItem> = ITEMS.register("ebony_sapling") { BlockItem(RMBlocks.EBONY_SAPLING.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
-//    val EBONY_LOG: RegistryObject<BlockItem> = ITEMS.register("ebony_log") { BlockItem(RMBlocks.EBONY_LOG.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
-//    val STRIPPED_EBONY_LOG: RegistryObject<BlockItem> = ITEMS.register("stripped_ebony_log") { BlockItem(RMBlocks.STRIPPED_EBONY_LOG.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
-//    val EBONY_WOOD: RegistryObject<BlockItem> = ITEMS.register("ebony_wood") { BlockItem(RMBlocks.EBONY_WOOD.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
-//    val STRIPPED_EBONY_WOOD: RegistryObject<BlockItem> = ITEMS.register("stripped_ebony_wood") { BlockItem(RMBlocks.STRIPPED_EBONY_WOOD.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
-//    val EBONY_LEAVES: RegistryObject<BlockItem> = ITEMS.register("ebony_leaves") { BlockItem(RMBlocks.EBONY_LEAVES.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val EBONY_SAPLING: RegistryObject<BlockItem> = ITEMS.register("ebony_sapling") {
+        BlockItem(RMBlocks.EBONY_SAPLING.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
+    }
+    val EBONY_LOG: RegistryObject<BlockItem> = ITEMS.register("ebony_log") {
+        BlockItem(RMBlocks.EBONY_LOG.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
+    }
+    val STRIPPED_EBONY_LOG: RegistryObject<BlockItem> = ITEMS.register("stripped_ebony_log") {
+        BlockItem(RMBlocks.STRIPPED_EBONY_LOG.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
+    }
+    val EBONY_WOOD: RegistryObject<BlockItem> = ITEMS.register("ebony_wood") {
+        BlockItem(RMBlocks.EBONY_WOOD.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
+    }
+    val STRIPPED_EBONY_WOOD: RegistryObject<BlockItem> = ITEMS.register("stripped_ebony_wood") {
+        BlockItem(RMBlocks.STRIPPED_EBONY_WOOD.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
+    }
+    val EBONY_LEAVES: RegistryObject<BlockItem> = ITEMS.register("ebony_leaves") {
+        BlockItem(RMBlocks.EBONY_LEAVES.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
+    }
 
 }

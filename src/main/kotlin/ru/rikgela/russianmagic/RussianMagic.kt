@@ -3,7 +3,9 @@ package ru.rikgela.russianmagic
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
 import ru.rikgela.russianmagic.init.RMBlocks
+import ru.rikgela.russianmagic.init.RMConfiguredFeatures
 import ru.rikgela.russianmagic.init.RMItems
+import ru.rikgela.russianmagic.init.RMPlacedFeatures
 
 
 const val MOD_ID = "russianmagic"
@@ -28,6 +30,8 @@ class RussianMagic {
 
         RMItems.ITEMS.register(bus)
         RMBlocks.BLOCKS.register(bus)
+        RMConfiguredFeatures.CONFIGURED_FEATURES.register(bus)
+        RMPlacedFeatures.PLACED_FEATURES.register(bus)
 //        RMEntities.ENTITIES.register(bus)
 //        RMTileEntityTypes.TILE_ENTITY_TYPES.register(bus)
 //        RMContainerTypes.CONTAINER_TYPES.register(bus)
