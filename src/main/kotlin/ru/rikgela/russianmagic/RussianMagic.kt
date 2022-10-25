@@ -2,18 +2,19 @@ package ru.rikgela.russianmagic
 
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
+import ru.rikgela.russianmagic.init.RMBlocks
 import ru.rikgela.russianmagic.init.RMItems
 
 
 const val MOD_ID = "russianmagic"
 var networkIndex = 0
 
+
+//@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 @Mod(MOD_ID)
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 class RussianMagic {
     init {
         val bus = FMLJavaModLoadingContext.get().modEventBus
-
         // Register the setup method for modLoading
 //        FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLCommonSetupEvent ->
 //            setup(event)
@@ -26,7 +27,7 @@ class RussianMagic {
 //        }
 
         RMItems.ITEMS.register(bus)
-//        RMBlocks.BLOCKS.register(bus)
+        RMBlocks.BLOCKS.register(bus)
 //        RMEntities.ENTITIES.register(bus)
 //        RMTileEntityTypes.TILE_ENTITY_TYPES.register(bus)
 //        RMContainerTypes.CONTAINER_TYPES.register(bus)
