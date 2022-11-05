@@ -10,6 +10,7 @@ import net.minecraftforge.registries.RegistryObject
 import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.objects.blocks.EbonyRotatedPillarBlock
 import ru.rikgela.russianmagic.objects.blocks.EbonyTreeGrower
+import ru.rikgela.russianmagic.objects.blocks.RMFurnacesBlock
 import ru.rikgela.russianmagic.objects.blocks.RMLeavesBlock
 
 
@@ -440,54 +441,76 @@ object RMBlocks {
         )
     }
 
-//    val RM_DIAMOND_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMDiamondFurnaceBlock> = BLOCKS
-//            .register("rm_diamond_furnace") {
-//                RMFurnacesBlock.RMDiamondFurnaceBlock(Block
-//                        .Properties
-//                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_DIAMOND_FURNACE)
-//            }
-//
-//    val RM_ISOLATED_DIAMOND_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMIsolatedDiamondFurnaceBlock> = BLOCKS
-//            .register("rm_isolated_diamond_furnace") {
-//                RMFurnacesBlock.RMIsolatedDiamondFurnaceBlock(Block
-//                        .Properties
-//                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_ISOLATED_DIAMOND_FURNACE)
-//            }
-//
-//    val RM_EBONY_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMEbonyFurnaceBlock> = BLOCKS
-//            .register("rm_ebony_furnace") {
-//                RMFurnacesBlock.RMEbonyFurnaceBlock(Block
-//                        .Properties
-//                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_EBONY_FURNACE)
-//            }
-//
-//    val RM_MARBLE_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMMarbleFurnaceBlock> = BLOCKS
-//            .register("rm_marble_furnace") {
-//                RMFurnacesBlock.RMMarbleFurnaceBlock(Block
-//                        .Properties
-//                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_MARBLE_FURNACE)
-//            }
-//
-//    val RM_WHITE_JADE_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMWhiteJadeFurnaceBlock> = BLOCKS
-//            .register("rm_white_jade_furnace") {
-//                RMFurnacesBlock.RMWhiteJadeFurnaceBlock(Block
-//                        .Properties
-//                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_WHITE_JADE_FURNACE)
-//            }
-//
-//    val RM_RHINESTONE_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMRhinestoneFurnaceBlock> = BLOCKS
-//            .register("rm_rhinestone_furnace") {
-//                RMFurnacesBlock.RMRhinestoneFurnaceBlock(Block
-//                        .Properties
-//                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_RHINESTONE_FURNACE)
-//            }
-//
-//    val RM_AQUAMARINE_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMAquamarineFurnaceBlock> = BLOCKS
-//            .register("rm_aquamarine_furnace") {
-//                RMFurnacesBlock.RMAquamarineFurnaceBlock(Block
-//                        .Properties
-//                        .from(Blocks.FURNACE), RMTileEntityTypes.RM_AQUAMARINE_FURNACE)
-//            }
+    val RM_DIAMOND_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMDiamondFurnaceBlock> = BLOCKS
+            .register("rm_diamond_furnace") {
+                RMFurnacesBlock.RMDiamondFurnaceBlock(
+                    BlockBehaviour
+                        .Properties
+                        .copy(Blocks.FURNACE)
+                        .requiresCorrectToolForDrops()
+                        .strength(1.0f, 3.0f)
+                )
+            }
+
+    val RM_ISOLATED_DIAMOND_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMIsolatedDiamondFurnaceBlock> = BLOCKS
+            .register("rm_isolated_diamond_furnace") {
+                RMFurnacesBlock.RMIsolatedDiamondFurnaceBlock(BlockBehaviour
+                    .Properties
+                    .copy(Blocks.FURNACE)
+                    .requiresCorrectToolForDrops()
+                    .strength(1.0f, 3.0f)
+                )
+            }
+
+    val RM_EBONY_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMEbonyFurnaceBlock> = BLOCKS
+            .register("rm_ebony_furnace") {
+                RMFurnacesBlock.RMEbonyFurnaceBlock(BlockBehaviour
+                    .Properties
+                    .copy(Blocks.FURNACE)
+                    .requiresCorrectToolForDrops()
+                    .strength(1.0f, 3.0f)
+                )
+            }
+
+    val RM_MARBLE_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMMarbleFurnaceBlock> = BLOCKS
+            .register("rm_marble_furnace") {
+                RMFurnacesBlock.RMMarbleFurnaceBlock(BlockBehaviour
+                    .Properties
+                    .copy(Blocks.FURNACE)
+                    .requiresCorrectToolForDrops()
+                    .strength(1.0f, 3.0f)
+                )
+            }
+
+    val RM_WHITE_JADE_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMWhiteJadeFurnaceBlock> = BLOCKS
+            .register("rm_white_jade_furnace") {
+                RMFurnacesBlock.RMWhiteJadeFurnaceBlock(BlockBehaviour
+                    .Properties
+                    .copy(Blocks.FURNACE)
+                    .requiresCorrectToolForDrops()
+                    .strength(1.0f, 3.0f)
+                )
+            }
+
+    val RM_RHINESTONE_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMRhinestoneFurnaceBlock> = BLOCKS
+            .register("rm_rhinestone_furnace") {
+                RMFurnacesBlock.RMRhinestoneFurnaceBlock(BlockBehaviour
+                    .Properties
+                    .copy(Blocks.FURNACE)
+                    .requiresCorrectToolForDrops()
+                    .strength(1.0f, 3.0f)
+                )
+            }
+
+    val RM_AQUAMARINE_FURNACE_BLOCK: RegistryObject<RMFurnacesBlock.RMAquamarineFurnaceBlock> = BLOCKS
+            .register("rm_aquamarine_furnace") {
+                RMFurnacesBlock.RMAquamarineFurnaceBlock(BlockBehaviour
+                    .Properties
+                    .copy(Blocks.FURNACE)
+                    .requiresCorrectToolForDrops()
+                    .strength(1.0f, 3.0f)
+                )
+            }
 //    val RM_BASIC_MAGIC_SOURCE_BLOCK: RegistryObject<RMMagicSourceBlock.RMBasicMagicSource> = BLOCKS
 //            .register("rm_basic_magic_source") {
 //                RMMagicSourceBlock.RMBasicMagicSource(Block
@@ -502,10 +525,6 @@ object RMBlocks {
             BlockBehaviour.Properties.of(Material.WOOD).strength(2.0F, 3.0F).sound(SoundType.WOOD)
         )
     }
-//    val EBONY_LEAVES: RegistryObject<RMLeavesBlock> = BLOCKS.register("ebony_leaves") {
-//        Blocks.OAK_LOG
-//        RMLeavesBlock(BlockBehaviour.Properties.of(Blocks.OAK_LEAVES))
-//    }
 
     val EBONY_LEAVES: RegistryObject<RMLeavesBlock> = BLOCKS.register("ebony_leaves") {
         RMLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES))

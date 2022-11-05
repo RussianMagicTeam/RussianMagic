@@ -503,14 +503,44 @@ object RMItems {
     }
 //
 //    //Mekanisms
-//    val RM_DIAMOND_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_diamond_furnace") { BlockItem(RMBlocks.RM_DIAMOND_FURNACE_BLOCK.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
-//    val RM_ISOLATED_DIAMOND_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_isolated_diamond_furnace") { BlockItem(RMBlocks.RM_ISOLATED_DIAMOND_FURNACE_BLOCK.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
-//
-//    val RM_EBONY_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_ebony_furnace") { BlockItem(RMBlocks.RM_EBONY_FURNACE_BLOCK.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
-//    val RM_MARBLE_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_marble_furnace") { BlockItem(RMBlocks.RM_MARBLE_FURNACE_BLOCK.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
-//    val RM_WHITE_JADE_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_white_jade_furnace") { BlockItem(RMBlocks.RM_WHITE_JADE_FURNACE_BLOCK.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
-//    val RM_RHINESTONE_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_rhinestone_furnace") { BlockItem(RMBlocks.RM_RHINESTONE_FURNACE_BLOCK.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
-//    val RM_AQUAMARINE_FURNACE_BLOCK: RegistryObject<Item> = ITEMS.register("rm_aquamarine_furnace") { BlockItem(RMBlocks.RM_AQUAMARINE_FURNACE_BLOCK.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
+    val RM_DIAMOND_FURNACE_BLOCK: RegistryObject<BlockItem> = ITEMS.register("rm_diamond_furnace") {
+        BlockItem(
+            RMBlocks.RM_DIAMOND_FURNACE_BLOCK.get(),
+            Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
+        )
+    }
+    val RM_ISOLATED_DIAMOND_FURNACE_BLOCK: RegistryObject<BlockItem> = ITEMS.register("rm_isolated_diamond_furnace") { BlockItem(RMBlocks.RM_ISOLATED_DIAMOND_FURNACE_BLOCK.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
+
+    val RM_EBONY_FURNACE_BLOCK: RegistryObject<BlockItem> = ITEMS.register("rm_ebony_furnace") {
+        BlockItem(
+            RMBlocks.RM_EBONY_FURNACE_BLOCK.get(),
+            Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
+        )
+    }
+    val RM_MARBLE_FURNACE_BLOCK: RegistryObject<BlockItem> = ITEMS.register("rm_marble_furnace") {
+        BlockItem(
+            RMBlocks.RM_MARBLE_FURNACE_BLOCK.get(),
+            Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
+        )
+    }
+    val RM_WHITE_JADE_FURNACE_BLOCK: RegistryObject<BlockItem> = ITEMS.register("rm_white_jade_furnace") {
+        BlockItem(
+            RMBlocks.RM_WHITE_JADE_FURNACE_BLOCK.get(),
+            Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
+        )
+    }
+    val RM_RHINESTONE_FURNACE_BLOCK: RegistryObject<BlockItem> = ITEMS.register("rm_rhinestone_furnace") {
+        BlockItem(
+            RMBlocks.RM_RHINESTONE_FURNACE_BLOCK.get(),
+            Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
+        )
+    }
+    val RM_AQUAMARINE_FURNACE_BLOCK: RegistryObject<BlockItem> = ITEMS.register("rm_aquamarine_furnace") {
+        BlockItem(
+            RMBlocks.RM_AQUAMARINE_FURNACE_BLOCK.get(),
+            Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
+        )
+    }
 //
 //    val RM_BASIC_MAGIC_SOURCE: RegistryObject<Item> = ITEMS.register("rm_basic_magic_source") { BlockItem(RMBlocks.RM_BASIC_MAGIC_SOURCE_BLOCK.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
 //    val RM_ANALYZER: RegistryObject<Item> = ITEMS.register("rm_analyzer") { RMAnalyzer(Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }

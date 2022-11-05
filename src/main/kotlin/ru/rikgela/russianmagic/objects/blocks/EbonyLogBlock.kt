@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraftforge.common.ToolAction
-import net.minecraftforge.common.property.Properties
 import ru.rikgela.russianmagic.init.RMBlocks
 import ru.rikgela.russianmagic.objects.items.RMAxeItem
 

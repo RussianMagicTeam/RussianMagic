@@ -1,11 +1,12 @@
 package ru.rikgela.russianmagic
 
+import net.minecraftforge.api.distmarker.Dist
+import net.minecraftforge.api.distmarker.OnlyIn
+import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext
-import ru.rikgela.russianmagic.init.RMBlocks
-import ru.rikgela.russianmagic.init.RMConfiguredFeatures
-import ru.rikgela.russianmagic.init.RMItems
-import ru.rikgela.russianmagic.init.RMPlacedFeatures
+import ru.rikgela.russianmagic.init.*
 
 
 const val MOD_ID = "russianmagic"
@@ -21,9 +22,9 @@ class RussianMagic {
 //        FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLCommonSetupEvent ->
 //            setup(event)
 //        }
-//        FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLClientSetupEvent ->
-//            clientSetup(event)
-//        }
+        FMLJavaModLoadingContext.get().modEventBus.addListener { event: FMLClientSetupEvent ->
+            clientSetup(event)
+        }
 //        FMLJavaModLoadingContext.get().modEventBus.addListener { event: ParticleFactoryRegisterEvent ->
 //            particleSetup(event)
 //        }
@@ -32,9 +33,9 @@ class RussianMagic {
         RMBlocks.BLOCKS.register(bus)
         RMConfiguredFeatures.CONFIGURED_FEATURES.register(bus)
         RMPlacedFeatures.PLACED_FEATURES.register(bus)
+        RMBlockEntityTypes.BLOCK_ENTITY_TYPES.register(bus)
+        RMMenuTypes.MENU_TYPES.register(bus)
 //        RMEntities.ENTITIES.register(bus)
-//        RMTileEntityTypes.TILE_ENTITY_TYPES.register(bus)
-//        RMContainerTypes.CONTAINER_TYPES.register(bus)
 //        RMParticles.PARTICLES.register(bus)
 //        MinecraftForge.EVENT_BUS.register(PlayerManaCapabilityHandler())
 //        MinecraftForge.EVENT_BUS.register(PlayerManaEventHandler())
@@ -47,12 +48,13 @@ class RussianMagic {
 
     }
 
-//    @SubscribeEvent
-//    @OnlyIn(Dist.CLIENT)
-//    fun clientSetup(event: FMLClientSetupEvent?) {
+
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    fun clientSetup(event: FMLClientSetupEvent?) {
 //        RMBlocks.clientSetup()
-//        RMRenderInit.setupScreens()
-//    }
+        RMScreens.setupScreens()
+    }
 
 //    @SubscribeEvent
 //    @OnlyIn(Dist.CLIENT)
