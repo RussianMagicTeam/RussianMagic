@@ -6,7 +6,10 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.util.Mth.ceil
+import net.minecraft.world.Containers
 import net.minecraft.world.MenuProvider
+import net.minecraft.world.SimpleContainer
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Recipe
@@ -22,7 +25,10 @@ import net.minecraftforge.common.util.NonNullSupplier
 import net.minecraftforge.items.IItemHandlerModifiable
 import net.minecraftforge.items.ItemStackHandler
 import ru.rikgela.russianmagic.MOD_ID
+import ru.rikgela.russianmagic.network.RMMessages
+import ru.rikgela.russianmagic.network.packet.ItemStackSyncS2CPacket
 import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace
+import ru.rikgela.russianmagic.objects.blocks.AbstractRMFurnace.Companion.LIT
 import ru.rikgela.russianmagic.objects.blocks.RMMekanism
 import ru.rikgela.russianmagic.objects.mana.IMana
 import ru.rikgela.russianmagic.objects.mana.IManaReceiver
@@ -41,7 +47,7 @@ abstract class AbstractRMFurnaceBlockEntity(
     private val rmMekanism: RMMekanism
 ) : BlockEntity(BlockEntityTypeIn, blockPos, blockState), IManaReceiver, IManaTaker, MenuProvider {
 
-    var customName: MutableComponent? = null
+    var customName: Component? = null
     var currentSmeltTime = 0
     private val mana: IMana = Mana.withParams(rmMekanism.tier * 100, rmMekanism.tier * 1000)
     private val manaReceiver: IManaReceiver = ManaReceiver(mana)
@@ -52,7 +58,7 @@ abstract class AbstractRMFurnaceBlockEntity(
     abstract val horizontalSlots: IntArray
 //    val inventory: RMItemHandler = RMItemHandler(2 + rmMekanism.supportSlots)
 
-    val name: MutableComponent
+    val name: Component
         get() = customName ?: defaultName
 
     override fun getRate(manaConsumer: BlockPos, sensitivity: Float): Float = manaTaker.getRate(manaConsumer, sensitivity)
@@ -91,11 +97,27 @@ abstract class AbstractRMFurnaceBlockEntity(
         return manaReceiver.transfer(points)
     }
 
-    override fun getDisplayName(): MutableComponent {
+    override fun getDisplayName(): Component {
         return name
     }
 
-    private val inventory = ItemStackHandler(3)
+    private val inventory: ItemStackHandler = object : ItemStackHandler(3) {
+        override fun onContentsChanged(slot: Int) {
+            setChanged()
+            if (!level!!.isClientSide()) {
+                RMMessages.sendToClients(ItemStackSyncS2CPacket(this, worldPosition))
+            }
+        }
+
+//        override fun isItemValid(slot: Int, stack: ItemStack): Boolean {
+//            return when (slot) {
+//                0 -> stack.getCapability(ForgeCapabilities.FLUID_HANDLER_ITEM).isPresent
+//                1 -> true
+//                2 -> false
+//                else -> super.isItemValid(slot, stack)
+//            }
+//        }
+    }
     private val optional = LazyOptional.of(NonNullSupplier<IItemHandlerModifiable> { this.inventory})
     override fun invalidateCaps() {
         this.optional.invalidate()
@@ -149,12 +171,20 @@ abstract class AbstractRMFurnaceBlockEntity(
                         && inventory.getStackInSlot(1).count + recipe.resultItem.count <= inventory.getStackInSlot(1).maxStackSize))
     }
 
+    open fun drops() {
+        val simpleContainer = SimpleContainer(inventory.slots)
+        for (i in 0 until inventory.slots) {
+            simpleContainer.setItem(i, inventory.getStackInSlot(i))
+        }
+        Containers.dropContents(level!!, worldPosition, simpleContainer)
+    }
+
     fun tick(level: Level, blockPos: BlockPos, blockState: BlockState, blockEntity: AbstractRMFurnaceBlockEntity) {
         if (!level.isClientSide) {
             if (mana.baseMaxMana != mana.currentMana) {
                 val diffMana = mana.baseMaxMana - mana.currentMana
                 val manaToRequest = diffMana / manaTaker.getRate(blockPos, 1F)
-                if (diffMana > 0){
+                if (manaToRequest > 0){
                     this.mana.fill(manaTaker.getMana(ceil(manaToRequest), level, blockPos, 1F))
                 }
                 else{
@@ -164,7 +194,7 @@ abstract class AbstractRMFurnaceBlockEntity(
             }
             val recipe = getRecipe(inventory.getStackInSlot(0)) ?: return dropProgress()
             if (canBurn(recipe)) {
-                level.setBlockAndUpdate(blockPos, this.blockState.setValue(AbstractRMFurnace.LIT, true))
+                level.setBlockAndUpdate(blockPos, this.blockState.setValue(LIT, true))
                 if (currentSmeltTime < maxSmeltTime) {
                     currentSmeltTime++
                     update()
@@ -185,18 +215,17 @@ abstract class AbstractRMFurnaceBlockEntity(
         }
     }
 
+    private inline fun <reified T> typeCast(any: Any?): T = any as T
     private fun getRecipe(stack: ItemStack?): Recipe<*>? {
-        if (stack == null) {
+        if (stack == ItemStack.EMPTY) {
             return null
         }
         for(recipe_type in rmMekanism.recipe_types)
         {
-            val recipes = findRecipesByType(recipe_type, level)
-            for (recipe in recipes) {
-                if (level?.recipeManager?.recipes?.contains(recipe)!!){
-                    return recipe
-                }
-            }
+            val simpleContainer = SimpleContainer(stack)
+            val recipe = level!!.recipeManager.getRecipeFor(typeCast(recipe_type), simpleContainer, level!!)
+            if (!recipe.isEmpty)
+                return recipe.get()
         }
         return null
     }
@@ -218,6 +247,32 @@ abstract class AbstractRMFurnaceBlockEntity(
 
         override fun getCount(): Int {
             return 2
+        }
+    }
+
+    fun setHandler(itemStackHandler: ItemStackHandler) {
+        for (i in 0 until itemStackHandler.slots) {
+            inventory.setStackInSlot(i, itemStackHandler.getStackInSlot(i))
+        }
+    }
+    fun getRenderStack(): ItemStack {
+        val stack: ItemStack = if (!inventory.getStackInSlot(2).isEmpty()) {
+            inventory.getStackInSlot(2)
+        } else {
+            inventory.getStackInSlot(1)
+        }
+        return stack
+    }
+
+    fun stillValid(player: Player): Boolean {
+        return if (level!!.getBlockEntity(worldPosition) !== this) {
+            false
+        } else {
+            player.distanceToSqr(
+                worldPosition.x.toDouble() + 0.5,
+                worldPosition.y.toDouble() + 0.5,
+                worldPosition.z.toDouble() + 0.5
+            ) <= 64.0
         }
     }
 

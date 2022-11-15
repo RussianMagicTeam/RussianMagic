@@ -49,6 +49,7 @@ object RMFurnacesMenuTypes {
                 addSlot(SlotItemHandler(handler, 2, 22, 34))
             }
             addDataSlots(data)
+            TE_INVENTORY_SLOT_COUNT = 3
         }
     }
 
@@ -78,7 +79,7 @@ object RMFurnacesMenuTypes {
         }
 
         init {
-            checkContainerSize(inv, 3)
+            checkContainerSize(inv, 4)
             addPlayerInventory(inv)
             addPlayerHotbar(inv)
             blockEntity!!.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent { handler ->
@@ -90,6 +91,7 @@ object RMFurnacesMenuTypes {
                 addSlot(SlotItemHandler(handler, 3, 22, 44))
             }
             addDataSlots(data)
+            TE_INVENTORY_SLOT_COUNT = 4
         }
     }
 
@@ -119,7 +121,7 @@ object RMFurnacesMenuTypes {
         }
 
         init {
-            checkContainerSize(inv, 3)
+            checkContainerSize(inv, 5)
             addPlayerInventory(inv)
             addPlayerHotbar(inv)
             blockEntity!!.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent { handler ->
@@ -132,6 +134,7 @@ object RMFurnacesMenuTypes {
                 addSlot(SlotItemHandler(handler, 4, 22, 53))
             }
             addDataSlots(data)
+            TE_INVENTORY_SLOT_COUNT = 5
         }
     }
 

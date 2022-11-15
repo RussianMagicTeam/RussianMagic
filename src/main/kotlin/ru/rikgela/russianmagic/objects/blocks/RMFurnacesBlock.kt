@@ -1,9 +1,13 @@
 package ru.rikgela.russianmagic.objects.blocks
 
 import net.minecraft.core.BlockPos
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityTicker
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import ru.rikgela.russianmagic.init.RMBlockEntityTypes
+import ru.rikgela.russianmagic.objects.blockentities.RMFurnacesBlockEntity
 
 
 object RMFurnacesBlock {
@@ -13,12 +17,46 @@ object RMFurnacesBlock {
         override fun newBlockEntity(blockPos: BlockPos, blockState: BlockState): BlockEntity {
             return RMBlockEntityTypes.RM_DIAMOND_FURNACE.get().create(blockPos, blockState)!!
         }
+
+        override fun <T : BlockEntity?> getTicker(
+            level: Level,
+            blockState: BlockState,
+            blockEntityType: BlockEntityType<T>
+        ): BlockEntityTicker<T>? {
+            return createTickerHelper(
+                blockEntityType,
+                RMBlockEntityTypes.RM_DIAMOND_FURNACE.get()
+            ) { level: Level,
+                blockPos: BlockPos,
+                blockState: BlockState,
+                rmDiamondFurnaceBlockEntity: RMFurnacesBlockEntity.RMDiamondFurnaceBlockEntity
+                ->
+                rmDiamondFurnaceBlockEntity.tick(level, blockPos, blockState, rmDiamondFurnaceBlockEntity)
+            }
+        }
     }
 
     class RMIsolatedDiamondFurnaceBlock(properties: Properties)
         : AbstractRMFurnace(properties) {
         override fun newBlockEntity(blockPos: BlockPos, blockState: BlockState): BlockEntity {
             return RMBlockEntityTypes.RM_ISOLATED_DIAMOND_FURNACE.get().create(blockPos, blockState)!!
+        }
+
+        override fun <T : BlockEntity?> getTicker(
+            level: Level,
+            blockState: BlockState,
+            blockEntityType: BlockEntityType<T>
+        ): BlockEntityTicker<T>? {
+            return createTickerHelper(
+                blockEntityType,
+                RMBlockEntityTypes.RM_ISOLATED_DIAMOND_FURNACE.get()
+            ) { level: Level,
+                blockPos: BlockPos,
+                blockState: BlockState,
+                rmIsolatedDiamondFurnaceBlockEntity: RMFurnacesBlockEntity.RMIsolatedDiamondFurnaceBlockEntity
+                ->
+                rmIsolatedDiamondFurnaceBlockEntity.tick(level, blockPos, blockState, rmIsolatedDiamondFurnaceBlockEntity)
+            }
         }
     }
 
@@ -27,12 +65,45 @@ object RMFurnacesBlock {
         override fun newBlockEntity(blockPos: BlockPos, blockState: BlockState): BlockEntity {
             return RMBlockEntityTypes.RM_EBONY_FURNACE.get().create(blockPos, blockState)!!
         }
+        override fun <T : BlockEntity?> getTicker(
+            level: Level,
+            blockState: BlockState,
+            blockEntityType: BlockEntityType<T>
+        ): BlockEntityTicker<T>? {
+            return createTickerHelper(
+                blockEntityType,
+                RMBlockEntityTypes.RM_EBONY_FURNACE.get()
+            ) { level: Level,
+                blockPos: BlockPos,
+                blockState: BlockState,
+                rmEbonyFurnaceBlockEntity: RMFurnacesBlockEntity.RMEbonyFurnaceBlockEntity
+                ->
+                rmEbonyFurnaceBlockEntity.tick(level, blockPos, blockState, rmEbonyFurnaceBlockEntity)
+            }
+        }
     }
 
     class RMMarbleFurnaceBlock(properties: Properties)
         : AbstractRMFurnace(properties) {
         override fun newBlockEntity(blockPos: BlockPos, blockState: BlockState): BlockEntity {
             return RMBlockEntityTypes.RM_MARBLE_FURNACE.get().create(blockPos, blockState)!!
+        }
+
+        override fun <T : BlockEntity?> getTicker(
+            level: Level,
+            blockState: BlockState,
+            blockEntityType: BlockEntityType<T>
+        ): BlockEntityTicker<T>? {
+            return createTickerHelper(
+                blockEntityType,
+                RMBlockEntityTypes.RM_MARBLE_FURNACE.get()
+            ) { level: Level,
+                blockPos: BlockPos,
+                blockState: BlockState,
+                rmMarbleFurnaceBlockEntity: RMFurnacesBlockEntity.RMMarbleFurnaceBlockEntity
+                ->
+                rmMarbleFurnaceBlockEntity.tick(level, blockPos, blockState, rmMarbleFurnaceBlockEntity)
+            }
         }
     }
 
@@ -41,6 +112,23 @@ object RMFurnacesBlock {
         override fun newBlockEntity(blockPos: BlockPos, blockState: BlockState): BlockEntity {
             return RMBlockEntityTypes.RM_WHITE_JADE_FURNACE.get().create(blockPos, blockState)!!
         }
+
+        override fun <T : BlockEntity?> getTicker(
+            level: Level,
+            blockState: BlockState,
+            blockEntityType: BlockEntityType<T>
+        ): BlockEntityTicker<T>? {
+            return createTickerHelper(
+                blockEntityType,
+                RMBlockEntityTypes.RM_WHITE_JADE_FURNACE.get()
+            ) { level: Level,
+                blockPos: BlockPos,
+                blockState: BlockState,
+                rmWhiteJadeFurnaceBlockEntity: RMFurnacesBlockEntity.RMWhiteJadeFurnaceBlockEntity
+                ->
+                rmWhiteJadeFurnaceBlockEntity.tick(level, blockPos, blockState, rmWhiteJadeFurnaceBlockEntity)
+            }
+        }
     }
 
     class RMRhinestoneFurnaceBlock(properties: Properties)
@@ -48,12 +136,46 @@ object RMFurnacesBlock {
         override fun newBlockEntity(blockPos: BlockPos, blockState: BlockState): BlockEntity {
             return RMBlockEntityTypes.RM_RHINESTONE_FURNACE.get().create(blockPos, blockState)!!
         }
+
+        override fun <T : BlockEntity?> getTicker(
+            level: Level,
+            blockState: BlockState,
+            blockEntityType: BlockEntityType<T>
+        ): BlockEntityTicker<T>? {
+            return createTickerHelper(
+                blockEntityType,
+                RMBlockEntityTypes.RM_RHINESTONE_FURNACE.get()
+            ) { level: Level,
+                blockPos: BlockPos,
+                blockState: BlockState,
+                rmRhinestoneFurnaceBlockEntity: RMFurnacesBlockEntity.RMRhinestoneFurnaceBlockEntity
+                ->
+                rmRhinestoneFurnaceBlockEntity.tick(level, blockPos, blockState, rmRhinestoneFurnaceBlockEntity)
+            }
+        }
     }
 
     class RMAquamarineFurnaceBlock(properties: Properties)
         : AbstractRMFurnace(properties) {
         override fun newBlockEntity(blockPos: BlockPos, blockState: BlockState): BlockEntity {
             return RMBlockEntityTypes.RM_AQUAMARINE_FURNACE.get().create(blockPos, blockState)!!
+        }
+
+        override fun <T : BlockEntity?> getTicker(
+            level: Level,
+            blockState: BlockState,
+            blockEntityType: BlockEntityType<T>
+        ): BlockEntityTicker<T>? {
+            return createTickerHelper(
+                blockEntityType,
+                RMBlockEntityTypes.RM_AQUAMARINE_FURNACE.get()
+            ) { level: Level,
+                blockPos: BlockPos,
+                blockState: BlockState,
+                rmAquamarineFurnaceBlockEntity: RMFurnacesBlockEntity.RMAquamarineFurnaceBlockEntity
+                ->
+                rmAquamarineFurnaceBlockEntity.tick(level, blockPos, blockState, rmAquamarineFurnaceBlockEntity)
+            }
         }
     }
 }

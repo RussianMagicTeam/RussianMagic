@@ -10,11 +10,11 @@ import net.minecraft.world.entity.player.Inventory
 import ru.rikgela.russianmagic.objects.menutypes.AbstractRMFurnaceMenuType
 
 class RMFurnaceScreen(
-    private val screenContainerMarble: AbstractRMFurnaceMenuType,
+    private val abstractRMFurnaceMenuType: AbstractRMFurnaceMenuType,
     inv: Inventory,
     titleIn: Component,
     private val TEXTURE: ResourceLocation
-) : AbstractContainerScreen<AbstractRMFurnaceMenuType>(screenContainerMarble, inv, titleIn){
+) : AbstractContainerScreen<AbstractRMFurnaceMenuType>(abstractRMFurnaceMenuType, inv, titleIn){
 
     override fun renderBg(pPoseStack: PoseStack, pPartialTick: Float, pMouseX: Int, pMouseY: Int) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader)
@@ -34,6 +34,13 @@ class RMFurnaceScreen(
             blit(pPoseStack, x + 105, y + 33, 176, 0, 8, menu.scaledProgress)
         }
     }
+
+    override fun render(pPoseStack: PoseStack, mouseX: Int, mouseY: Int, delta: Float) {
+        renderBackground(pPoseStack)
+        super.render(pPoseStack, mouseX, mouseY, delta)
+        renderTooltip(pPoseStack, mouseX, mouseY)
+    }
+
 
 //    override fun drawGuiContainerBackgroundLayer(partialTicks: Float, mouseX: Int, mouseY: Int) {
 //        RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f)

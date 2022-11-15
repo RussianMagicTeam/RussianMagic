@@ -1,6 +1,8 @@
 package ru.rikgela.russianmagic.init
 
 
+import net.minecraft.client.renderer.ItemBlockRenderTypes
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.Material
@@ -446,7 +448,7 @@ object RMBlocks {
                 RMFurnacesBlock.RMDiamondFurnaceBlock(
                     BlockBehaviour
                         .Properties
-                        .copy(Blocks.FURNACE)
+                        .of(Material.STONE)
                         .requiresCorrectToolForDrops()
                         .strength(1.0f, 3.0f)
                 )
@@ -456,7 +458,7 @@ object RMBlocks {
             .register("rm_isolated_diamond_furnace") {
                 RMFurnacesBlock.RMIsolatedDiamondFurnaceBlock(BlockBehaviour
                     .Properties
-                    .copy(Blocks.FURNACE)
+                    .of(Material.STONE)
                     .requiresCorrectToolForDrops()
                     .strength(1.0f, 3.0f)
                 )
@@ -466,7 +468,7 @@ object RMBlocks {
             .register("rm_ebony_furnace") {
                 RMFurnacesBlock.RMEbonyFurnaceBlock(BlockBehaviour
                     .Properties
-                    .copy(Blocks.FURNACE)
+                    .of(Material.STONE)
                     .requiresCorrectToolForDrops()
                     .strength(1.0f, 3.0f)
                 )
@@ -476,7 +478,7 @@ object RMBlocks {
             .register("rm_marble_furnace") {
                 RMFurnacesBlock.RMMarbleFurnaceBlock(BlockBehaviour
                     .Properties
-                    .copy(Blocks.FURNACE)
+                    .of(Material.STONE)
                     .requiresCorrectToolForDrops()
                     .strength(1.0f, 3.0f)
                 )
@@ -486,7 +488,7 @@ object RMBlocks {
             .register("rm_white_jade_furnace") {
                 RMFurnacesBlock.RMWhiteJadeFurnaceBlock(BlockBehaviour
                     .Properties
-                    .copy(Blocks.FURNACE)
+                    .of(Material.STONE)
                     .requiresCorrectToolForDrops()
                     .strength(1.0f, 3.0f)
                 )
@@ -496,7 +498,7 @@ object RMBlocks {
             .register("rm_rhinestone_furnace") {
                 RMFurnacesBlock.RMRhinestoneFurnaceBlock(BlockBehaviour
                     .Properties
-                    .copy(Blocks.FURNACE)
+                    .of(Material.STONE)
                     .requiresCorrectToolForDrops()
                     .strength(1.0f, 3.0f)
                 )
@@ -506,7 +508,7 @@ object RMBlocks {
             .register("rm_aquamarine_furnace") {
                 RMFurnacesBlock.RMAquamarineFurnaceBlock(BlockBehaviour
                     .Properties
-                    .copy(Blocks.FURNACE)
+                    .of(Material.STONE)
                     .requiresCorrectToolForDrops()
                     .strength(1.0f, 3.0f)
                 )
@@ -551,10 +553,10 @@ object RMBlocks {
     val STRIPPED_EBONY_WOOD: RegistryObject<EbonyRotatedPillarBlock> = BLOCKS.register("stripped_ebony_wood") {
         EbonyRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD))
     }
-//    fun clientSetup() {
-////        RenderTypeLookup.setRenderLayer(EBONY_SAPLING.get(), RenderType.getCutout())
-////        RenderTypeLookup.setRenderLayer(EBONY_LEAVES.get(), RenderType.getCutout())
-//        RenderTypeLookup.setRenderLayer(RHINESTONE_BLOCK.get(), RenderType.getTranslucent())
-////        RenderTypeLookup.setRenderLayer(RM_BASIC_MAGIC_SOURCE_BLOCK.get(), RenderType.getTranslucent())
-//    }
+    fun clientSetup() {
+        ItemBlockRenderTypes.setRenderLayer(EBONY_SAPLING.get(), RenderType.cutout())
+        ItemBlockRenderTypes.setRenderLayer(EBONY_LEAVES.get(), RenderType.cutout())
+        ItemBlockRenderTypes.setRenderLayer(RHINESTONE_BLOCK.get(), RenderType.translucent())
+//        RenderTypeLookup.setRenderLayer(RM_BASIC_MAGIC_SOURCE_BLOCK.get(), RenderType.getTranslucent())
+    }
 }

@@ -64,12 +64,17 @@ class ManaTaker : IManaTaker {
     }
 
     override fun getRate(manaConsumer: BlockPos, sensitivity: Float): Float {
-        val distance = sqrt(spreaderPos!!.distSqr(Vec3i(manaConsumer.x, manaConsumer.y, manaConsumer.z))).toFloat()
-        val rate =
-            sensitivity *
-                    if (distance >= this.baseDistance) 1F / distance
-                    else 1F - distance / this.baseDistance
-        return max(min(rate, 1F), 0F)
+        if(spreaderPos != null) {
+            val distance = sqrt(spreaderPos!!.distSqr(Vec3i(manaConsumer.x, manaConsumer.y, manaConsumer.z))).toFloat()
+            val rate =
+                sensitivity *
+                        if (distance >= this.baseDistance) 1F / distance
+                        else 1F - distance / this.baseDistance
+            return max(min(rate, 1F), 0F)
+        }
+        else {
+            return 0F
+        }
     }
 
     override fun getMana(

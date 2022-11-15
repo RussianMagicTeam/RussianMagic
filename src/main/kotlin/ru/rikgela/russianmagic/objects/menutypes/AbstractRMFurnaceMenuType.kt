@@ -2,10 +2,12 @@ package ru.rikgela.russianmagic.objects.menutypes
 
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.inventory.*
+import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.ContainerData
+import net.minecraft.world.inventory.MenuType
+import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import ru.rikgela.russianmagic.init.RMBlocks
 import ru.rikgela.russianmagic.objects.blockentities.AbstractRMFurnaceBlockEntity
 import java.sql.DriverManager.println
 
@@ -78,10 +80,11 @@ abstract class AbstractRMFurnaceMenuType(
     }
 
     override fun stillValid(player: Player): Boolean {
-        return stillValid(
-            ContainerLevelAccess.create(level, blockEntity!!.blockPos),
-            player, RMBlocks.RM_ISOLATED_DIAMOND_FURNACE_BLOCK.get()
-        )
+        return blockEntity!!.stillValid(player)
+//        return stillValid(
+//            ContainerLevelAccess.create(level, blockEntity!!.blockPos),
+//            player, RMBlocks.RM_ISOLATED_DIAMOND_FURNACE_BLOCK.get()
+//        )
     }
 
     protected fun addPlayerInventory(playerInventory: Inventory) {
@@ -115,8 +118,9 @@ abstract class AbstractRMFurnaceMenuType(
         private val TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT
 
         // THIS YOU HAVE TO DEFINE!
-        private val TE_INVENTORY_SLOT_COUNT = 3 // must be the number of slots you have!
     }
+    protected var TE_INVENTORY_SLOT_COUNT = 3 // must be the number of slots you have!
+
     init{
         this.blockEntity = blockEntityFurnace
         this.level = inv.player.level

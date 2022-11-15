@@ -182,6 +182,26 @@ object RMItems {
         Item(Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
     }
 
+    // Tree
+    val EBONY_SAPLING: RegistryObject<BlockItem> = ITEMS.register("ebony_sapling") {
+        BlockItem(RMBlocks.EBONY_SAPLING.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
+    }
+    val EBONY_LOG: RegistryObject<BlockItem> = ITEMS.register("ebony_log") {
+        BlockItem(RMBlocks.EBONY_LOG.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
+    }
+    val STRIPPED_EBONY_LOG: RegistryObject<BlockItem> = ITEMS.register("stripped_ebony_log") {
+        BlockItem(RMBlocks.STRIPPED_EBONY_LOG.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
+    }
+    val EBONY_WOOD: RegistryObject<BlockItem> = ITEMS.register("ebony_wood") {
+        BlockItem(RMBlocks.EBONY_WOOD.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
+    }
+    val STRIPPED_EBONY_WOOD: RegistryObject<BlockItem> = ITEMS.register("stripped_ebony_wood") {
+        BlockItem(RMBlocks.STRIPPED_EBONY_WOOD.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
+    }
+    val EBONY_LEAVES: RegistryObject<BlockItem> = ITEMS.register("ebony_leaves") {
+        BlockItem(RMBlocks.EBONY_LEAVES.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
+    }
+
     // Instruments
     val EBONY_PLANKS_AXE: RegistryObject<Item> = ITEMS.register("ebony_planks_axe") {
         RMAxeItem(RMForgeTier.EBONY_PLANKS_TIER, 6.0f, -3.1f, Item.Properties().tab(
@@ -558,24 +578,6 @@ object RMItems {
 //        MeditationRebornScroll(Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
 //    }
 //
-//    //tree
-    val EBONY_SAPLING: RegistryObject<BlockItem> = ITEMS.register("ebony_sapling") {
-        BlockItem(RMBlocks.EBONY_SAPLING.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
-    }
-    val EBONY_LOG: RegistryObject<BlockItem> = ITEMS.register("ebony_log") {
-        BlockItem(RMBlocks.EBONY_LOG.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
-    }
-    val STRIPPED_EBONY_LOG: RegistryObject<BlockItem> = ITEMS.register("stripped_ebony_log") {
-        BlockItem(RMBlocks.STRIPPED_EBONY_LOG.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
-    }
-    val EBONY_WOOD: RegistryObject<BlockItem> = ITEMS.register("ebony_wood") {
-        BlockItem(RMBlocks.EBONY_WOOD.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
-    }
-    val STRIPPED_EBONY_WOOD: RegistryObject<BlockItem> = ITEMS.register("stripped_ebony_wood") {
-        BlockItem(RMBlocks.STRIPPED_EBONY_WOOD.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
-    }
-    val EBONY_LEAVES: RegistryObject<BlockItem> = ITEMS.register("ebony_leaves") {
-        BlockItem(RMBlocks.EBONY_LEAVES.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP))
-    }
+
 
 }
