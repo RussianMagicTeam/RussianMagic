@@ -64,7 +64,7 @@ abstract class AbstractRMFurnaceBlockEntity(
     override fun getRate(manaConsumer: BlockPos, sensitivity: Float): Float = manaTaker.getRate(manaConsumer, sensitivity)
 
     private val defaultName: MutableComponent
-        get() = Component.literal("container.$MOD_ID.${rmMekanism.name}")
+        get() = Component.translatable("container.$MOD_ID.${rmMekanism.name}")
 
     override val isConnectedToManaSpreader: Boolean
         get() = manaTaker.isConnectedToManaSpreader
@@ -101,7 +101,7 @@ abstract class AbstractRMFurnaceBlockEntity(
         return name
     }
 
-    private val inventory: ItemStackHandler = object : ItemStackHandler(3) {
+    private val inventory: ItemStackHandler = object : ItemStackHandler(2 + rmMekanism.supportSlots) {
         override fun onContentsChanged(slot: Int) {
             setChanged()
             if (!level!!.isClientSide()) {

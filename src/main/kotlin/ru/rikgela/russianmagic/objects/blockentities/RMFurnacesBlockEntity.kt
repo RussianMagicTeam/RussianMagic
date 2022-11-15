@@ -19,7 +19,7 @@ object RMFurnacesBlockEntity {
         RMBlockEntityTypes.RM_DIAMOND_FURNACE.get(),
         blockPos,
         blockState,
-        RMMekanism(1, 1, "rm_isolated_diamond_furnace", setOf(RecipeType.SMELTING))
+        RMMekanism(1, 1, "rm_diamond_furnace", setOf(RecipeType.SMELTING))
     ), IManaReceiver {
         override val upSlots = RMFurnacesMenuTypes.RMOneSupportOneToOneFurnaceMenuType.upSlots
         override val downSlots = RMFurnacesMenuTypes.RMOneSupportOneToOneFurnaceMenuType.downSlots

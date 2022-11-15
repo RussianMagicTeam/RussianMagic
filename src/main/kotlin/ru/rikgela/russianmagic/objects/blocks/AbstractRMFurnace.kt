@@ -33,12 +33,6 @@ import ru.rikgela.russianmagic.objects.blockentities.AbstractRMFurnaceBlockEntit
 
 abstract class AbstractRMFurnace(properties: Properties) : BaseEntityBlock(properties) {
 
-
-//    override fun hasTileEntity(state: BlockState): Boolean {
-//        return true
-//    }
-//    val FACING: DirectionProperty? = BlockStateProperties.HORIZONTAL_FACING
-
     fun openContainer(level: Level, blockPos: BlockPos?, player: Player) {
         val blockentity = level.getBlockEntity(blockPos)
         if (blockentity is FurnaceBlockEntity) {
@@ -77,11 +71,6 @@ abstract class AbstractRMFurnace(properties: Properties) : BaseEntityBlock(prope
         }
     }
 
-//    override fun fillStateContainer(builder: StateContainer.Builder<Block, BlockState>) {
-//        super.fillStateContainer(builder)
-//        builder.add(FACING, LIT)
-//    }
-//
     @Deprecated("Deprecated in Java")
     override fun mirror(state: BlockState, mirrorIn: Mirror): BlockState {
         return state.rotate(mirrorIn.getRotation(state.getValue(FACING)))
@@ -102,6 +91,7 @@ abstract class AbstractRMFurnace(properties: Properties) : BaseEntityBlock(prope
     }
 
     override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block?, BlockState?>) {
+        super.createBlockStateDefinition(builder)
         builder.add(FACING, LIT)
     }
 
@@ -217,7 +207,4 @@ abstract class AbstractRMFurnace(properties: Properties) : BaseEntityBlock(prope
         this.defaultBlockState().setValue(LIT, false).setValue(FACING, Direction.NORTH)
     }
 
-//    init {
-//        registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
-//    }
 }
