@@ -16,6 +16,7 @@ interface IMana : IManaBase, INBTSerializable<CompoundTag> {
     fun give(points: Int, rate: Float): Int
     fun fill(points: Int)
     fun copy(mana: IMana)
+    fun onContentsChanged()
 }
 
 interface IManaSpreader : IManaBase {
@@ -42,5 +43,5 @@ interface IManaTaker : INBTSerializable<CompoundTag> {
         manaConsumer: BlockPos,
         sensitivity: Float
     ): Int
-    fun getRate(manaConsumer: BlockPos, sensitivity: Float): Float
+    val rate: Float
 }

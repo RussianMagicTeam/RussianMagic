@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import ru.rikgela.russianmagic.init.RMBlockEntityTypes
+import ru.rikgela.russianmagic.objects.blockentities.AbstractRMFurnaceBlockEntity
 import ru.rikgela.russianmagic.objects.blockentities.RMFurnacesBlockEntity
 
 
@@ -15,7 +16,8 @@ object RMFurnacesBlock {
     )
         : AbstractRMFurnace(properties) {
         override fun newBlockEntity(blockPos: BlockPos, blockState: BlockState): BlockEntity {
-            return RMBlockEntityTypes.RM_DIAMOND_FURNACE.get().create(blockPos, blockState)!!
+//            return RMBlockEntityTypes.RM_DIAMOND_FURNACE.get().create(blockPos, blockState)!!
+            return RMFurnacesBlockEntity.RMDiamondFurnaceBlockEntity(blockPos, blockState)
         }
 
         override fun <T : BlockEntity?> getTicker(
@@ -31,7 +33,7 @@ object RMFurnacesBlock {
                 blockState: BlockState,
                 rmDiamondFurnaceBlockEntity: RMFurnacesBlockEntity.RMDiamondFurnaceBlockEntity
                 ->
-                rmDiamondFurnaceBlockEntity.tick(level, blockPos, blockState, rmDiamondFurnaceBlockEntity)
+                AbstractRMFurnaceBlockEntity.tick(level, blockPos, blockState, rmDiamondFurnaceBlockEntity)
             }
         }
     }
@@ -55,7 +57,7 @@ object RMFurnacesBlock {
                 blockState: BlockState,
                 rmIsolatedDiamondFurnaceBlockEntity: RMFurnacesBlockEntity.RMIsolatedDiamondFurnaceBlockEntity
                 ->
-                rmIsolatedDiamondFurnaceBlockEntity.tick(level, blockPos, blockState, rmIsolatedDiamondFurnaceBlockEntity)
+                AbstractRMFurnaceBlockEntity.tick(level, blockPos, blockState, rmIsolatedDiamondFurnaceBlockEntity)
             }
         }
     }
@@ -78,7 +80,7 @@ object RMFurnacesBlock {
                 blockState: BlockState,
                 rmEbonyFurnaceBlockEntity: RMFurnacesBlockEntity.RMEbonyFurnaceBlockEntity
                 ->
-                rmEbonyFurnaceBlockEntity.tick(level, blockPos, blockState, rmEbonyFurnaceBlockEntity)
+                AbstractRMFurnaceBlockEntity.tick(level, blockPos, blockState, rmEbonyFurnaceBlockEntity)
             }
         }
     }
@@ -102,7 +104,7 @@ object RMFurnacesBlock {
                 blockState: BlockState,
                 rmMarbleFurnaceBlockEntity: RMFurnacesBlockEntity.RMMarbleFurnaceBlockEntity
                 ->
-                rmMarbleFurnaceBlockEntity.tick(level, blockPos, blockState, rmMarbleFurnaceBlockEntity)
+                AbstractRMFurnaceBlockEntity.tick(level, blockPos, blockState, rmMarbleFurnaceBlockEntity)
             }
         }
     }
@@ -126,7 +128,7 @@ object RMFurnacesBlock {
                 blockState: BlockState,
                 rmWhiteJadeFurnaceBlockEntity: RMFurnacesBlockEntity.RMWhiteJadeFurnaceBlockEntity
                 ->
-                rmWhiteJadeFurnaceBlockEntity.tick(level, blockPos, blockState, rmWhiteJadeFurnaceBlockEntity)
+                AbstractRMFurnaceBlockEntity.tick(level, blockPos, blockState, rmWhiteJadeFurnaceBlockEntity)
             }
         }
     }
@@ -150,7 +152,7 @@ object RMFurnacesBlock {
                 blockState: BlockState,
                 rmRhinestoneFurnaceBlockEntity: RMFurnacesBlockEntity.RMRhinestoneFurnaceBlockEntity
                 ->
-                rmRhinestoneFurnaceBlockEntity.tick(level, blockPos, blockState, rmRhinestoneFurnaceBlockEntity)
+                AbstractRMFurnaceBlockEntity.tick(level, blockPos, blockState, rmRhinestoneFurnaceBlockEntity)
             }
         }
     }
@@ -174,7 +176,7 @@ object RMFurnacesBlock {
                 blockState: BlockState,
                 rmAquamarineFurnaceBlockEntity: RMFurnacesBlockEntity.RMAquamarineFurnaceBlockEntity
                 ->
-                rmAquamarineFurnaceBlockEntity.tick(level, blockPos, blockState, rmAquamarineFurnaceBlockEntity)
+                AbstractRMFurnaceBlockEntity.tick(level, blockPos, blockState, rmAquamarineFurnaceBlockEntity)
             }
         }
     }

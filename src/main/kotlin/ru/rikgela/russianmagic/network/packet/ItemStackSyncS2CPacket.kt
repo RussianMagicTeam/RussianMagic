@@ -35,7 +35,6 @@ class ItemStackSyncS2CPacket {
             list.add(itemStackHandler.getStackInSlot(i))
         }
         buf.writeCollection(list, FriendlyByteBuf::writeItem)
-//        buf.writeCollection(list, FriendlyByteBuf.Writer { obj: FriendlyByteBuf -> obj.writeItem() })
         buf.writeBlockPos(blockPos)
     }
 
@@ -43,7 +42,7 @@ class ItemStackSyncS2CPacket {
         val context: NetworkEvent.Context  = supplier.get()
         context.enqueueWork {
             if (Minecraft.getInstance().level!!.getBlockEntity(blockPos) is AbstractRMFurnaceBlockEntity)
-                (Minecraft.getInstance().level!!.getBlockEntity(blockPos) as AbstractRMFurnaceBlockEntity).setHandler(this.itemStackHandler)
+                (Minecraft.getInstance().level!!.getBlockEntity(blockPos) as AbstractRMFurnaceBlockEntity).setItemStackHandler(this.itemStackHandler)
         }
         return true
     }

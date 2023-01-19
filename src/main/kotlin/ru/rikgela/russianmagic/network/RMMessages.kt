@@ -9,6 +9,7 @@ import net.minecraftforge.network.PacketDistributor
 import net.minecraftforge.network.simple.SimpleChannel
 import ru.rikgela.russianmagic.MOD_ID
 import ru.rikgela.russianmagic.network.packet.ItemStackSyncS2CPacket
+import ru.rikgela.russianmagic.network.packet.ManaSyncS2CPacket
 
 
 object RMMessages {
@@ -31,10 +32,10 @@ object RMMessages {
             .encoder(ItemStackSyncS2CPacket::toBytes)
             .consumerMainThread(ItemStackSyncS2CPacket::handle)
             .add()
-        net.messageBuilder(ItemStackSyncS2CPacket::class.java, id(), NetworkDirection.PLAY_TO_CLIENT)
-            .decoder { friendlyByteBuf: FriendlyByteBuf -> ItemStackSyncS2CPacket(friendlyByteBuf) }
-            .encoder(ItemStackSyncS2CPacket::toBytes)
-            .consumerMainThread(ItemStackSyncS2CPacket::handle)
+        net.messageBuilder(ManaSyncS2CPacket::class.java, id(), NetworkDirection.PLAY_TO_CLIENT)
+            .decoder { friendlyByteBuf: FriendlyByteBuf -> ManaSyncS2CPacket(friendlyByteBuf) }
+            .encoder(ManaSyncS2CPacket::toBytes)
+            .consumerMainThread(ManaSyncS2CPacket::handle)
             .add()
     }
 

@@ -16,11 +16,14 @@ abstract class AbstractRMFurnaceMenuType(
     id: Int,
     furnaceType: MenuType<*>,
     inv: Inventory,
-    blockEntityFurnace: AbstractRMFurnaceBlockEntity?,
-    data: ContainerData
+    val blockEntity: AbstractRMFurnaceBlockEntity?,
+    data: ContainerData,
+    private val _numberOfInputSlots: Int,
+    private val _numberOfOutputSlots: Int,
+    private val _numberOfSupportSlots: Int
 ) : AbstractContainerMenu(furnaceType, id) {
 
-    var blockEntity: AbstractRMFurnaceBlockEntity?
+//    var blockEntity: AbstractRMFurnaceBlockEntity?
     protected var level: Level
     private var data: ContainerData
 
@@ -44,22 +47,22 @@ abstract class AbstractRMFurnaceMenuType(
         val copyOfSourceStack = sourceStack.copy()
 
         // Check if the slot clicked is one of the vanilla container slots
-        if (index < VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT) {
+        if (index < TE_INVENTORY_FIRST_SLOT_INDEX) {
             // This is a vanilla container slot so merge the stack into the tile inventory
             if (!moveItemStackTo(
                     sourceStack, TE_INVENTORY_FIRST_SLOT_INDEX,
                     TE_INVENTORY_FIRST_SLOT_INDEX
-                            + TE_INVENTORY_SLOT_COUNT, false
+                            + _numberOfInputSlots, false
                 )
             ) {
                 return ItemStack.EMPTY // EMPTY_ITEM
             }
-        } else if (index < TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_SLOT_COUNT) {
+        } else if (index < TE_INVENTORY_FIRST_SLOT_INDEX + TE_INVENTORY_FULL_SLOT_COUNT) {
             // This is a TE slot so merge the stack into the players inventory
             if (!moveItemStackTo(
                     sourceStack,
                     VANILLA_FIRST_SLOT_INDEX,
-                    VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT,
+                    TE_INVENTORY_FIRST_SLOT_INDEX,
                     false
                 )
             ) {
@@ -81,23 +84,19 @@ abstract class AbstractRMFurnaceMenuType(
 
     override fun stillValid(player: Player): Boolean {
         return blockEntity!!.stillValid(player)
-//        return stillValid(
-//            ContainerLevelAccess.create(level, blockEntity!!.blockPos),
-//            player, RMBlocks.RM_ISOLATED_DIAMOND_FURNACE_BLOCK.get()
-//        )
     }
 
     protected fun addPlayerInventory(playerInventory: Inventory) {
         for (i in 0..2) {
             for (l in 0..8) {
-                addSlot(Slot(playerInventory, l + (i * 9) + 9, 8 + l * 18, 86 + i * 18))
+                addSlot(Slot(playerInventory, l + (i * 9) + 9, 8 + l * 18, 84 + i * 18))
             }
         }
     }
 
     protected fun addPlayerHotbar(playerInventory: Inventory) {
         for (i in 0..8) {
-            addSlot(Slot(playerInventory, i, 8 + i * 18, 144))
+            addSlot(Slot(playerInventory, i, 8 + i * 18, 142))
         }
     }
 
@@ -116,13 +115,15 @@ abstract class AbstractRMFurnaceMenuType(
         private val VANILLA_SLOT_COUNT = HOTBAR_SLOT_COUNT + PLAYER_INVENTORY_SLOT_COUNT
         private val VANILLA_FIRST_SLOT_INDEX = 0
         private val TE_INVENTORY_FIRST_SLOT_INDEX = VANILLA_FIRST_SLOT_INDEX + VANILLA_SLOT_COUNT
-
         // THIS YOU HAVE TO DEFINE!
     }
-    protected var TE_INVENTORY_SLOT_COUNT = 3 // must be the number of slots you have!
+
+    protected var TE_INVENTORY_FULL_SLOT_COUNT =
+        _numberOfInputSlots +
+        _numberOfOutputSlots +
+        _numberOfSupportSlots // must be the number of slots you have!
 
     init{
-        this.blockEntity = blockEntityFurnace
         this.level = inv.player.level
         this.data = data
     }

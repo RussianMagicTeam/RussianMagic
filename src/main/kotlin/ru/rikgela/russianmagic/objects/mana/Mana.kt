@@ -2,18 +2,17 @@ package ru.rikgela.russianmagic.objects.mana
 
 import net.minecraft.nbt.CompoundTag
 
-open class Mana : IMana {
-
-    // Properties
-    override var currentMana = 250
-    override var baseMaxMana = 1000
+open class Mana(
+    override var currentMana: Int = 250,
+    override var baseMaxMana: Int = 1000
+) : IMana {
 
     // To save
 
     override fun serializeNBT(): CompoundTag{
         val nbt = CompoundTag()
         nbt.putInt("currentMana", this.currentMana)
-        nbt.putInt("baseMaxMana", this.currentMana)
+        nbt.putInt("baseMaxMana", this.baseMaxMana)
         return nbt
     }
 
@@ -37,6 +36,7 @@ open class Mana : IMana {
 
     override fun copy(mana: IMana) {
         this.currentMana = mana.currentMana
+        onContentsChanged()
     }
 
     // Important
@@ -45,9 +45,14 @@ open class Mana : IMana {
     override fun consume(points: Int): Boolean {
         if (currentMana >= points) {
             currentMana -= points
+            onContentsChanged()
             return true
         }
         return false
+    }
+
+    override fun onContentsChanged() {
+
     }
 
     override fun give(points: Int, rate: Float): Int {
@@ -63,18 +68,21 @@ open class Mana : IMana {
         }
         if (currentMana >= afterRateConsume) {
             currentMana -= afterRateConsume
+            onContentsChanged()
             return if (rate > 1F) points else if (rate < 0F) 0 else afterRateToSend
         } else {
             afterRateToSend = (currentMana * rate).toInt()
             if (afterRateToSend == 0) return 0
             val tmp: Int = if (rate > 1) currentMana else if (rate < 0) 0 else afterRateToSend
             currentMana = 0
+            onContentsChanged()
             return tmp
         }
     }
 
     override fun fill(points: Int) {
         currentMana += points
+        onContentsChanged()
     }
 }
 

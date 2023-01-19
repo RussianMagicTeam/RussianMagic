@@ -4,6 +4,8 @@ import net.minecraft.world.item.crafting.RecipeType
 
 data class RMMekanism(
         val tier: Int,
+        val inputSlots: Int,
+        val outputSlots: Int,
         val supportSlots: Int,
         val name: String,
         val recipe_types: Set<RecipeType<*>>
@@ -14,6 +16,8 @@ data class RMMekanism(
         other as RMMekanism
 
         if (tier != other.tier) return false
+        if (inputSlots != other.inputSlots) return false
+        if (outputSlots != other.outputSlots) return false
         if (supportSlots != other.supportSlots) return false
         if (name != other.name) return false
         if (recipe_types == other.recipe_types) return false
@@ -23,6 +27,8 @@ data class RMMekanism(
 
     override fun hashCode(): Int {
         var result = tier
+        result = 31 * result + inputSlots
+        result = 31 * result + outputSlots
         result = 31 * result + supportSlots
         result = 31 * result + name.hashCode()
         result = 31 * result + recipe_types.hashCode()

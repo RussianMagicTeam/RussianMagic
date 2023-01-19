@@ -7,6 +7,9 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.block.state.BlockState
 import ru.rikgela.russianmagic.init.RMBlockEntityTypes
+import ru.rikgela.russianmagic.network.RMMessages
+import ru.rikgela.russianmagic.network.packet.ItemStackSyncS2CPacket
+import ru.rikgela.russianmagic.network.packet.ManaSyncS2CPacket
 import ru.rikgela.russianmagic.objects.blocks.RMMekanism
 import ru.rikgela.russianmagic.objects.mana.IManaReceiver
 import ru.rikgela.russianmagic.objects.menutypes.RMFurnacesMenuTypes
@@ -19,12 +22,19 @@ object RMFurnacesBlockEntity {
         RMBlockEntityTypes.RM_DIAMOND_FURNACE.get(),
         blockPos,
         blockState,
-        RMMekanism(1, 1, "rm_diamond_furnace", setOf(RecipeType.SMELTING))
+        RMMekanism(
+            1,
+            RMFurnacesMenuTypes.RMOneSupportOneToOneFurnaceMenuType.numberOfInputSlots,
+            RMFurnacesMenuTypes.RMOneSupportOneToOneFurnaceMenuType.numberOfOutputSlots,
+            RMFurnacesMenuTypes.RMOneSupportOneToOneFurnaceMenuType.numberOfSupportSlots,
+            "rm_diamond_furnace",
+            setOf(RecipeType.SMELTING)
+        )
     ), IManaReceiver {
-        override val upSlots = RMFurnacesMenuTypes.RMOneSupportOneToOneFurnaceMenuType.upSlots
-        override val downSlots = RMFurnacesMenuTypes.RMOneSupportOneToOneFurnaceMenuType.downSlots
-        override val horizontalSlots = RMFurnacesMenuTypes.RMOneSupportOneToOneFurnaceMenuType.horizontalSlots
         override fun createMenu(windowID: Int, playerInv: Inventory, playerIn: Player): AbstractContainerMenu {
+//            RMMessages.sendToClients(ManaSyncS2CPacket(this.mana, this.worldPosition))
+//            RMMessages.sendToClients(ItemStackSyncS2CPacket(this.inventory, this.worldPosition))
+            super.update()
             return RMFurnacesMenuTypes.RMOneSupportOneToOneFurnaceMenuType(windowID, playerInv, this, this.data)
         }
     }
@@ -36,12 +46,18 @@ object RMFurnacesBlockEntity {
         RMBlockEntityTypes.RM_ISOLATED_DIAMOND_FURNACE.get(),
         blockPos,
         blockState,
-        RMMekanism(1, 1, "rm_isolated_diamond_furnace", setOf(RecipeType.SMELTING))
+        RMMekanism(
+            1,
+            RMFurnacesMenuTypes.RMOneSupportOneToOneFurnaceMenuType.numberOfInputSlots,
+            RMFurnacesMenuTypes.RMOneSupportOneToOneFurnaceMenuType.numberOfOutputSlots,
+            RMFurnacesMenuTypes.RMOneSupportOneToOneFurnaceMenuType.numberOfSupportSlots,
+            "rm_isolated_diamond_furnace",
+            setOf(RecipeType.SMELTING)
+        )
     ), IManaReceiver {
-        override val upSlots = RMFurnacesMenuTypes.RMOneSupportOneToOneFurnaceMenuType.upSlots
-        override val downSlots = RMFurnacesMenuTypes.RMOneSupportOneToOneFurnaceMenuType.downSlots
-        override val horizontalSlots = RMFurnacesMenuTypes.RMOneSupportOneToOneFurnaceMenuType.horizontalSlots
         override fun createMenu(windowID: Int, playerInv: Inventory, playerIn: Player): AbstractContainerMenu {
+            RMMessages.sendToClients(ManaSyncS2CPacket(this.mana, this.worldPosition))
+            RMMessages.sendToClients(ItemStackSyncS2CPacket(this.inventory, this.worldPosition))
             return RMFurnacesMenuTypes.RMOneSupportOneToOneFurnaceMenuType(windowID, playerInv, this, this.data)
         }
     }
@@ -53,12 +69,18 @@ object RMFurnacesBlockEntity {
         RMBlockEntityTypes.RM_EBONY_FURNACE.get(),
         blockPos,
         blockState,
-        RMMekanism(1, 2, "rm_ebony_furnace", setOf(RecipeType.SMELTING))
+        RMMekanism(
+            1,
+            RMFurnacesMenuTypes.RMTwoSupportOneToOneFurnaceMenuType.numberOfInputSlots,
+            RMFurnacesMenuTypes.RMTwoSupportOneToOneFurnaceMenuType.numberOfOutputSlots,
+            RMFurnacesMenuTypes.RMTwoSupportOneToOneFurnaceMenuType.numberOfSupportSlots,
+            "rm_ebony_furnace",
+            setOf(RecipeType.SMELTING)
+        )
     ), IManaReceiver {
-        override val upSlots = RMFurnacesMenuTypes.RMTwoSupportOneToOneFurnaceMenuType.upSlots
-        override val downSlots = RMFurnacesMenuTypes.RMTwoSupportOneToOneFurnaceMenuType.downSlots
-        override val horizontalSlots = RMFurnacesMenuTypes.RMTwoSupportOneToOneFurnaceMenuType.horizontalSlots
         override fun createMenu(windowID: Int, playerInv: Inventory, playerIn: Player): AbstractContainerMenu {
+            RMMessages.sendToClients(ManaSyncS2CPacket(this.mana, this.worldPosition))
+            RMMessages.sendToClients(ItemStackSyncS2CPacket(this.inventory, this.worldPosition))
             return RMFurnacesMenuTypes.RMTwoSupportOneToOneFurnaceMenuType(windowID, playerInv, this, this.data)
         }
     }
@@ -70,12 +92,18 @@ object RMFurnacesBlockEntity {
         RMBlockEntityTypes.RM_MARBLE_FURNACE.get(),
         blockPos,
         blockState,
-        RMMekanism(2, 2, "rm_marble_furnace", setOf(RecipeType.SMELTING))
+        RMMekanism(
+            2,
+            RMFurnacesMenuTypes.RMTwoSupportOneToOneFurnaceMenuType.numberOfInputSlots,
+            RMFurnacesMenuTypes.RMTwoSupportOneToOneFurnaceMenuType.numberOfOutputSlots,
+            RMFurnacesMenuTypes.RMTwoSupportOneToOneFurnaceMenuType.numberOfSupportSlots,
+            "rm_marble_furnace",
+            setOf(RecipeType.SMELTING)
+        )
     ), IManaReceiver {
-        override val upSlots = RMFurnacesMenuTypes.RMTwoSupportOneToOneFurnaceMenuType.upSlots
-        override val downSlots = RMFurnacesMenuTypes.RMTwoSupportOneToOneFurnaceMenuType.downSlots
-        override val horizontalSlots = RMFurnacesMenuTypes.RMTwoSupportOneToOneFurnaceMenuType.horizontalSlots
         override fun createMenu(windowID: Int, playerInv: Inventory, playerIn: Player): AbstractContainerMenu {
+            RMMessages.sendToClients(ManaSyncS2CPacket(this.mana, this.worldPosition))
+            RMMessages.sendToClients(ItemStackSyncS2CPacket(this.inventory, this.worldPosition))
             return RMFurnacesMenuTypes.RMTwoSupportOneToOneFurnaceMenuType(windowID, playerInv, this, this.data)
         }
     }
@@ -87,12 +115,18 @@ object RMFurnacesBlockEntity {
         RMBlockEntityTypes.RM_WHITE_JADE_FURNACE.get(),
         blockPos,
         blockState,
-        RMMekanism(3, 3, "rm_white_jade_furnace", setOf(RecipeType.SMELTING))
+        RMMekanism(
+            3,
+            RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.numberOfInputSlots,
+            RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.numberOfOutputSlots,
+            RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.numberOfSupportSlots,
+            "rm_white_jade_furnace",
+            setOf(RecipeType.SMELTING)
+        )
     ), IManaReceiver {
-        override val upSlots = RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.upSlots
-        override val downSlots = RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.downSlots
-        override val horizontalSlots = RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.horizontalSlots
         override fun createMenu(windowID: Int, playerInv: Inventory, playerIn: Player): AbstractContainerMenu {
+            RMMessages.sendToClients(ManaSyncS2CPacket(this.mana, this.worldPosition))
+            RMMessages.sendToClients(ItemStackSyncS2CPacket(this.inventory, this.worldPosition))
             return RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType(windowID, playerInv, this, this.data)
         }
     }
@@ -104,12 +138,18 @@ object RMFurnacesBlockEntity {
         RMBlockEntityTypes.RM_RHINESTONE_FURNACE.get(),
         blockPos,
         blockState,
-        RMMekanism(4, 3, "rm_rhinestone_furnace", setOf(RecipeType.SMELTING))
+        RMMekanism(
+            4,
+            RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.numberOfInputSlots,
+            RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.numberOfOutputSlots,
+            RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.numberOfSupportSlots,
+            "rm_rhinestone_furnace",
+            setOf(RecipeType.SMELTING)
+        )
     ), IManaReceiver {
-        override val upSlots = RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.upSlots
-        override val downSlots = RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.downSlots
-        override val horizontalSlots = RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.horizontalSlots
         override fun createMenu(windowID: Int, playerInv: Inventory, playerIn: Player): AbstractContainerMenu {
+            RMMessages.sendToClients(ManaSyncS2CPacket(this.mana, this.worldPosition))
+            RMMessages.sendToClients(ItemStackSyncS2CPacket(this.inventory, this.worldPosition))
             return RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType(windowID, playerInv, this, this.data)
         }
     }
@@ -121,12 +161,18 @@ object RMFurnacesBlockEntity {
         RMBlockEntityTypes.RM_AQUAMARINE_FURNACE.get(),
         blockPos,
         blockState,
-        RMMekanism(5, 3, "rm_aquamarine_furnace", setOf(RecipeType.SMELTING))
+        RMMekanism(
+            5,
+            RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.numberOfInputSlots,
+            RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.numberOfOutputSlots,
+            RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.numberOfSupportSlots,
+            "rm_aquamarine_furnace",
+            setOf(RecipeType.SMELTING)
+        )
     ), IManaReceiver {
-        override val upSlots = RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.upSlots
-        override val downSlots = RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.downSlots
-        override val horizontalSlots = RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType.horizontalSlots
         override fun createMenu(windowID: Int, playerInv: Inventory, playerIn: Player): AbstractContainerMenu {
+            RMMessages.sendToClients(ManaSyncS2CPacket(this.mana, this.worldPosition))
+            RMMessages.sendToClients(ItemStackSyncS2CPacket(this.inventory, this.worldPosition))
             return RMFurnacesMenuTypes.RMThreeSupportOneToOneFurnaceMenuType(windowID, playerInv, this, this.data)
         }
     }

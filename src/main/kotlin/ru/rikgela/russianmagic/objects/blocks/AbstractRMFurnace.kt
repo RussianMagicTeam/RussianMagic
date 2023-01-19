@@ -1,6 +1,5 @@
 package ru.rikgela.russianmagic.objects.blocks
 
-import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.particles.ParticleTypes
@@ -34,7 +33,7 @@ import ru.rikgela.russianmagic.objects.blockentities.AbstractRMFurnaceBlockEntit
 abstract class AbstractRMFurnace(properties: Properties) : BaseEntityBlock(properties) {
 
     fun openContainer(level: Level, blockPos: BlockPos?, player: Player) {
-        val blockentity = level.getBlockEntity(blockPos)
+        val blockentity = level.getBlockEntity(blockPos!!)
         if (blockentity is FurnaceBlockEntity) {
             player.openMenu(blockentity as MenuProvider?)
             player.awardStat(Stats.INTERACT_WITH_FURNACE)
@@ -81,11 +80,11 @@ abstract class AbstractRMFurnace(properties: Properties) : BaseEntityBlock(prope
         return state.setValue(FACING, rot.rotate(state.getValue(FACING)))
     }
 
-//
+
 //    override fun getLightValue(state: BlockState): Int {
 //        return if (state.get(LIT)) super.lightValue else 0
 //    }
-//
+
     override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
         return defaultBlockState().setValue(FACING, context.horizontalDirection.opposite)
     }
@@ -127,7 +126,7 @@ abstract class AbstractRMFurnace(properties: Properties) : BaseEntityBlock(prope
         blockHitResult: BlockHitResult
     ): InteractionResult {
         if (!level.isClientSide()) {
-            if (Minecraft.getInstance().options.keyShift.isDown)
+            if (player.isShiftKeyDown)
                 if (player.getItemInHand(interactionHand).isEmpty){}
 //                    RMCCMessage.transferManaToTileEntity(pos.x, pos.y, pos.z)
                 else
@@ -197,6 +196,23 @@ abstract class AbstractRMFurnace(properties: Properties) : BaseEntityBlock(prope
             }
         }
     }
+
+//    override fun <T : BlockEntity?> getTicker(
+//        level: Level,
+//        blockState: BlockState,
+//        blockEntityType: BlockEntityType<T>
+//    ): BlockEntityTicker<T>? {
+//        return createTickerHelper(
+//            blockEntityType,
+//            RMBlockEntityTypes.RM_DIAMOND_FURNACE.get()
+//        ) { level: Level,
+//            blockPos: BlockPos,
+//            blockState: BlockState,
+//            abstractRMFurnaceBlockEntity: AbstractRMFurnaceBlockEntity
+//            ->
+//            AbstractRMFurnaceBlockEntity.tick(level, blockPos, blockState, abstractRMFurnaceBlockEntity)
+//        }
+//    }
 
     companion object {
         val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING

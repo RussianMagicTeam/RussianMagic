@@ -8,7 +8,6 @@ import ru.rikgela.russianmagic.objects.mana.IManaSpreader
 import ru.rikgela.russianmagic.objects.mana.IManaTaker
 import java.lang.Float.max
 import java.lang.Float.min
-import java.lang.Math.sqrt
 
 class ManaTaker : IManaTaker {
 
@@ -19,14 +18,22 @@ class ManaTaker : IManaTaker {
     override val isConnectedToManaSpreader: Boolean
         get() = spreaderPos != null
     override val spreaderWorldPos: String
-        get() = if (spreaderPos != null) levelResourceKey + ", " + spreaderPos!!.x.toString() + ", " + spreaderPos!!.y.toString() + ", " + spreaderPos!!.z.toString() else "NULL"
-
+        get() = if (spreaderPos != null)
+            levelResourceKey + ", " +
+                    spreaderPos!!.x.toString() + ", " +
+                    spreaderPos!!.y.toString() + ", " +
+                    spreaderPos!!.z.toString() else "NULL"
+    override val rate: Float
+        get() = 0.0F
     // To save
     override fun serializeNBT(): CompoundTag {
         val nbt = CompoundTag()
         nbt.putString("levelResourceKey", this.levelResourceKey)
         if (this.spreaderPos != null) {
-            nbt.putIntArray("spreaderPos", intArrayOf(this.spreaderPos!!.x, this.spreaderPos!!.y, this.spreaderPos!!.z))
+            nbt.putIntArray(
+                "spreaderPos",
+                intArrayOf(this.spreaderPos!!.x, this.spreaderPos!!.y, this.spreaderPos!!.z)
+            )
         }
         return nbt
     }
@@ -63,17 +70,24 @@ class ManaTaker : IManaTaker {
         this.levelResourceKey = ""
     }
 
-    override fun getRate(manaConsumer: BlockPos, sensitivity: Float): Float {
-        if(spreaderPos != null) {
-            val distance = sqrt(spreaderPos!!.distSqr(Vec3i(manaConsumer.x, manaConsumer.y, manaConsumer.z))).toFloat()
+    fun getRate(manaConsumer: BlockPos, sensitivity: Float): Float {
+        return if(spreaderPos != null) {
+            val distance = kotlin.math.sqrt(
+                spreaderPos!!.distSqr(
+                    Vec3i(
+                        manaConsumer.x,
+                        manaConsumer.y,
+                        manaConsumer.z
+                    )
+                )
+            ).toFloat()
             val rate =
                 sensitivity *
                         if (distance >= this.baseDistance) 1F / distance
                         else 1F - distance / this.baseDistance
-            return max(min(rate, 1F), 0F)
-        }
-        else {
-            return 0F
+            max(min(rate, 1F), 0F)
+        } else {
+            0F
         }
     }
 
