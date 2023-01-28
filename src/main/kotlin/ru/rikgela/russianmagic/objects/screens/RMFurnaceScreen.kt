@@ -46,18 +46,18 @@ class RMFurnaceScreen(
         super.render(pPoseStack, mouseX, mouseY, delta)
         renderTooltip(pPoseStack, mouseX, mouseY - 20)
         val curMana = abstractRMFurnaceMenuType.blockEntity!!.currentMana
-        val maxMana = abstractRMFurnaceMenuType.blockEntity!!.baseMaxMana
+        val maxMana = abstractRMFurnaceMenuType.blockEntity.baseMaxMana
         val mana = I18n.get("capability.russianmagic.mana") + ": $curMana/$maxMana"
         font.draw(pPoseStack, mana, guiLeft + 8.0f, guiTop + 16.0f, 0x404040)
         val df = DecimalFormat("00.00")
-        val rate = "Rate: " + df.format(abstractRMFurnaceMenuType.blockEntity!!.rate * 100) + "%"
+        val rate = "Rate: " + df.format(abstractRMFurnaceMenuType.blockEntity.rate * 100) + "%"
         font.draw(pPoseStack, rate, guiLeft + 8.0f, guiTop + 24.0f, 0x404040)
         renderMana(pPoseStack)
     }
 
     fun renderMana(pPoseStack: PoseStack){
         val currentMana = this.abstractRMFurnaceMenuType.blockEntity!!.currentMana
-        val maxMana = this.abstractRMFurnaceMenuType.blockEntity!!.baseMaxMana
+        val maxMana = this.abstractRMFurnaceMenuType.blockEntity.baseMaxMana
         val x = guiLeft + 6
         val y = guiTop + 22
         val hudWidth = 12
