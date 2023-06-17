@@ -12,6 +12,7 @@ import ru.rikgela.russianmagic.objects.blockentities.RMFurnacesBlockEntity.RMIso
 import ru.rikgela.russianmagic.objects.blockentities.RMFurnacesBlockEntity.RMMarbleFurnaceBlockEntity
 import ru.rikgela.russianmagic.objects.blockentities.RMFurnacesBlockEntity.RMRhinestoneFurnaceBlockEntity
 import ru.rikgela.russianmagic.objects.blockentities.RMFurnacesBlockEntity.RMWhiteJadeFurnaceBlockEntity
+import ru.rikgela.russianmagic.objects.blockentities.RMMagicSourcesBlockEntity
 
 object RMBlockEntityTypes {
     val BLOCK_ENTITY_TYPES: DeferredRegister<BlockEntityType<*>> = DeferredRegister.create(
@@ -73,11 +74,11 @@ object RMBlockEntityTypes {
                     .build(null)
             }
 
-//    @JvmField
-//    val RM_BASIC_MAGIC_SOURCE: RegistryObject<BlockEntityType<RMMagicSourcesTileEntity.RMBasicMagicSourceTileEntity>> = BLOCK_ENTITY_TYPES
-//            .register("rm_basic_magic_source") {
-//                BlockEntityType.Builder
-//                        .create({ RMMagicSourcesTileEntity.RMBasicMagicSourceTileEntity() }, RMBlocks.RM_BASIC_MAGIC_SOURCE_BLOCK.get())
-//                        .build(null)
-//            }
+    val RM_BASIC_MAGIC_SOURCE: RegistryObject<BlockEntityType<RMMagicSourcesBlockEntity.RMBasicMagicSourceBlockEntity>> = BLOCK_ENTITY_TYPES
+            .register("rm_basic_magic_source") {
+                BlockEntityType.Builder.of(
+                {blockPos, blockState -> RMMagicSourcesBlockEntity.RMBasicMagicSourceBlockEntity(blockPos, blockState) },
+                RMBlocks.RM_BASIC_MAGIC_SOURCE_BLOCK.get())
+                .build(null)
+            }
 }

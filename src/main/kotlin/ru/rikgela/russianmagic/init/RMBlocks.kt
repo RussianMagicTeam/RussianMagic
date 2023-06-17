@@ -1,8 +1,6 @@
 package ru.rikgela.russianmagic.init
 
 
-import net.minecraft.client.renderer.ItemBlockRenderTypes
-import net.minecraft.client.renderer.RenderType
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.material.Material
@@ -10,10 +8,7 @@ import net.minecraftforge.registries.DeferredRegister
 import net.minecraftforge.registries.ForgeRegistries
 import net.minecraftforge.registries.RegistryObject
 import ru.rikgela.russianmagic.MOD_ID
-import ru.rikgela.russianmagic.objects.blocks.EbonyRotatedPillarBlock
-import ru.rikgela.russianmagic.objects.blocks.EbonyTreeGrower
-import ru.rikgela.russianmagic.objects.blocks.RMFurnacesBlock
-import ru.rikgela.russianmagic.objects.blocks.RMLeavesBlock
+import ru.rikgela.russianmagic.objects.blocks.*
 
 
 object RMBlocks {
@@ -513,14 +508,15 @@ object RMBlocks {
                     .strength(1.0f, 3.0f)
                 )
             }
-//    val RM_BASIC_MAGIC_SOURCE_BLOCK: RegistryObject<RMMagicSourceBlock.RMBasicMagicSource> = BLOCKS
-//            .register("rm_basic_magic_source") {
-//                RMMagicSourceBlock.RMBasicMagicSource(Block
-//                        .Properties
-//                        .create(Material.STONE)
-//                        .hardnessAndResistance(3.0f, 3.0f)
-//                        .harvestTool(ToolType.PICKAXE), RMTileEntityTypes.RM_BASIC_MAGIC_SOURCE)
-//            }
+    val RM_BASIC_MAGIC_SOURCE_BLOCK: RegistryObject<RMMagicSourceBlock.RMBasicMagicSource> = BLOCKS
+            .register("rm_basic_magic_source") {
+                RMMagicSourceBlock.RMBasicMagicSource(BlockBehaviour
+                        .Properties
+                        .of(Material.STONE)
+                        .strength(3.0f, 3.0f)
+                        .requiresCorrectToolForDrops()
+                )
+            }
 
     val EBONY_PLANKS: RegistryObject<Block> = BLOCKS.register("ebony_planks") {
         Block(
@@ -554,9 +550,9 @@ object RMBlocks {
         EbonyRotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD))
     }
     fun clientSetup() {
-        ItemBlockRenderTypes.setRenderLayer(EBONY_SAPLING.get(), RenderType.cutout())
-        ItemBlockRenderTypes.setRenderLayer(EBONY_LEAVES.get(), RenderType.cutout())
-        ItemBlockRenderTypes.setRenderLayer(RHINESTONE_BLOCK.get(), RenderType.translucent())
+//        ItemBlockRenderTypes.setRenderLayer(EBONY_SAPLING.get(), RenderType.cutout())
+//        ItemBlockRenderTypes.setRenderLayer(EBONY_LEAVES.get(), RenderType.cutout())
+//        ItemBlockRenderTypes.setRenderLayer(RHINESTONE_BLOCK.get(), RenderType.translucent())
 //        RenderTypeLookup.setRenderLayer(RM_BASIC_MAGIC_SOURCE_BLOCK.get(), RenderType.getTranslucent())
     }
 }

@@ -561,8 +561,13 @@ object RMItems {
             Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
         )
     }
-//
-//    val RM_BASIC_MAGIC_SOURCE: RegistryObject<Item> = ITEMS.register("rm_basic_magic_source") { BlockItem(RMBlocks.RM_BASIC_MAGIC_SOURCE_BLOCK.get(), Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
+
+    val RM_BASIC_MAGIC_SOURCE: RegistryObject<Item> = ITEMS.register("rm_basic_magic_source") {
+        BlockItem(
+            RMBlocks.RM_BASIC_MAGIC_SOURCE_BLOCK.get(),
+            Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)
+        )
+    }
 //    val RM_ANALYZER: RegistryObject<Item> = ITEMS.register("rm_analyzer") { RMAnalyzer(Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
 //    val RM_LINK_CREATOR: RegistryObject<Item> = ITEMS.register("rm_link_creator") { RMLinkCreator(Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
 //    val RM_LINK_DESTROYER: RegistryObject<Item> = ITEMS.register("rm_link_destroyer") { RMLinkDestroyer(Item.Properties().tab(RMCreativeModeTabs.RUSSIAN_MAGIC_ITEM_GROUP)) }
